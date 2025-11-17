@@ -21,8 +21,18 @@ The benchmarks are completed using the FlintCLI tool. It runs tests with setbloc
 ## Contributing
 Contributions to the benchmark suite are welcome! If you have additional tests or server implementations to add, please submit a pull request with your changes. Try to write 100% of tests for a block if the block is small enough. Larger blocks can be split into multiple PRs.
 
+## Using FlintBenchmark for Your Server
+FlintBenchmark is freely available for other FOSS projects to use for testing and developing their own Minecraft server implementations. The test suite can help you:
+
+- Validate your server's behavior against vanilla Minecraft
+- Identify compatibility issues during development
+- Track your progress toward vanilla parity
+- Ensure block mechanics work correctly
+
+Feel free to integrate these tests into your development workflow, CI/CD pipeline, or use them as a reference for expected vanilla behavior.
+
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details. This means you are free to use, modify, and distribute the tests in this repository for any purpose, including developing and testing your own server implementations.
 
 ## Contact
 For questions or suggestions, please open an issue in this repository.
