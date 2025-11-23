@@ -913,7 +913,6 @@
 - Warped Stem
 - Warped Trapdoor
 - Warped Wart Block
-- Water
 - Waxed Block of Copper
 - Waxed Chiseled Copper
 - Waxed Copper

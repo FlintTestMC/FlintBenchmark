@@ -1,0 +1,55 @@
+{
+    "name": "water_falling_state",
+    "description": "Water sets falling=true when flowing downward",
+    "tags": ["state", "falling"],
+    "setup": {
+        "cleanup": {
+            "region": [[0, 0, 0], [4, 10, 4]]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 0, 0], [4, 0, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [4, 6, 0]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 4], [4, 6, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [0, 6, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[4, 1, 0], [4, 6, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 1,
+            "do": "place",
+            "pos": [2, 5, 2],
+            "block": "minecraft:water[level=0]"
+        },
+        {
+            "at": 15,
+            "do": "assert_state",
+            "pos": [2, 4, 2],
+            "state": "level",
+            "values": ["8"]
+        }
+    ]
+}

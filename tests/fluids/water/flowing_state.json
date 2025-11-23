@@ -1,0 +1,55 @@
+{
+    "name": "water_flowing_state",
+    "description": "Water has correct flowing state when not at source level",
+    "tags": ["state", "flow"],
+    "setup": {
+        "cleanup": {
+            "region": [[0, 0, 0], [6, 5, 4]]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 0, 0], [6, 0, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [6, 2, 0]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 4], [6, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [0, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[6, 1, 0], [6, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 1,
+            "do": "place",
+            "pos": [3, 2, 2],
+            "block": "minecraft:water[level=0]"
+        },
+        {
+            "at": 30,
+            "do": "assert_state",
+            "pos": [3, 1, 2],
+            "state": "level",
+            "values": ["8"]
+        }
+    ]
+}

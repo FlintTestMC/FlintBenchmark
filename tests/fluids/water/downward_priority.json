@@ -1,0 +1,68 @@
+{
+    "name": "water_downward_priority",
+    "description": "Water prioritizes flowing down over horizontal spread",
+    "tags": ["priority", "flow"],
+    "setup": {
+        "cleanup": {
+            "region": [[0, 0, 0], [6, 10, 6]]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 0, 0], [6, 0, 6]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 1,
+            "do": "place_each",
+            "blocks": [
+                {
+                    "pos": [1, 1, 3],
+                    "block": "minecraft:stone"
+                },
+                {
+                    "pos": [2, 1, 3],
+                    "block": "minecraft:stone"
+                },
+                {
+                    "pos": [4, 1, 3],
+                    "block": "minecraft:stone"
+                },
+                {
+                    "pos": [5, 1, 3],
+                    "block": "minecraft:stone"
+                }
+            ]
+        },
+        {
+            "at": 2,
+            "do": "place",
+            "pos": [3, 5, 3],
+            "block": "minecraft:water[level=0]"
+        },
+        {
+            "at": 22,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [3, 1, 3],
+                    "is": "minecraft:water"
+                },
+                {
+                    "pos": [3, 2, 3],
+                    "is": "minecraft:water"
+                },
+                {
+                    "pos": [3, 3, 3],
+                    "is": "minecraft:water"
+                },
+                {
+                    "pos": [3, 4, 3],
+                    "is": "minecraft:water"
+                }
+            ]
+        }
+    ]
+}

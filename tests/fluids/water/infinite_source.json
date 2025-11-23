@@ -1,0 +1,73 @@
+{
+    "name": "water_infinite_source_creation",
+    "description": "Two source blocks create infinite source when diagonally adjacent",
+    "tags": ["infinite", "source"],
+    "setup": {
+        "cleanup": {
+            "region": [[0, 0, 0], [4, 5, 4]]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 0, 0], [4, 0, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [4, 2, 0]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 4], [4, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [0, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[4, 1, 0], [4, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 1,
+            "do": "place_each",
+            "blocks": [
+                {
+                    "pos": [1, 1, 2],
+                    "block": "minecraft:water[level=0]"
+                },
+                {
+                    "pos": [3, 1, 2],
+                    "block": "minecraft:water[level=0]"
+                }
+            ]
+        },
+        {
+            "at": 20,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [2, 1, 2],
+                    "is": "minecraft:water"
+                }
+            ]
+        },
+        {
+            "at": 21,
+            "do": "assert_state",
+            "pos": [2, 1, 2],
+            "state": "level",
+            "values": ["0"]
+        }
+    ]
+}

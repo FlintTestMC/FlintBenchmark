@@ -1,0 +1,68 @@
+{
+    "name": "water_max_spread_distance",
+    "description": "Water spreads exactly 7 blocks from source on flat surface",
+    "tags": ["distance", "limit"],
+    "setup": {
+        "cleanup": {
+            "region": [[0, 0, 0], [14, 5, 4]]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 0, 0], [14, 0, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [14, 2, 0]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 4], [14, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [0, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[14, 1, 0], [14, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[1, 1, 0], [1, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 1,
+            "do": "place",
+            "pos": [2, 1, 2],
+            "block": "minecraft:water[level=0]"
+        },
+        {
+            "at": 40,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [9, 1, 2],
+                    "is": "minecraft:water"
+                },
+                {
+                    "pos": [10, 1, 2],
+                    "is": "minecraft:air"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,58 @@
+{
+    "name": "water_tick_rate_consistency",
+    "description": "Water updates consistently with 5-tick rate",
+    "tags": ["timing", "tick"],
+    "setup": {
+        "cleanup": {
+            "region": [[0, 0, 0], [8, 5, 4]]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 0, 0], [8, 0, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [8, 2, 0]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 4], [8, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [0, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 0,
+            "do": "fill",
+            "region": [[8, 1, 0], [8, 2, 4]],
+            "with": "minecraft:stone"
+        },
+        {
+            "at": 1,
+            "do": "place",
+            "pos": [1, 1, 2],
+            "block": "minecraft:water[level=0]"
+        },
+        {
+            "at": 10,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [2, 1, 2],
+                    "is": "minecraft:water"
+                }
+            ]
+        }
+    ]
+}
