@@ -12,44 +12,44 @@
             "at": 0,
             "do": "fill",
             "region": [[0, 0, 0], [8, 0, 8]],
-            "with": "minecraft:stone"
+            "with": {"id": "minecraft:stone"}
         },
         {
             "at": 1,
             "do": "place_each",
             "blocks": [
-                {"pos": [0, 1, 0], "block": "minecraft:stone"},
-                {"pos": [1, 1, 0], "block": "minecraft:stone"},
-                {"pos": [2, 1, 0], "block": "minecraft:stone"},
-                {"pos": [3, 1, 0], "block": "minecraft:stone"},
-                {"pos": [4, 1, 0], "block": "minecraft:stone"},
-                {"pos": [5, 1, 0], "block": "minecraft:stone"},
-                {"pos": [6, 1, 0], "block": "minecraft:stone"},
-                {"pos": [7, 1, 0], "block": "minecraft:stone"},
-                {"pos": [8, 1, 0], "block": "minecraft:stone"},
-                {"pos": [0, 1, 8], "block": "minecraft:stone"},
-                {"pos": [1, 1, 8], "block": "minecraft:stone"},
-                {"pos": [2, 1, 8], "block": "minecraft:stone"},
-                {"pos": [3, 1, 8], "block": "minecraft:stone"},
-                {"pos": [4, 1, 8], "block": "minecraft:stone"},
-                {"pos": [5, 1, 8], "block": "minecraft:stone"},
-                {"pos": [6, 1, 8], "block": "minecraft:stone"},
-                {"pos": [7, 1, 8], "block": "minecraft:stone"},
-                {"pos": [8, 1, 8], "block": "minecraft:stone"},
-                {"pos": [0, 1, 1], "block": "minecraft:stone"},
-                {"pos": [0, 1, 2], "block": "minecraft:stone"},
-                {"pos": [0, 1, 3], "block": "minecraft:stone"},
-                {"pos": [0, 1, 4], "block": "minecraft:stone"},
-                {"pos": [0, 1, 5], "block": "minecraft:stone"},
-                {"pos": [0, 1, 6], "block": "minecraft:stone"},
-                {"pos": [0, 1, 7], "block": "minecraft:stone"},
-                {"pos": [8, 1, 1], "block": "minecraft:stone"},
-                {"pos": [8, 1, 2], "block": "minecraft:stone"},
-                {"pos": [8, 1, 3], "block": "minecraft:stone"},
-                {"pos": [8, 1, 4], "block": "minecraft:stone"},
-                {"pos": [8, 1, 5], "block": "minecraft:stone"},
-                {"pos": [8, 1, 6], "block": "minecraft:stone"},
-                {"pos": [8, 1, 7], "block": "minecraft:stone"}
+                {"pos": [0, 1, 0], "block": {"id": "minecraft:stone"}},
+                {"pos": [1, 1, 0], "block": {"id": "minecraft:stone"}},
+                {"pos": [2, 1, 0], "block": {"id": "minecraft:stone"}},
+                {"pos": [3, 1, 0], "block": {"id": "minecraft:stone"}},
+                {"pos": [4, 1, 0], "block": {"id": "minecraft:stone"}},
+                {"pos": [5, 1, 0], "block": {"id": "minecraft:stone"}},
+                {"pos": [6, 1, 0], "block": {"id": "minecraft:stone"}},
+                {"pos": [7, 1, 0], "block": {"id": "minecraft:stone"}},
+                {"pos": [8, 1, 0], "block": {"id": "minecraft:stone"}},
+                {"pos": [0, 1, 8], "block": {"id": "minecraft:stone"}},
+                {"pos": [1, 1, 8], "block": {"id": "minecraft:stone"}},
+                {"pos": [2, 1, 8], "block": {"id": "minecraft:stone"}},
+                {"pos": [3, 1, 8], "block": {"id": "minecraft:stone"}},
+                {"pos": [4, 1, 8], "block": {"id": "minecraft:stone"}},
+                {"pos": [5, 1, 8], "block": {"id": "minecraft:stone"}},
+                {"pos": [6, 1, 8], "block": {"id": "minecraft:stone"}},
+                {"pos": [7, 1, 8], "block": {"id": "minecraft:stone"}},
+                {"pos": [8, 1, 8], "block": {"id": "minecraft:stone"}},
+                {"pos": [0, 1, 1], "block": {"id": "minecraft:stone"}},
+                {"pos": [0, 1, 2], "block": {"id": "minecraft:stone"}},
+                {"pos": [0, 1, 3], "block": {"id": "minecraft:stone"}},
+                {"pos": [0, 1, 4], "block": {"id": "minecraft:stone"}},
+                {"pos": [0, 1, 5], "block": {"id": "minecraft:stone"}},
+                {"pos": [0, 1, 6], "block": {"id": "minecraft:stone"}},
+                {"pos": [0, 1, 7], "block": {"id": "minecraft:stone"}},
+                {"pos": [8, 1, 1], "block": {"id": "minecraft:stone"}},
+                {"pos": [8, 1, 2], "block": {"id": "minecraft:stone"}},
+                {"pos": [8, 1, 3], "block": {"id": "minecraft:stone"}},
+                {"pos": [8, 1, 4], "block": {"id": "minecraft:stone"}},
+                {"pos": [8, 1, 5], "block": {"id": "minecraft:stone"}},
+                {"pos": [8, 1, 6], "block": {"id": "minecraft:stone"}},
+                {"pos": [8, 1, 7], "block": {"id": "minecraft:stone"}}
             ]
         },
         {
@@ -58,23 +58,23 @@
             "blocks": [
                 {
                     "pos": [4, 1, 1],
-                    "block": "minecraft:stone"
+                    "block": {"id": "minecraft:stone"}
                 },
                 {
                     "pos": [4, 1, 2],
-                    "block": "minecraft:stone"
+                    "block": {"id": "minecraft:stone"}
                 },
                 {
                     "pos": [4, 1, 3],
-                    "block": "minecraft:stone"
+                    "block": {"id": "minecraft:stone"}
                 },
                 {
                     "pos": [4, 1, 4],
-                    "block": "minecraft:stone"
+                    "block": {"id": "minecraft:stone"}
                 },
                 {
                     "pos": [4, 1, 5],
-                    "block": "minecraft:stone"
+                    "block": {"id": "minecraft:stone"}
                 }
             ]
         },
@@ -82,7 +82,7 @@
             "at": 3,
             "do": "place",
             "pos": [2, 1, 6],
-            "block": "minecraft:water[level=0]"
+            "block": {"id": "minecraft:water", "level": 0}
         },
         {
             "at": 50,
@@ -90,15 +90,15 @@
             "checks": [
                 {
                     "pos": [3, 1, 6],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [5, 1, 6],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [5, 1, 4],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 }
             ]
         }

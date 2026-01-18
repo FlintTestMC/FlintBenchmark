@@ -12,37 +12,37 @@
             "at": 0,
             "do": "fill",
             "region": [[0, 0, 0], [10, 0, 10]],
-            "with": "minecraft:stone"
+            "with": {"id": "minecraft:stone"}
         },
         {
             "at": 0,
             "do": "fill",
             "region": [[0, 1, 0], [10, 2, 0]],
-            "with": "minecraft:stone"
+            "with": {"id": "minecraft:stone"}
         },
         {
             "at": 0,
             "do": "fill",
             "region": [[0, 1, 10], [10, 2, 10]],
-            "with": "minecraft:stone"
+            "with": {"id": "minecraft:stone"}
         },
         {
             "at": 0,
             "do": "fill",
             "region": [[0, 1, 0], [0, 2, 10]],
-            "with": "minecraft:stone"
+            "with": {"id": "minecraft:stone"}
         },
         {
             "at": 0,
             "do": "fill",
             "region": [[10, 1, 0], [10, 2, 10]],
-            "with": "minecraft:stone"
+            "with": {"id": "minecraft:stone"}
         },
         {
             "at": 1,
             "do": "place",
             "pos": [5, 1, 5],
-            "block": "minecraft:water[level=0]"
+            "block": {"id": "minecraft:water", "level": 0}
         },
         {
             "at": 30,
@@ -50,39 +50,39 @@
             "checks": [
                 {
                     "pos": [5, 1, 5],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [6, 1, 5],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [7, 1, 5],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [8, 1, 5],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [9, 1, 5],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [4, 1, 5],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [3, 1, 5],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [2, 1, 5],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 },
                 {
                     "pos": [1, 1, 5],
-                    "is": "minecraft:water"
+                    "is": {"id": "minecraft:water"}
                 }
             ]
         }
