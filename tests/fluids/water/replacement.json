@@ -9,48 +9,59 @@
     }, 
     "timeline": [
         {
-            "at": 0, 
-            "do": "fill", 
-            "region": [ [0, 0, 0], [6, 0, 4] ], 
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 0, 0], [6, 0, 4]],
             "with": {"id": "minecraft:stone"}
-        }, 
+        },
         {
-            "at": 0, 
-            "do": "fill", 
-            "region": [ [0, 1, 0], [6, 2, 0] ], 
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [6, 2, 0]],
             "with": {"id": "minecraft:stone"}
-        }, 
+        },
         {
-            "at": 0, 
-            "do": "fill", 
-            "region": [ [0, 1, 4], [6, 2, 4] ], 
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 4], [6, 2, 4]],
             "with": {"id": "minecraft:stone"}
-        }, 
+        },
         {
-            "at": 0, 
-            "do": "fill", 
-            "region": [ [0, 1, 0], [0, 2, 4] ], 
+            "at": 0,
+            "do": "fill",
+            "region": [[0, 1, 0], [0, 2, 4]],
             "with": {"id": "minecraft:stone"}
-        }, 
+        },
         {
-            "at": 0, 
-            "do": "fill", 
-            "region": [ [6, 1, 0], [6, 2, 4] ], 
+            "at": 0,
+            "do": "fill",
+            "region": [[6, 1, 0], [6, 2, 4]],
             "with": {"id": "minecraft:stone"}
-        }, 
+        },
         {
-            "at": 1, 
-            "do": "place_each", 
+            "at": 1,
+            "do": "place_each",
             "blocks": [
-                { "pos": [2, 1, 2], "block": {"id": "minecraft:tall_grass"} }
+                {
+                    "pos": [2, 1, 2],
+                    "block": {"id": "minecraft:tall_grass"}
+                }
             ]
-        }, 
-        { "at": 2, "do": "place", "pos": [1, 1, 2], "block": {"id": "minecraft:water", "level": 0} }, 
+        },
+        {
+            "at": 2,
+            "do": "place",
+            "pos": [1, 1, 2],
+            "block": {"id": "minecraft:water", "level": 0}
+        },
         {
             "at": 30, 
             "do": "assert", 
             "checks": [
-                { "pos": [2, 1, 2], "is": {"id": "minecraft:water"} }
+                {
+                    "pos": [2, 1, 2],
+                    "is": {"id": "minecraft:water"}
+                }
             ]
         }
     ]
