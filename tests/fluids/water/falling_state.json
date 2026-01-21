@@ -1,58 +1,51 @@
 {
-    "name": "water_falling_state",
-    "description": "Water sets falling=true when flowing downward",
-    "tags": ["state", "falling"],
+    "name": "water_falling_state", 
+    "description": "Water sets falling=true when flowing downward", 
+    "tags": ["state", "falling"], 
     "setup": {
         "cleanup": {
-            "region": [[0, 0, 0], [4, 10, 4]]
+            "region": [ [0, 0, 0], [4, 10, 4] ]
         }
-    },
+    }, 
     "timeline": [
         {
-            "at": 0,
-            "do": "fill",
-            "region": [[0, 0, 0], [4, 0, 4]],
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 0, 4] ], 
             "with": {"id": "minecraft:stone"}
-        },
+        }, 
         {
-            "at": 0,
-            "do": "fill",
-            "region": [[0, 1, 0], [4, 6, 0]],
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [4, 6, 0] ], 
             "with": {"id": "minecraft:stone"}
-        },
+        }, 
         {
-            "at": 0,
-            "do": "fill",
-            "region": [[0, 1, 4], [4, 6, 4]],
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 4], [4, 6, 4] ], 
             "with": {"id": "minecraft:stone"}
-        },
+        }, 
         {
-            "at": 0,
-            "do": "fill",
-            "region": [[0, 1, 0], [0, 6, 4]],
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 6, 4] ], 
             "with": {"id": "minecraft:stone"}
-        },
+        }, 
         {
-            "at": 0,
-            "do": "fill",
-            "region": [[4, 1, 0], [4, 6, 4]],
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [4, 1, 0], [4, 6, 4] ], 
             "with": {"id": "minecraft:stone"}
-        },
+        }, 
+        { "at": 1, "do": "place", "pos": [2, 5, 2], "block": {"id": "minecraft:water", "level": 0} }, 
         {
-            "at": 1,
-            "do": "place",
-            "pos": [2, 5, 2],
-            "block": {"id": "minecraft:water", "level": 0}
-        },
-        {
-            "at": 15,
-            "do": "assert",
+            "at": 15, 
+            "do": "assert", 
             "checks": [
-                {
-                    "pos": [2, 4, 2],
-                    "is": {"id": "minecraft:water", "level": 8}
-                }
+                { "pos": [2, 4, 2], "is": {"id": "minecraft:water", "level": 8} }
             ]
         }
     ]
 }
+

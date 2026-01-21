@@ -31,6 +31,20 @@ FlintBenchmark is freely available for other FOSS projects to use for testing an
 
 Feel free to integrate these tests into your development workflow, CI/CD pipeline, or use them as a reference for expected vanilla behavior.
 
+## JSON Formatting
+All test JSON files are formatted using [FracturedJson](https://github.com/j-brooke/FracturedJson), which produces human-readable yet compact output. Small arrays and objects are inlined, while larger ones are expanded for readability.
+
+To format all JSON files:
+```bash
+npm install
+npm run format
+```
+
+To check formatting (used in CI):
+```bash
+npm run format:check
+```
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details. This means you are free to use, modify, and distribute the tests in this repository for any purpose, including developing and testing your own server implementations.
 
