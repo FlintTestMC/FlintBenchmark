@@ -1,48 +1,27 @@
 {
-    "name": "water_basic_downward_flow",
-    "description": "Water flows downward when placed above air",
-    "tags": ["basic", "flow", "gravity"],
+    "name": "water_basic_downward_flow", 
+    "description": "Water flows downward when placed above air", 
+    "tags": ["basic", "flow", "gravity"], 
     "setup": {
         "cleanup": {
-            "region": [[0, 0, 0], [4, 10, 4]]
+            "region": [ [0, 0, 0], [4, 10, 4] ]
         }
-    },
+    }, 
     "timeline": [
+        { "at": 0, "do": "place", "pos": [2, 5, 2], "block": {"id": "minecraft:water", "level": 0} }, 
+        { "at": 0, "do": "place", "pos": [2, 5, 2], "block": {"id": "minecraft:water", "level": 0} }, 
         {
-            "at": 0,
-            "do": "place",
-            "pos": [2, 5, 2],
-            "block": {"id": "minecraft:water", "level": 0}
-        },
-        {
-            "at": 25,
-            "do": "assert",
+            "at": 25, 
+            "do": "assert", 
             "checks": [
-                {
-                    "pos": [2, 5, 2],
-                    "is": {"id": "minecraft:water"}
-                },
-                {
-                    "pos": [2, 4, 2],
-                    "is": {"id": "minecraft:water"}
-                },
-                {
-                    "pos": [2, 3, 2],
-                    "is": {"id": "minecraft:water"}
-                },
-                {
-                    "pos": [2, 2, 2],
-                    "is": {"id": "minecraft:water"}
-                },
-                {
-                    "pos": [2, 1, 2],
-                    "is": {"id": "minecraft:water"}
-                },
-                {
-                    "pos": [2, 0, 2],
-                    "is": {"id": "minecraft:water"}
-                }
+                { "pos": [2, 5, 2], "is": {"id": "minecraft:water"} }, 
+                { "pos": [2, 4, 2], "is": {"id": "minecraft:water"} }, 
+                { "pos": [2, 3, 2], "is": {"id": "minecraft:water"} }, 
+                { "pos": [2, 2, 2], "is": {"id": "minecraft:water"} }, 
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:water"} }, 
+                { "pos": [2, 0, 2], "is": {"id": "minecraft:water"} }  
             ]
         }
     ]
 }
+

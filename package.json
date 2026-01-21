@@ -1,0 +1,13 @@
+{
+  "name": "flintbenchmark",
+  "version": "1.0.0",
+  "description": "Benchmark repository for testing Minecraft server implementations",
+  "scripts": {
+    "format": "node scripts/format-json.js",
+    "format:check": "node scripts/format-json.js --check"
+  },
+  "devDependencies": {
+    "fracturedjsonjs": "^4.0.0"
+  },
+  "license": "MIT"
+}
