@@ -1,0 +1,151 @@
+{
+    "flintVersion": null, 
+    "name": "fence_connection", 
+    "description": "Tests fence connection behavior across different wood types (oak, birch, jungle, spruce, dark_oak, mangrove, cherry, acacia, pale_oak, warped, crimson, bamboo) and validates connections/disconnections with non-fence blocks.", 
+    "tags": ["connectible", "fence", "wood-types", "block-state", "neighbor-update"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, -1, -2], [1, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:birch_fence" } }, 
+                { "pos": [-1, 0,  0], "block": {"id": "minecraft:oak_fence"   } }, 
+                { "pos": [-1, 0,  1], "block": {"id": "minecraft:jungle_fence"} }, 
+                { "pos": [-1, 0, -1], "block": {"id": "minecraft:spruce_fence"} }, 
+                { "pos": [-2, 0,  0], "block": {"id": "minecraft:oak_fence"   } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [-1, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:oak_fence", 
+                        "north"      : "true"               , 
+                        "waterlogged": "false"              , 
+                        "south"      : "true"               , 
+                        "west"       : "true"               , 
+                        "east"       : "true"                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:dark_oak_fence"} }, 
+                { "pos": [-1, 0,  1], "block": {"id": "minecraft:mangrove_fence"} }, 
+                { "pos": [-2, 0,  0], "block": {"id": "minecraft:cherry_fence"  } }, 
+                { "pos": [-1, 0, -1], "block": {"id": "minecraft:acacia_fence"  } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [-1, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:oak_fence", 
+                        "north"      : "true"               , 
+                        "east"       : "true"               , 
+                        "waterlogged": "false"              , 
+                        "west"       : "true"               , 
+                        "south"      : "true"                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 0, -1], "block": {"id": "minecraft:pale_oak_fence"} }, 
+                { "pos": [-2, 0,  0], "block": {"id": "minecraft:warped_fence"  } }, 
+                { "pos": [-1, 0,  1], "block": {"id": "minecraft:crimson_fence" } }, 
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:bamboo_fence"  } }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [-1, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:oak_fence", 
+                        "east"       : "true"               , 
+                        "north"      : "true"               , 
+                        "waterlogged": "false"              , 
+                        "west"       : "true"               , 
+                        "south"      : "true"                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 0,  1], "block": {"id": "minecraft:pumpkin"           } }, 
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:stone"             } }, 
+                { "pos": [-2, 0,  0], "block": {"id": "minecraft:melon"             } }, 
+                { "pos": [-1, 0, -1], "block": {"id": "minecraft:nether_brick_fence"} }  
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [-1, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:oak_fence", 
+                        "west"       : "false"              , 
+                        "east"       : "true"               , 
+                        "waterlogged": "false"              , 
+                        "north"      : "false"              , 
+                        "south"      : "false"                
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-2, 0, 0], "block": {"id": "minecraft:oak_leaves" } }, 
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:barrier"    } }, 
+                { "pos": [-1, 0, 1], "block": {"id": "minecraft:shulker_box"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [-1, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:oak_fence", 
+                        "north"      : "false"              , 
+                        "waterlogged": "false"              , 
+                        "west"       : "false"              , 
+                        "east"       : "false"              , 
+                        "south"      : "false"                
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
