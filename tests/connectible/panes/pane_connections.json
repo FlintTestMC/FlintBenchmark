@@ -916,6 +916,36 @@
                         "half"       : "bottom"              , 
                         "shape"      : "straight"              
                     }
+                },
+                {
+                    "pos": [6,0,8],
+                    "block": {
+                        "id": "minecraft:cauldron"
+                    }
+                },
+                {
+                    "pos": [4,0,0],
+                    "block": {
+                        "id": "minecraft:oak_trapdoor", 
+                        "open"       : "true"                    , 
+                        "powered"    : "false"                    , 
+                        "half"       : "bottom"                   , 
+                        "facing"     : "west"                     , 
+                        "waterlogged": "false"                      
+
+                    }
+                },
+                {
+                    "pos": [4,0,1],
+                    "block": {
+                        "id": "minecraft:cobweb"
+                    }
+                },
+                {
+                    "pos": [4,0,2],
+                    "block": {
+                        "id": "minecraft:scaffolding"
+                    }
                 }
             ]
         }, 
@@ -930,7 +960,7 @@
                         "south"      : "true"                , 
                         "east"       : "false"               , 
                         "waterlogged": "false"               , 
-                        "west"       : "false"               , 
+                        "west"       : "true"               , 
                         "north"      : "false"                 
                     }
                 }, 
