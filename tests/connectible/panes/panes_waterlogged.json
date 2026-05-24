@@ -43,29 +43,17 @@
             "at": 2, 
             "do": "assert", 
             "checks": [
-                {
-                    "pos": [0, 1, 0], 
-                    "is": {
-                        "id": "minecraft:glass_pane", 
-                        "waterlogged": true
-                    }
-                }
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:glass_pane", "waterlogged": true} }
             ]
         }, 
-        { "at": 2, "do": "place", "block": {"id": "minecraft:water"}, "pos": [0, 1, 0] },
+        { "at": 2, "do": "place", "block": {"id": "minecraft:water"}, "pos": [0, 1, 0] }, 
         {"at": 2, "do": "select_hotbar", "slot": 3}, 
-        { "at":3, "do": "use_item_on", "pos": [0, 0, 0], "face": "top" }, 
+        { "at": 3, "do": "use_item_on", "pos": [0, 0, 0], "face": "top" }, 
         {
             "at": 4, 
             "do": "assert", 
             "checks": [
-                {
-                    "pos": [0, 1, 0], 
-                    "is": {
-                        "id": "minecraft:white_stained_glass_pane", 
-                        "waterlogged": true
-                    }
-                }
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:white_stained_glass_pane", "waterlogged": true} }
             ]
         }
     ]
