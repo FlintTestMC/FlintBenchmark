@@ -1,0 +1,133 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0", 
+    "name": "bonemeal_hanging_moss", 
+    "description": "TODO: describe what this test verifies", 
+    "tags": [], 
+    "minecraftIds": ["minecraft:stone"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 9, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "block": {"id": "minecraft:dirt"                          }, "pos": [0, 9, 0] }, 
+                { "block": {"id": "minecraft:pale_hanging_moss", "tip": true}, "pos": [0, 8, 0] }, 
+                { "block": {"id": "stone"                                   }, "pos": [0, 0, 0] }  
+            ]
+        }, 
+        {
+            "at": 0, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 8, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": true} }
+            ]
+        }, 
+        { "at": 1, "do": "use_item_on", "item": "minecraft:bonemeal", "pos": [0, 8, 0], "face": "bottom" }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 8, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 7, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": true } }  
+            ]
+        }, 
+        { "at": 2, "do": "use_item_on", "item": "minecraft:bonemeal", "pos": [0, 7, 0], "face": "bottom" }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 8, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 7, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": true } }  
+            ]
+        }, 
+        { "at": 3, "do": "use_item_on", "item": "minecraft:bonemeal", "pos": [0, 6, 0], "face": "bottom" }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 8, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 7, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": true } }  
+            ]
+        }, 
+        { "at": 4, "do": "use_item_on", "item": "minecraft:bonemeal", "pos": [0, 5, 0], "face": "bottom" }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 8, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 7, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": true } }  
+            ]
+        }, 
+        { "at": 5, "do": "use_item_on", "item": "minecraft:bonemeal", "pos": [0, 4, 0], "face": "bottom" }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 8, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 7, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": true } }  
+            ]
+        }, 
+        { "at": 6, "do": "use_item_on", "item": "minecraft:bonemeal", "pos": [0, 3, 0], "face": "bottom" }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 8, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 7, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": true } }  
+            ]
+        }, 
+        { "at": 7, "do": "use_item_on", "item": "minecraft:bonemeal", "pos": [0, 2, 0], "face": "east" }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 8, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 7, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": true } }, 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"                          } }  
+            ]
+        }, 
+        { "at": 8, "do": "use_item_on", "item": "minecraft:bonemeal", "pos": [0, 1, 0], "face": "east" }, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 8, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 7, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": false} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:pale_hanging_moss", "tip": true } }, 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"                          } }  
+            ]
+        }
+    ]
+}
+
