@@ -4,7 +4,7 @@
     "name": "bonemeal_dripleaf", 
     "description": "Tests bone meal action on dripleaf and dripleaf stem.", 
     "tags": ["bone_meal"], 
-    "minecraftIds": ["minecraft:dripleaf"], 
+    "minecraftIds": ["minecraft:big_dripleaf"], 
     "setup": {
         "cleanup": {
             "region": [ [0, 0, 0], [0, 5, 0] ]
