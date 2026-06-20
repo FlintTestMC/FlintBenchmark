@@ -15,17 +15,23 @@
             "at": 0, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [0, 0, 0], "block": {"id": "minecraft:clay"                           } }, 
-                { "pos": [0, 1, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "south"} }, 
-                { "pos": [0, 5, 0], "block": {"id": "minecraft:stone"                          } }  
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:clay"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {"id": "minecraft:big_dripleaf", "facing": "south", "waterlogged": false}
+                }, 
+                { "pos": [0, 5, 0], "block": {"id": "minecraft:stone"} }
             ]
         }, 
         {
             "at": 0, 
             "do": "assert", 
             "checks": [
-                { "pos": [0, 0, 0], "is": {"id": "minecraft:clay"                                           } }, 
-                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf", "tilt": "None", "facing": "south"} }  
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:clay"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf", "tilt": "none", "facing": "south", "waterlogged": false}
+                }
             ]
         }, 
         { "at": 1, "do": "use_item_on", "face": "east", "item": "minecraft:bone_meal", "pos": [0, 1, 0] }, 
@@ -33,9 +39,12 @@
             "at": 2, 
             "do": "assert", 
             "checks": [
-                { "pos": [0, 0, 0], "is": {"id": "minecraft:clay"                                                } }, 
-                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"                } }, 
-                { "pos": [0, 2, 0], "is": {"id": "minecraft:big_dripleaf"     , "facing": "south", "tilt": "none"} }  
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:clay"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:big_dripleaf", "facing": "south", "tilt": "none", "waterlogged": false}
+                }
             ]
         }, 
         { "at": 2, "do": "use_item_on", "face": "east", "item": "minecraft:bone_meal", "pos": [0, 2, 0] }, 
@@ -57,11 +66,14 @@
             "at": 4, 
             "do": "assert", 
             "checks": [
-                { "pos": [0, 0, 0], "is": {"id": "minecraft:clay"                                                } }, 
-                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"                } }, 
-                { "pos": [0, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"                } }, 
-                { "pos": [0, 3, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"                } }, 
-                { "pos": [0, 4, 0], "is": {"id": "minecraft:big_dripleaf"     , "facing": "south", "tilt": "none"} }  
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:clay"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"} }, 
+                {
+                    "pos": [0, 4, 0], 
+                    "is": {"id": "minecraft:big_dripleaf", "facing": "south", "tilt": "none", "waterlogged": false}
+                }
             ]
         }, 
         { "at": 4, "do": "use_item_on", "face": "east", "item": "minecraft:bone_meal", "pos": [0, 2, 0] }, 
@@ -69,12 +81,15 @@
             "at": 5, 
             "do": "assert", 
             "checks": [
-                { "pos": [0, 0, 0], "is": {"id": "minecraft:clay"                                                } }, 
-                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"                } }, 
-                { "pos": [0, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"                } }, 
-                { "pos": [0, 3, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"                } }, 
-                { "pos": [0, 4, 0], "is": {"id": "minecraft:big_dripleaf"     , "facing": "south", "tilt": "none"} }, 
-                { "pos": [0, 5, 0], "is": {"id": "minecraft:stone"                                               } }  
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:clay"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"} }, 
+                {
+                    "pos": [0, 4, 0], 
+                    "is": {"id": "minecraft:big_dripleaf", "facing": "south", "tilt": "none", "waterlogged": false}
+                }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:stone"} }
             ]
         }
     ]
