@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "fences_over_walls", 
+    "name": "Fences Over Walls", 
     "description": "Recorded test: fences_over_walls", 
     "tags": ["wall", "fence", "connectible"], 
     "minecraftIds": ["minecraft:cobblestone_wall"], 

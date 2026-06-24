@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "iron_bars_in_wall", 
+    "name": "Iron Bars in Wall", 
     "description": "Recorded test: iron_bars_in_wall", 
     "tags": ["wall", "bars", "connectible"], 
     "minecraftIds": ["minecraft:cobblestone_wall"], 

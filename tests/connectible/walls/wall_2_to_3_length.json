@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "walls", 
+    "name": "Wall 2 to 3 Length", 
     "description": "Recorded test: walls", 
     "tags": ["wall", "connectible"], 
     "minecraftIds": ["minecraft:cobblestone_wall"], 

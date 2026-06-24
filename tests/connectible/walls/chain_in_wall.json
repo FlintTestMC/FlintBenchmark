@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "chain_in_wall", 
+    "name": "Chain in Wall", 
     "description": "Recorded test: chain_in_wall", 
     "tags": ["wall", "chain", "connectible"], 
     "minecraftIds": ["minecraft:cobblestone_wall"], 

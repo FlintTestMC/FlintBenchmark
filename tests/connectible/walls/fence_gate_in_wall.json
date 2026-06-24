@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "fence_gate_in_wall", 
+    "name": "Fence Gate in Wall", 
     "description": "Recorded test: fence_gate_in_wall", 
     "tags": ["wall", "fence_gate", "connectible"], 
     "minecraftIds": ["minecraft:cobblestone_wall"], 

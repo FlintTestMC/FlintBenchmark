@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "connectible_wall", 
+    "name": "Wall Connections", 
     "description": "Tests cobblestone wall connection behavior with adjacent blocks (solid blocks, fences, walls, barriers) and validates correct directional state updates.", 
     "tags": ["connectible", "wall", "block-state", "neighbor-update"], 
     "minecraftIds": ["minecraft:cobblestone_wall"], 

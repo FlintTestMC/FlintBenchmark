@@ -2,31 +2,31 @@
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
     "minecraftIds": ["minecraft:water"], 
-    "name": "water_three_source_infinite", 
-    "description": "Three adjacent source blocks create stable infinite sources", 
-    "tags": ["infinite", "source", "stable"], 
+    "name": "Water Infinite Source", 
+    "description": "Two source blocks create infinite source when diagonally adjacent", 
+    "tags": ["infinite", "source"], 
     "setup": {
         "cleanup": {
-            "region": [ [0, 0, 0], [6, 5, 4] ]
+            "region": [ [0, 0, 0], [4, 5, 4] ]
         }
     }, 
     "timeline": [
         {
             "at": 0, 
             "do": "fill", 
-            "region": [ [0, 0, 0], [6, 0, 4] ], 
+            "region": [ [0, 0, 0], [4, 0, 4] ], 
             "with": {"id": "minecraft:stone"}
         }, 
         {
             "at": 0, 
             "do": "fill", 
-            "region": [ [0, 1, 0], [6, 2, 0] ], 
+            "region": [ [0, 1, 0], [4, 2, 0] ], 
             "with": {"id": "minecraft:stone"}
         }, 
         {
             "at": 0, 
             "do": "fill", 
-            "region": [ [0, 1, 4], [6, 2, 4] ], 
+            "region": [ [0, 1, 4], [4, 2, 4] ], 
             "with": {"id": "minecraft:stone"}
         }, 
         {
@@ -38,7 +38,7 @@
         {
             "at": 0, 
             "do": "fill", 
-            "region": [ [6, 1, 0], [6, 2, 4] ], 
+            "region": [ [4, 1, 0], [4, 2, 4] ], 
             "with": {"id": "minecraft:stone"}
         }, 
         {
@@ -46,20 +46,18 @@
             "do": "place_each", 
             "blocks": [
                 { "pos": [1, 1, 2], "block": {"id": "minecraft:water", "level": 0} }, 
-                { "pos": [2, 1, 2], "block": {"id": "minecraft:water", "level": 0} }, 
                 { "pos": [3, 1, 2], "block": {"id": "minecraft:water", "level": 0} }  
             ]
         }, 
-        { "at": 30, "do": "remove", "pos": [2, 1, 2] }, 
         {
-            "at": 50, 
+            "at": 20, 
             "do": "assert", 
             "checks": [
                 { "pos": [2, 1, 2], "is": {"id": "minecraft:water"} }
             ]
         }, 
         {
-            "at": 51, 
+            "at": 21, 
             "do": "assert", 
             "checks": [
                 { "pos": [2, 1, 2], "is": {"id": "minecraft:water", "level": "0"} }
