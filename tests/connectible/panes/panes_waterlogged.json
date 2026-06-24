@@ -31,7 +31,7 @@
             ]
         }, 
         {
-            "at": 0, 
+            "at": 1, 
             "do": "assert", 
             "checks": [
                 { "pos": [0, 1, 0], "is": {"id": "minecraft:water"} }

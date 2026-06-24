@@ -22,13 +22,6 @@
         }, 
         {
             "at": 1, 
-            "do": "place_each", 
-            "blocks": [
-                { "pos": [0, 0, -2], "block": {"id": "minecraft:cobblestone_wall"} }
-            ]
-        }, 
-        {
-            "at": 1, 
             "do": "assert", 
             "checks": [
                 {
@@ -55,6 +48,13 @@
                         "west"       : "none"                        
                     }
                 }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, -2], "block": {"id": "minecraft:cobblestone_wall"} }
             ]
         }, 
         {

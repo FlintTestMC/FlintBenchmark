@@ -27,14 +27,6 @@
         }, 
         {
             "at": 1, 
-            "do": "place_each", 
-            "blocks": [
-                { "pos": [1, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
-                { "pos": [2, 1, 0], "block": {"id": "minecraft:oak_fence"} }  
-            ]
-        }, 
-        {
-            "at": 1, 
             "do": "assert", 
             "checks": [
                 {
@@ -124,11 +116,11 @@
             ]
         }, 
         {
-            "at": 2, 
+            "at": 1, 
             "do": "place_each", 
             "blocks": [
                 { "pos": [1, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
-                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_fence"} }  
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:oak_fence"} }  
             ]
         }, 
         {
@@ -249,13 +241,11 @@
             ]
         }, 
         {
-            "at": 3, 
+            "at": 2, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [-3, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
-                { "pos": [-2, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
-                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
-                { "pos": [-1, 1, 0], "block": {"id": "minecraft:oak_fence"} }  
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_fence"} }  
             ]
         }, 
         {
@@ -281,7 +271,7 @@
                         "id"         : "minecraft:cobblestone_wall", 
                         "north"      : "none"                      , 
                         "west"       : "low"                       , 
-                        "up"         : "true"                      , 
+                        "up"         : "false"                     , 
                         "east"       : "low"                       , 
                         "waterlogged": "false"                     , 
                         "south"      : "none"                        
@@ -386,11 +376,13 @@
             ]
         }, 
         {
-            "at": 4, 
+            "at": 3, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [-4, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
-                { "pos": [-3, 1, 0], "block": {"id": "minecraft:oak_fence"} }  
+                { "pos": [-3, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
+                { "pos": [-2, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:oak_fence"} }  
             ]
         }, 
         {
@@ -548,6 +540,14 @@
                         "south"      : "false"                
                     }
                 }
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-4, 1, 0], "block": {"id": "minecraft:oak_fence"} }, 
+                { "pos": [-3, 1, 0], "block": {"id": "minecraft:oak_fence"} }  
             ]
         }, 
         {

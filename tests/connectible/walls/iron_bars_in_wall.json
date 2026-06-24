@@ -116,23 +116,6 @@
         }, 
         {
             "at": 1, 
-            "do": "place_each", 
-            "blocks": [
-                {
-                    "pos": [0, 1, 0], 
-                    "block": {
-                        "id"         : "minecraft:iron_bars", 
-                        "north"      : "false"              , 
-                        "east"       : "true"               , 
-                        "west"       : "true"               , 
-                        "south"      : "false"              , 
-                        "waterlogged": "false"                
-                    }
-                }
-            ]
-        }, 
-        {
-            "at": 1, 
             "do": "assert", 
             "checks": [
                 {
@@ -230,6 +213,23 @@
                         "waterlogged": "false"                     , 
                         "up"         : "true"                      , 
                         "north"      : "none"                        
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id"         : "minecraft:iron_bars", 
+                        "north"      : "false"              , 
+                        "east"       : "true"               , 
+                        "west"       : "true"               , 
+                        "south"      : "false"              , 
+                        "waterlogged": "false"                
                     }
                 }
             ]

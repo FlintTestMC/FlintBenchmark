@@ -116,35 +116,6 @@
         }, 
         {
             "at": 1, 
-            "do": "place_each", 
-            "blocks": [
-                {
-                    "pos": [1, -1, 0], 
-                    "block": {
-                        "id"         : "minecraft:cobblestone_wall", 
-                        "west"       : "low"                       , 
-                        "east"       : "low"                       , 
-                        "up"         : "true"                      , 
-                        "north"      : "none"                      , 
-                        "waterlogged": "false"                     , 
-                        "south"      : "none"                        
-                    }
-                }, 
-                {
-                    "pos": [1, 0, 0], 
-                    "block": {
-                        "id"         : "minecraft:oak_fence", 
-                        "north"      : "false"              , 
-                        "west"       : "false"              , 
-                        "waterlogged": "false"              , 
-                        "east"       : "false"              , 
-                        "south"      : "false"                
-                    }
-                }
-            ]
-        }, 
-        {
-            "at": 1, 
             "do": "assert", 
             "checks": [
                 {
@@ -242,6 +213,35 @@
                         "north"      : "none"                      , 
                         "waterlogged": "false"                     , 
                         "west"       : "low"                         
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [1, -1, 0], 
+                    "block": {
+                        "id"         : "minecraft:cobblestone_wall", 
+                        "west"       : "low"                       , 
+                        "east"       : "low"                       , 
+                        "up"         : "true"                      , 
+                        "north"      : "none"                      , 
+                        "waterlogged": "false"                     , 
+                        "south"      : "none"                        
+                    }
+                }, 
+                {
+                    "pos": [1, 0, 0], 
+                    "block": {
+                        "id"         : "minecraft:oak_fence", 
+                        "north"      : "false"              , 
+                        "west"       : "false"              , 
+                        "waterlogged": "false"              , 
+                        "east"       : "false"              , 
+                        "south"      : "false"                
                     }
                 }
             ]

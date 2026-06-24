@@ -116,25 +116,6 @@
         }, 
         {
             "at": 1, 
-            "do": "place_each", 
-            "blocks": [
-                {
-                    "pos": [1, -2, 0], 
-                    "block": {
-                        "id"         : "minecraft:cobblestone_wall", 
-                        "up"         : "true"                      , 
-                        "west"       : "low"                       , 
-                        "waterlogged": "false"                     , 
-                        "east"       : "low"                       , 
-                        "south"      : "none"                      , 
-                        "north"      : "none"                        
-                    }
-                }, 
-                { "pos": [1, -1, 0], "block": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": "false"} }
-            ]
-        }, 
-        {
-            "at": 1, 
             "do": "assert", 
             "checks": [
                 {
@@ -234,6 +215,25 @@
                         "east"       : "none"                        
                     }
                 }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [1, -2, 0], 
+                    "block": {
+                        "id"         : "minecraft:cobblestone_wall", 
+                        "up"         : "true"                      , 
+                        "west"       : "low"                       , 
+                        "waterlogged": "false"                     , 
+                        "east"       : "low"                       , 
+                        "south"      : "none"                      , 
+                        "north"      : "none"                        
+                    }
+                }, 
+                { "pos": [1, -1, 0], "block": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": "false"} }
             ]
         }, 
         {
