@@ -1,0 +1,31 @@
+name: Timeline Validation
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout benchmark tests
+        uses: actions/checkout@v4
+
+      - name: Checkout flint-core
+        uses: actions/checkout@v4
+        with:
+          repository: FlintTestMC/flint-core
+          path: flint-core
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: flint-core
+
+      - name: Validate timeline ordering
+        run: cargo run --release --manifest-path flint-core/Cargo.toml --bin flint-validate -- tests --recursive

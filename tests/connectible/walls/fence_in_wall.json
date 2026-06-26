@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "fence_in_wall", 
+    "name": "Fence in Wall", 
     "description": "Recorded test: fence_in_wall", 
     "tags": ["wall", "fence", "connectible"], 
     "minecraftIds": ["minecraft:oak_fence", "minecraft:cobblestone_wall"], 
@@ -116,35 +116,6 @@
         }, 
         {
             "at": 1, 
-            "do": "place_each", 
-            "blocks": [
-                {
-                    "pos": [1, -1, 0], 
-                    "block": {
-                        "id"         : "minecraft:cobblestone_wall", 
-                        "west"       : "low"                       , 
-                        "east"       : "low"                       , 
-                        "up"         : "true"                      , 
-                        "north"      : "none"                      , 
-                        "waterlogged": "false"                     , 
-                        "south"      : "none"                        
-                    }
-                }, 
-                {
-                    "pos": [1, 0, 0], 
-                    "block": {
-                        "id"         : "minecraft:oak_fence", 
-                        "north"      : "false"              , 
-                        "west"       : "false"              , 
-                        "waterlogged": "false"              , 
-                        "east"       : "false"              , 
-                        "south"      : "false"                
-                    }
-                }
-            ]
-        }, 
-        {
-            "at": 1, 
             "do": "assert", 
             "checks": [
                 {
@@ -242,6 +213,35 @@
                         "north"      : "none"                      , 
                         "waterlogged": "false"                     , 
                         "west"       : "low"                         
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [1, -1, 0], 
+                    "block": {
+                        "id"         : "minecraft:cobblestone_wall", 
+                        "west"       : "low"                       , 
+                        "east"       : "low"                       , 
+                        "up"         : "true"                      , 
+                        "north"      : "none"                      , 
+                        "waterlogged": "false"                     , 
+                        "south"      : "none"                        
+                    }
+                }, 
+                {
+                    "pos": [1, 0, 0], 
+                    "block": {
+                        "id"         : "minecraft:oak_fence", 
+                        "north"      : "false"              , 
+                        "west"       : "false"              , 
+                        "waterlogged": "false"              , 
+                        "east"       : "false"              , 
+                        "south"      : "false"                
                     }
                 }
             ]

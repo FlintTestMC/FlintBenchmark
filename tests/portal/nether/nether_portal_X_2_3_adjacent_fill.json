@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "1.0.0", 
-    "name": "nether_portal_X_2_3_adjacent_fill", 
+    "name": "Nether Portal X 2 3 Adjacent Fill", 
     "description": "Tests that placing and removing blocks adjacent to a 2x3 X-axis nether portal (front and back faces) does not destroy the portal", 
     "tags": ["portal", "nether_portal", "obsidian"], 
     "minecraftIds": ["minecraft:obsidian", "minecraft:nether_portal", "minecraft:stone"], 

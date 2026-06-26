@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "1.0.0", 
-    "name": "create_nether_portal_X_2_2_All", 
+    "name": "Create Nether Portal X 2 2 All", 
     "description": "Test different portal size", 
     "tags": ["portal", "nether_portal", "obsidian", "fire"], 
     "minecraftIds": ["minecraft:obsidian", "minecraft:fire", "minecraft:nether_portal"], 
