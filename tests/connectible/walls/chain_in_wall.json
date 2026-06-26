@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "chain_in_wall", 
+    "name": "Chain in Wall", 
     "description": "Recorded test: chain_in_wall", 
     "tags": ["wall", "chain", "connectible"], 
     "minecraftIds": ["minecraft:cobblestone_wall"], 
@@ -116,25 +116,6 @@
         }, 
         {
             "at": 1, 
-            "do": "place_each", 
-            "blocks": [
-                {
-                    "pos": [1, -2, 0], 
-                    "block": {
-                        "id"         : "minecraft:cobblestone_wall", 
-                        "up"         : "true"                      , 
-                        "west"       : "low"                       , 
-                        "waterlogged": "false"                     , 
-                        "east"       : "low"                       , 
-                        "south"      : "none"                      , 
-                        "north"      : "none"                        
-                    }
-                }, 
-                { "pos": [1, -1, 0], "block": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": "false"} }
-            ]
-        }, 
-        {
-            "at": 1, 
             "do": "assert", 
             "checks": [
                 {
@@ -234,6 +215,25 @@
                         "east"       : "none"                        
                     }
                 }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [1, -2, 0], 
+                    "block": {
+                        "id"         : "minecraft:cobblestone_wall", 
+                        "up"         : "true"                      , 
+                        "west"       : "low"                       , 
+                        "waterlogged": "false"                     , 
+                        "east"       : "low"                       , 
+                        "south"      : "none"                      , 
+                        "north"      : "none"                        
+                    }
+                }, 
+                { "pos": [1, -1, 0], "block": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": "false"} }
             ]
         }, 
         {

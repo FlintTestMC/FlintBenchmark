@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "glass_panel_in_wall", 
+    "name": "Glass Panel in Wall", 
     "description": "Recorded test: glass_panel_in_wall", 
     "tags": ["wall", "glass", "connectible"], 
     "minecraftIds": ["minecraft:cobblestone_wall"], 
@@ -24,13 +24,6 @@
                 { "pos": [-2, 2, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
                 { "pos": [ 0, 2, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
                 { "pos": [-1, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }  
-            ]
-        }, 
-        {
-            "at": 1, 
-            "do": "place_each", 
-            "blocks": [
-                { "pos": [-1, 1, 0], "block": {"id": "minecraft:glass_pane"} }
             ]
         }, 
         {
@@ -134,6 +127,13 @@
                         "up"         : "true"                        
                     }
                 }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:glass_pane"} }
             ]
         }, 
         {
