@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0", 
+    "name": "Pane Waterlogging", 
+    "description": "checks water logging of glass_panes", 
+    "tags": [], 
+    "minecraftIds": ["minecraft:glass_pane", "minecraft:white_stained_glass_pane"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
+        }, 
+        "player": {
+            "game_mode": "Creative", 
+            "inventory": {
+                "hotbar2": {"id": "minecraft:glass_pane"              , "count": 1}, 
+                "hotbar3": {"id": "minecraft:white_stained_glass_pane", "count": 1}  
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "block": {"id": "minecraft:stone"}, "pos": [ 0, 0,  0] }, 
+                { "block": {"id": "minecraft:stone"}, "pos": [ 1, 1,  0] }, 
+                { "block": {"id": "minecraft:stone"}, "pos": [ 0, 1,  1] }, 
+                { "block": {"id": "minecraft:stone"}, "pos": [ 0, 1, -1] }, 
+                { "block": {"id": "minecraft:stone"}, "pos": [-1, 1,  0] }, 
+                { "block": {"id": "minecraft:water"}, "pos": [ 0, 1,  0] }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water"} }
+            ]
+        }, 
+        {"at": 1, "do": "select_hotbar", "slot": 2}, 
+        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top" }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:glass_pane", "waterlogged": true} }
+            ]
+        }, 
+        { "at": 2, "do": "place", "block": {"id": "minecraft:water"}, "pos": [0, 1, 0] }, 
+        {"at": 2, "do": "select_hotbar", "slot": 3}, 
+        { "at": 3, "do": "use_item_on", "pos": [0, 0, 0], "face": "top" }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:white_stained_glass_pane", "waterlogged": true} }
+            ]
+        }
+    ]
+}
+

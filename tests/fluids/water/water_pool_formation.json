@@ -2,7 +2,7 @@
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
     "minecraftIds": ["minecraft:water"], 
-    "name": "water_pool_formation", 
+    "name": "Water Pool Formation", 
     "description": "Water fills a pool evenly from single source", 
     "tags": ["pool", "fill"], 
     "setup": {

@@ -2,7 +2,7 @@
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
     "minecraftIds": ["minecraft:water"], 
-    "name": "water_ravine_fill", 
+    "name": "Water Ravine Fill", 
     "description": "Water fills a ravine from top to bottom", 
     "tags": ["ravine", "fill", "complex"], 
     "setup": {

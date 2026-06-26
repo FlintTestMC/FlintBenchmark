@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "connectible_iron", 
+    "name": "Iron Bars Connections", 
     "description": "Tests iron bars connection behavior with adjacent blocks (solid blocks, barriers, walls, pane-type blocks) and validates correct directional connection states.", 
     "tags": ["connectible", "bars", "iron-bars", "block-state", "neighbor-update"], 
     "dependencies": [], 
