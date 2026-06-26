@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "water_mixing_with_lava", 
+    "name": "Water Lava Mixing", 
     "description": "Water converts lava source to obsidian", 
     "tags": ["interaction", "lava"], 
     "minecraftIds": ["minecraft:water", "minecraft:lava"], 
