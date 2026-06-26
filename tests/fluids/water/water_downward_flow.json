@@ -2,7 +2,7 @@
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
     "minecraftIds": ["minecraft:water"], 
-    "name": "water_basic_downward_flow", 
+    "name": "Water Downward Flow", 
     "description": "Water flows downward when placed above air", 
     "tags": ["basic", "flow", "gravity"], 
     "setup": {

@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "0.0.0", 
-    "name": "walls_wall", 
+    "name": "Walls on Wall", 
     "description": "Recorded test: walls_wall", 
     "tags": ["wall", "connectible", "block-state", "neighbor-update"], 
     "minecraftIds": ["minecraft:cobblestone_wall"], 
@@ -19,13 +19,6 @@
                 { "pos": [ 0, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
                 { "pos": [-2, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
                 { "pos": [-1, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }  
-            ]
-        }, 
-        {
-            "at": 1, 
-            "do": "place_each", 
-            "blocks": [
-                { "pos": [0, 1, 0], "block": {"id": "minecraft:cobblestone_wall"} }
             ]
         }, 
         {
@@ -71,10 +64,10 @@
             ]
         }, 
         {
-            "at": 2, 
+            "at": 1, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [-1, 1, 0], "block": {"id": "minecraft:cobblestone_wall"} }
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:cobblestone_wall"} }
             ]
         }, 
         {
@@ -134,10 +127,10 @@
             ]
         }, 
         {
-            "at": 3, 
+            "at": 2, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [-2, 1, 0], "block": {"id": "minecraft:cobblestone_wall"} }
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:cobblestone_wall"} }
             ]
         }, 
         {
@@ -205,6 +198,13 @@
                         "waterlogged": "false"                       
                     }
                 }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-2, 1, 0], "block": {"id": "minecraft:cobblestone_wall"} }
             ]
         }, 
         {
