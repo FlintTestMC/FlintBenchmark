@@ -30,16 +30,13 @@
                 }
             ]
         }, 
-        { "at": 1, "do": "use_item_on", "face": "top", "item": "minecraft:big_dripleaf", "pos": [0, 1, 0] },
+        { "at": 1, "do": "use_item_on", "face": "top", "item": "minecraft:big_dripleaf", "pos": [0, 1, 0] }, 
         {
             "at": 2, 
             "do": "assert", 
             "checks": [
                 { "pos": [0, 0, 0], "is": {"id": "minecraft:clay"} }, 
-                {
-                    "pos": [0, 1, 0], 
-                    "is": {"id": "minecraft:clay", "facing": "south", "waterlogged": false}
-                }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:clay", "facing": "south", "waterlogged": false} }, 
                 {
                     "pos": [0, 2, 0], 
                     "is": {"id": "minecraft:big_dripleaf", "facing": "south", "tilt": "none", "waterlogged": false}
