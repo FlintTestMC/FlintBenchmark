@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json",
+    "name": "wall_t_junction",
+    "description": "Tests a 3-way (T-junction) wall connection: north, east, and west connected, south open. Because sides are not symmetric (northNone != southNone), the post raises (up=true).",
+    "tags": ["wall", "connectible", "block-state", "neighbor-update"],
+    "minecraftIds": ["minecraft:cobblestone_wall"],
+    "dependencies": [],
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [2, 1, 2] ]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "place_each",
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:cobblestone_wall"} },
+                { "pos": [ 0, 0, -1], "block": {"id": "minecraft:bedrock"} },
+                { "pos": [ 1, 0,  0], "block": {"id": "minecraft:bedrock"} },
+                { "pos": [-1, 0,  0], "block": {"id": "minecraft:bedrock"} }
+            ]
+        },
+        {
+            "at": 1,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [0, 0, 0],
+                    "is": {
+                        "id"         : "minecraft:cobblestone_wall",
+                        "north"      : "low"                       ,
+                        "east"       : "low"                       ,
+                        "west"       : "low"                       ,
+                        "south"      : "none"                      ,
+                        "waterlogged": "false"                     ,
+                        "up"         : "true"
+                    }
+                }
+            ]
+        }
+    ],
+    "breakpoints": []
+}

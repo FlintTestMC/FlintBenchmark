@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json",
+    "name": "wall_all_four_connected",
+    "description": "Tests a wall connected on all four sides with air above. All arms are LOW. Because sides are symmetric (N==S, E==W in None-status) and no block above covers the post shape, up=false — the post is suppressed.",
+    "tags": ["wall", "connectible", "block-state", "neighbor-update"],
+    "minecraftIds": ["minecraft:cobblestone_wall"],
+    "dependencies": [],
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [2, 1, 2] ]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "place_each",
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:cobblestone_wall"} },
+                { "pos": [ 0, 0, -1], "block": {"id": "minecraft:bedrock"} },
+                { "pos": [ 0, 0,  1], "block": {"id": "minecraft:bedrock"} },
+                { "pos": [ 1, 0,  0], "block": {"id": "minecraft:bedrock"} },
+                { "pos": [-1, 0,  0], "block": {"id": "minecraft:bedrock"} }
+            ]
+        },
+        {
+            "at": 1,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [0, 0, 0],
+                    "is": {
+                        "id"         : "minecraft:cobblestone_wall",
+                        "north"      : "low"                       ,
+                        "east"       : "low"                       ,
+                        "south"      : "low"                       ,
+                        "west"       : "low"                       ,
+                        "waterlogged": "false"                     ,
+                        "up"         : "false"
+                    }
+                }
+            ]
+        }
+    ],
+    "breakpoints": []
+}

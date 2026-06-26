@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json",
+    "name": "wall_neighbor_removal",
+    "description": "Tests that removing a connecting neighbor triggers a wall state update: east arm drops from LOW to NONE and the isolated post raises to up=true.",
+    "tags": ["wall", "connectible", "block-state", "neighbor-update"],
+    "minecraftIds": ["minecraft:cobblestone_wall"],
+    "dependencies": [],
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [2, 1, 2] ]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "place_each",
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} },
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:bedrock"} }
+            ]
+        },
+        {
+            "at": 1,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [0, 0, 0],
+                    "is": {
+                        "id"         : "minecraft:cobblestone_wall",
+                        "east"       : "low"                       ,
+                        "west"       : "none"                      ,
+                        "north"      : "none"                      ,
+                        "south"      : "none"                      ,
+                        "waterlogged": "false"                     ,
+                        "up"         : "true"
+                    }
+                }
+            ]
+        },
+        {
+            "at": 1,
+            "do": "remove",
+            "pos": [1, 0, 0]
+        },
+        {
+            "at": 2,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [0, 0, 0],
+                    "is": {
+                        "id"         : "minecraft:cobblestone_wall",
+                        "east"       : "none"                      ,
+                        "west"       : "none"                      ,
+                        "north"      : "none"                      ,
+                        "south"      : "none"                      ,
+                        "waterlogged": "false"                     ,
+                        "up"         : "true"
+                    }
+                },
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ],
+    "breakpoints": []
+}

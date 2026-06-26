@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json",
+    "name": "wall_slab_above_stays_low",
+    "description": "Tests that a bottom slab above a connecting wall forces arms to TALL. The DOWN face shape of a bottom slab is a full 16x16 square, so it covers the arm test shape the same as a full block.",
+    "tags": ["wall", "connectible", "block-state", "tall"],
+    "minecraftIds": ["minecraft:cobblestone_wall"],
+    "dependencies": [],
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [2, 2, 2] ]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "place_each",
+            "blocks": [
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} },
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:bedrock"} },
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:bedrock"} }
+            ]
+        },
+        {
+            "at": 1,
+            "do": "place",
+            "pos": [0, 1, 0],
+            "block": {"id": "minecraft:stone_slab", "type": "bottom"}
+        },
+        {
+            "at": 2,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [0, 0, 0],
+                    "is": {
+                        "id"         : "minecraft:cobblestone_wall",
+                        "east"       : "tall"                      ,
+                        "west"       : "tall"                      ,
+                        "north"      : "none"                      ,
+                        "south"      : "none"                      ,
+                        "waterlogged": "false"                     ,
+                        "up"         : "false"
+                    }
+                }
+            ]
+        }
+    ],
+    "breakpoints": []
+}

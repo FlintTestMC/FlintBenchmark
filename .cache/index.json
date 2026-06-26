@@ -1,0 +1,20 @@
+{
+  "hash": 2648051125432728441,
+  "index": {
+    "block-state": [
+      "/home/jonas/flint/FlintBenchmark/walls/tests/connectible/walls/wall_neighbor_removal.json"
+    ],
+    "connectible": [
+      "/home/jonas/flint/FlintBenchmark/walls/tests/connectible/walls/wall_neighbor_removal.json"
+    ],
+    "minecraft:cobblestone_wall": [
+      "/home/jonas/flint/FlintBenchmark/walls/tests/connectible/walls/wall_neighbor_removal.json"
+    ],
+    "neighbor-update": [
+      "/home/jonas/flint/FlintBenchmark/walls/tests/connectible/walls/wall_neighbor_removal.json"
+    ],
+    "wall": [
+      "/home/jonas/flint/FlintBenchmark/walls/tests/connectible/walls/wall_neighbor_removal.json"
+    ]
+  }
+}

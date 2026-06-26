@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json",
+    "name": "wall_waterlogged",
+    "description": "Tests that a waterlogged cobblestone wall retains correct directional connection states (east/west LOW, straight, UP false).",
+    "tags": ["wall", "connectible", "block-state", "waterlogged"],
+    "minecraftIds": ["minecraft:cobblestone_wall"],
+    "dependencies": [],
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [2, 2, 2] ]
+        }
+    },
+    "timeline": [
+        {
+            "at": 0,
+            "do": "place_each",
+            "blocks": [
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:cobblestone_wall", "waterlogged": "true"} },
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:bedrock"} },
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:bedrock"} }
+            ]
+        },
+        {
+            "at": 1,
+            "do": "assert",
+            "checks": [
+                {
+                    "pos": [0, 0, 0],
+                    "is": {
+                        "id"         : "minecraft:cobblestone_wall",
+                        "waterlogged": "true"                      ,
+                        "east"       : "low"                       ,
+                        "west"       : "low"                       ,
+                        "north"      : "none"                      ,
+                        "south"      : "none"                      ,
+                        "up"         : "false"
+                    }
+                }
+            ]
+        }
+    ],
+    "breakpoints": []
+}
