@@ -939,7 +939,7 @@
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "south"      : "true"                , 
-                        "east"       : "true"               , 
+                        "east"       : "true"                , 
                         "waterlogged": "false"               , 
                         "west"       : "true"                , 
                         "north"      : "false"                 
