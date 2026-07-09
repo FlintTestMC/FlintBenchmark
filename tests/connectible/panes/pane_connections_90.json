@@ -857,8 +857,8 @@
             "at": 9, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [0, 0, 4], "block": {"id": "minecraft:oak_slab", "kind": "double", "waterlogged": "false"} }, 
-                { "pos": [1, 0, 4], "block": {"id": "minecraft:oak_slab", "waterlogged": "false", "kind": "bottom"} }, 
+                { "pos": [0, 0, 4], "block": {"id": "minecraft:oak_slab", "waterlogged": "false", "type": "double"} }, 
+                { "pos": [1, 0, 4], "block": {"id": "minecraft:oak_slab", "waterlogged": "false", "type": "bottom"} }, 
                 {
                     "pos": [2, 0, 4], 
                     "block": {
@@ -925,7 +925,7 @@
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "east"       : "true"                , 
-                        "north"      : "false"               , 
+                        "north"      : "true"               , 
                         "waterlogged": "false"               , 
                         "south"      : "false"               , 
                         "west"       : "false"                 

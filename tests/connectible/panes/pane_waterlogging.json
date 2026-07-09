@@ -37,8 +37,8 @@
                 { "pos": [0, 1, 0], "is": {"id": "minecraft:water"} }
             ]
         }, 
-        {"at": 1, "do": "select_hotbar", "slot": 2}, 
-        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top" }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:glass_pane"}, 
         {
             "at": 2, 
             "do": "assert", 
@@ -47,8 +47,8 @@
             ]
         }, 
         { "at": 2, "do": "place", "block": {"id": "minecraft:water"}, "pos": [0, 1, 0] }, 
-        {"at": 2, "do": "select_hotbar", "slot": 3}, 
-        { "at": 3, "do": "use_item_on", "pos": [0, 0, 0], "face": "top" }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:white_stained_glass_pane"}, 
         {
             "at": 4, 
             "do": "assert", 
@@ -58,4 +58,3 @@
         }
     ]
 }
-

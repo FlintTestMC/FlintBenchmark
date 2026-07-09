@@ -1,0 +1,131 @@
+{
+  "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json",
+  "flintVersion": "1.0.0",
+  "minecraftIds": ["minecraft:water", "minecraft:item", "minecraft:stone"],
+  "name": "Item Flowing Speed In Water",
+  "description": "An item entity is carried downstream by flowing water over a fixed 60-tick window.",
+  "tags": ["water", "entity", "item", "flow", "speed"],
+  "setup": {
+    "cleanup": {
+      "region": [[0, 0, 0], [14, 4, 4]]
+    }
+  },
+  "timeline": [
+    {
+      "at": 0,
+      "do": "fill",
+      "region": [[0, 0, 0], [14, 0, 4]],
+      "with": { "id": "minecraft:stone" }
+    },
+    {
+      "at": 0,
+      "do": "fill",
+      "region": [[0, 1, 0], [14, 2, 0]],
+      "with": { "id": "minecraft:stone" }
+    },
+    {
+      "at": 0,
+      "do": "fill",
+      "region": [[0, 1, 4], [14, 2, 4]],
+      "with": { "id": "minecraft:stone" }
+    },
+    {
+      "at": 0,
+      "do": "fill",
+      "region": [[0, 1, 0], [0, 2, 4]],
+      "with": { "id": "minecraft:stone" }
+    },
+    {
+      "at": 0,
+      "do": "fill",
+      "region": [[14, 1, 0], [14, 2, 4]],
+      "with": { "id": "minecraft:stone" }
+    },
+    {
+      "at": 1,
+      "do": "place",
+      "pos": [1, 1, 2],
+      "block": { "id": "minecraft:water", "level": 0 }
+    },
+    {
+      "at": 40,
+      "do": "summon",
+      "entity_alias": "carried_item",
+      "entity_type": "minecraft:item",
+      "pos": [2.5, 1.25, 2.5],
+      "nbt": "{Item:{id:\"minecraft:stone\",count:1},PickupDelay:32767s}"
+    },
+    {
+      "at": 50,
+      "do": "assert",
+      "checks": [
+        {
+          "entity_alias": "carried_item",
+          "is": "minecraft:item",
+          "pos": [3.77, 1.28, 2.5],
+          "max_distance": 0.35
+        }
+      ]
+    },
+    {
+      "at": 60,
+      "do": "assert",
+      "checks": [
+        {
+          "entity_alias": "carried_item",
+          "is": "minecraft:item",
+          "pos": [7.16, 1.22, 2.5],
+          "max_distance": 0.35
+        }
+      ]
+    },
+    {
+      "at": 70,
+      "do": "assert",
+      "checks": [
+        {
+          "entity_alias": "carried_item",
+          "is": "minecraft:item",
+          "pos": [10.04, 1.0, 2.5],
+          "max_distance": 0.35
+        }
+      ]
+    },
+    {
+      "at": 80,
+      "do": "assert",
+      "checks": [
+        {
+          "entity_alias": "carried_item",
+          "is": "minecraft:item",
+          "pos": [10.1, 1.0, 2.5],
+          "max_distance": 0.5
+        }
+      ]
+    },
+    {
+      "at": 90,
+      "do": "assert",
+      "checks": [
+        {
+          "entity_alias": "carried_item",
+          "is": "minecraft:item",
+          "pos": [10.1, 1.0, 2.5],
+          "max_distance": 0.5
+        }
+      ]
+    },
+    {
+      "at": 100,
+      "do": "assert",
+      "checks": [
+        {
+          "entity_alias": "carried_item",
+          "is": "minecraft:item",
+          "pos": [10.1, 1.0, 2.5],
+          "max_distance": 0.5
+        }
+      ]
+    }
+  ]
+}
