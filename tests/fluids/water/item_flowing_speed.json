@@ -62,7 +62,7 @@
                     "entity_alias": "carried_item", 
                     "is": "minecraft:item", 
                     "pos": [3.77, 1.28, 2.5], 
-                    "max_distance": 0.35,
+                    "position_tolerance": 0.35,
                     "Item.id": "minecraft:stone"
                 }
             ]
@@ -75,7 +75,7 @@
                     "entity_alias": "carried_item", 
                     "is": "minecraft:item", 
                     "pos": [7.16, 1.22, 2.5], 
-                    "max_distance": 0.35
+                    "position_tolerance": 0.35
                 }
             ]
         }, 
@@ -83,28 +83,28 @@
             "at": 70, 
             "do": "assert", 
             "checks": [
-                { "entity_alias": "carried_item", "is": "minecraft:item", "pos": [10.04, 1, 2.5], "max_distance": 0.35 }
+                { "entity_alias": "carried_item", "is": "minecraft:item", "pos": [10.04, 1, 2.5], "position_tolerance": 0.35 }
             ]
         }, 
         {
             "at": 80, 
             "do": "assert", 
             "checks": [
-                { "entity_alias": "carried_item", "is": "minecraft:item", "pos": [10.1, 1, 2.5], "max_distance": 0.5 }
+                { "entity_alias": "carried_item", "is": "minecraft:item", "pos": [10.1, 1, 2.5], "position_tolerance": 0.5 }
             ]
         }, 
         {
             "at": 90, 
             "do": "assert", 
             "checks": [
-                { "entity_alias": "carried_item", "is": "minecraft:item", "pos": [10.1, 1, 2.5], "max_distance": 0.5 }
+                { "entity_alias": "carried_item", "is": "minecraft:item", "pos": [10.1, 1, 2.5], "position_tolerance": 0.5 }
             ]
         }, 
         {
             "at": 100, 
             "do": "assert", 
             "checks": [
-                { "entity_alias": "carried_item", "is": "minecraft:item", "pos": [10.1, 1, 2.5], "max_distance": 0.5 }
+                { "entity_alias": "carried_item", "is": "minecraft:item", "pos": [10.1, 1, 2.5], "position_tolerance": 0.5 }
             ]
         }
     ]
