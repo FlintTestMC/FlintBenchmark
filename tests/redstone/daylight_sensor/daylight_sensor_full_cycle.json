@@ -1,0 +1,58 @@
+{
+  "name": "daylight_sensor_full_cycle",
+  "description": "A daylight sensor turns off and back on over one complete daytime cycle",
+  "tags": ["world", "gamerule", "time", "redstone", "daylight-sensor"],
+  "setup": {
+    "cleanup": { "region": [[-1, 99, -1], [1, 101, 1]] },
+    "world": {
+      "time": "0",
+      "gamerules": {
+        "minecraft:spawn_mobs": false,
+        "minecraft:advance_time": true,
+        "minecraft:advance_weather": false
+      }
+    }
+  },
+  "timeline": [
+    {
+      "at": 0,
+      "do": "place_each",
+      "blocks": [
+        { "pos": [0, 100, 0], "block": { "id": "minecraft:daylight_detector", "inverted": false } },
+        { "pos": [1, 100, 0], "block": { "id": "minecraft:redstone_lamp" } }
+      ]
+    },
+    {
+      "at": 20,
+      "do": "assert",
+      "checks": [
+        { "time": 20 },
+        { "pos": [1, 100, 0], "is": { "id": "minecraft:redstone_lamp", "lit": true } }
+      ]
+    },
+    {
+      "at": 6000,
+      "do": "assert",
+      "checks": [
+        { "time": 6000 },
+        { "pos": [1, 100, 0], "is": { "id": "minecraft:redstone_lamp", "lit": true } }
+      ]
+    },
+    {
+      "at": 18000,
+      "do": "assert",
+      "checks": [
+        { "time": 18000 },
+        { "pos": [1, 100, 0], "is": { "id": "minecraft:redstone_lamp", "lit": false } }
+      ]
+    },
+    {
+      "at": 24000,
+      "do": "assert",
+      "checks": [
+        { "time": 0 },
+        { "pos": [1, 100, 0], "is": { "id": "minecraft:redstone_lamp", "lit": true } }
+      ]
+    }
+  ]
+}
