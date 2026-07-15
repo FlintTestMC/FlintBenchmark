@@ -1,0 +1,26 @@
+{
+  "name": "daylight_sensor_day",
+  "description": "A normal daylight sensor is powered during the day",
+  "tags": ["world-config", "daylight-sensor"],
+  "setup": {
+    "cleanup": { "region": [[-1, 99, -1], [1, 101, 1]] },
+    "world": { "time": "minecraft:day" }
+  },
+  "timeline": [
+    {
+      "at": 0,
+      "do": "place_each",
+      "blocks": [
+        { "pos": [0, 100, 0], "block": { "id": "minecraft:daylight_detector", "inverted": false } },
+        { "pos": [1, 100, 0], "block": { "id": "minecraft:redstone_lamp" } }
+      ]
+    },
+    {
+      "at": 20,
+      "do": "assert",
+      "checks": [
+        { "pos": [1, 100, 0], "is": { "id": "minecraft:redstone_lamp", "lit": true } }
+      ]
+    }
+  ]
+}

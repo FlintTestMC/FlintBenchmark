@@ -1,0 +1,28 @@
+{
+  "name": "advance_time",
+  "description": "The minecraft:advance_time gamerule advances daytime while Flint steps the server",
+  "tags": ["world", "gamerule", "time"],
+  "setup": {
+    "cleanup": { "region": [[0, 100, 0], [0, 100, 0]] },
+    "world": {
+      "time": "0",
+      "gamerules": {
+        "minecraft:spawn_mobs": false,
+        "minecraft:advance_time": true,
+        "minecraft:advance_weather": false
+      }
+    }
+  },
+  "timeline": [
+    {
+      "at": 0,
+      "do": "assert",
+      "checks": [{ "time": 0 }]
+    },
+    {
+      "at": 20,
+      "do": "assert",
+      "checks": [{ "time": 20 }]
+    }
+  ]
+}
