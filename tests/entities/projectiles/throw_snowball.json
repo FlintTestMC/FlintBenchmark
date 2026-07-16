@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:snowball"], 
+    "name": "Throw Snowball", 
+    "description": "A survival player can throw a snowball, consuming it from the active hand.", 
+    "tags": ["entity", "projectile", "player", "snowball"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 63, -1], [1, 67, 5] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 63, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [0.5, 64, 0.5], "rot": [0, 0] }, 
+        {"at": 0, "do": "interact", "item": "minecraft:snowball"}, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [ {"slot": "hotbar1", "is": "empty"} ]
+        },
+        {
+            "at": 1,
+            "do": "assert",
+            "checks": [
+                {
+                    "is": "minecraft:snowball",
+                    "exists": true,
+                    "count": 1,
+                    "pos": [0.5, 65.5, 2.0],
+                    "position_tolerance": 0.75,
+                    "Owner": "[I; 1090192112, 104018212, -2046533210, 1798617213]"
+                }
+            ]
+        }
+    ]
+}
