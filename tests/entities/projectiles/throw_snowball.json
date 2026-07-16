@@ -29,7 +29,8 @@
                     "exists": true,
                     "count": 1,
                     "pos": [0.5, 65.5, 2.0],
-                    "position_tolerance": 0.75
+                    "position_tolerance": 0.75,
+                    "Owner": "[I; 1090192112, 104018212, -2046533210, 1798617213]"
                 }
             ]
         }
