@@ -1,67 +1,383 @@
 {
-  "name": "inverted_daylight_sensor_full_cycle",
-  "description": "Checks every inverted daylight detector power transition over one aligned 24000-tick clear-weather cycle",
-  "tags": ["world", "gamerule", "time", "redstone", "daylight-sensor", "inverted"],
-  "setup": {
-    "cleanup": { "region": [[-1, 99, -1], [1, 101, 1]] },
-    "world": {
-      "time": "0",
-      "weather": "clear",
-      "gamerules": {
-        "minecraft:spawn_mobs": false,
-        "minecraft:advance_time": true,
-        "minecraft:advance_weather": false
-      }
-    }
-  },
-  "timeline": [
-    { "at": 0, "do": "place", "pos": [0, 100, 0], "block": { "id": "minecraft:daylight_detector", "inverted": true } },
-
-    { "at": 12039, "do": "assert", "checks": [{ "time": 12039 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 0 } }] },
-    { "at": 12040, "do": "assert", "checks": [{ "time": 12040 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 1 } }] },
-    { "at": 12199, "do": "assert", "checks": [{ "time": 12199 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 1 } }] },
-    { "at": 12200, "do": "assert", "checks": [{ "time": 12200 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 2 } }] },
-    { "at": 12359, "do": "assert", "checks": [{ "time": 12359 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 2 } }] },
-    { "at": 12360, "do": "assert", "checks": [{ "time": 12360 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 3 } }] },
-    { "at": 12539, "do": "assert", "checks": [{ "time": 12539 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 3 } }] },
-    { "at": 12540, "do": "assert", "checks": [{ "time": 12540 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 4 } }] },
-    { "at": 12699, "do": "assert", "checks": [{ "time": 12699 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 4 } }] },
-    { "at": 12700, "do": "assert", "checks": [{ "time": 12700 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 5 } }] },
-    { "at": 12859, "do": "assert", "checks": [{ "time": 12859 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 5 } }] },
-    { "at": 12860, "do": "assert", "checks": [{ "time": 12860 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 6 } }] },
-    { "at": 13019, "do": "assert", "checks": [{ "time": 13019 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 6 } }] },
-    { "at": 13020, "do": "assert", "checks": [{ "time": 13020 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 7 } }] },
-    { "at": 13179, "do": "assert", "checks": [{ "time": 13179 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 7 } }] },
-    { "at": 13180, "do": "assert", "checks": [{ "time": 13180 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 8 } }] },
-    { "at": 13359, "do": "assert", "checks": [{ "time": 13359 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 8 } }] },
-    { "at": 13360, "do": "assert", "checks": [{ "time": 13360 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 9 } }] },
-    { "at": 13519, "do": "assert", "checks": [{ "time": 13519 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 9 } }] },
-    { "at": 13520, "do": "assert", "checks": [{ "time": 13520 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 10 } }] },
-    { "at": 13679, "do": "assert", "checks": [{ "time": 13679 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 10 } }] },
-    { "at": 13680, "do": "assert", "checks": [{ "time": 13680 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 11 } }] },
-
-    { "at": 22339, "do": "assert", "checks": [{ "time": 22339 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 11 } }] },
-    { "at": 22340, "do": "assert", "checks": [{ "time": 22340 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 10 } }] },
-    { "at": 22499, "do": "assert", "checks": [{ "time": 22499 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 10 } }] },
-    { "at": 22500, "do": "assert", "checks": [{ "time": 22500 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 9 } }] },
-    { "at": 22659, "do": "assert", "checks": [{ "time": 22659 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 9 } }] },
-    { "at": 22660, "do": "assert", "checks": [{ "time": 22660 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 8 } }] },
-    { "at": 22839, "do": "assert", "checks": [{ "time": 22839 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 8 } }] },
-    { "at": 22840, "do": "assert", "checks": [{ "time": 22840 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 7 } }] },
-    { "at": 22999, "do": "assert", "checks": [{ "time": 22999 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 7 } }] },
-    { "at": 23000, "do": "assert", "checks": [{ "time": 23000 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 6 } }] },
-    { "at": 23159, "do": "assert", "checks": [{ "time": 23159 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 6 } }] },
-    { "at": 23160, "do": "assert", "checks": [{ "time": 23160 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 5 } }] },
-    { "at": 23319, "do": "assert", "checks": [{ "time": 23319 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 5 } }] },
-    { "at": 23320, "do": "assert", "checks": [{ "time": 23320 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 4 } }] },
-    { "at": 23479, "do": "assert", "checks": [{ "time": 23479 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 4 } }] },
-    { "at": 23480, "do": "assert", "checks": [{ "time": 23480 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 3 } }] },
-    { "at": 23659, "do": "assert", "checks": [{ "time": 23659 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 3 } }] },
-    { "at": 23660, "do": "assert", "checks": [{ "time": 23660 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 2 } }] },
-    { "at": 23819, "do": "assert", "checks": [{ "time": 23819 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 2 } }] },
-    { "at": 23820, "do": "assert", "checks": [{ "time": 23820 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 1 } }] },
-    { "at": 23979, "do": "assert", "checks": [{ "time": 23979 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 1 } }] },
-    { "at": 23980, "do": "assert", "checks": [{ "time": 23980 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 0 } }] },
-    { "at": 24000, "do": "assert", "checks": [{ "time": 0 }, { "pos": [0, 100, 0], "is": { "id": "minecraft:daylight_detector", "inverted": true, "power": 0 } }] }
-  ]
+    "name": "inverted_daylight_sensor_full_cycle", 
+    "description": "Checks every inverted daylight detector power transition over one aligned 24000-tick clear-weather cycle", 
+    "tags": ["world", "gamerule", "time", "redstone", "daylight-sensor", "inverted"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [1, 1, 1] ]
+        }, 
+        "world": {
+            "time": "0", 
+            "weather": "clear", 
+            "gamerules": {
+                "minecraft:spawn_mobs"     : false, 
+                "minecraft:advance_time"   : true , 
+                "minecraft:advance_weather": false  
+            }
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:daylight_detector", "inverted": true} }, 
+        {
+            "at": 12039, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12039}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 0} }  
+            ]
+        }, 
+        {
+            "at": 12040, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12040}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 1} }  
+            ]
+        }, 
+        {
+            "at": 12199, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12199}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 1} }  
+            ]
+        }, 
+        {
+            "at": 12200, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12200}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 2} }  
+            ]
+        }, 
+        {
+            "at": 12359, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12359}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 2} }  
+            ]
+        }, 
+        {
+            "at": 12360, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12360}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 3} }  
+            ]
+        }, 
+        {
+            "at": 12539, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12539}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 3} }  
+            ]
+        }, 
+        {
+            "at": 12540, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12540}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 4} }  
+            ]
+        }, 
+        {
+            "at": 12699, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12699}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 4} }  
+            ]
+        }, 
+        {
+            "at": 12700, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12700}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 5} }  
+            ]
+        }, 
+        {
+            "at": 12859, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12859}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 5} }  
+            ]
+        }, 
+        {
+            "at": 12860, 
+            "do": "assert", 
+            "checks": [
+                {"time": 12860}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 6} }  
+            ]
+        }, 
+        {
+            "at": 13019, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13019}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 6} }  
+            ]
+        }, 
+        {
+            "at": 13020, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13020}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 7} }  
+            ]
+        }, 
+        {
+            "at": 13179, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13179}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 7} }  
+            ]
+        }, 
+        {
+            "at": 13180, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13180}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 8} }  
+            ]
+        }, 
+        {
+            "at": 13359, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13359}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 8} }  
+            ]
+        }, 
+        {
+            "at": 13360, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13360}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 9} }  
+            ]
+        }, 
+        {
+            "at": 13519, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13519}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 9} }  
+            ]
+        }, 
+        {
+            "at": 13520, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13520}                                                                                 , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 10} }  
+            ]
+        }, 
+        {
+            "at": 13679, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13679}                                                                                 , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 10} }  
+            ]
+        }, 
+        {
+            "at": 13680, 
+            "do": "assert", 
+            "checks": [
+                {"time": 13680}                                                                                 , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 11} }  
+            ]
+        }, 
+        {
+            "at": 22339, 
+            "do": "assert", 
+            "checks": [
+                {"time": 22339}                                                                                 , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 11} }  
+            ]
+        }, 
+        {
+            "at": 22340, 
+            "do": "assert", 
+            "checks": [
+                {"time": 22340}                                                                                 , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 10} }  
+            ]
+        }, 
+        {
+            "at": 22499, 
+            "do": "assert", 
+            "checks": [
+                {"time": 22499}                                                                                 , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 10} }  
+            ]
+        }, 
+        {
+            "at": 22500, 
+            "do": "assert", 
+            "checks": [
+                {"time": 22500}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 9} }  
+            ]
+        }, 
+        {
+            "at": 22659, 
+            "do": "assert", 
+            "checks": [
+                {"time": 22659}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 9} }  
+            ]
+        }, 
+        {
+            "at": 22660, 
+            "do": "assert", 
+            "checks": [
+                {"time": 22660}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 8} }  
+            ]
+        }, 
+        {
+            "at": 22839, 
+            "do": "assert", 
+            "checks": [
+                {"time": 22839}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 8} }  
+            ]
+        }, 
+        {
+            "at": 22840, 
+            "do": "assert", 
+            "checks": [
+                {"time": 22840}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 7} }  
+            ]
+        }, 
+        {
+            "at": 22999, 
+            "do": "assert", 
+            "checks": [
+                {"time": 22999}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 7} }  
+            ]
+        }, 
+        {
+            "at": 23000, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23000}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 6} }  
+            ]
+        }, 
+        {
+            "at": 23159, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23159}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 6} }  
+            ]
+        }, 
+        {
+            "at": 23160, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23160}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 5} }  
+            ]
+        }, 
+        {
+            "at": 23319, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23319}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 5} }  
+            ]
+        }, 
+        {
+            "at": 23320, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23320}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 4} }  
+            ]
+        }, 
+        {
+            "at": 23479, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23479}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 4} }  
+            ]
+        }, 
+        {
+            "at": 23480, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23480}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 3} }  
+            ]
+        }, 
+        {
+            "at": 23659, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23659}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 3} }  
+            ]
+        }, 
+        {
+            "at": 23660, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23660}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 2} }  
+            ]
+        }, 
+        {
+            "at": 23819, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23819}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 2} }  
+            ]
+        }, 
+        {
+            "at": 23820, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23820}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 1} }  
+            ]
+        }, 
+        {
+            "at": 23979, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23979}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 1} }  
+            ]
+        }, 
+        {
+            "at": 23980, 
+            "do": "assert", 
+            "checks": [
+                {"time": 23980}                                                                                , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 0} }  
+            ]
+        }, 
+        {
+            "at": 24000, 
+            "do": "assert", 
+            "checks": [
+                {"time": 0}                                                                                    , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 0} }  
+            ]
+        }
+    ]
 }
+
