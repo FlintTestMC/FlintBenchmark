@@ -7,7 +7,7 @@
     "tags": ["block-entity", "container", "hopper", "chest", "item-transfer"], 
     "setup": {
         "cleanup": {
-            "region": [ [0, 63, 0], [0, 64, 0] ]
+            "region": [ [0, 0, 0], [0, 1, 0] ]
         }
     }, 
     "timeline": [
@@ -15,9 +15,9 @@
             "at": 0, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [0, 63, 0], "block": {"id": "minecraft:chest"} }, 
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:chest"} }, 
                 {
-                    "pos": [0, 64, 0], 
+                    "pos": [0, 1, 0], 
                     "block": {
                         "id": "minecraft:hopper", 
                         "facing": "down", 
@@ -34,14 +34,14 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [0, 63, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id": "minecraft:chest", 
                         "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 1}
                     }
                 }, 
                 {
-                    "pos": [0, 64, 0], 
+                    "pos": [0, 1, 0], 
                     "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 3} }
                 }
             ]
@@ -51,14 +51,14 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [0, 63, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id": "minecraft:chest", 
                         "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 2}
                     }
                 }, 
                 {
-                    "pos": [0, 64, 0], 
+                    "pos": [0, 1, 0], 
                     "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 2} }
                 }
             ]
@@ -68,14 +68,14 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [0, 63, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id": "minecraft:chest", 
                         "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 3}
                     }
                 }, 
                 {
-                    "pos": [0, 64, 0], 
+                    "pos": [0, 1, 0], 
                     "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 1} }
                 }
             ]
@@ -85,14 +85,14 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [0, 63, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id": "minecraft:chest", 
                         "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 4}
                     }
                 }, 
                 {
-                    "pos": [0, 64, 0], 
+                    "pos": [0, 1, 0], 
                     "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
                 }
             ]

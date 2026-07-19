@@ -1,26 +1,29 @@
 {
-  "name": "inverted_daylight_sensor_night",
-  "description": "An inverted daylight sensor is powered at night",
-  "tags": ["world-config", "daylight-sensor"],
-  "setup": {
-    "cleanup": { "region": [[-1, 99, -1], [1, 101, 1]] },
-    "world": { "time": "minecraft:midnight" }
-  },
-  "timeline": [
-    {
-      "at": 0,
-      "do": "place_each",
-      "blocks": [
-        { "pos": [0, 100, 0], "block": { "id": "minecraft:daylight_detector", "inverted": true } },
-        { "pos": [1, 100, 0], "block": { "id": "minecraft:redstone_lamp" } }
-      ]
-    },
-    {
-      "at": 20,
-      "do": "assert",
-      "checks": [
-        { "pos": [1, 100, 0], "is": { "id": "minecraft:redstone_lamp", "lit": true } }
-      ]
-    }
-  ]
+    "name": "inverted_daylight_sensor_night", 
+    "description": "An inverted daylight sensor is powered at night", 
+    "tags": ["world-config", "daylight-sensor"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [1, 1, 1] ]
+        }, 
+        "world": {"time": "minecraft:midnight"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:daylight_detector", "inverted": true} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:redstone_lamp"                      } }  
+            ]
+        }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:redstone_lamp", "lit": true} }
+            ]
+        }
+    ]
 }
+
