@@ -1,0 +1,1638 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0", 
+    "name": "bars_connections", 
+    "description": "Test different portal size", 
+    "tags": ["bar", "block-state", "neighbor-update", "connectible"], 
+    "minecraftIds": [
+        "minecraft:copper_bars"          , "minecraft:oxidized_copper_bars" , "minecraft:waxed_copper_bars"    , 
+        "minecraft:iron_bars"            , "minecraft:exposed_copper_bars"  , "minecraft:weathered_copper_bars"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [4, 0, 0], [6, 0, 9] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [5, 0, 0], "block": {"id": "minecraft:iron_bars"                  } }, 
+                { "pos": [5, 0, 1], "block": {"id": "minecraft:copper_bars"                } }, 
+                { "pos": [5, 0, 2], "block": {"id": "minecraft:exposed_copper_bars"        } }, 
+                { "pos": [5, 0, 3], "block": {"id": "minecraft:weathered_copper_bars"      } }, 
+                { "pos": [5, 0, 4], "block": {"id": "minecraft:oxidized_copper_bars"       } }, 
+                { "pos": [5, 0, 5], "block": {"id": "minecraft:waxed_copper_bars"          } }, 
+                { "pos": [5, 0, 6], "block": {"id": "minecraft:waxed_exposed_copper_bars"  } }, 
+                { "pos": [5, 0, 7], "block": {"id": "minecraft:waxed_weathered_copper_bars"} }, 
+                { "pos": [5, 0, 8], "block": {"id": "minecraft:waxed_oxidized_copper_bars" } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [5, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "south"      : "true"               , 
+                        "east"       : "false"              , 
+                        "waterlogged": "false"              , 
+                        "west"       : "false"              , 
+                        "north"      : "false"                
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 1], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 2], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 3], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 4], 
+                    "is": {
+                        "id"         : "minecraft:oxidized_copper_bars", 
+                        "west"       : "false"                         , 
+                        "east"       : "false"                         , 
+                        "south"      : "true"                          , 
+                        "waterlogged": "false"                         , 
+                        "north"      : "true"                            
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 5], 
+                    "is": {
+                        "id"         : "minecraft:waxed_copper_bars", 
+                        "waterlogged": "false"                      , 
+                        "north"      : "true"                       , 
+                        "south"      : "true"                       , 
+                        "west"       : "false"                      , 
+                        "east"       : "false"                        
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 6], 
+                    "is": {
+                        "id"         : "minecraft:waxed_exposed_copper_bars", 
+                        "waterlogged": "false"                              , 
+                        "north"      : "true"                               , 
+                        "west"       : "false"                              , 
+                        "east"       : "false"                              , 
+                        "south"      : "true"                                 
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 7], 
+                    "is": {
+                        "id"         : "minecraft:waxed_weathered_copper_bars", 
+                        "north"      : "true"                                 , 
+                        "east"       : "false"                                , 
+                        "south"      : "true"                                 , 
+                        "waterlogged": "false"                                , 
+                        "west"       : "false"                                  
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 8], 
+                    "is": {
+                        "id"         : "minecraft:waxed_oxidized_copper_bars", 
+                        "north"      : "true"                                , 
+                        "south"      : "false"                               , 
+                        "waterlogged": "false"                               , 
+                        "west"       : "false"                               , 
+                        "east"       : "false"                                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:glass_pane"                   } }, 
+                { "pos": [6, 0, 1], "block": {"id": "minecraft:white_stained_glass_pane"     } }, 
+                { "pos": [6, 0, 3], "block": {"id": "minecraft:gray_stained_glass_pane"      } }, 
+                { "pos": [6, 0, 2], "block": {"id": "minecraft:light_gray_stained_glass_pane"} }, 
+                { "pos": [6, 0, 4], "block": {"id": "minecraft:black_stained_glass_pane"     } }, 
+                { "pos": [6, 0, 5], "block": {"id": "minecraft:brown_stained_glass_pane"     } }, 
+                { "pos": [6, 0, 6], "block": {"id": "minecraft:red_stained_glass_pane"       } }, 
+                { "pos": [6, 0, 7], "block": {"id": "minecraft:orange_stained_glass_pane"    } }, 
+                { "pos": [6, 0, 8], "block": {"id": "minecraft:yellow_stained_glass_pane"    } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [5, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "south"      : "true"               , 
+                        "waterlogged": "false"              , 
+                        "west"       : "false"              , 
+                        "east"       : "true"               , 
+                        "north"      : "false"                
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 1], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "true"                 , 
+                            "waterlogged": "false"                , 
+                            "west"       : "false"                , 
+                            "north"      : "true"                 , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "true"                         , 
+                            "waterlogged": "false"                        , 
+                            "west"       : "false"                        , 
+                            "north"      : "true"                         , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "true"                           , 
+                            "waterlogged": "false"                          , 
+                            "west"       : "false"                          , 
+                            "north"      : "true"                           , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "true"                          , 
+                            "waterlogged": "false"                         , 
+                            "west"       : "false"                         , 
+                            "north"      : "true"                          , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 2], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "true"                 , 
+                            "waterlogged": "false"                , 
+                            "west"       : "false"                , 
+                            "north"      : "true"                 , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "true"                         , 
+                            "waterlogged": "false"                        , 
+                            "west"       : "false"                        , 
+                            "north"      : "true"                         , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "true"                           , 
+                            "waterlogged": "false"                          , 
+                            "west"       : "false"                          , 
+                            "north"      : "true"                           , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "true"                          , 
+                            "waterlogged": "false"                         , 
+                            "west"       : "false"                         , 
+                            "north"      : "true"                          , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 3], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "true"                 , 
+                            "waterlogged": "false"                , 
+                            "west"       : "false"                , 
+                            "north"      : "true"                 , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "true"                         , 
+                            "waterlogged": "false"                        , 
+                            "west"       : "false"                        , 
+                            "north"      : "true"                         , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "true"                           , 
+                            "waterlogged": "false"                          , 
+                            "west"       : "false"                          , 
+                            "north"      : "true"                           , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "true"                          , 
+                            "waterlogged": "false"                         , 
+                            "west"       : "false"                         , 
+                            "north"      : "true"                          , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 4], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "true"                 , 
+                            "waterlogged": "false"                , 
+                            "west"       : "false"                , 
+                            "north"      : "true"                 , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "true"                         , 
+                            "waterlogged": "false"                        , 
+                            "west"       : "false"                        , 
+                            "north"      : "true"                         , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "true"                           , 
+                            "waterlogged": "false"                          , 
+                            "west"       : "false"                          , 
+                            "north"      : "true"                           , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "true"                          , 
+                            "waterlogged": "false"                         , 
+                            "west"       : "false"                         , 
+                            "north"      : "true"                          , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 5], 
+                    "is": {
+                        "id"         : "minecraft:waxed_copper_bars", 
+                        "east"       : "true"                       , 
+                        "waterlogged": "false"                      , 
+                        "west"       : "false"                      , 
+                        "north"      : "true"                       , 
+                        "south"      : "true"                         
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 6], 
+                    "is": {
+                        "id"         : "minecraft:waxed_exposed_copper_bars", 
+                        "waterlogged": "false"                              , 
+                        "east"       : "true"                               , 
+                        "south"      : "true"                               , 
+                        "north"      : "true"                               , 
+                        "west"       : "false"                                
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 7], 
+                    "is": {
+                        "id"         : "minecraft:waxed_weathered_copper_bars", 
+                        "west"       : "false"                                , 
+                        "south"      : "true"                                 , 
+                        "north"      : "true"                                 , 
+                        "east"       : "true"                                 , 
+                        "waterlogged": "false"                                  
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 8], 
+                    "is": {
+                        "id"         : "minecraft:waxed_oxidized_copper_bars", 
+                        "east"       : "true"                                , 
+                        "waterlogged": "false"                               , 
+                        "north"      : "true"                                , 
+                        "south"      : "false"                               , 
+                        "west"       : "false"                                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [4, 0, 1], "block": {"id": "minecraft:green_stained_glass_pane"     } }, 
+                { "pos": [4, 0, 2], "block": {"id": "minecraft:cyan_stained_glass_pane"      } }, 
+                { "pos": [4, 0, 3], "block": {"id": "minecraft:light_blue_stained_glass_pane"} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:lime_stained_glass_pane"      } }, 
+                { "pos": [4, 0, 4], "block": {"id": "minecraft:blue_stained_glass_pane"      } }, 
+                { "pos": [4, 0, 6], "block": {"id": "minecraft:magenta_stained_glass_pane"   } }, 
+                { "pos": [4, 0, 5], "block": {"id": "minecraft:purple_stained_glass_pane"    } }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [5, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "east"       : "true"               , 
+                        "waterlogged": "false"              , 
+                        "west"       : "true"               , 
+                        "north"      : "false"              , 
+                        "south"      : "true"                 
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 1], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "north"      : "true"                 , 
+                            "south"      : "true"                 , 
+                            "waterlogged": "false"                , 
+                            "west"       : "true"                 , 
+                            "east"       : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "north"      : "true"                         , 
+                            "south"      : "true"                         , 
+                            "waterlogged": "false"                        , 
+                            "west"       : "true"                         , 
+                            "east"       : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "north"      : "true"                           , 
+                            "south"      : "true"                           , 
+                            "waterlogged": "false"                          , 
+                            "west"       : "true"                           , 
+                            "east"       : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "north"      : "true"                          , 
+                            "south"      : "true"                          , 
+                            "waterlogged": "false"                         , 
+                            "west"       : "true"                          , 
+                            "east"       : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 2], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "north"      : "true"                 , 
+                            "south"      : "true"                 , 
+                            "waterlogged": "false"                , 
+                            "west"       : "true"                 , 
+                            "east"       : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "north"      : "true"                         , 
+                            "south"      : "true"                         , 
+                            "waterlogged": "false"                        , 
+                            "west"       : "true"                         , 
+                            "east"       : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "north"      : "true"                           , 
+                            "south"      : "true"                           , 
+                            "waterlogged": "false"                          , 
+                            "west"       : "true"                           , 
+                            "east"       : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "north"      : "true"                          , 
+                            "south"      : "true"                          , 
+                            "waterlogged": "false"                         , 
+                            "west"       : "true"                          , 
+                            "east"       : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 3], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "north"      : "true"                 , 
+                            "south"      : "true"                 , 
+                            "waterlogged": "false"                , 
+                            "west"       : "true"                 , 
+                            "east"       : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "north"      : "true"                         , 
+                            "south"      : "true"                         , 
+                            "waterlogged": "false"                        , 
+                            "west"       : "true"                         , 
+                            "east"       : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "north"      : "true"                           , 
+                            "south"      : "true"                           , 
+                            "waterlogged": "false"                          , 
+                            "west"       : "true"                           , 
+                            "east"       : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "north"      : "true"                          , 
+                            "south"      : "true"                          , 
+                            "waterlogged": "false"                         , 
+                            "west"       : "true"                          , 
+                            "east"       : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 4], 
+                    "is": {
+                        "id"         : "minecraft:oxidized_copper_bars", 
+                        "south"      : "true"                          , 
+                        "west"       : "true"                          , 
+                        "east"       : "true"                          , 
+                        "north"      : "true"                          , 
+                        "waterlogged": "false"                           
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 5], 
+                    "is": {
+                        "id"         : "minecraft:waxed_copper_bars", 
+                        "west"       : "true"                       , 
+                        "east"       : "true"                       , 
+                        "waterlogged": "false"                      , 
+                        "north"      : "true"                       , 
+                        "south"      : "true"                         
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 6], 
+                    "is": {
+                        "id"         : "minecraft:waxed_exposed_copper_bars", 
+                        "waterlogged": "false"                              , 
+                        "east"       : "true"                               , 
+                        "south"      : "true"                               , 
+                        "north"      : "true"                               , 
+                        "west"       : "true"                                 
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 7], 
+                    "is": {
+                        "id"         : "minecraft:waxed_weathered_copper_bars", 
+                        "east"       : "true"                                 , 
+                        "waterlogged": "false"                                , 
+                        "north"      : "true"                                 , 
+                        "west"       : "false"                                , 
+                        "south"      : "true"                                   
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 8], 
+                    "is": {
+                        "id"         : "minecraft:waxed_oxidized_copper_bars", 
+                        "north"      : "true"                                , 
+                        "waterlogged": "false"                               , 
+                        "south"      : "false"                               , 
+                        "east"       : "true"                                , 
+                        "west"       : "false"                                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [6, 0, 0], [6, 0, 8] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [4, 0, 0], [4, 0, 8] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [5, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "south"      : "true"               , 
+                        "east"       : "false"              , 
+                        "waterlogged": "false"              , 
+                        "west"       : "false"              , 
+                        "north"      : "false"                
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 1], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 2], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 3], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 4], 
+                    "is": {
+                        "id"         : "minecraft:oxidized_copper_bars", 
+                        "west"       : "false"                         , 
+                        "east"       : "false"                         , 
+                        "south"      : "true"                          , 
+                        "waterlogged": "false"                         , 
+                        "north"      : "true"                            
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 5], 
+                    "is": {
+                        "id"         : "minecraft:waxed_copper_bars", 
+                        "waterlogged": "false"                      , 
+                        "north"      : "true"                       , 
+                        "south"      : "true"                       , 
+                        "west"       : "false"                      , 
+                        "east"       : "false"                        
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 6], 
+                    "is": {
+                        "id"         : "minecraft:waxed_exposed_copper_bars", 
+                        "waterlogged": "false"                              , 
+                        "north"      : "true"                               , 
+                        "west"       : "false"                              , 
+                        "east"       : "false"                              , 
+                        "south"      : "true"                                 
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 7], 
+                    "is": {
+                        "id"         : "minecraft:waxed_weathered_copper_bars", 
+                        "north"      : "true"                                 , 
+                        "east"       : "false"                                , 
+                        "south"      : "true"                                 , 
+                        "waterlogged": "false"                                , 
+                        "west"       : "false"                                  
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 8], 
+                    "is": {
+                        "id"         : "minecraft:waxed_oxidized_copper_bars", 
+                        "north"      : "true"                                , 
+                        "south"      : "false"                               , 
+                        "waterlogged": "false"                               , 
+                        "west"       : "false"                               , 
+                        "east"       : "false"                                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [4, 0, 6], 
+                    "block": {
+                        "id"         : "minecraft:mangrove_leaves", 
+                        "waterlogged": "false"                    , 
+                        "distance"   : "7"                        , 
+                        "persistent" : "true"                       
+                    }
+                }, 
+                { "pos": [4, 0, 3], "block": {"id": "minecraft:pumpkin"} }, 
+                { "pos": [4, 0, 5], "block": {"id": "minecraft:shulker_box", "facing": "up"} }, 
+                { "pos": [4, 0, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:tinted_glass"} }, 
+                { "pos": [4, 0, 2], "block": {"id": "minecraft:melon"} }, 
+                { "pos": [4, 0, 4], "block": {"id": "minecraft:carved_pumpkin", "facing": "west"} }
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [5, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "south"      : "true"               , 
+                        "east"       : "false"              , 
+                        "waterlogged": "false"              , 
+                        "west"       : "true"               , 
+                        "north"      : "false"                
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 1], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "true"                 , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "true"                         , 
+                            "south"      : "true"                           
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 2], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 3], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 4], 
+                    "is": {
+                        "id"         : "minecraft:oxidized_copper_bars", 
+                        "west"       : "false"                         , 
+                        "east"       : "false"                         , 
+                        "south"      : "true"                          , 
+                        "waterlogged": "false"                         , 
+                        "north"      : "true"                            
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 5], 
+                    "is": {
+                        "id"         : "minecraft:waxed_copper_bars", 
+                        "waterlogged": "false"                      , 
+                        "north"      : "true"                       , 
+                        "south"      : "true"                       , 
+                        "west"       : "false"                      , 
+                        "east"       : "false"                        
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 6], 
+                    "is": {
+                        "id"         : "minecraft:waxed_exposed_copper_bars", 
+                        "waterlogged": "false"                              , 
+                        "north"      : "true"                               , 
+                        "west"       : "false"                              , 
+                        "east"       : "false"                              , 
+                        "south"      : "true"                                 
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 7], 
+                    "is": {
+                        "id"         : "minecraft:waxed_weathered_copper_bars", 
+                        "north"      : "true"                                 , 
+                        "east"       : "false"                                , 
+                        "south"      : "true"                                 , 
+                        "waterlogged": "false"                                , 
+                        "west"       : "false"                                  
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 8], 
+                    "is": {
+                        "id"         : "minecraft:waxed_oxidized_copper_bars", 
+                        "north"      : "true"                                , 
+                        "south"      : "false"                               , 
+                        "waterlogged": "false"                               , 
+                        "west"       : "false"                               , 
+                        "east"       : "false"                                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:orange_shulker_box"    , "facing": "up"} }, 
+                { "pos": [6, 0, 1], "block": {"id": "minecraft:white_shulker_box"     , "facing": "up"} }, 
+                { "pos": [6, 0, 2], "block": {"id": "minecraft:red_shulker_box"       , "facing": "up"} }, 
+                { "pos": [6, 0, 3], "block": {"id": "minecraft:light_gray_shulker_box", "facing": "up"} }, 
+                { "pos": [6, 0, 4], "block": {"id": "minecraft:brown_shulker_box"     , "facing": "up"} }, 
+                { "pos": [6, 0, 5], "block": {"id": "minecraft:light_gray_shulker_box", "facing": "up"} }, 
+                { "pos": [6, 0, 6], "block": {"id": "minecraft:yellow_shulker_box"    , "facing": "up"} }, 
+                { "pos": [6, 0, 7], "block": {"id": "minecraft:gray_shulker_box"      , "facing": "up"} }, 
+                { "pos": [6, 0, 8], "block": {"id": "minecraft:lime_shulker_box"      , "facing": "up"} }, 
+                { "pos": [5, 0, 9], "block": {"id": "minecraft:black_shulker_box"     , "facing": "up"} }  
+            ]
+        }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [5, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "south"      : "true"               , 
+                        "east"       : "false"              , 
+                        "waterlogged": "false"              , 
+                        "west"       : "true"               , 
+                        "north"      : "false"                
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 1], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "true"                 , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "true"                         , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "true"                           , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "true"                          , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 2], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "south"      : "true"                         , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                          
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "south"      : "true"                           , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                            
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "south"      : "true"                          , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                           
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 3], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "south"      : "true"                           , 
+                            "north"      : "true"                           , 
+                            "east"       : "false"                          , 
+                            "west"       : "false"                          , 
+                            "waterlogged": "false"                            
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "south"      : "true"                          , 
+                            "north"      : "true"                          , 
+                            "east"       : "false"                         , 
+                            "west"       : "false"                         , 
+                            "waterlogged": "false"                           
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 4], 
+                    "is": {
+                        "id"         : "minecraft:oxidized_copper_bars", 
+                        "west"       : "false"                         , 
+                        "east"       : "false"                         , 
+                        "south"      : "true"                          , 
+                        "waterlogged": "false"                         , 
+                        "north"      : "true"                            
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 5], 
+                    "is": {
+                        "id"         : "minecraft:waxed_copper_bars", 
+                        "waterlogged": "false"                      , 
+                        "north"      : "true"                       , 
+                        "south"      : "true"                       , 
+                        "west"       : "false"                      , 
+                        "east"       : "false"                        
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 6], 
+                    "is": {
+                        "id"         : "minecraft:waxed_exposed_copper_bars", 
+                        "waterlogged": "false"                              , 
+                        "north"      : "true"                               , 
+                        "west"       : "false"                              , 
+                        "east"       : "false"                              , 
+                        "south"      : "true"                                 
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 7], 
+                    "is": {
+                        "id"         : "minecraft:waxed_weathered_copper_bars", 
+                        "north"      : "true"                                 , 
+                        "east"       : "false"                                , 
+                        "south"      : "true"                                 , 
+                        "waterlogged": "false"                                , 
+                        "west"       : "false"                                  
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 8], 
+                    "is": {
+                        "id"         : "minecraft:waxed_oxidized_copper_bars", 
+                        "north"      : "true"                                , 
+                        "south"      : "false"                               , 
+                        "waterlogged": "false"                               , 
+                        "west"       : "false"                               , 
+                        "east"       : "false"                                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 8, 
+            "do": "fill", 
+            "region": [ [6, 0, 0], [6, 0, 8] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 8, 
+            "do": "fill", 
+            "region": [ [4, 0, 0], [4, 0, 8] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 8, "do": "place", "pos": [5, 0, 9], "block": {"id": "minecraft:air"} }, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [5, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "south"      : "true"               , 
+                        "east"       : "false"              , 
+                        "waterlogged": "false"              , 
+                        "west"       : "false"              , 
+                        "north"      : "false"                
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 1], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 2], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 3], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 4], 
+                    "is": {
+                        "id"         : "minecraft:oxidized_copper_bars", 
+                        "west"       : "false"                         , 
+                        "east"       : "false"                         , 
+                        "south"      : "true"                          , 
+                        "waterlogged": "false"                         , 
+                        "north"      : "true"                            
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 5], 
+                    "is": {
+                        "id"         : "minecraft:waxed_copper_bars", 
+                        "waterlogged": "false"                      , 
+                        "north"      : "true"                       , 
+                        "south"      : "true"                       , 
+                        "west"       : "false"                      , 
+                        "east"       : "false"                        
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 6], 
+                    "is": {
+                        "id"         : "minecraft:waxed_exposed_copper_bars", 
+                        "waterlogged": "false"                              , 
+                        "north"      : "true"                               , 
+                        "west"       : "false"                              , 
+                        "east"       : "false"                              , 
+                        "south"      : "true"                                 
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 7], 
+                    "is": {
+                        "id"         : "minecraft:waxed_weathered_copper_bars", 
+                        "north"      : "true"                                 , 
+                        "east"       : "false"                                , 
+                        "south"      : "true"                                 , 
+                        "waterlogged": "false"                                , 
+                        "west"       : "false"                                  
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 8], 
+                    "is": {
+                        "id"         : "minecraft:waxed_oxidized_copper_bars", 
+                        "north"      : "true"                                , 
+                        "south"      : "false"                               , 
+                        "waterlogged": "false"                               , 
+                        "west"       : "false"                               , 
+                        "east"       : "false"                                 
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 9, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:oak_slab", "kind": "double", "waterlogged": "false"} }, 
+                { "pos": [6, 0, 1], "block": {"id": "minecraft:oak_slab", "waterlogged": "false", "kind": "bottom"} }, 
+                {
+                    "pos": [6, 0, 2], 
+                    "block": {
+                        "id"         : "minecraft:spruce_trapdoor", 
+                        "open"       : "false"                    , 
+                        "powered"    : "false"                    , 
+                        "half"       : "bottom"                   , 
+                        "facing"     : "east"                     , 
+                        "waterlogged": "false"                      
+                    }
+                }, 
+                {
+                    "pos": [6, 0, 3], 
+                    "block": {
+                        "id"         : "minecraft:birch_fence", 
+                        "waterlogged": "false"                , 
+                        "south"      : "false"                , 
+                        "north"      : "false"                , 
+                        "west"       : "false"                , 
+                        "east"       : "false"                  
+                    }
+                }, 
+                {
+                    "pos": [6, 0, 4], 
+                    "block": {
+                        "id"         : "minecraft:diorite_wall", 
+                        "south"      : "low"                   , 
+                        "waterlogged": "false"                 , 
+                        "up"         : "true"                  , 
+                        "west"       : "low"                   , 
+                        "east"       : "none"                  , 
+                        "north"      : "none"                    
+                    }
+                }, 
+                { "pos": [6, 0, 5], "block": {"id": "minecraft:spruce_pressure_plate", "powered": "false"} }, 
+                {
+                    "pos": [6, 0, 6], 
+                    "block": {
+                        "id"         : "minecraft:oak_stairs", 
+                        "facing"     : "east"                , 
+                        "waterlogged": "false"               , 
+                        "shape"      : "straight"            , 
+                        "half"       : "bottom"                
+                    }
+                }, 
+                {
+                    "pos": [6, 0, 7], 
+                    "block": {
+                        "id"         : "minecraft:oak_stairs", 
+                        "facing"     : "west"                , 
+                        "waterlogged": "false"               , 
+                        "half"       : "bottom"              , 
+                        "shape"      : "straight"              
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [5, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "south"      : "true"               , 
+                        "east"       : "false"              , 
+                        "waterlogged": "false"              , 
+                        "west"       : "false"              , 
+                        "north"      : "false"                
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 1], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 2], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 3], 
+                    "is": [
+                        {
+                            "id"         : "minecraft:copper_bars", 
+                            "east"       : "false"                , 
+                            "waterlogged": "false"                , 
+                            "north"      : "true"                 , 
+                            "west"       : "false"                , 
+                            "south"      : "true"                   
+                        }, 
+                        {
+                            "id"         : "minecraft:exposed_copper_bars", 
+                            "east"       : "false"                        , 
+                            "waterlogged": "false"                        , 
+                            "north"      : "true"                         , 
+                            "west"       : "false"                        , 
+                            "south"      : "true"                           
+                        }, 
+                        {
+                            "id"         : "minecraft:weathered_copper_bars", 
+                            "east"       : "false"                          , 
+                            "waterlogged": "false"                          , 
+                            "north"      : "true"                           , 
+                            "west"       : "false"                          , 
+                            "south"      : "true"                             
+                        }, 
+                        {
+                            "id"         : "minecraft:oxidized_copper_bars", 
+                            "east"       : "false"                         , 
+                            "waterlogged": "false"                         , 
+                            "north"      : "true"                          , 
+                            "west"       : "false"                         , 
+                            "south"      : "true"                            
+                        }
+                    ]
+                }, 
+                {
+                    "pos": [5, 0, 4], 
+                    "is": {
+                        "id"         : "minecraft:oxidized_copper_bars", 
+                        "west"       : "false"                         , 
+                        "east"       : "true"                          , 
+                        "south"      : "true"                          , 
+                        "waterlogged": "false"                         , 
+                        "north"      : "true"                            
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 5], 
+                    "is": {
+                        "id"         : "minecraft:waxed_copper_bars", 
+                        "waterlogged": "false"                      , 
+                        "north"      : "true"                       , 
+                        "south"      : "true"                       , 
+                        "west"       : "false"                      , 
+                        "east"       : "false"                        
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 6], 
+                    "is": {
+                        "id"         : "minecraft:waxed_exposed_copper_bars", 
+                        "waterlogged": "false"                              , 
+                        "north"      : "true"                               , 
+                        "west"       : "false"                              , 
+                        "east"       : "false"                              , 
+                        "south"      : "true"                                 
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 7], 
+                    "is": {
+                        "id"         : "minecraft:waxed_weathered_copper_bars", 
+                        "north"      : "true"                                 , 
+                        "east"       : "true"                                 , 
+                        "south"      : "true"                                 , 
+                        "waterlogged": "false"                                , 
+                        "west"       : "false"                                  
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 8], 
+                    "is": {
+                        "id"         : "minecraft:waxed_oxidized_copper_bars", 
+                        "north"      : "true"                                , 
+                        "south"      : "false"                               , 
+                        "waterlogged": "false"                               , 
+                        "west"       : "false"                               , 
+                        "east"       : "false"                                 
+                    }
+                }
+            ]
+        }
+    ]
+}
+

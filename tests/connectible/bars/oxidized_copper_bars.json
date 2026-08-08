@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oxidice_copper_bars", 
+    "description": "Tests the weathering of copper bar", 
+    "tags": ["bar", "copper", "weathering"], 
+    "minecraftIds": ["minecraft:copper_bars", "minecraft:oxidized_copper_bars"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "copper_bars"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:copper_bars", 
+                        "waterlogged": false, 
+                        "east": false, 
+                        "west": false, 
+                        "south": false, 
+                        "north": false
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 200000, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:oxidized_copper_bars", 
+                        "waterlogged": false, 
+                        "east": false, 
+                        "west": false, 
+                        "south": false, 
+                        "north": false
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,73 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxing_copper_bars", 
+    "description": "Tests the waxing of copper bar", 
+    "tags": ["bar", "copper", "weathering", "waxing"], 
+    "minecraftIds": ["minecraft:copper_bars", "minecraft:waxed_copper_bars", "minecraft:honeycomb"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "copper_bars"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:copper_bars", 
+                        "waterlogged": false, 
+                        "east": false, 
+                        "west": false, 
+                        "south": false, 
+                        "north": false
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top", "item": "minecraft:honeycomb" }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {"slot": "hotbar1", "is": "empty"}, 
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:waxed_copper_bars", 
+                        "waterlogged": false, 
+                        "east": false, 
+                        "west": false, 
+                        "south": false, 
+                        "north": false
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 200000, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:waxed_copper_bars", 
+                        "waterlogged": false, 
+                        "east": false, 
+                        "west": false, 
+                        "south": false, 
+                        "north": false
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

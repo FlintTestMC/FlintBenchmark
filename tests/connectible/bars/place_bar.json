@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "place_bars", 
+    "description": "Tests the placing of bars", 
+    "tags": ["bar"], 
+    "minecraftIds": ["minecraft:iron_bars"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }
+            ]
+        }, 
+        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top", "item": "iron_bars" }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:iron_bars", 
+                        "east": false, 
+                        "west": false, 
+                        "south": false, 
+                        "north": false, 
+                        "waterlogged": false
+                    }
+                }, 
+                {"is": "empty", "slot": "hotbar1"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
