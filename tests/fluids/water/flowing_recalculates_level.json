@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "name": "water_flowing_recalculates_level_on_tick", 
+    "description": "Flowing water recalculates its level each tick based on neighbors. If a second source is added nearby, flowing water between two sources becomes a source (level 0) via getNewLiquid neighbourSources check.", 
+    "tags": ["recalculate", "dynamic"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [6, 3, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [6, 0, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [6, 2, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 4], [6, 2, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 2, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [6, 1, 0], [6, 2, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 2], "block": {"id": "minecraft:water", "level": 0} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:water", "level": "1"} }
+            ]
+        }, 
+        { "at": 21, "do": "place", "pos": [3, 1, 2], "block": {"id": "minecraft:water", "level": 0} }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:water", "level": "0"} }
+            ]
+        }
+    ]
+}
+

@@ -1,0 +1,11 @@
+{
+  "hash": 12464441102537979377,
+  "index": {
+    "complex": [
+      "tests/fluids/water/u_shape.json"
+    ],
+    "pathfinding": [
+      "tests/fluids/water/u_shape.json"
+    ]
+  }
+}

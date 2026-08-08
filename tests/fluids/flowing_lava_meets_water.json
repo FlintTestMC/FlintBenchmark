@@ -1,0 +1,70 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "name": "flowing_lava_meets_water_cobblestone", 
+    "description": "Flowing lava (not source) that touches water becomes cobblestone. In shouldSpreadLiquid, non-source lava adjacent to water converts to cobblestone.", 
+    "tags": ["interaction", "lava", "water", "cobblestone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [8, 3, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [8, 0, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [8, 2, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 4], [8, 2, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 2, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [8, 1, 0], [8, 2, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [4, 1, 1], [4, 2, 3] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 2], "block": {"id": "minecraft:lava", "level": 0} }, 
+        { "at": 60, "do": "place", "pos": [4, 1, 2], "block": {"id": "minecraft:air"} }, 
+        { "at": 60, "do": "place", "pos": [4, 2, 2], "block": {"id": "minecraft:air"} }, 
+        { "at": 61, "do": "place", "pos": [7, 1, 2], "block": {"id": "minecraft:water", "level": 0} }, 
+        {
+            "at": 62, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:lava"              } }, 
+                { "pos": [1, 1, 2], "is": {"id": "minecraft:lava", "level": "0"} }  
+            ]
+        }, 
+        {
+            "at": 100, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [3, 1, 2], "is": {"id": "minecraft:cobblestone"} }
+            ]
+        }
+    ]
+}
+

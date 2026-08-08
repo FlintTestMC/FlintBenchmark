@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "name": "lava_flows_down_onto_water_stone", 
+    "description": "Lava flowing downward onto water creates stone at the water position. In LavaFluid.spreadTo, when direction is DOWN and target has water in a LiquidBlock, the water position becomes stone.", 
+    "tags": ["interaction", "lava", "water", "stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 5, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 0, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [4, 4, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 4], [4, 4, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 4, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [4, 1, 0], [4, 4, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [2, 1, 2], "block": {"id": "minecraft:water", "level": 0} }, 
+        { "at": 2, "do": "place", "pos": [2, 3, 2], "block": {"id": "minecraft:lava", "level": 0} }, 
+        {
+            "at": 80, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:stone"} }
+            ]
+        }
+    ]
+}
+

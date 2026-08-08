@@ -1,0 +1,31 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "name": "lava_over_soul_soil_with_blue_ice_basalt", 
+    "description": "Lava placed above soul_soil and adjacent to blue_ice converts to basalt. In shouldSpreadLiquid, lava over soul_soil touching blue_ice becomes basalt.", 
+    "tags": ["interaction", "lava", "basalt", "soul_soil", "blue_ice"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 3, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 0, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [2, 0, 2], "block": {"id": "minecraft:soul_soil"} }, 
+        { "at": 0, "do": "place", "pos": [3, 1, 2], "block": {"id": "minecraft:blue_ice"} }, 
+        { "at": 1, "do": "place", "pos": [2, 1, 2], "block": {"id": "minecraft:lava", "level": 0} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:basalt"} }
+            ]
+        }
+    ]
+}
+
