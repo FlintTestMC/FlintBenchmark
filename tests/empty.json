@@ -1,0 +1,22 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "name": "empty", 
+    "description": "Checks for air, so easy way to debug, cave, void and normal air", 
+    "tags": ["air"],
+    "minecraftIds":["minecraft:air"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -2, -2], [2, 5, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 0, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ]
+}
+
