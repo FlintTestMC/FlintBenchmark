@@ -1,0 +1,87 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "place_chain", 
+    "description": "Tests the placing of chains", 
+    "tags": ["chain"], 
+    "minecraftIds": ["minecraft:iron_chain"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }
+            ]
+        }, 
+        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top", "item": "iron_chain" }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }                                        , 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false} }, 
+                {"is": "empty", "slot": "hotbar1"}                                                             
+            ]
+        }, 
+        { "at": 3, "do": "use_item_on", "pos": [0, 0, 0], "face": "east", "item": "iron_chain" }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }                                        , 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:iron_chain", "axis": "x", "waterlogged": false} }, 
+                {"is": "empty", "slot": "hotbar1"}                                                             
+            ]
+        }, 
+        { "at": 5, "do": "use_item_on", "pos": [0, 0, 0], "face": "south", "item": "iron_chain" }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }                                        , 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:iron_chain", "axis": "x", "waterlogged": false} }, 
+                { "pos": [0, 0, 1], "is": {"id": "minecraft:iron_chain", "axis": "z", "waterlogged": false} }, 
+                {"is": "empty", "slot": "hotbar1"}                                                             
+            ]
+        }, 
+        { "at": 7, "do": "use_item_on", "pos": [0, 0, 0], "face": "west", "item": "iron_chain" }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }                                         , 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false} } , 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:iron_chain", "axis": "x", "waterlogged": false} } , 
+                { "pos": [0, 0, 1], "is": {"id": "minecraft:iron_chain", "axis": "z", "waterlogged": false} } , 
+                { "pos": [-1, 0, 0], "is": {"id": "minecraft:iron_chain", "axis": "x", "waterlogged": false} }, 
+                {"is": "empty", "slot": "hotbar1"}                                                              
+            ]
+        }, 
+        { "at": 9, "do": "use_item_on", "pos": [0, 0, 0], "face": "north", "item": "iron_chain" }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }                                         , 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false} } , 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:iron_chain", "axis": "x", "waterlogged": false} } , 
+                { "pos": [0, 0, 1], "is": {"id": "minecraft:iron_chain", "axis": "z", "waterlogged": false} } , 
+                { "pos": [-1, 0, 0], "is": {"id": "minecraft:iron_chain", "axis": "x", "waterlogged": false} }, 
+                { "pos": [0, 0, -1], "is": {"id": "minecraft:iron_chain", "axis": "z", "waterlogged": false} }, 
+                {"is": "empty", "slot": "hotbar1"}                                                              
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

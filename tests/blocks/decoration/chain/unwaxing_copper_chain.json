@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "unwaxing_copper_chain", 
+    "description": "Tests the unwaxing of copper chain", 
+    "tags": ["chain", "copper", "weathering", "unwaxing"], 
+    "minecraftIds": [
+        "minecraft:copper_chain"         , "minecraft:waxed_copper_chain"   , "minecraft:iron_axe"             , 
+        "minecraft:oxidized_copper_chain"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "waxed_copper_chain"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_copper_chain", "waterlogged": false, "axis": "y"} }
+            ]
+        }, 
+        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top", "item": "iron_axe" }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:copper_chain", "waterlogged": false, "axis": "y"} }
+            ]
+        }, 
+        {
+            "at": 200000, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:oxidized_copper_chain", "waterlogged": false, "axis": "y"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

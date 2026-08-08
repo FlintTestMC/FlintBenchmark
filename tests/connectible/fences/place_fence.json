@@ -10,7 +10,7 @@
         "cleanup": {
             "region": [ [0, 0, 0], [0, 1, 0] ]
         }, 
-        "player": {"gamemode": "Survival"}
+        "player": {"game_mode": "Survival"}
     }, 
     "timeline": [
         { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
