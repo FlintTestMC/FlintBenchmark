@@ -4,10 +4,7 @@
     "name": "mature_stem_rejects_bonemeal", 
     "description": "Bone meal does not affect mature pumpkin or melon stems and is not consumed.", 
     "tags": ["vegetation", "stem", "pumpkin", "melon", "bone-meal", "mature", "player"], 
-    "minecraftIds": [
-        "minecraft:farmland"    , "minecraft:pumpkin_stem", "minecraft:melon_stem"  , "minecraft:bone_meal"   , 
-        "minecraft:stone"       
-    ], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:pumpkin_stem", "minecraft:melon_stem", "minecraft:bone_meal"], 
     "dependencies": [], 
     "setup": {
         "cleanup": {

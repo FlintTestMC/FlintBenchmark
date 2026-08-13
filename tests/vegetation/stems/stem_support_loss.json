@@ -5,9 +5,8 @@
     "description": "Normal and attached pumpkin and melon stems break when the farmland beneath them is removed, while their fruits remain.", 
     "tags": ["vegetation", "stem", "attached-stem", "pumpkin", "melon", "support", "neighbor-update"], 
     "minecraftIds": [
-        "minecraft:farmland"             , "minecraft:pumpkin"              , "minecraft:melon"                , 
-        "minecraft:pumpkin_stem"         , "minecraft:melon_stem"           , "minecraft:attached_pumpkin_stem", 
-        "minecraft:attached_melon_stem"  , "minecraft:stone"                , "minecraft:dirt"                 
+        "minecraft:farmland"             , "minecraft:pumpkin_stem"         , "minecraft:melon_stem"           , 
+        "minecraft:attached_pumpkin_stem", "minecraft:attached_melon_stem"  
     ], 
     "dependencies": [], 
     "setup": {

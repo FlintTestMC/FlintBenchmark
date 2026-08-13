@@ -4,10 +4,7 @@
     "name": "stem_bonemeal_growth", 
     "description": "One bone meal grows an age-zero pumpkin or melon stem by two to five ages and consumes the item.", 
     "tags": ["vegetation", "stem", "pumpkin", "melon", "bone-meal", "growth", "player"], 
-    "minecraftIds": [
-        "minecraft:farmland"    , "minecraft:pumpkin_stem", "minecraft:melon_stem"  , "minecraft:bone_meal"   , 
-        "minecraft:stone"       
-    ], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:pumpkin_stem", "minecraft:melon_stem", "minecraft:bone_meal"], 
     "dependencies": [], 
     "setup": {
         "cleanup": {

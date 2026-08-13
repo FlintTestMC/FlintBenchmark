@@ -5,9 +5,8 @@
     "description": "Removing or replacing an attached stem's matching fruit restores the correct mature pumpkin or melon stem.", 
     "tags": ["vegetation", "stem", "attached-stem", "pumpkin", "melon", "neighbor-update", "reversion"], 
     "minecraftIds": [
-        "minecraft:farmland"             , "minecraft:pumpkin"              , "minecraft:melon"                , 
-        "minecraft:pumpkin_stem"         , "minecraft:melon_stem"           , "minecraft:attached_pumpkin_stem", 
-        "minecraft:attached_melon_stem"  , "minecraft:stone"                , "minecraft:dirt"                 
+        "minecraft:farmland"             , "minecraft:pumpkin_stem"         , "minecraft:melon_stem"           , 
+        "minecraft:attached_pumpkin_stem", "minecraft:attached_melon_stem"  
     ], 
     "dependencies": [], 
     "setup": {

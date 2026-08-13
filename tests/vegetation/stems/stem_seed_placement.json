@@ -6,7 +6,7 @@
     "tags": ["vegetation", "stem", "pumpkin", "melon", "placement", "player"], 
     "minecraftIds": [
         "minecraft:farmland"     , "minecraft:pumpkin_seeds", "minecraft:pumpkin_stem" , "minecraft:melon_seeds"  , 
-        "minecraft:melon_stem"   , "minecraft:stone"        , "minecraft:water"        
+        "minecraft:melon_stem"   
     ], 
     "dependencies": [], 
     "setup": {

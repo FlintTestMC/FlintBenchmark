@@ -4,10 +4,7 @@
     "name": "attached_stem_keeps_matching_fruit", 
     "description": "Attached pumpkin and melon stems keep their family and facing when their matching fruit remains present during an unrelated neighbor update.", 
     "tags": ["vegetation", "stem", "attached-stem", "pumpkin", "melon", "neighbor-update"], 
-    "minecraftIds": [
-        "minecraft:farmland"             , "minecraft:pumpkin"              , "minecraft:melon"                , 
-        "minecraft:attached_pumpkin_stem", "minecraft:attached_melon_stem"  , "minecraft:stone"                
-    ], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:attached_pumpkin_stem", "minecraft:attached_melon_stem"], 
     "dependencies": [], 
     "setup": {
         "cleanup": {
