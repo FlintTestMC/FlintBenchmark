@@ -1,0 +1,67 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "mature_stem_rejects_bonemeal", 
+    "description": "Bone meal does not affect mature pumpkin or melon stems and is not consumed.", 
+    "tags": ["vegetation", "stem", "pumpkin", "melon", "bone-meal", "mature", "player"], 
+    "minecraftIds": [
+        "minecraft:farmland"    , "minecraft:pumpkin_stem", "minecraft:melon_stem"  , "minecraft:bone_meal"   , 
+        "minecraft:stone"       
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [2, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [2, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, 0], [1, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:farmland"              } }, 
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:farmland"              } }, 
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:pumpkin_stem", "age": 7} }, 
+                { "pos": [ 1, 1, 0], "block": {"id": "minecraft:melon_stem"  , "age": 7} }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [-0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact", "item": "minecraft:bone_meal"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [-0.5, 5, 0.5] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:pumpkin_stem", "age": 7            }                    }, 
+                {                    "is": {"id": "minecraft:bone_meal"   ,           "count": 1}, "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact", "item": "minecraft:bone_meal"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [1.5, 5, 0.5] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:pumpkin_stem", "age": 7            }                    }, 
+                { "pos": [ 1, 1, 0], "is": {"id": "minecraft:melon_stem"  , "age": 7            }                    }, 
+                {                    "is": {"id": "minecraft:bone_meal"   ,           "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

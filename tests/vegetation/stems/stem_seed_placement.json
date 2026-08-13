@@ -1,0 +1,67 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "stem_seed_placement", 
+    "description": "Pumpkin and melon seeds planted on farmland create their matching age-zero stems and consume the seeds.", 
+    "tags": ["vegetation", "stem", "pumpkin", "melon", "placement", "player"], 
+    "minecraftIds": [
+        "minecraft:farmland"     , "minecraft:pumpkin_seeds", "minecraft:pumpkin_stem" , "minecraft:melon_seeds"  , 
+        "minecraft:melon_stem"   , "minecraft:stone"        , "minecraft:water"        
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:water"   } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:farmland"} }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact", "item": "minecraft:pumpkin_seeds"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:farmland"}                                  }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:pumpkin_stem", "age": 0}                    }, 
+                {                   "is": "empty"                                   , "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact", "item": "minecraft:melon_seeds"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [2.5, 5, 0.5] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:pumpkin_stem", "age": 0}                    }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:melon_stem", "age": 0}                      }, 
+                {                   "is": "empty"                                   , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

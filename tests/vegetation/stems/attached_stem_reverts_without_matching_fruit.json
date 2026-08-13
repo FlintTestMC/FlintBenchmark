@@ -1,0 +1,84 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_stem_reverts_without_matching_fruit", 
+    "description": "Removing or replacing an attached stem's matching fruit restores the correct mature pumpkin or melon stem.", 
+    "tags": ["vegetation", "stem", "attached-stem", "pumpkin", "melon", "neighbor-update", "reversion"], 
+    "minecraftIds": [
+        "minecraft:farmland"             , "minecraft:pumpkin"              , "minecraft:melon"                , 
+        "minecraft:pumpkin_stem"         , "minecraft:melon_stem"           , "minecraft:attached_pumpkin_stem", 
+        "minecraft:attached_melon_stem"  , "minecraft:stone"                , "minecraft:dirt"                 
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [11, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [11, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [10, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [ 3, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [ 6, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [ 9, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:dirt"                                   } }, 
+                { "pos": [ 4, 0, 0], "block": {"id": "minecraft:dirt"                                   } }, 
+                { "pos": [ 7, 0, 0], "block": {"id": "minecraft:dirt"                                   } }, 
+                { "pos": [10, 0, 0], "block": {"id": "minecraft:dirt"                                   } }, 
+                { "pos": [ 1, 1, 0], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [ 4, 1, 0], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [ 7, 1, 0], "block": {"id": "minecraft:melon"                                  } }, 
+                { "pos": [10, 1, 0], "block": {"id": "minecraft:melon"                                  } }, 
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }, 
+                { "pos": [ 3, 1, 0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }, 
+                { "pos": [ 6, 1, 0], "block": {"id": "minecraft:attached_melon_stem"  , "facing": "east"} }, 
+                { "pos": [ 9, 1, 0], "block": {"id": "minecraft:attached_melon_stem"  , "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:attached_melon_stem"  , "facing": "east"} }, 
+                { "pos": [9, 1, 0], "is": {"id": "minecraft:attached_melon_stem"  , "facing": "east"} }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [1, 1, 0] }, 
+        { "at": 5, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:melon"} }, 
+        { "at": 5, "do": "remove", "pos": [7, 1, 0] }, 
+        { "at": 5, "do": "place", "pos": [10, 1, 0], "block": {"id": "minecraft:pumpkin"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1, 0], "is": {"id": "minecraft:pumpkin_stem", "age": 7} }, 
+                { "pos": [ 1, 1, 0], "is": {"id": "minecraft:air"                   } }, 
+                { "pos": [ 3, 1, 0], "is": {"id": "minecraft:pumpkin_stem", "age": 7} }, 
+                { "pos": [ 4, 1, 0], "is": {"id": "minecraft:melon"                 } }, 
+                { "pos": [ 6, 1, 0], "is": {"id": "minecraft:melon_stem"  , "age": 7} }, 
+                { "pos": [ 7, 1, 0], "is": {"id": "minecraft:air"                   } }, 
+                { "pos": [ 9, 1, 0], "is": {"id": "minecraft:melon_stem"  , "age": 7} }, 
+                { "pos": [10, 1, 0], "is": {"id": "minecraft:pumpkin"               } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
