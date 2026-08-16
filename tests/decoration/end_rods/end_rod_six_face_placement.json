@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "end_rod_six_face_placement", 
+    "description": "Survival placement against each clicked face gives an end rod that face's direction and consumes all six items.", 
+    "tags": ["decoration", "end-rod", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:end_rod"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 2, 9] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:end_rod", "count": 6} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 8], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 4], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [8, 1, 4], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [4.5, -2, 0.5], "rot": [0, -90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [8.5, 0, -3.5], "rot": [0, 0] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 11.5], "rot": [180, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [3.5, 0, 4.5], "rot": [90, 0] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [4.5, 0, 4.5], "rot": [-90, 0] }, 
+        {"at": 6, "do": "interact"}, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0] , "is": {"id": "minecraft:end_rod", "facing": "up"}                       }, 
+                { "pos": [4, 0, 0] , "is": {"id": "minecraft:end_rod", "facing": "down"}                     }, 
+                { "pos": [8, 1, -1], "is": {"id": "minecraft:end_rod", "facing": "north"}                    }, 
+                { "pos": [0, 1, 9] , "is": {"id": "minecraft:end_rod", "facing": "south"}                    }, 
+                { "pos": [1, 1, 4] , "is": {"id": "minecraft:end_rod", "facing": "east"}                     }, 
+                { "pos": [7, 1, 4] , "is": {"id": "minecraft:end_rod", "facing": "west"}                     }, 
+                {                    "is": {"id": "minecraft:air", "count": 0}           , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
