@@ -14,14 +14,9 @@
     "timeline": [
         {
             "at": 0, 
-            "do": "fill", 
-            "region": [ [-1, 0, -1], [1, 0, 1] ], 
-            "with": {"id": "minecraft:stone"}
-        }, 
-        {
-            "at": 0, 
             "do": "place_each", 
             "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:stone"              } }, 
                 { "pos": [-1, 1,  0], "block": {"id": "minecraft:stone"              } }, 
                 { "pos": [ 1, 1,  0], "block": {"id": "minecraft:stone"              } }, 
                 { "pos": [ 0, 1, -1], "block": {"id": "minecraft:stone"              } }, 
