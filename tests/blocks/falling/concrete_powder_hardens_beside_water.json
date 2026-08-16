@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "concrete_powder_hardens_beside_water", 
+    "description": "Supported blue concrete powder hardens when a neighboring water source is added beside it.", 
+    "tags": ["blocks", "falling-block", "concrete-powder", "water", "hardening", "neighbor-update"], 
+    "minecraftIds": ["minecraft:blue_concrete_powder"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"               } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:stone"               } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:blue_concrete_powder"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:blue_concrete_powder"} }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:water"} }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:blue_concrete"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water"        } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

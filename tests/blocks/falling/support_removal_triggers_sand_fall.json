@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "support_removal_triggers_sand_fall", 
+    "description": "Removing a settled sand block's support schedules a new falling check, after which the sand falls and settles on the lower floor.", 
+    "tags": ["blocks", "falling-block", "sand", "support", "neighbor-update", "timing"], 
+    "minecraftIds": ["minecraft:sand"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 4, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 4, 0], "block": {"id": "minecraft:sand" } }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:sand"} }
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 3, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:sand"} }
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }, 
+        {
+            "at": 24, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:sand"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
