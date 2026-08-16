@@ -1,0 +1,102 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:hopper", "minecraft:chest", "minecraft:cobblestone"], 
+    "name": "Hopper Transfers Cobblestone To Chest", 
+    "description": "A hopper transfers four cobblestone into the chest below at eight-tick intervals.", 
+    "tags": ["block-entity", "container", "hopper", "chest", "item-transfer"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:chest"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {
+                            "Items": [ {"Slot": "0b", "id": "minecraft:cobblestone", "count": 4} ], 
+                            "TransferCooldown": 0
+                        }
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:chest", 
+                        "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 1}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 3} }
+                }
+            ]
+        }, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:chest", 
+                        "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 2}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 2} }
+                }
+            ]
+        }, 
+        {
+            "at": 17, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:chest", 
+                        "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 3}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 1} }
+                }
+            ]
+        }, 
+        {
+            "at": 25, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:chest", 
+                        "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 4}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
+                }
+            ]
+        }
+    ]
+}
+

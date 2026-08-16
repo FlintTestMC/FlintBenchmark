@@ -7,59 +7,59 @@
     "minecraftIds": ["minecraft:oak_fence"], 
     "setup": {
         "cleanup": {
-            "region": [ [0, 63, 0], [10, 66, 2] ]
+            "region": [ [0, -1, 0], [10, 2, 2] ]
         }
     }, 
     "timeline": [
         {
             "at": 0, 
             "do": "fill", 
-            "region": [ [0, 63, 0], [10, 63, 2] ], 
+            "region": [ [0, -1, 0], [10, -1, 2] ], 
             "with": {"id": "minecraft:stone"}
         }, 
-        { "at": 1, "do": "place", "pos": [0, 64, 0], "block": {"id": "minecraft:oak_fence"} }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:oak_fence"} }, 
         {
             "at": 2, 
             "do": "assert", 
             "checks": [
-                { "pos": [0, 64, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "false"} }
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "false"} }
             ]
         }, 
-        { "at": 2, "do": "place", "pos": [1, 64, 0], "block": {"id": "minecraft:oak_fence"} }, 
+        { "at": 2, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:oak_fence"} }, 
         {
             "at": 3, 
             "do": "assert", 
             "checks": [
-                { "pos": [0, 64, 0], "is": {"id": "minecraft:oak_fence", "east": "true"                 } }, 
-                { "pos": [1, 64, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "true"} }  
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:oak_fence", "east": "true"                 } }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "true"} }  
             ]
         }, 
-        { "at": 3, "do": "place", "pos": [2, 64, 0], "block": {"id": "minecraft:oak_fence"} }, 
+        { "at": 3, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:oak_fence"} }, 
         {
             "at": 4, 
             "do": "assert", 
             "checks": [
-                { "pos": [0, 64, 0], "is": {"id": "minecraft:oak_fence"                                 } }, 
-                { "pos": [1, 64, 0], "is": {"id": "minecraft:oak_fence", "east": "true" , "west": "true"} }, 
-                { "pos": [2, 64, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "true"} }  
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:oak_fence"                                 } }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:oak_fence", "east": "true" , "west": "true"} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "true"} }  
             ]
         }, 
-        { "at": 4, "do": "place", "pos": [3, 64, 0], "block": {"id": "minecraft:oak_fence"} }, 
+        { "at": 4, "do": "place", "pos": [3, 0, 0], "block": {"id": "minecraft:oak_fence"} }, 
         {
             "at": 5, 
             "do": "assert", 
             "checks": [
-                { "pos": [2, 64, 0], "is": {"id": "minecraft:oak_fence", "east": "true" , "west": "true"} }, 
-                { "pos": [3, 64, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "true"} }  
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:oak_fence", "east": "true" , "west": "true"} }, 
+                { "pos": [3, 0, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "true"} }  
             ]
         }, 
-        { "at": 5, "do": "place", "pos": [4, 64, 0], "block": {"id": "minecraft:oak_fence"} }, 
+        { "at": 5, "do": "place", "pos": [4, 0, 0], "block": {"id": "minecraft:oak_fence"} }, 
         {
             "at": 6, 
             "do": "assert", 
             "checks": [
-                { "pos": [3, 64, 0], "is": {"id": "minecraft:oak_fence", "east": "true" , "west": "true"} }, 
-                { "pos": [4, 64, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "true"} }  
+                { "pos": [3, 0, 0], "is": {"id": "minecraft:oak_fence", "east": "true" , "west": "true"} }, 
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:oak_fence", "east": "false", "west": "true"} }  
             ]
         }, 
         {
@@ -67,7 +67,7 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [0, 64, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id"   : "minecraft:oak_fence", 
                         "east" : "true"               , 
@@ -77,7 +77,7 @@
                     }
                 }, 
                 {
-                    "pos": [1, 64, 0], 
+                    "pos": [1, 0, 0], 
                     "is": {
                         "id"   : "minecraft:oak_fence", 
                         "east" : "true"               , 
@@ -87,7 +87,7 @@
                     }
                 }, 
                 {
-                    "pos": [2, 64, 0], 
+                    "pos": [2, 0, 0], 
                     "is": {
                         "id"   : "minecraft:oak_fence", 
                         "east" : "true"               , 
@@ -97,7 +97,7 @@
                     }
                 }, 
                 {
-                    "pos": [3, 64, 0], 
+                    "pos": [3, 0, 0], 
                     "is": {
                         "id"   : "minecraft:oak_fence", 
                         "east" : "true"               , 
@@ -107,7 +107,7 @@
                     }
                 }, 
                 {
-                    "pos": [4, 64, 0], 
+                    "pos": [4, 0, 0], 
                     "is": {
                         "id"   : "minecraft:oak_fence", 
                         "east" : "false"              , 

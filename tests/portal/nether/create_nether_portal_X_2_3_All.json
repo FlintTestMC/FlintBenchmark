@@ -32,7 +32,8 @@
                 { "pos": [3, 4, 0], "block": {"id": "minecraft:obsidian"} }  
             ]
         }, 
-        { "at": 2, "do": "use_item_on", "pos": [1, 0, 0], "face": "top", "item": "minecraft:flint_and_steel" }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 2.5], "rot": [180, 60] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:flint_and_steel"}, 
         {
             "at": 4, 
             "do": "assert", 
