@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "supported_sand_and_gravel_stay_in_place", 
+    "description": "Sand and gravel remain blocks after their scheduled falling checks when each has solid support.", 
+    "tags": ["blocks", "falling-block", "sand", "gravel", "support", "timing"], 
+    "minecraftIds": ["minecraft:sand", "minecraft:gravel"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [ 1, 1, 0], "block": {"id": "minecraft:gravel"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:sand"  } }, 
+                { "pos": [ 1, 1, 0], "is": {"id": "minecraft:gravel"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

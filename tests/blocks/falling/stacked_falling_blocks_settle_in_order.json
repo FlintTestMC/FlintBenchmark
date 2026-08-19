@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "stacked_falling_blocks_settle_in_order", 
+    "description": "A sand block and the gravel above it fall together and settle as an ordered two-block stack on the floor.", 
+    "tags": ["blocks", "falling-block", "sand", "gravel", "stacked", "settling"], 
+    "minecraftIds": ["minecraft:sand", "minecraft:gravel"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 5, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [0, 4, 0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [0, 5, 0], "block": {"id": "minecraft:gravel"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:sand"  } }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:gravel"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:air"} }  
+            ]
+        }, 
+        {
+            "at": 24, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:sand"  } }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:gravel"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

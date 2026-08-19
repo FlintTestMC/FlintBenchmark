@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "falling_concrete_powder_hardens_in_water", 
+    "description": "Unsupported red concrete powder becomes a falling block and hardens when it enters a contained water source.", 
+    "tags": ["blocks", "falling-block", "concrete-powder", "water", "hardening", "settling"], 
+    "minecraftIds": ["minecraft:red_concrete_powder"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 5, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:stone"              } }, 
+                { "pos": [-1, 1,  0], "block": {"id": "minecraft:stone"              } }, 
+                { "pos": [ 1, 1,  0], "block": {"id": "minecraft:stone"              } }, 
+                { "pos": [ 0, 1, -1], "block": {"id": "minecraft:stone"              } }, 
+                { "pos": [ 0, 1,  1], "block": {"id": "minecraft:stone"              } }, 
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:water"              } }, 
+                { "pos": [ 0, 5,  0], "block": {"id": "minecraft:red_concrete_powder"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:red_concrete_powder"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water"              } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }, 
+        {
+            "at": 24, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:red_concrete"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
