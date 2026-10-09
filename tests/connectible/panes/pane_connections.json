@@ -8,7 +8,7 @@
     "dependencies": [], 
     "setup": {
         "cleanup": {
-            "region": [ [4, 0, 0], [6, 0, 9] ]
+            "region": [ [-1, 0, 0], [1, 0, 9] ]
         }
     }, 
     "timeline": [
@@ -16,15 +16,15 @@
             "at": 0, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [5, 0, 0], "block": {"id": "minecraft:glass_pane"              } }, 
-                { "pos": [5, 0, 1], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
-                { "pos": [5, 0, 2], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
-                { "pos": [5, 0, 3], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
-                { "pos": [5, 0, 4], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
-                { "pos": [5, 0, 5], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
-                { "pos": [5, 0, 6], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
-                { "pos": [5, 0, 7], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
-                { "pos": [5, 0, 8], "block": {"id": "minecraft:white_stained_glass_pane"} }  
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:glass_pane"              } }, 
+                { "pos": [0, 0, 1], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
+                { "pos": [0, 0, 2], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
+                { "pos": [0, 0, 3], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
+                { "pos": [0, 0, 4], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
+                { "pos": [0, 0, 5], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
+                { "pos": [0, 0, 6], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
+                { "pos": [0, 0, 7], "block": {"id": "minecraft:white_stained_glass_pane"} }, 
+                { "pos": [0, 0, 8], "block": {"id": "minecraft:white_stained_glass_pane"} }  
             ]
         }, 
         {
@@ -32,7 +32,7 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [5, 0, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "south"      : "true"                , 
@@ -43,7 +43,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 1], 
+                    "pos": [0, 0, 1], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -54,7 +54,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 2], 
+                    "pos": [0, 0, 2], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -65,7 +65,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 3], 
+                    "pos": [0, 0, 3], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -76,7 +76,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 4], 
+                    "pos": [0, 0, 4], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "west"       : "false"                             , 
@@ -87,7 +87,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 5], 
+                    "pos": [0, 0, 5], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -98,7 +98,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 6], 
+                    "pos": [0, 0, 6], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -109,7 +109,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 7], 
+                    "pos": [0, 0, 7], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -120,7 +120,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 8], 
+                    "pos": [0, 0, 8], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -136,15 +136,15 @@
             "at": 1, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [6, 0, 0], "block": {"id": "minecraft:waxed_copper_bars"            } }, 
-                { "pos": [6, 0, 1], "block": {"id": "minecraft:white_stained_glass_pane"     } }, 
-                { "pos": [6, 0, 3], "block": {"id": "minecraft:gray_stained_glass_pane"      } }, 
-                { "pos": [6, 0, 2], "block": {"id": "minecraft:light_gray_stained_glass_pane"} }, 
-                { "pos": [6, 0, 4], "block": {"id": "minecraft:black_stained_glass_pane"     } }, 
-                { "pos": [6, 0, 5], "block": {"id": "minecraft:brown_stained_glass_pane"     } }, 
-                { "pos": [6, 0, 6], "block": {"id": "minecraft:red_stained_glass_pane"       } }, 
-                { "pos": [6, 0, 7], "block": {"id": "minecraft:orange_stained_glass_pane"    } }, 
-                { "pos": [6, 0, 8], "block": {"id": "minecraft:yellow_stained_glass_pane"    } }  
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:waxed_copper_bars"            } }, 
+                { "pos": [1, 0, 1], "block": {"id": "minecraft:white_stained_glass_pane"     } }, 
+                { "pos": [1, 0, 3], "block": {"id": "minecraft:gray_stained_glass_pane"      } }, 
+                { "pos": [1, 0, 2], "block": {"id": "minecraft:light_gray_stained_glass_pane"} }, 
+                { "pos": [1, 0, 4], "block": {"id": "minecraft:black_stained_glass_pane"     } }, 
+                { "pos": [1, 0, 5], "block": {"id": "minecraft:brown_stained_glass_pane"     } }, 
+                { "pos": [1, 0, 6], "block": {"id": "minecraft:red_stained_glass_pane"       } }, 
+                { "pos": [1, 0, 7], "block": {"id": "minecraft:orange_stained_glass_pane"    } }, 
+                { "pos": [1, 0, 8], "block": {"id": "minecraft:yellow_stained_glass_pane"    } }  
             ]
         }, 
         {
@@ -152,7 +152,7 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [5, 0, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "south"      : "true"                , 
@@ -163,7 +163,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 1], 
+                    "pos": [0, 0, 1], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "true"                              , 
@@ -174,7 +174,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 2], 
+                    "pos": [0, 0, 2], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "true"                              , 
@@ -185,7 +185,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 3], 
+                    "pos": [0, 0, 3], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "true"                              , 
@@ -196,7 +196,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 4], 
+                    "pos": [0, 0, 4], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "true"                              , 
@@ -207,7 +207,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 5], 
+                    "pos": [0, 0, 5], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "true"                              , 
@@ -218,7 +218,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 6], 
+                    "pos": [0, 0, 6], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -229,7 +229,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 7], 
+                    "pos": [0, 0, 7], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "west"       : "false"                             , 
@@ -240,7 +240,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 8], 
+                    "pos": [0, 0, 8], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "true"                              , 
@@ -256,14 +256,14 @@
             "at": 2, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [4, 0, 1], "block": {"id": "minecraft:green_stained_glass_pane"     } }, 
-                { "pos": [4, 0, 2], "block": {"id": "minecraft:cyan_stained_glass_pane"      } }, 
-                { "pos": [4, 0, 3], "block": {"id": "minecraft:light_blue_stained_glass_pane"} }, 
-                { "pos": [4, 0, 0], "block": {"id": "minecraft:lime_stained_glass_pane"      } }, 
-                { "pos": [4, 0, 4], "block": {"id": "minecraft:blue_stained_glass_pane"      } }, 
-                { "pos": [4, 0, 6], "block": {"id": "minecraft:magenta_stained_glass_pane"   } }, 
-                { "pos": [4, 0, 5], "block": {"id": "minecraft:purple_stained_glass_pane"    } }, 
-                { "pos": [4, 0, 7], "block": {"id": "minecraft:iron_bars"                    } }  
+                { "pos": [-1, 0, 1], "block": {"id": "minecraft:green_stained_glass_pane"     } }, 
+                { "pos": [-1, 0, 2], "block": {"id": "minecraft:cyan_stained_glass_pane"      } }, 
+                { "pos": [-1, 0, 3], "block": {"id": "minecraft:light_blue_stained_glass_pane"} }, 
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:lime_stained_glass_pane"      } }, 
+                { "pos": [-1, 0, 4], "block": {"id": "minecraft:blue_stained_glass_pane"      } }, 
+                { "pos": [-1, 0, 6], "block": {"id": "minecraft:magenta_stained_glass_pane"   } }, 
+                { "pos": [-1, 0, 5], "block": {"id": "minecraft:purple_stained_glass_pane"    } }, 
+                { "pos": [-1, 0, 7], "block": {"id": "minecraft:iron_bars"                    } }  
             ]
         }, 
         {
@@ -271,7 +271,7 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [5, 0, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "east"       : "true"                , 
@@ -282,7 +282,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 1], 
+                    "pos": [0, 0, 1], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -293,7 +293,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 2], 
+                    "pos": [0, 0, 2], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -304,7 +304,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 3], 
+                    "pos": [0, 0, 3], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -315,7 +315,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 4], 
+                    "pos": [0, 0, 4], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "south"      : "true"                              , 
@@ -326,7 +326,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 5], 
+                    "pos": [0, 0, 5], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "west"       : "true"                              , 
@@ -337,7 +337,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 6], 
+                    "pos": [0, 0, 6], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -348,7 +348,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 7], 
+                    "pos": [0, 0, 7], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "true"                              , 
@@ -359,7 +359,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 8], 
+                    "pos": [0, 0, 8], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -374,13 +374,13 @@
         {
             "at": 4, 
             "do": "fill", 
-            "region": [ [6, 0, 0], [6, 0, 8] ], 
+            "region": [ [1, 0, 0], [1, 0, 8] ], 
             "with": {"id": "minecraft:air"}
         }, 
         {
             "at": 4, 
             "do": "fill", 
-            "region": [ [4, 0, 0], [4, 0, 8] ], 
+            "region": [ [-1, 0, 0], [-1, 0, 8] ], 
             "with": {"id": "minecraft:air"}
         }, 
         {
@@ -388,7 +388,7 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [5, 0, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "south"      : "true"                , 
@@ -399,7 +399,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 1], 
+                    "pos": [0, 0, 1], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -410,7 +410,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 2], 
+                    "pos": [0, 0, 2], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -421,7 +421,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 3], 
+                    "pos": [0, 0, 3], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -432,7 +432,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 4], 
+                    "pos": [0, 0, 4], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "west"       : "false"                             , 
@@ -443,7 +443,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 5], 
+                    "pos": [0, 0, 5], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -454,7 +454,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 6], 
+                    "pos": [0, 0, 6], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -465,7 +465,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 7], 
+                    "pos": [0, 0, 7], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -476,7 +476,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 8], 
+                    "pos": [0, 0, 8], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -493,7 +493,7 @@
             "do": "place_each", 
             "blocks": [
                 {
-                    "pos": [4, 0, 6], 
+                    "pos": [-1, 0, 6], 
                     "block": {
                         "id"         : "minecraft:mangrove_leaves", 
                         "waterlogged": "false"                    , 
@@ -501,12 +501,12 @@
                         "persistent" : "true"                       
                     }
                 }, 
-                { "pos": [4, 0, 3], "block": {"id": "minecraft:pumpkin"} }, 
-                { "pos": [4, 0, 5], "block": {"id": "minecraft:shulker_box", "facing": "up"} }, 
-                { "pos": [4, 0, 1], "block": {"id": "minecraft:stone"} }, 
-                { "pos": [4, 0, 0], "block": {"id": "minecraft:tinted_glass"} }, 
-                { "pos": [4, 0, 2], "block": {"id": "minecraft:melon"} }, 
-                { "pos": [4, 0, 4], "block": {"id": "minecraft:carved_pumpkin", "facing": "west"} }
+                { "pos": [-1, 0, 3], "block": {"id": "minecraft:pumpkin"} }, 
+                { "pos": [-1, 0, 5], "block": {"id": "minecraft:shulker_box", "facing": "up"} }, 
+                { "pos": [-1, 0, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:tinted_glass"} }, 
+                { "pos": [-1, 0, 2], "block": {"id": "minecraft:melon"} }, 
+                { "pos": [-1, 0, 4], "block": {"id": "minecraft:carved_pumpkin", "facing": "west"} }
             ]
         }, 
         {
@@ -514,7 +514,7 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [5, 0, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "south"      : "true"                , 
@@ -525,7 +525,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 1], 
+                    "pos": [0, 0, 1], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -536,7 +536,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 2], 
+                    "pos": [0, 0, 2], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -547,7 +547,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 3], 
+                    "pos": [0, 0, 3], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -558,7 +558,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 4], 
+                    "pos": [0, 0, 4], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "west"       : "false"                             , 
@@ -569,7 +569,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 5], 
+                    "pos": [0, 0, 5], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -580,7 +580,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 6], 
+                    "pos": [0, 0, 6], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -591,7 +591,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 7], 
+                    "pos": [0, 0, 7], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -602,7 +602,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 8], 
+                    "pos": [0, 0, 8], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -618,16 +618,16 @@
             "at": 6, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [6, 0, 0], "block": {"id": "minecraft:orange_shulker_box"    , "facing": "up"} }, 
-                { "pos": [6, 0, 1], "block": {"id": "minecraft:white_shulker_box"     , "facing": "up"} }, 
-                { "pos": [6, 0, 2], "block": {"id": "minecraft:red_shulker_box"       , "facing": "up"} }, 
-                { "pos": [6, 0, 3], "block": {"id": "minecraft:light_gray_shulker_box", "facing": "up"} }, 
-                { "pos": [6, 0, 4], "block": {"id": "minecraft:brown_shulker_box"     , "facing": "up"} }, 
-                { "pos": [6, 0, 5], "block": {"id": "minecraft:light_gray_shulker_box", "facing": "up"} }, 
-                { "pos": [6, 0, 6], "block": {"id": "minecraft:yellow_shulker_box"    , "facing": "up"} }, 
-                { "pos": [6, 0, 7], "block": {"id": "minecraft:gray_shulker_box"      , "facing": "up"} }, 
-                { "pos": [6, 0, 8], "block": {"id": "minecraft:lime_shulker_box"      , "facing": "up"} }, 
-                { "pos": [5, 0, 9], "block": {"id": "minecraft:black_shulker_box"     , "facing": "up"} }  
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:orange_shulker_box"    , "facing": "up"} }, 
+                { "pos": [1, 0, 1], "block": {"id": "minecraft:white_shulker_box"     , "facing": "up"} }, 
+                { "pos": [1, 0, 2], "block": {"id": "minecraft:red_shulker_box"       , "facing": "up"} }, 
+                { "pos": [1, 0, 3], "block": {"id": "minecraft:light_gray_shulker_box", "facing": "up"} }, 
+                { "pos": [1, 0, 4], "block": {"id": "minecraft:brown_shulker_box"     , "facing": "up"} }, 
+                { "pos": [1, 0, 5], "block": {"id": "minecraft:light_gray_shulker_box", "facing": "up"} }, 
+                { "pos": [1, 0, 6], "block": {"id": "minecraft:yellow_shulker_box"    , "facing": "up"} }, 
+                { "pos": [1, 0, 7], "block": {"id": "minecraft:gray_shulker_box"      , "facing": "up"} }, 
+                { "pos": [1, 0, 8], "block": {"id": "minecraft:lime_shulker_box"      , "facing": "up"} }, 
+                { "pos": [0, 0, 9], "block": {"id": "minecraft:black_shulker_box"     , "facing": "up"} }  
             ]
         }, 
         {
@@ -635,7 +635,7 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [5, 0, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "south"      : "true"                , 
@@ -646,7 +646,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 1], 
+                    "pos": [0, 0, 1], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -657,7 +657,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 2], 
+                    "pos": [0, 0, 2], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -668,7 +668,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 3], 
+                    "pos": [0, 0, 3], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "south"      : "true"                              , 
@@ -679,7 +679,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 4], 
+                    "pos": [0, 0, 4], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "west"       : "false"                             , 
@@ -690,7 +690,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 5], 
+                    "pos": [0, 0, 5], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -701,7 +701,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 6], 
+                    "pos": [0, 0, 6], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -712,7 +712,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 7], 
+                    "pos": [0, 0, 7], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -723,7 +723,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 8], 
+                    "pos": [0, 0, 8], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -738,22 +738,22 @@
         {
             "at": 8, 
             "do": "fill", 
-            "region": [ [6, 0, 0], [6, 0, 8] ], 
+            "region": [ [1, 0, 0], [1, 0, 8] ], 
             "with": {"id": "minecraft:air"}
         }, 
         {
             "at": 8, 
             "do": "fill", 
-            "region": [ [4, 0, 0], [4, 0, 8] ], 
+            "region": [ [-1, 0, 0], [-1, 0, 8] ], 
             "with": {"id": "minecraft:air"}
         }, 
-        { "at": 8, "do": "place", "pos": [5, 0, 9], "block": {"id": "minecraft:air"} }, 
+        { "at": 8, "do": "place", "pos": [0, 0, 9], "block": {"id": "minecraft:air"} }, 
         {
             "at": 9, 
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [5, 0, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "south"      : "true"                , 
@@ -764,7 +764,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 1], 
+                    "pos": [0, 0, 1], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -775,7 +775,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 2], 
+                    "pos": [0, 0, 2], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -786,7 +786,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 3], 
+                    "pos": [0, 0, 3], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -797,7 +797,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 4], 
+                    "pos": [0, 0, 4], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "west"       : "false"                             , 
@@ -808,7 +808,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 5], 
+                    "pos": [0, 0, 5], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -819,7 +819,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 6], 
+                    "pos": [0, 0, 6], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -830,7 +830,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 7], 
+                    "pos": [0, 0, 7], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -841,7 +841,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 8], 
+                    "pos": [0, 0, 8], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -857,10 +857,10 @@
             "at": 9, 
             "do": "place_each", 
             "blocks": [
-                { "pos": [6, 0, 0], "block": {"id": "minecraft:oak_slab", "kind": "double", "waterlogged": "false"} }, 
-                { "pos": [6, 0, 1], "block": {"id": "minecraft:oak_slab", "waterlogged": "false", "kind": "bottom"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:oak_slab", "waterlogged": "false", "type": "double"} }, 
+                { "pos": [1, 0, 1], "block": {"id": "minecraft:oak_slab", "waterlogged": "false", "type": "bottom"} }, 
                 {
-                    "pos": [6, 0, 2], 
+                    "pos": [1, 0, 2], 
                     "block": {
                         "id"         : "minecraft:spruce_trapdoor", 
                         "open"       : "false"                    , 
@@ -871,7 +871,7 @@
                     }
                 }, 
                 {
-                    "pos": [6, 0, 3], 
+                    "pos": [1, 0, 3], 
                     "block": {
                         "id"         : "minecraft:birch_fence", 
                         "waterlogged": "false"                , 
@@ -882,7 +882,7 @@
                     }
                 }, 
                 {
-                    "pos": [6, 0, 4], 
+                    "pos": [1, 0, 4], 
                     "block": {
                         "id"         : "minecraft:diorite_wall", 
                         "south"      : "low"                   , 
@@ -893,9 +893,9 @@
                         "north"      : "none"                    
                     }
                 }, 
-                { "pos": [6, 0, 5], "block": {"id": "minecraft:spruce_pressure_plate", "powered": "false"} }, 
+                { "pos": [1, 0, 5], "block": {"id": "minecraft:spruce_pressure_plate", "powered": "false"} }, 
                 {
-                    "pos": [6, 0, 6], 
+                    "pos": [1, 0, 6], 
                     "block": {
                         "id"         : "minecraft:oak_stairs", 
                         "facing"     : "east"                , 
@@ -905,7 +905,7 @@
                     }
                 }, 
                 {
-                    "pos": [6, 0, 7], 
+                    "pos": [1, 0, 7], 
                     "block": {
                         "id"         : "minecraft:oak_stairs", 
                         "facing"     : "west"                , 
@@ -914,9 +914,9 @@
                         "shape"      : "straight"              
                     }
                 }, 
-                { "pos": [6, 0, 8], "block": {"id": "minecraft:cauldron"} }, 
+                { "pos": [1, 0, 8], "block": {"id": "minecraft:cauldron"} }, 
                 {
-                    "pos": [4, 0, 0], 
+                    "pos": [-1, 0, 0], 
                     "block": {
                         "id"         : "minecraft:oak_trapdoor", 
                         "open"       : "true"                  , 
@@ -926,8 +926,8 @@
                         "waterlogged": "false"                   
                     }
                 }, 
-                { "pos": [4, 0, 1], "block": {"id": "minecraft:cobweb"} }, 
-                { "pos": [4, 0, 2], "block": {"id": "minecraft:scaffolding"} }
+                { "pos": [-1, 0, 1], "block": {"id": "minecraft:cobweb"} }, 
+                { "pos": [-1, 0, 2], "block": {"id": "minecraft:scaffolding"} }
             ]
         }, 
         {
@@ -935,18 +935,18 @@
             "do": "assert", 
             "checks": [
                 {
-                    "pos": [5, 0, 0], 
+                    "pos": [0, 0, 0], 
                     "is": {
                         "id"         : "minecraft:glass_pane", 
                         "south"      : "true"                , 
-                        "east"       : "false"               , 
+                        "east"       : "true"                , 
                         "waterlogged": "false"               , 
                         "west"       : "true"                , 
                         "north"      : "false"                 
                     }
                 }, 
                 {
-                    "pos": [5, 0, 1], 
+                    "pos": [0, 0, 1], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -957,7 +957,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 2], 
+                    "pos": [0, 0, 2], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -968,7 +968,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 3], 
+                    "pos": [0, 0, 3], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "east"       : "false"                             , 
@@ -979,7 +979,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 4], 
+                    "pos": [0, 0, 4], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "west"       : "false"                             , 
@@ -990,7 +990,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 5], 
+                    "pos": [0, 0, 5], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -1001,7 +1001,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 6], 
+                    "pos": [0, 0, 6], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "waterlogged": "false"                             , 
@@ -1012,7 +1012,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 7], 
+                    "pos": [0, 0, 7], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
@@ -1023,7 +1023,7 @@
                     }
                 }, 
                 {
-                    "pos": [5, 0, 8], 
+                    "pos": [0, 0, 8], 
                     "is": {
                         "id"         : "minecraft:white_stained_glass_pane", 
                         "north"      : "true"                              , 
