@@ -21,7 +21,8 @@
                 { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }
             ]
         }, 
-        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top", "item": "iron_chain" }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "iron_chain"}, 
         {
             "at": 2, 
             "do": "assert", 
@@ -31,7 +32,8 @@
                 {"is": "empty", "slot": "hotbar1"}                                                             
             ]
         }, 
-        { "at": 3, "do": "use_item_on", "pos": [0, 0, 0], "face": "east", "item": "iron_chain" }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, -1.12, 0.5], "rot": [90, 0] }, 
+        {"at": 3, "do": "interact", "item": "iron_chain"}, 
         {
             "at": 4, 
             "do": "assert", 
@@ -42,7 +44,8 @@
                 {"is": "empty", "slot": "hotbar1"}                                                             
             ]
         }, 
-        { "at": 5, "do": "use_item_on", "pos": [0, 0, 0], "face": "south", "item": "iron_chain" }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, -1.12, 2.5], "rot": [180, 0] }, 
+        {"at": 5, "do": "interact", "item": "iron_chain"}, 
         {
             "at": 6, 
             "do": "assert", 
@@ -54,7 +57,8 @@
                 {"is": "empty", "slot": "hotbar1"}                                                             
             ]
         }, 
-        { "at": 7, "do": "use_item_on", "pos": [0, 0, 0], "face": "west", "item": "iron_chain" }, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [-1.5, -1.12, 0.5], "rot": [-90, 0] }, 
+        {"at": 7, "do": "interact", "item": "iron_chain"}, 
         {
             "at": 8, 
             "do": "assert", 
@@ -67,7 +71,8 @@
                 {"is": "empty", "slot": "hotbar1"}                                                              
             ]
         }, 
-        { "at": 9, "do": "use_item_on", "pos": [0, 0, 0], "face": "north", "item": "iron_chain" }, 
+        { "at": 9, "do": "tp", "entity_alias": "player", "pos": [0.5, -1.12, -1.5], "rot": [0, 0] }, 
+        {"at": 9, "do": "interact", "item": "iron_chain"}, 
         {
             "at": 10, 
             "do": "assert", 

@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "1.1", 
-    "name": "oxidice_copper_chain", 
+    "name": "oxidized_copper_chain", 
     "description": "Tests the weathering of copper chain", 
     "tags": ["chain", "copper", "weathering"], 
     "minecraftIds": ["minecraft:copper_chain", "minecraft:oxidized_copper_chain"], 

@@ -21,7 +21,8 @@
                 { "pos": [0, 0, 0], "is": {"id": "minecraft:copper_chain", "waterlogged": false, "axis": "y"} }
             ]
         }, 
-        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top", "item": "minecraft:honeycomb" }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:honeycomb"}, 
         {
             "at": 2, 
             "do": "assert", 

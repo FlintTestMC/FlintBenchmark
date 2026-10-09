@@ -37,7 +37,8 @@
                 { "pos": [ 0,  0,  0], "is": {"id": "minecraft:water"} }  
             ]
         }, 
-        { "at": 1, "do": "use_item_on", "pos": [0, -1, 0], "face": "top", "item": "iron_chain" }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "iron_chain"}, 
         {
             "at": 2, 
             "do": "assert", 
@@ -59,7 +60,8 @@
                 { "pos": [ 0,  0,  0], "is": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false} }  
             ]
         }, 
-        { "at": 3, "do": "use_item_on", "pos": [0, 0, 0], "face": "top", "item": "minecraft:water_bucket" }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:water_bucket"}, 
         {
             "at": 4, 
             "do": "assert", 
@@ -73,7 +75,8 @@
                 { "is": {"id": "minecraft:bucket", "count": 1}, "slot": "hotbar1" }                           
             ]
         }, 
-        { "at": 4, "do": "use_item_on", "pos": [0, 0, 0], "face": "top" }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
         {
             "at": 5, 
             "do": "assert", 
