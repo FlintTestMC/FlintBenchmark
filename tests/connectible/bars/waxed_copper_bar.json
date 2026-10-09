@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "1.1", 
-    "name": "waxed_copper_bars", 
+    "name": "waxed_copper_bar", 
     "description": "Tests the waxed copper bar", 
     "tags": ["bar", "copper", "weathering", "waxing"], 
     "minecraftIds": ["minecraft:copper_bars", "minecraft:waxed_copper_bars"], 

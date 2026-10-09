@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "1.1", 
-    "name": "place_bars", 
+    "name": "place_bar", 
     "description": "Tests the placing of bars", 
     "tags": ["bar"], 
     "minecraftIds": ["minecraft:iron_bars"], 
@@ -21,7 +21,8 @@
                 { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }
             ]
         }, 
-        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top", "item": "iron_bars" }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "iron_bars"}, 
         {
             "at": 2, 
             "do": "assert", 

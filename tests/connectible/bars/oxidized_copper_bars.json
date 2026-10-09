@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "1.1", 
-    "name": "oxidice_copper_bars", 
+    "name": "oxidized_copper_bars", 
     "description": "Tests the weathering of copper bar", 
     "tags": ["bar", "copper", "weathering"], 
     "minecraftIds": ["minecraft:copper_bars", "minecraft:oxidized_copper_bars"], 

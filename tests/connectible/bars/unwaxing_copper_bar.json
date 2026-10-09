@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "1.1", 
-    "name": "unwaxing_copper_bars", 
+    "name": "unwaxing_copper_bar", 
     "description": "Tests the unwaxing of copper bar", 
     "tags": ["bar", "copper", "weathering", "unwaxing"], 
     "minecraftIds": [
@@ -34,7 +34,8 @@
                 }
             ]
         }, 
-        { "at": 1, "do": "use_item_on", "pos": [0, 0, 0], "face": "top", "item": "iron_axe" }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "iron_axe"}, 
         {
             "at": 2, 
             "do": "assert", 
