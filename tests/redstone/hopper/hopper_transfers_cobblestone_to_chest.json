@@ -21,10 +21,7 @@
                     "block": {
                         "id": "minecraft:hopper", 
                         "facing": "down", 
-                        "nbt": {
-                            "Items": [ {"Slot": "0b", "id": "minecraft:cobblestone", "count": 4} ], 
-                            "TransferCooldown": 0
-                        }
+                        "nbt": {"Items": "[{Slot: 0b, count: 4, id: \"minecraft:cobblestone\"}]", "TransferCooldown": 0}
                     }
                 }
             ]
