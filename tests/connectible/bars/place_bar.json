@@ -1,14 +1,14 @@
 {
     "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
     "flintVersion": "1.1", 
-    "name": "Place Fence", 
-    "description": "Tests fence connection behavior across different wood types (oak, birch, jungle, spruce, dark_oak, mangrove, cherry, acacia, pale_oak, warped, crimson, bamboo) and validates connections/disconnections with non-fence blocks.", 
-    "tags": ["connectible", "fence", "wood-types", "block-state", "neighbor-update"], 
-    "minecraftIds": ["minecraft:oak_fence"], 
+    "name": "place_bar", 
+    "description": "Tests the placing of bars", 
+    "tags": ["bar"], 
+    "minecraftIds": ["minecraft:iron_bars"], 
     "dependencies": [], 
     "setup": {
         "cleanup": {
-            "region": [ [0, 0, 0], [0, 1, 0] ]
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
         }, 
         "player": {"game_mode": "Survival"}
     }, 
@@ -22,14 +22,24 @@
             ]
         }, 
         { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
-        {"at": 1, "do": "interact", "item": "oak_fence"}, 
+        {"at": 1, "do": "interact", "item": "iron_bars"}, 
         {
             "at": 2, 
             "do": "assert", 
             "checks": [
-                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"}                        }, 
-                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_fence"}                    }, 
-                {                   "is": "empty"                      , "slot": "hotbar1" }  
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:iron_bars", 
+                        "east": false, 
+                        "west": false, 
+                        "south": false, 
+                        "north": false, 
+                        "waterlogged": false
+                    }
+                }, 
+                {"is": "empty", "slot": "hotbar1"}
             ]
         }
     ], 
