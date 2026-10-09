@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # Pinned: nightly 2026-10-08 ICEs compiling azalea-entity. Overrides FlintCLI's rust-toolchain.toml.
+      RUSTUP_TOOLCHAIN: nightly-2026-08-21
 
     steps:
     - uses: actions/checkout@v4
@@ -26,7 +29,9 @@ jobs:
         java-version: '25'
 
     - name: Set up Rust
-      uses: dtolnay/rust-toolchain@nightly
+      uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: nightly-2026-08-21
 
     - name: Cache Rust dependencies
       uses: Swatinem/rust-cache@v2
