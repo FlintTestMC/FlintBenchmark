@@ -1,0 +1,178 @@
+name: Test FlintMC
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # Pinned: nightly 2026-10-08 ICEs compiling azalea-entity. Overrides FlintCLI's rust-toolchain.toml.
+      RUSTUP_TOOLCHAIN: nightly-2026-08-21
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Checkout FlintCLI
+      uses: actions/checkout@v4
+      with:
+        repository: FlintTestMC/FlintCLI
+        path: FlintCLI
+
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '25'
+
+    - name: Set up Rust
+      uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: nightly-2026-08-21
+
+    - name: Cache Rust dependencies
+      uses: Swatinem/rust-cache@v2
+      with:
+        workspaces: FlintCLI
+
+    - name: Download Minecraft Server
+      run: |
+        mkdir -p minecraft-server
+        cd minecraft-server
+        # Download Fabric 26.2
+        wget -O server.jar https://meta.fabricmc.net/v2/versions/loader/26.2/0.19.3/1.1.1/server/jar
+        echo "eula=true" > eula.txt
+
+    - name: Configure Minecraft Server
+      run: |
+        cd minecraft-server
+        cat > server.properties << EOF
+        #Minecraft server properties
+        accepts-transfers=false
+        allow-flight=false
+        broadcast-console-to-ops=true
+        broadcast-rcon-to-ops=true
+        bug-report-link=
+        chat-spam-threshold-seconds=0
+        command-spam-threshold-seconds=0
+        difficulty=easy
+        enable-code-of-conduct=false
+        enable-jmx-monitoring=false
+        enable-query=false
+        enable-rcon=false
+        enable-status=true
+        enforce-secure-profile=true
+        enforce-whitelist=false
+        entity-broadcast-range-percentage=100
+        force-gamemode=false
+        function-permission-level=2
+        gamemode=creative
+        generate-structures=false
+        generator-settings={}
+        hardcore=false
+        hide-online-players=false
+        initial-disabled-packs=
+        initial-enabled-packs=vanilla
+        level-name=world
+        level-seed=
+        level-type=minecraft\:flat
+        log-ips=true
+        management-server-allowed-origins=
+        management-server-enabled=false
+        management-server-host=localhost
+        management-server-port=0
+        management-server-tls-enabled=true
+        management-server-tls-keystore=
+        management-server-tls-keystore-password=
+        max-chained-neighbor-updates=1000000
+        max-players=20
+        max-tick-time=60000
+        max-world-size=29999984
+        motd=A Minecraft Server
+        network-compression-threshold=256
+        online-mode=false
+        op-permission-level=4
+        pause-when-empty-seconds=60
+        player-idle-timeout=0
+        prevent-proxy-connections=false
+        query.port=25565
+        rate-limit=0
+        rcon.password=
+        rcon.port=25575
+        region-file-compression=deflate
+        require-resource-pack=false
+        resource-pack=
+        resource-pack-id=
+        resource-pack-prompt=
+        resource-pack-sha1=
+        server-ip=
+        server-port=25565
+        simulation-distance=16
+        spawn-protection=16
+        status-heartbeat-interval=0
+        sync-chunk-writes=true
+        text-filtering-config=
+        text-filtering-version=0
+        use-native-transport=true
+        view-distance=16
+        white-list=false
+        EOF
+
+    - name: Start Minecraft Server
+      run: |
+        cd minecraft-server
+        # Start server with named pipe for console input
+        mkfifo server_input
+        nohup bash -c 'tail -f server_input | java -Xmx2G -Xms1G -jar server.jar nogui' &
+        SERVER_PID=$!
+        echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
+
+        # Wait for server to start (look for "Done" message in logs)
+        echo "Waiting for server to start..."
+        timeout 120 bash -c 'until grep -q "Done" logs/latest.log 2>/dev/null; do sleep 2; done' || {
+          echo "Server failed to start within 120 seconds"
+          cat logs/latest.log
+          exit 1
+        }
+        echo "Server started successfully"
+
+        # Wait for TCP port to actually accept connections
+        echo "Waiting for port 25565..."
+        timeout 30 bash -c 'until echo > /dev/tcp/localhost/25565 2>/dev/null; do sleep 1; done' || {
+          echo "Port 25565 not accepting connections"
+          exit 1
+        }
+        echo "Port 25565 is ready"
+
+        # Op the bot player by writing directly to the pipe
+        echo "op flintmc_testbot" > server_input
+        echo "Sent op command for flintmc_testbot"
+        sleep 2
+
+    - name: Build FlintMC
+      run: cargo build --manifest-path FlintCLI/Cargo.toml
+
+    - name: Run FlintMC Tests
+      run: |
+        # Run all example tests
+        cargo run --manifest-path FlintCLI/Cargo.toml -- tests/ --server localhost:25565 --recursive --verbose
+      timeout-minutes: 10
+
+    - name: Stop Minecraft Server
+      if: always()
+      run: |
+        if [ ! -z "$SERVER_PID" ]; then
+          kill $SERVER_PID || true
+        fi
+        pkill -f "java.*server.jar" || true
+
+    - name: Upload Server Logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: minecraft-server-logs
+        path: minecraft-server/logs/
+        retention-days: 7
