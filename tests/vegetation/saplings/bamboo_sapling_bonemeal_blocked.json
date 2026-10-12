@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_sapling_bonemeal_blocked", 
+    "description": "Bone meal on a bamboo sapling with a solid block above does nothing and is not consumed.", 
+    "tags": ["vegetation", "bamboo", "bamboo-sapling", "bone-meal", "player"], 
+    "minecraftIds": ["minecraft:bamboo_sapling", "minecraft:dirt", "minecraft:stone", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"          } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:stone"         } }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact", "item": "minecraft:bone_meal"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:bamboo_sapling"            }                    }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:stone"                     }                    }, 
+                {                   "is": {"id": "minecraft:bone_meal"     , "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

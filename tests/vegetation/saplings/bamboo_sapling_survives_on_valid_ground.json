@@ -1,0 +1,98 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_sapling_survives_on_valid_ground", 
+    "description": "Bamboo saplings stay in place after a neighbor update when the block below is dirt, grass, podzol, mud, moss, sand, red sand or gravel.", 
+    "tags": ["vegetation", "bamboo", "bamboo-sapling", "support", "neighbor-update"], 
+    "minecraftIds": [
+        "minecraft:bamboo_sapling", "minecraft:dirt"          , "minecraft:grass_block"   , "minecraft:podzol"        , 
+        "minecraft:mud"           , "minecraft:moss_block"    , "minecraft:sand"          , "minecraft:red_sand"      , 
+        "minecraft:gravel"        
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [8, 5, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [8, 5, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 2, 0], [7, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"          } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:grass_block"   } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:podzol"        } }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:mud"           } }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:moss_block"    } }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:sand"          } }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:red_sand"      } }, 
+                { "pos": [7, 1, 0], "block": {"id": "minecraft:gravel"        } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [1, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [2, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [3, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [5, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [6, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [7, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [5, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [7, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }  
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [1, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [3, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [5, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [6, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [7, 2, 1], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [5, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [7, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

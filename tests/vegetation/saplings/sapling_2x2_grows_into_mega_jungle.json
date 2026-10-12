@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "sapling_2x2_grows_into_mega_jungle", 
+    "description": "With rapid random ticks a 2x2 block of jungle saplings grows into one large jungle tree with a four-block trunk. Uses the minecraft:random_tick_speed gamerule set to 1024 (default 3) and waits 400 ticks to speed up growth.", 
+    "tags": ["vegetation", "sapling", "growth", "random-tick", "tree", "mega-tree", "jungle"], 
+    "minecraftIds": ["minecraft:jungle_sapling", "minecraft:dirt", "minecraft:jungle_log"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-7, 0, -7], [7, 40, 7] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 1024
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-7, 0, -7], [7, 40, 7] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-6, 1, -6], [6, 40, 6] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"                      } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"                      } }, 
+                { "pos": [0, 0, 1], "block": {"id": "minecraft:dirt"                      } }, 
+                { "pos": [1, 0, 1], "block": {"id": "minecraft:dirt"                      } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:jungle_sapling", "stage": 0} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:jungle_sapling", "stage": 0} }, 
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:jungle_sapling", "stage": 0} }, 
+                { "pos": [1, 1, 1], "block": {"id": "minecraft:jungle_sapling", "stage": 0} }  
+            ]
+        }, 
+        {
+            "at": 400, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:jungle_log", "axis": "y"} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:jungle_log", "axis": "y"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:jungle_log", "axis": "y"} }, 
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:jungle_log", "axis": "y"} }, 
+                { "pos": [0, 1, 1], "is": {"id": "minecraft:jungle_log", "axis": "y"} }, 
+                { "pos": [0, 2, 1], "is": {"id": "minecraft:jungle_log", "axis": "y"} }, 
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:jungle_log", "axis": "y"} }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:jungle_log", "axis": "y"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
