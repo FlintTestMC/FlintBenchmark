@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "oak_leaves_no_torch_support", 
+    "description": "A torch cannot be placed on top of oak leaves because leaves have no support shape, so it is not placed or consumed, while the same torch stays placeable on stone.", 
+    "tags": ["vegetation", "leaves", "support", "torch", "placement", "player"], 
+    "minecraftIds": ["minecraft:oak_leaves", "minecraft:torch", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:torch", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                         } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_leaves", "persistent": true} }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:stone"                         } }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:stone"                         } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [3.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"              }                    }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:torch"            }                    }, 
+                {                   "is": {"id": "minecraft:torch", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

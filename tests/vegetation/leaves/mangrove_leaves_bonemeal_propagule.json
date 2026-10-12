@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "mangrove_leaves_bonemeal_propagule", 
+    "description": "Bone meal on mangrove leaves with air below grows a hanging propagule (age 0) there and is consumed; with a solid block below it does nothing and is not consumed.", 
+    "tags": ["vegetation", "leaves", "mangrove", "propagule", "bone-meal", "player"], 
+    "minecraftIds": [
+        "minecraft:mangrove_leaves"   , "minecraft:mangrove_propagule", "minecraft:bone_meal"         , 
+        "minecraft:stone"             
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:mangrove_leaves", "persistent": true} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:mangrove_leaves", "persistent": true} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:stone"                              } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:mangrove_propagule", "hanging": true, "age": 0} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:mangrove_leaves", "persistent": true} }          , 
+                { "is": {"id": "minecraft:bone_meal", "count": 1}, "slot": "hotbar1" }                         
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [4.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:stone"} }                                        , 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:mangrove_leaves", "persistent": true} }          , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:mangrove_propagule", "hanging": true, "age": 0} }, 
+                { "is": {"id": "minecraft:bone_meal", "count": 1}, "slot": "hotbar1" }                         
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "oak_leaves_distance_propagation", 
+    "description": "A log placed at the end of a row of non-persistent oak leaves gives them distance 1 through 7 along the row, and removing the log resets them all to 7.", 
+    "tags": ["vegetation", "leaves", "distance", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:oak_leaves", "minecraft:oak_log"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 2, 1] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [1, 1, 0], [8, 1, 0] ], 
+            "with": {"id": "minecraft:oak_leaves", "distance": 7, "persistent": false}
+        }, 
+        { "at": 3, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:oak_log", "axis": "y"} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 1, "persistent": false} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 2, "persistent": false} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 3, "persistent": false} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 4, "persistent": false} }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 5, "persistent": false} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 6, "persistent": false} }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 7, "persistent": false} }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 7, "persistent": false} }  
+            ]
+        }, 
+        { "at": 21, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 7} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 7} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 7} }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 7} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "mangrove_leaves_hanging_propagule_support", 
+    "description": "A hanging propagule stays under mangrove leaves, but breaks when the mangrove leaves are removed or replaced with oak leaves, since only mangrove leaves support hanging propagules.", 
+    "tags": ["vegetation", "leaves", "mangrove", "propagule", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:mangrove_leaves", "minecraft:mangrove_propagule", "minecraft:oak_leaves"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 2, 1] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:mangrove_leaves", "persistent": true}           }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:mangrove_leaves", "persistent": true}           }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:mangrove_leaves", "persistent": true}           }, 
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:mangrove_propagule", "hanging": true, "age": 0} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:mangrove_propagule", "hanging": true, "age": 0} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:mangrove_propagule", "hanging": true, "age": 0} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:mangrove_propagule", "hanging": true} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:mangrove_propagule", "hanging": true} }, 
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:mangrove_propagule", "hanging": true} }  
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [2, 1, 0] }, 
+        { "at": 4, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:oak_leaves", "persistent": true} }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:mangrove_propagule", "hanging": true, "age": 0} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:air"                                          } }, 
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:air"                                          } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "oak_leaves_waterlogged_no_flow", 
+    "description": "Waterlogged oak leaves keep their water inside: their full-cube collision shape stops the water from spreading into an adjacent air corridor, even after a neighbor update schedules a fluid tick.", 
+    "tags": ["vegetation", "leaves", "waterlogged", "fluid", "neighbor-update"], 
+    "minecraftIds": ["minecraft:oak_leaves", "minecraft:water", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [3, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [3, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [1, 1, 0], [2, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 2, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:oak_leaves", "persistent": true, "waterlogged": true}
+        }, 
+        { "at": 4, "do": "place", "pos": [-1, 1, 0], "block": {"id": "minecraft:oak_planks"} }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_leaves", "waterlogged": true} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"                            } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                            } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
