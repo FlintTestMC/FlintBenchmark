@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "allium_bonemeal_no_effect", 
+    "description": "Bone meal used on an allium does nothing: the allium stays, nothing grows around it and the bone meal is not consumed.", 
+    "tags": ["vegetation", "allium", "flower", "bone-meal", "player"], 
+    "minecraftIds": ["minecraft:allium", "minecraft:dirt", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [7, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:dirt"  } }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:allium"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [6.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [6, 0, 0], "is": {"id": "minecraft:dirt"                 }                    }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:allium"               }                    }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:air"                  }                    }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:air"                  }                    }, 
+                {                   "is": {"id": "minecraft:bone_meal", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

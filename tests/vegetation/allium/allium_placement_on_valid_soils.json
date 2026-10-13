@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "allium_placement_on_valid_soils", 
+    "description": "Survival placement of alliums on the top face of grass block, dirt, podzol, moss block, mud and farmland creates an allium on each and consumes all six items.", 
+    "tags": ["vegetation", "allium", "flower", "placement", "player"], 
+    "minecraftIds": [
+        "minecraft:allium"     , "minecraft:grass_block", "minecraft:dirt"       , "minecraft:podzol"     , 
+        "minecraft:moss_block" , "minecraft:mud"        , "minecraft:farmland"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:allium", "count": 6} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"       } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:podzol"     } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:moss_block" } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:mud"        } }, 
+                { "pos": [5, 0, 0], "block": {"id": "minecraft:farmland"   } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [3.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [5.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:allium"}                    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:allium"}                    }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:allium"}                    }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:allium"}                    }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:allium"}                    }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:allium"}                    }, 
+                {                   "is": "empty"                   , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
