@@ -1,0 +1,106 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Crimson Trapdoor Toggle And Redstone", 
+    "description": "A crimson trapdoor toggles open and closed by hand and opens/closes with a redstone signal. Representative of crimson and warped trapdoors, which differ from other wooden trapdoors only by lacking ignitedByLava; lava ignition is random and not testable deterministically, so it is not tested here.", 
+    "tags": ["trapdoor", "nether-wood", "interaction", "redstone"], 
+    "minecraftIds": ["minecraft:crimson_trapdoor"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }, 
+        "player": {"gamemode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id"     : "minecraft:crimson_trapdoor", 
+                        "facing" : "north"                     , 
+                        "half"   : "bottom"                    , 
+                        "open"   : "false"                     , 
+                        "powered": "false"                       
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id"     : "minecraft:crimson_trapdoor", 
+                        "facing" : "north"                     , 
+                        "half"   : "bottom"                    , 
+                        "open"   : "true"                      , 
+                        "powered": "false"                       
+                    }
+                }
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, -0.12, -1.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id"     : "minecraft:crimson_trapdoor", 
+                        "facing" : "north"                     , 
+                        "half"   : "bottom"                    , 
+                        "open"   : "false"                     , 
+                        "powered": "false"                       
+                    }
+                }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id"     : "minecraft:crimson_trapdoor", 
+                        "facing" : "north"                     , 
+                        "half"   : "bottom"                    , 
+                        "open"   : "true"                      , 
+                        "powered": "true"                        
+                    }
+                }
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [1, 1, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id"     : "minecraft:crimson_trapdoor", 
+                        "facing" : "north"                     , 
+                        "half"   : "bottom"                    , 
+                        "open"   : "false"                     , 
+                        "powered": "false"                       
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
