@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "powered_rail_ignores_activator_rail", 
+    "description": "A powered rail does not take power from a powered activator rail next to it, but does from a powered rail of its own type.", 
+    "tags": ["transportation", "powered-rail", "activator-rail", "redstone", "block-state"], 
+    "minecraftIds": [
+        "minecraft:powered_rail"  , "minecraft:activator_rail", "minecraft:redstone_block", "minecraft:stone"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 3, 5] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [4, 1, 0], [4, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:activator_rail"} }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 1], "block": {"id": "minecraft:powered_rail"} }, 
+        { "at": 1, "do": "place", "pos": [4, 2, 0], "block": {"id": "minecraft:powered_rail"} }, 
+        { "at": 1, "do": "place", "pos": [4, 2, 1], "block": {"id": "minecraft:powered_rail"} }, 
+        { "at": 2, "do": "place", "pos": [1, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        { "at": 2, "do": "place", "pos": [5, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:activator_rail", "powered": true } }, 
+                { "pos": [0, 2, 1], "is": {"id": "minecraft:powered_rail"  , "powered": false} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:powered_rail"  , "powered": true } }, 
+                { "pos": [4, 2, 1], "is": {"id": "minecraft:powered_rail"  , "powered": true } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

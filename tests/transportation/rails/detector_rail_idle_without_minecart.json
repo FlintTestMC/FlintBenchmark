@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "detector_rail_idle_without_minecart", 
+    "description": "A detector rail with no minecart on it stays unpowered, leaves an adjacent redstone lamp unlit, and is still idle 24 ticks later.", 
+    "tags": ["transportation", "detector-rail", "redstone", "block-state"], 
+    "minecraftIds": ["minecraft:detector_rail", "minecraft:redstone_lamp", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [1, 2, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:detector_rail"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:detector_rail", "powered": false} }
+            ]
+        }, 
+        {
+            "at": 25, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:detector_rail", "powered": false              } }, 
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:redstone_lamp",                   "lit": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
