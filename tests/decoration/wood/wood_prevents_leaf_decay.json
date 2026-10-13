@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "wood_prevents_leaf_decay", 
+    "description": "Oak wood placed beside a persistent oak leaf at distance 7 pulls the leaf distance down to 1, while a leaf with no wood beside it stays at distance 7.", 
+    "tags": ["decoration", "wood", "leaves", "leaf-decay", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:oak_wood", "minecraft:oak_leaves"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [7, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [7, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_leaves", "distance": 7, "persistent": true} }, 
+                { "pos": [7, 1, 0], "block": {"id": "minecraft:oak_leaves", "distance": 7, "persistent": true} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:oak_wood", "axis": "x"} }
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 1} }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:oak_leaves", "distance": 7} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
