@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "piston_pushes_amethyst_block", 
+    "description": "A piston powered by a redstone block pushes an amethyst block one block forward (normal push reaction) and its head takes the block's old position.", 
+    "tags": ["amethyst", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:amethyst_block", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston"        , "facing": "east", "extended": false} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:amethyst_block"                                     } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston"        , "facing": "east", "extended": false} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:amethyst_block"                                     } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                                                } }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": true}      }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east", "type": "normal"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:amethyst_block"}                                  }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

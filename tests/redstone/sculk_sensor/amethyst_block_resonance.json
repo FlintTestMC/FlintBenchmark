@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "amethyst_block_resonance", 
+    "description": "A sculk sensor activated next to an amethyst block makes the block re-emit the vibration, which activates a second sculk sensor out of the first sensor's own range of the original vibration.", 
+    "tags": ["amethyst", "sculk-sensor", "vibration", "resonance", "player"], 
+    "minecraftIds": ["minecraft:amethyst_block", "minecraft:sculk_sensor", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-4, 0, -1], [9, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:stone", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-4, 0, -1], [9, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:sculk_sensor"  } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:amethyst_block"} }, 
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:sculk_sensor"  } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [-2.5, 3, 0.5], "rot": [0, 90] }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:sculk_sensor", "sculk_sensor_phase": "inactive"} }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:sculk_sensor", "sculk_sensor_phase": "inactive"} }  
+            ]
+        }, 
+        {"at": 41, "do": "interact"}, 
+        {
+            "at": 42, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-3, 1, 0], "is": {"id": "minecraft:stone"} }
+            ]
+        }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:sculk_sensor", "sculk_sensor_phase": "active"} }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:sculk_sensor", "sculk_sensor_phase": "active", "power": 2} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
