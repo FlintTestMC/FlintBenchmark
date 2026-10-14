@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_melon_stem_washed_away_by_water", 
+    "description": "Flowing water replaces an attached melon stem because the stem does not block motion, while the melon beside it stays.", 
+    "tags": ["vegetation", "stem", "attached-stem", "melon", "water", "replacement"], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:melon", "minecraft:attached_melon_stem", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [2, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [2, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, 0], [1, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"                             } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:attached_melon_stem", "facing": "east"} }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [-1, 1, 0], "block": {"id": "minecraft:water", "level": 0} }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:melon"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

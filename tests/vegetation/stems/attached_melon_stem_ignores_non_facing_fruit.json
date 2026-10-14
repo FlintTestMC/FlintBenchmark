@@ -1,0 +1,65 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_melon_stem_ignores_non_facing_fruit", 
+    "description": "An attached melon stem only depends on the melon on its facing side: removing melons on its other three sides changes nothing, removing the facing melon reverts it.", 
+    "tags": ["vegetation", "stem", "attached-stem", "melon", "neighbor-update", "facing"], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:melon", "minecraft:melon_stem", "minecraft:attached_melon_stem"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [2, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [2, 2, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [1, 1, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:farmland"                             } }, 
+                { "pos": [ 1, 1,  0], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [-1, 1,  0], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [ 0, 1, -1], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [ 0, 1,  1], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:attached_melon_stem", "facing": "east"} }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [-1, 1, 0] }, 
+        { "at": 5, "do": "remove", "pos": [0, 1, -1] }, 
+        { "at": 5, "do": "remove", "pos": [0, 1, 1] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1,  0], "is": {"id": "minecraft:attached_melon_stem", "facing": "east"} }, 
+                { "pos": [ 1, 1,  0], "is": {"id": "minecraft:melon"                                } }, 
+                { "pos": [-1, 1,  0], "is": {"id": "minecraft:air"                                  } }, 
+                { "pos": [ 0, 1, -1], "is": {"id": "minecraft:air"                                  } }, 
+                { "pos": [ 0, 1,  1], "is": {"id": "minecraft:air"                                  } }  
+            ]
+        }, 
+        { "at": 6, "do": "remove", "pos": [1, 1, 0] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:melon_stem", "age": 7} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"                 } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
