@@ -1,0 +1,33 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "damaged_anvil_long_fall_destroyed", 
+    "description": "A damaged anvil dropped 25 blocks is destroyed on landing, leaving air where it would have settled.", 
+    "tags": ["world", "anvil", "falling-block", "damage"], 
+    "minecraftIds": ["minecraft:damaged_anvil", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 29, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 27, 0], "block": {"id": "minecraft:damaged_anvil", "facing": "south"} }, 
+        {
+            "at": 80, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 27, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [0,  2, 0], "is": {"id": "minecraft:air"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

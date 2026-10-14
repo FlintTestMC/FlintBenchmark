@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "anvil_one_block_fall_stays_intact", 
+    "description": "Anvils placed one block above the floor fall and land at the lower position as undamaged anvils with their facing unchanged, because a one-block fall deals no fall damage.", 
+    "tags": ["world", "anvil", "falling-block", "damage"], 
+    "minecraftIds": ["minecraft:anvil", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:anvil", "facing": "east"} }, 
+                { "pos": [2, 3, 0], "block": {"id": "minecraft:anvil", "facing": "east"} }, 
+                { "pos": [4, 3, 0], "block": {"id": "minecraft:anvil", "facing": "east"} }, 
+                { "pos": [6, 3, 0], "block": {"id": "minecraft:anvil", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"                    } }, 
+                { "pos": [2, 3, 0], "is": {"id": "minecraft:air"                    } }, 
+                { "pos": [4, 3, 0], "is": {"id": "minecraft:air"                    } }, 
+                { "pos": [6, 3, 0], "is": {"id": "minecraft:air"                    } }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:anvil", "facing": "east"} }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:anvil", "facing": "east"} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:anvil", "facing": "east"} }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:anvil", "facing": "east"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

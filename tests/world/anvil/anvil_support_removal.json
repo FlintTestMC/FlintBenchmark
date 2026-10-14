@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "anvil_support_removal", 
+    "description": "An anvil resting on a block stays in place until the block is removed, then falls one block onto the floor and stays an intact anvil.", 
+    "tags": ["world", "anvil", "falling-block", "neighbor-update", "support"], 
+    "minecraftIds": ["minecraft:anvil", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 5, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 2, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:anvil", "facing": "north"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:stone"                   } }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:anvil", "facing": "north"} }  
+            ]
+        }, 
+        { "at": 13, "do": "remove", "pos": [0, 2, 0] }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"                     } }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:anvil", "facing": "north"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

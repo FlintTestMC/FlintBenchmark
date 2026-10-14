@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "anvil_blocks_piston_push", 
+    "description": "A powered piston facing an anvil does not extend and the anvil stays put, while a control piston pushes a stone block.", 
+    "tags": ["world", "anvil", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:anvil", "minecraft:piston", "minecraft:redstone_block", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 3] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 1, 3] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:piston", "facing": "east" , "extended": false} }, 
+                { "pos": [1, 2, 0], "block": {"id": "minecraft:anvil" , "facing": "north"                   } }, 
+                { "pos": [0, 2, 2], "block": {"id": "minecraft:piston", "facing": "east" , "extended": false} }, 
+                { "pos": [1, 2, 2], "block": {"id": "minecraft:stone"                                       } }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:redstone_block"} }, 
+                { "pos": [0, 3, 2], "block": {"id": "minecraft:redstone_block"} }  
+            ]
+        }, 
+        {
+            "at": 15, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:piston", "extended": false                   } }, 
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:anvil" ,                    "facing": "north"} }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:air"                                         } }, 
+                { "pos": [0, 2, 2], "is": {"id": "minecraft:piston", "extended": true                    } }, 
+                { "pos": [2, 2, 2], "is": {"id": "minecraft:stone"                                       } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

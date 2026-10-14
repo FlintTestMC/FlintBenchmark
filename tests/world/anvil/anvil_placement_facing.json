@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "anvil_placement_facing", 
+    "description": "A survival player placing an anvil while facing each horizontal direction gives it the clockwise facing and consumes all four items.", 
+    "tags": ["world", "anvil", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:anvil"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [7, 6, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:anvil", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [180, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 4, 0.5], "rot": [-90, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [6.5, 4, 0.5], "rot": [90, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:anvil", "facing": "east"}                     }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:anvil", "facing": "south"}                    }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:anvil", "facing": "west"}                     }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:anvil", "facing": "north"}                    }, 
+                {                   "is": "empty"                                     , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
