@@ -1,0 +1,65 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_stem_reverts_for_carved_pumpkin_variants", 
+    "description": "Replacing the faced pumpkin of an attached pumpkin stem with a carved pumpkin or jack o'lantern reverts the stem, since only minecraft:pumpkin counts as its fruit.", 
+    "tags": ["vegetation", "stem", "attached-stem", "pumpkin", "neighbor-update", "reversion", "carved-pumpkin"], 
+    "minecraftIds": [
+        "minecraft:farmland"             , "minecraft:pumpkin"              , "minecraft:carved_pumpkin"       , 
+        "minecraft:jack_o_lantern"       , "minecraft:attached_pumpkin_stem", "minecraft:pumpkin_stem"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [5, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:carved_pumpkin"} }, 
+        { "at": 5, "do": "place", "pos": [5, 1, 0], "block": {"id": "minecraft:jack_o_lantern"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:pumpkin_stem"  , "age": 7} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:pumpkin_stem"  , "age": 7} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:carved_pumpkin"          } }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:jack_o_lantern"          } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

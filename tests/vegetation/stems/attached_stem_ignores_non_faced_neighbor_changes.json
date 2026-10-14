@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_stem_ignores_non_faced_neighbor_changes", 
+    "description": "Removing pumpkins on the north, south and west sides of an east-facing attached pumpkin stem leaves the stem and its facing unchanged.", 
+    "tags": ["vegetation", "stem", "attached-stem", "pumpkin", "neighbor-update", "facing"], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:pumpkin", "minecraft:attached_pumpkin_stem"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [1, 1, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [ 1, 1,  0], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [ 0, 1, -1], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [ 0, 1,  1], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [-1, 1,  0], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [0, 1, -1] }, 
+        { "at": 5, "do": "remove", "pos": [0, 1, 1] }, 
+        { "at": 5, "do": "remove", "pos": [-1, 1, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1,  0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }, 
+                { "pos": [ 1, 1,  0], "is": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [ 0, 1, -1], "is": {"id": "minecraft:air"                                    } }, 
+                { "pos": [ 0, 1,  1], "is": {"id": "minecraft:air"                                    } }, 
+                { "pos": [-1, 1,  0], "is": {"id": "minecraft:air"                                    } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
