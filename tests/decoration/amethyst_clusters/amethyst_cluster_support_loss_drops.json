@@ -1,0 +1,39 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "amethyst_cluster_support_loss_drops", 
+    "description": "An amethyst cluster that breaks because its support was removed drops exactly two amethyst shards as a single item entity.", 
+    "tags": ["decoration", "amethyst-cluster", "support", "drops", "item"], 
+    "minecraftIds": ["minecraft:amethyst_cluster", "minecraft:amethyst_shard", "minecraft:item", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-4, 0, -4], [4, 3, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:amethyst_cluster", "facing": "up"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [ {"is": "minecraft:item", "exists": false} ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"} }                                         , 
+                {"is": "minecraft:item", "count": 1, "Item.id": "minecraft:amethyst_shard", "Item.count": 2}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
