@@ -1,0 +1,83 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "Wall Post Override Torch", 
+    "description": "A torch on top of a straight wall raises its post and removing it lowers the post again, while a block with no collision outside the override tag does not raise it.", 
+    "tags": ["wall", "connectible", "block-state", "neighbor-update", "torch"], 
+    "minecraftIds": ["minecraft:cobblestone_wall", "minecraft:torch", "minecraft:light"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [2, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:light"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "none"                      , 
+                        "east" : "low"                       , 
+                        "west" : "low"                       , 
+                        "up"   : "false"                       
+                    }
+                }
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 3, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:torch"} }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:torch"} }, 
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "none"                      , 
+                        "east" : "low"                       , 
+                        "west" : "low"                       , 
+                        "up"   : "true"                        
+                    }
+                }
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "none"                      , 
+                        "east" : "low"                       , 
+                        "west" : "low"                       , 
+                        "up"   : "false"                       
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

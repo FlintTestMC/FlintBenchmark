@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "Wall Player Placement", 
+    "description": "A wall placed by the player with the item connects low to a neighbouring wall and a solid block, and has no post.", 
+    "tags": ["wall", "connectible", "placement", "player"], 
+    "minecraftIds": ["minecraft:cobblestone_wall", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [2, 3, 2] ]
+        }, 
+        "player": {
+            "game_mode": "Creative", 
+            "inventory": { "hotbar1": {"id": "minecraft:cobblestone_wall", "count": 1} }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, -1, 0], "block": {"id": "minecraft:stone"           } }, 
+                { "pos": [-1,  0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 1,  0, 0], "block": {"id": "minecraft:stone"           } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:cobblestone_wall"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:cobblestone_wall", 
+                        "north"      : "none"                      , 
+                        "south"      : "none"                      , 
+                        "east"       : "low"                       , 
+                        "west"       : "low"                       , 
+                        "up"         : "false"                     , 
+                        "waterlogged": "false"                       
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
