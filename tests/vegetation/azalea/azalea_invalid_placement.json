@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "azalea_invalid_placement", 
+    "description": "An azalea cannot be planted on top of stone or sand, so nothing is placed and the item is not consumed.", 
+    "tags": ["vegetation", "azalea", "placement", "support", "player"], 
+    "minecraftIds": ["minecraft:azalea", "minecraft:stone", "minecraft:sand"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [1, 4, 3] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [1, 4, 3] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [1, 4, 3] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 2.5], "rot": [180, 39] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:azalea"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"               }                    }, 
+                {                   "is": {"id": "minecraft:azalea", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [1.5, 1, 2.5], "rot": [180, 39] }, 
+        {"at": 4, "do": "interact", "item": "minecraft:azalea"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"               }                    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"               }                    }, 
+                {                   "is": {"id": "minecraft:azalea", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

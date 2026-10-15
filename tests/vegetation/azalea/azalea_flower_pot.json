@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "azalea_flower_pot", 
+    "description": "Using an azalea item on an empty flower pot turns it into a potted azalea bush and consumes the item.", 
+    "tags": ["vegetation", "azalea", "flower-pot", "player"], 
+    "minecraftIds": ["minecraft:azalea", "minecraft:flower_pot", "minecraft:potted_azalea_bush"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [0, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [0, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:flower_pot"} }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:azalea"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:potted_azalea_bush"}                    }, 
+                {                   "is": "empty"                               , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

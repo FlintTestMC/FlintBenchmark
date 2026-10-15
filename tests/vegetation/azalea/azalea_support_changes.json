@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "azalea_support_changes", 
+    "description": "An azalea breaks when its supporting block is removed or replaced by stone, but survives when it is replaced by another valid support such as clay.", 
+    "tags": ["vegetation", "azalea", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:azalea", "minecraft:dirt", "minecraft:clay", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [6, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [6, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [6, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"  } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:dirt"  } }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:dirt"  } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:azalea"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:azalea"} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:azalea"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:azalea"} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:azalea"} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:azalea"} }  
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 0, 0] }, 
+        { "at": 3, "do": "place", "pos": [3, 0, 0], "block": {"id": "minecraft:clay"} }, 
+        { "at": 3, "do": "place", "pos": [6, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:azalea"} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:air"   } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
