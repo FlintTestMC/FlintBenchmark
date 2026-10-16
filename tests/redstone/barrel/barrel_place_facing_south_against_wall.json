@@ -1,0 +1,29 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:barrel", "minecraft:stone"], 
+    "name": "Barrel Place Facing South Against Wall", 
+    "description": "A survival player looking north at a wall places a barrel against it, and the barrel faces back toward the player (south).", 
+    "tags": ["block-entity", "container", "barrel", "placement", "block-state", "player"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -2], [0, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, -2], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [180, 0] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:barrel"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, -2], "is": {"id": "minecraft:stone"} }                                   , 
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:barrel", "facing": "south", "open": false} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                         
+            ]
+        }
+    ]
+}
+

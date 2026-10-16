@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:barrel", "minecraft:cobblestone", "minecraft:diamond"], 
+    "name": "Barrel Keeps Items", 
+    "description": "A barrel placed with item NBT keeps each stack in its slot, including the last of its 27 slots, and leaves unused slots empty.", 
+    "tags": ["block-entity", "container", "barrel", "inventory", "nbt"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:barrel", 
+                "facing": "up", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, count: 5, id: \"minecraft:cobblestone\"}, {Slot: 26b, count: 1, id: \"minecraft:diamond\"}]"
+                }
+            }
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:barrel", 
+                        "facing": "up", 
+                        "open": false, 
+                        "nbt": {
+                            "Items[0].id": "minecraft:cobblestone", 
+                            "Items[0].count": 5, 
+                            "Items[0].Slot": "0b", 
+                            "Items[1].id": "minecraft:diamond", 
+                            "Items[1].count": 1, 
+                            "Items[1].Slot": "26b"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+
