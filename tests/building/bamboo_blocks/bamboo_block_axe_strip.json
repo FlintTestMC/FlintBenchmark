@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_block_axe_strip", 
+    "description": "Using an axe on a bamboo block turns it into a stripped bamboo block and keeps its axis for x, y and z.", 
+    "tags": ["building", "bamboo-block", "stripped-bamboo-block", "axe", "strip", "player"], 
+    "minecraftIds": ["minecraft:bamboo_block", "minecraft:stripped_bamboo_block", "minecraft:iron_axe"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 2, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:iron_axe", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Creative"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                    } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:stone"                    } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:stone"                    } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:bamboo_block", "axis": "y"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:bamboo_block", "axis": "x"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:bamboo_block", "axis": "z"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:stripped_bamboo_block", "axis": "y"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:stripped_bamboo_block", "axis": "x"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:stripped_bamboo_block", "axis": "z"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

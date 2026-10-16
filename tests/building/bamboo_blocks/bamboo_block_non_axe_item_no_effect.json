@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_block_non_axe_item_no_effect", 
+    "description": "Using a stick or an iron shovel on a bamboo block changes nothing: the block stays a bamboo block and keeps its axis.", 
+    "tags": ["building", "bamboo-block", "item-use", "player"], 
+    "minecraftIds": ["minecraft:bamboo_block", "minecraft:stick", "minecraft:iron_shovel"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 2, 0] ]
+        }, 
+        "player": {
+            "inventory": {
+                "hotbar1": {"id": "minecraft:stick"      , "count": 1}, 
+                "hotbar2": {"id": "minecraft:iron_shovel", "count": 1}  
+            }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Creative"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                    } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:stone"                    } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:bamboo_block", "axis": "y"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:bamboo_block", "axis": "x"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {"at": 2, "do": "select_hotbar", "slot": 2}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:bamboo_block", "axis": "y"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:bamboo_block", "axis": "x"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
