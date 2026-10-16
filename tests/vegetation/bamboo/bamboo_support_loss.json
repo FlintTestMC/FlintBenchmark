@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_support_loss", 
+    "description": "A bamboo column breaks from the bottom up once its supporting dirt is removed, and the broken stalks drop bamboo items.", 
+    "tags": ["vegetation", "bamboo", "support", "neighbor-update", "drops"], 
+    "minecraftIds": ["minecraft:bamboo", "minecraft:dirt", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 6, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [0, 6, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:bamboo", "age": 0} }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:bamboo", "age": 0} }, 
+        { "at": 1, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:bamboo", "age": 0} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:bamboo"} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo"} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:bamboo"} }  
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:bamboo"} }  
+            ]
+        }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"}                                                }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"}                                                }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"}                                                }, 
+                {                   "is": "minecraft:item"       , "exists": true, "Item.id": "minecraft:bamboo" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

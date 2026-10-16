@@ -1,0 +1,89 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_bonemeal_rejected", 
+    "description": "Bone meal has no effect on bamboo whose top stalk has stage 1, whose growth space is blocked by a solid block, or that is already 16 blocks tall, and the bone meal is not consumed.", 
+    "tags": ["vegetation", "bamboo", "bone-meal", "stage", "max-height", "player"], 
+    "minecraftIds": ["minecraft:bamboo", "minecraft:dirt", "minecraft:stone", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -2], [4, 19, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -2], [4, 19, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"                                           } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:dirt"                                           } }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:dirt"                                           } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:bamboo", "age": 0, "leaves": "large", "stage": 1} }, 
+                { "pos": [2, 2, 0], "block": {"id": "minecraft:bamboo", "age": 0, "leaves": "large", "stage": 0} }, 
+                { "pos": [2, 3, 0], "block": {"id": "minecraft:stone"                                          } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [4, 2, 0], [4, 16, 0] ], 
+            "with": {"id": "minecraft:bamboo", "age": 1, "leaves": "none", "stage": 0}
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [4, 17, 0], 
+            "block": {"id": "minecraft:bamboo", "age": 1, "leaves": "large", "stage": 0}
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:bone_meal"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo", "age": 0, "leaves": "large", "stage": 1} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"} }                                            , 
+                { "slot": "hotbar1", "is": {"id": "minecraft:bone_meal"} }                                       
+            ]
+        }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 0.88, -1.5], "rot": [0, 0] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:bone_meal"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:bamboo", "age": 0, "leaves": "large", "stage": 0} }, 
+                { "pos": [2, 3, 0], "is": {"id": "minecraft:stone"} }                                          , 
+                { "pos": [2, 4, 0], "is": {"id": "minecraft:air"} }                                            , 
+                { "slot": "hotbar1", "is": {"id": "minecraft:bone_meal"} }                                       
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [4.5, 19, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact", "item": "minecraft:bone_meal"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [4, 17, 0], "is": {"id": "minecraft:bamboo", "age": 1, "leaves": "large", "stage": 0} }, 
+                { "pos": [4, 18, 0], "is": {"id": "minecraft:air"} }                                            , 
+                { "slot": "hotbar1", "is": {"id": "minecraft:bone_meal"} }                                        
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
