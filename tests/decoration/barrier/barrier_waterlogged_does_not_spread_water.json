@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:barrier"], 
+    "name": "Barrier Waterlogged Does Not Spread Water", 
+    "description": "A waterlogged barrier schedules a water tick on a neighbour update, but its full-cube collision shape stops the water from flowing into adjacent air.", 
+    "tags": ["decoration", "barrier", "waterlogged", "fluid", "neighbor-update"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                       } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:stone"                       } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:stone"                       } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:barrier", "waterlogged": true} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 2, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:barrier", "waterlogged": true} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                         } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                         } }  
+            ]
+        }
+    ]
+}
+

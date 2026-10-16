@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:barrier", "minecraft:piston"], 
+    "name": "Barrier Blocks Piston", 
+    "description": "A powered piston does not extend into a barrier, while the same setup with stone extends and pushes it.", 
+    "tags": ["decoration", "barrier", "piston", "push-reaction"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 0, 3] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:piston" , "facing": "east"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:barrier"                  } }, 
+                { "pos": [0, 0, 2], "block": {"id": "minecraft:piston" , "facing": "east"} }, 
+                { "pos": [1, 0, 2], "block": {"id": "minecraft:stone"                    } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 1], "block": {"id": "minecraft:redstone_block"} }, 
+                { "pos": [0, 0, 3], "block": {"id": "minecraft:redstone_block"} }  
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:piston" , "extended": false} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:barrier"                   } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:air"                       } }, 
+                { "pos": [0, 0, 2], "is": {"id": "minecraft:piston" , "extended": true } }, 
+                { "pos": [2, 0, 2], "is": {"id": "minecraft:stone"                     } }  
+            ]
+        }
+    ]
+}
+
