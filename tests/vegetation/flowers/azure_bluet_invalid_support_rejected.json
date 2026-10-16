@@ -1,0 +1,59 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "azure_bluet_invalid_support_rejected", 
+    "description": "Azure bluets used on the top of stone, sand and glass are not placed and no item is consumed.", 
+    "tags": ["vegetation", "flower", "azure_bluet", "placement", "support", "player"], 
+    "minecraftIds": ["minecraft:azure_bluet", "minecraft:stone", "minecraft:sand", "minecraft:glass"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:azure_bluet", "count": 3} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [4, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:sand" } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:glass"} }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                {                   "is": {"id": "minecraft:azure_bluet", "count": 3}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
