@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "lava_flow_onto_soul_soil_basalt", 
+    "description": "Lava flowing from a walled-in source onto a soul soil block beside blue ice becomes basalt, while the source stays lava.", 
+    "tags": ["fluids", "lava", "basalt", "blue-ice", "soul-soil", "flow", "basalt-generator"], 
+    "minecraftIds": ["minecraft:basalt", "minecraft:lava", "minecraft:soul_soil", "minecraft:blue_ice"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, 0], [3, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, 0], [3, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0, 2], "block": {"id": "minecraft:soul_soil"} }, 
+                { "pos": [ 1, 1, 2], "block": {"id": "minecraft:blue_ice" } }, 
+                { "pos": [-1, 1, 1], "block": {"id": "minecraft:stone"    } }, 
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:stone"    } }, 
+                { "pos": [ 1, 1, 1], "block": {"id": "minecraft:stone"    } }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 1], "block": {"id": "minecraft:lava", "level": 0} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 1], "is": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:air"             } }  
+            ]
+        }, 
+        {
+            "at": 45, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 1], "is": {"id": "minecraft:lava"  , "level": 0             } }, 
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:basalt",             "axis": "y"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
