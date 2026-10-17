@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bell_redstone_power_state", 
+    "description": "A bell becomes powered when a redstone block is placed next to it and unpowered again when the block is removed, keeping its facing and attachment.", 
+    "tags": ["decoration", "bell", "redstone", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:bell", "minecraft:stone", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:bell", "attachment": "floor", "facing": "east"}
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:bell", "attachment": "floor", "facing": "east", "powered": false}
+                }
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:bell", "attachment": "floor", "facing": "east", "powered": true}
+                }
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [1, 1, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:bell", "attachment": "floor", "facing": "east", "powered": false}
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

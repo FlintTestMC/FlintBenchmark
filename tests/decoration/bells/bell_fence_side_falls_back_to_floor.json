@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bell_fence_side_falls_back_to_floor", 
+    "description": "Clicking the side of a fence post, which cannot hold a wall bell, places a floor bell on the solid block below the target position, facing away from the clicked face.", 
+    "tags": ["decoration", "bell", "placement", "block-state", "player", "fence"], 
+    "minecraftIds": ["minecraft:bell", "minecraft:oak_fence", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bell", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"    } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:stone"    } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_fence"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [3.5, 0, 0.5], "rot": [90, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_fence"} }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "is": {"id": "minecraft:bell", "attachment": "floor", "facing": "west", "powered": false}
+                }, 
+                { "is": {"id": "minecraft:air", "count": 0}, "slot": "hotbar1" }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
