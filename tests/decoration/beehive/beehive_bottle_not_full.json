@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:beehive", "minecraft:glass_bottle"], 
+    "name": "Beehive Bottle Not Full", 
+    "description": "Using a glass bottle on a beehive below honey level 5 changes nothing and gives no honey bottle.", 
+    "tags": ["beehive", "glass-bottle", "interaction", "edge-case"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:beehive", "honey_level": 4, "facing": "east"}
+        }, 
+        {"at": 1, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:glass_bottle", "count": 1}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:beehive", "honey_level": 4, "facing": "east"} }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:glass_bottle"} }                              , 
+                {"slot": "hotbar2", "is": "empty"}                                                           
+            ]
+        }
+    ]
+}
+

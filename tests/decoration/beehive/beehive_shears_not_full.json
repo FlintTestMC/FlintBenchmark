@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:beehive", "minecraft:shears"], 
+    "name": "Beehive Shears Not Full", 
+    "description": "Using shears on a beehive below honey level 5 changes nothing and drops no honeycomb.", 
+    "tags": ["beehive", "shears", "interaction", "edge-case"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:beehive", "honey_level": 4, "facing": "east"}
+        }, 
+        {"at": 1, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:shears", "count": 1}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:beehive", "honey_level": 4, "facing": "east"} }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:shears"} }                                    , 
+                {"is": "minecraft:item", "exists": false}                                                    
+            ]
+        }
+    ]
+}
+
