@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "beetroot_seed_placement", 
+    "description": "Beetroot seeds planted on farmland create age-zero beetroots and consume the seed.", 
+    "tags": ["vegetation", "crop", "beetroots", "placement", "player"], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:beetroot_seeds", "minecraft:beetroots"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 3
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 0.5], "rot": [0, 90] }, 
+        { "at": 6, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"} }, 
+        {"at": 8, "do": "interact", "item": "minecraft:beetroot_seeds"}, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:farmland"}                               }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:beetroots", "age": 0}                    }, 
+                {                   "is": "empty"                                , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

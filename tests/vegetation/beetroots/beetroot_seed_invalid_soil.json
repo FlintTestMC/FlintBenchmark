@@ -1,0 +1,68 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "beetroot_seed_invalid_soil", 
+    "description": "Beetroot seeds cannot be planted on dirt, grass or stone; nothing is placed and the seed is kept.", 
+    "tags": ["vegetation", "crop", "beetroots", "placement", "support", "player"], 
+    "minecraftIds": [
+        "minecraft:dirt"          , "minecraft:grass_block"   , "minecraft:stone"         , "minecraft:beetroot_seeds", 
+        "minecraft:beetroots"     
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 3
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [4, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"       } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:stone"      } }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact", "item": "minecraft:beetroot_seeds"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact", "item": "minecraft:beetroot_seeds"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact", "item": "minecraft:beetroot_seeds"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [2.5, 5, 0.5] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                       }                    }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                       }                    }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"                       }                    }, 
+                {                   "is": {"id": "minecraft:beetroot_seeds", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

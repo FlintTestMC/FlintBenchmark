@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "beetroot_random_tick_growth", 
+    "description": "At the default random tick speed, age-zero beetroots on watered farmland under open sky grow to age three through random ticks alone.", 
+    "tags": ["vegetation", "crop", "beetroots", "growth", "random-tick"], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:water", "minecraft:beetroots"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 4, 1] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 3
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [2, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 1] ], 
+            "with": {"id": "minecraft:farmland", "moisture": 7}
+        }, 
+        { "at": 4, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 4, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:beetroots", "age": 0} }, 
+        {
+            "at": [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000], 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:farmland"} }
+            ]
+        }, 
+        {
+            "at": 100000, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:farmland"           } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:beetroots", "age": 3} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

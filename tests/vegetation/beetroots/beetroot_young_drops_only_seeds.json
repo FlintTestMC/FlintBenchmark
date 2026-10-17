@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "beetroot_young_drops_only_seeds", 
+    "description": "Young beetroots pushed by a piston drop a single item stack of beetroot seeds and no beetroot.", 
+    "tags": ["vegetation", "crop", "beetroots", "drops", "piston"], 
+    "minecraftIds": [
+        "minecraft:farmland"      , "minecraft:beetroots"     , "minecraft:piston"        , "minecraft:item"          , 
+        "minecraft:beetroot"      , "minecraft:beetroot_seeds", "minecraft:redstone_block"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 3
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"} }, 
+        { "at": 4, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:beetroots", "age": 1} }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 12, 0.5] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:beetroots", "age": 1}                  }, 
+                {                   "is": "minecraft:item"                       , "exists": false }  
+            ]
+        }, 
+        { "at": 8, "do": "place", "pos": [-1, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        { "at": 4, "do": "place", "pos": [-1, 1, 0], "block": {"id": "minecraft:piston", "facing": "east"} }, 
+        {
+            "at": 16, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston_head"} }                    , 
+                {"is": "minecraft:item", "exists": true, "count": 1}                           , 
+                {"is": "minecraft:item", "exists": true, "Item.id": "minecraft:beetroot_seeds"}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
