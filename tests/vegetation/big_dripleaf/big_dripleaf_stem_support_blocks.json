@@ -1,0 +1,126 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "big_dripleaf_stem_support_blocks", 
+    "description": "A big dripleaf stem with a leaf above survives on every block in the big dripleaf support tag and on top of another stem, keeping its facing.", 
+    "tags": ["vegetation", "big-dripleaf", "stem", "support"], 
+    "minecraftIds": [
+        "minecraft:big_dripleaf_stem"   , "minecraft:big_dripleaf"        , "minecraft:dirt"                , 
+        "minecraft:grass_block"         , "minecraft:podzol"              , "minecraft:coarse_dirt"         , 
+        "minecraft:mycelium"            , "minecraft:rooted_dirt"         , "minecraft:moss_block"          , 
+        "minecraft:mud"                 , "minecraft:muddy_mangrove_roots", "minecraft:farmland"            , 
+        "minecraft:clay"                
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [12, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [12, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:dirt"                                   } }, 
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 0, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:grass_block"                            } }, 
+                { "pos": [ 1, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 1, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [ 2, 0, 0], "block": {"id": "minecraft:podzol"                                 } }, 
+                { "pos": [ 2, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 2, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [ 3, 0, 0], "block": {"id": "minecraft:coarse_dirt"                            } }, 
+                { "pos": [ 3, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 3, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [ 4, 0, 0], "block": {"id": "minecraft:mycelium"                               } }, 
+                { "pos": [ 4, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 4, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [ 5, 0, 0], "block": {"id": "minecraft:rooted_dirt"                            } }, 
+                { "pos": [ 5, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 5, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [ 6, 0, 0], "block": {"id": "minecraft:moss_block"                             } }, 
+                { "pos": [ 6, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 6, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [ 7, 0, 0], "block": {"id": "minecraft:mud"                                    } }, 
+                { "pos": [ 7, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 7, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [ 8, 0, 0], "block": {"id": "minecraft:muddy_mangrove_roots"                   } }, 
+                { "pos": [ 8, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 8, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [ 9, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [ 9, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [ 9, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [10, 0, 0], "block": {"id": "minecraft:clay"                                   } }, 
+                { "pos": [10, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "east" } }, 
+                { "pos": [10, 2, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "east" } }, 
+                { "pos": [11, 0, 0], "block": {"id": "minecraft:dirt"                                   } }, 
+                { "pos": [11, 1, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "south"} }, 
+                { "pos": [11, 2, 0], "block": {"id": "minecraft:big_dripleaf_stem"   , "facing": "south"} }, 
+                { "pos": [11, 3, 0], "block": {"id": "minecraft:big_dripleaf"        , "facing": "south"} }  
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [3, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [4, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [5, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [6, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [7, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [8, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [9, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                {
+                    "pos": [10, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                { "pos": [11, 1, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"} }, 
+                { "pos": [11, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south"} }, 
+                { "pos": [11, 3, 0], "is": {"id": "minecraft:big_dripleaf"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

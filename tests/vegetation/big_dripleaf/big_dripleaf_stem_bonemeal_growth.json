@@ -1,0 +1,76 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "big_dripleaf_stem_bonemeal_growth", 
+    "description": "Bone meal on a stem turns the top leaf into a stem, adds a new leaf above it with the clicked stem's facing, and consumes one bone meal.", 
+    "tags": ["vegetation", "big-dripleaf", "stem", "bone-meal", "growth", "player"], 
+    "minecraftIds": ["minecraft:big_dripleaf_stem", "minecraft:big_dripleaf", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 6, 3] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 3} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 6, 3] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 1, 3] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"                                } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [0, 4, 0], "block": {"id": "minecraft:big_dripleaf"     , "facing": "north"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:dirt"                                } }, 
+                { "pos": [3, 2, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "east" } }, 
+                { "pos": [3, 3, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "east" } }, 
+                { "pos": [3, 4, 0], "block": {"id": "minecraft:big_dripleaf"     , "facing": "north"} }  
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 2.5], "rot": [180, 0] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "north"} }     , 
+                { "pos": [3, 4, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "north"} }     , 
+                { "pos": [3, 5, 0], "is": {"id": "minecraft:air"} }                                 , 
+                { "slot": "hotbar1", "is": {"id": "minecraft:bone_meal", "count": 2} }                
+            ]
+        }, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [3.25, 2, 2.5], "rot": [180, 0] }, 
+        {"at": 9, "do": "interact"}, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "north"} }     , 
+                { "pos": [3, 3, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east"} } , 
+                { "pos": [3, 4, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east"} } , 
+                { "pos": [3, 5, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "east"} }      , 
+                { "slot": "hotbar1", "is": {"id": "minecraft:bone_meal", "count": 1} }                
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "big_dripleaf_stem_formed_by_stacking_leaf", 
+    "description": "Placing a big dripleaf item on top of a leaf turns the lower leaf into a stem that keeps its facing and gives the new leaf the same facing, while a leaf placed on dirt faces away from the player.", 
+    "tags": ["vegetation", "big-dripleaf", "stem", "placement", "player"], 
+    "minecraftIds": ["minecraft:big_dripleaf_stem", "minecraft:big_dripleaf", "minecraft:dirt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 5, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:big_dripleaf", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 5, 2] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"                          } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "east"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:dirt"                          } }  
+            ]
+        }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [3.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dirt"} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": "false"}
+                }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "east", "waterlogged": "false"} }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "waterlogged": "false"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
