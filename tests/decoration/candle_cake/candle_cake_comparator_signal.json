@@ -1,0 +1,37 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Candle Cake Comparator Signal", 
+    "description": "A comparator reading a candle cake outputs the full cake signal of 14.", 
+    "tags": ["decoration", "candle_cake", "redstone", "comparator"], 
+    "minecraftIds": ["minecraft:candle_cake", "minecraft:comparator", "minecraft:redstone_wire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                                        } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:stone"                                        } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:stone"                                        } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:candle_cake"  , "lit": false                  } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:comparator"   ,               "facing": "west"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:redstone_wire"                                } }  
+            ]
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:redstone_wire", "power": 14} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

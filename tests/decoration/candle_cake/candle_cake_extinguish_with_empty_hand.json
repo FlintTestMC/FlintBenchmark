@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Candle Cake Extinguish With Empty Hand", 
+    "description": "Clicking the candle part of a lit candle cake with an empty hand puts it out; the block stays a candle cake.", 
+    "tags": ["decoration", "candle_cake", "candle", "interaction"], 
+    "minecraftIds": ["minecraft:candle_cake"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 3, 0] ]
+        }, 
+        "player": {"game_mode": "Creative"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                   } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:candle_cake", "lit": true} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:candle_cake", "lit": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

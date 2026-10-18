@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Candle Cake Dispenser Flint And Steel Lights", 
+    "description": "A powered dispenser holding flint and steel lights the unlit candle cake in front of it.", 
+    "tags": ["decoration", "candle_cake", "redstone", "dispenser", "flint_and_steel"], 
+    "minecraftIds": [
+        "minecraft:candle_cake"    , "minecraft:dispenser"      , "minecraft:flint_and_steel", 
+        "minecraft:redstone_block" 
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:candle_cake", "lit": false} }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "west", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:flint_and_steel\"}]"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:candle_cake", "lit": false} }
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:candle_cake", "lit": true} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Candle Cake Candle On Bitten Cake", 
+    "description": "Using a candle on a cake that has been bitten does not create a candle cake; the click falls through to eating another bite.", 
+    "tags": ["decoration", "candle_cake", "cake", "candle", "interaction"], 
+    "minecraftIds": ["minecraft:candle_cake", "minecraft:cake", "minecraft:candle"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {
+            "game_mode": "Creative", 
+            "inventory": { "hotbar1": {"id": "minecraft:candle", "count": 1} }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"            } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:cake" , "bites": 1} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:candle"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:cake"  , "bites": 2            }                    }, 
+                {                   "is": {"id": "minecraft:candle",             "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

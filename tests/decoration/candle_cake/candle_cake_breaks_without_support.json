@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Candle Cake Breaks Without Support", 
+    "description": "Removing the solid block under a candle cake turns it into air and drops its candle.", 
+    "tags": ["decoration", "candle_cake", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:candle_cake"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 3, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                    } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:candle_cake", "lit": false} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:candle_cake"} }
+            ]
+        }, 
+        { "at": 1, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }                                , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:candle"}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
