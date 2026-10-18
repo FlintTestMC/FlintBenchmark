@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "banner_wall_post_override", 
+    "description": "A standing banner on top of the middle of a straight wall forces the wall post up, and removing the banner lets the post drop back down.", 
+    "tags": ["decoration", "banner", "wall", "connectible", "neighbor-update"], 
+    "minecraftIds": ["minecraft:red_banner", "minecraft:cobblestone_wall"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 0, 0], 
+                    "is": {"id": "minecraft:cobblestone_wall", "up": false, "east": "low", "west": "low"}
+                }
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:red_banner"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:red_banner"} }, 
+                {
+                    "pos": [1, 0, 0], 
+                    "is": {"id": "minecraft:cobblestone_wall", "up": true, "east": "low", "west": "low"}
+                }
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [1, 1, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:cobblestone_wall", "up": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

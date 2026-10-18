@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "banner_support_loss", 
+    "description": "A standing banner breaks and drops itself when the block below is removed, a wall banner breaks and drops itself when the block behind it is removed, and removing an unrelated adjacent block leaves a wall banner in place.", 
+    "tags": ["decoration", "banner", "wall-banner", "support", "neighbor-update", "drops"], 
+    "minecraftIds": ["minecraft:red_banner", "minecraft:red_wall_banner", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [8, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [4.5, 8, 8.5] }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                                            } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:red_banner"     , "rotation": 4                   } }, 
+                { "pos": [4, 1, 1], "block": {"id": "minecraft:stone"                                            } }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:red_wall_banner",                "facing": "north"} }, 
+                { "pos": [8, 1, 1], "block": {"id": "minecraft:stone"                                            } }, 
+                { "pos": [7, 1, 0], "block": {"id": "minecraft:stone"                                            } }, 
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:red_wall_banner",                "facing": "north"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:red_banner", "rotation": 4}                           }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:red_wall_banner", "facing": "north"}                  }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:red_wall_banner", "facing": "north"}                  }, 
+                {                   "is": "minecraft:item"                                      , "exists": false }  
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, 0] }, 
+        { "at": 2, "do": "remove", "pos": [4, 1, 1] }, 
+        { "at": 2, "do": "remove", "pos": [7, 1, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }                               , 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"} }                               , 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:red_wall_banner", "facing": "north"} }, 
+                {"is": "minecraft:item", "count": 2, "Item.id": "minecraft:red_banner"}             
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
