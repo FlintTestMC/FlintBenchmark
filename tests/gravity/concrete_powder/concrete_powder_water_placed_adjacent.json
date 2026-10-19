@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "concrete_powder_water_placed_adjacent", 
+    "description": "Concrete powder turns into concrete when a water source appears beside it or above it, but not when lava appears beside it.", 
+    "tags": ["gravity", "concrete-powder", "water", "lava", "neighbor-update"], 
+    "minecraftIds": [
+        "minecraft:white_concrete_powder", "minecraft:white_concrete"       , "minecraft:water"                , 
+        "minecraft:lava"                 
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [8, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [8, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:white_concrete_powder"} }, 
+        { "at": 1, "do": "place", "pos": [4, 1, 1], "block": {"id": "minecraft:white_concrete_powder"} }, 
+        { "at": 1, "do": "place", "pos": [7, 1, 1], "block": {"id": "minecraft:white_concrete_powder"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:white_concrete_powder"} }, 
+                { "pos": [4, 1, 1], "is": {"id": "minecraft:white_concrete_powder"} }, 
+                { "pos": [7, 1, 1], "is": {"id": "minecraft:white_concrete_powder"} }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [2, 1, 1], "block": {"id": "minecraft:water", "level": 0} }, 
+        { "at": 3, "do": "place", "pos": [4, 2, 1], "block": {"id": "minecraft:water", "level": 0} }, 
+        { "at": 3, "do": "place", "pos": [8, 1, 1], "block": {"id": "minecraft:lava", "level": 0} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:white_concrete"       } }, 
+                { "pos": [4, 1, 1], "is": {"id": "minecraft:white_concrete"       } }, 
+                { "pos": [7, 1, 1], "is": {"id": "minecraft:white_concrete_powder"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

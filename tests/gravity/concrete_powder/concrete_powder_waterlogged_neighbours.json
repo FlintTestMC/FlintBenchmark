@@ -1,0 +1,76 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "concrete_powder_waterlogged_neighbours", 
+    "description": "Concrete powder turns into concrete next to a waterlogged block whose touching face is not full, but not when that face is a full solid face or when the waterlogged block is below it.", 
+    "tags": ["gravity", "concrete-powder", "water", "waterlogged", "neighbor-update"], 
+    "minecraftIds": [
+        "minecraft:white_concrete_powder", "minecraft:white_concrete"       , "minecraft:stone_slab"           , 
+        "minecraft:stone_stairs"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [11, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [11, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:white_concrete_powder"} }, 
+        { "at": 1, "do": "place", "pos": [4, 1, 1], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "place", "pos": [4, 2, 1], "block": {"id": "minecraft:white_concrete_powder"} }, 
+        { "at": 1, "do": "place", "pos": [7, 1, 1], "block": {"id": "minecraft:white_concrete_powder"} }, 
+        { "at": 1, "do": "place", "pos": [10, 1, 1], "block": {"id": "minecraft:white_concrete_powder"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 1, 1, 1], "is": {"id": "minecraft:white_concrete_powder"} }, 
+                { "pos": [ 4, 2, 1], "is": {"id": "minecraft:white_concrete_powder"} }, 
+                { "pos": [ 7, 1, 1], "is": {"id": "minecraft:white_concrete_powder"} }, 
+                { "pos": [10, 1, 1], "is": {"id": "minecraft:white_concrete_powder"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place", 
+            "pos": [2, 1, 1], 
+            "block": {"id": "minecraft:stone_slab", "type": "bottom", "waterlogged": true}
+        }, 
+        {
+            "at": 3, 
+            "do": "place", 
+            "pos": [4, 1, 1], 
+            "block": {"id": "minecraft:stone_slab", "type": "bottom", "waterlogged": true}
+        }, 
+        {
+            "at": 3, 
+            "do": "place", 
+            "pos": [8, 1, 1], 
+            "block": {"id": "minecraft:stone_stairs", "facing": "west", "half": "bottom", "waterlogged": true}
+        }, 
+        {
+            "at": 3, 
+            "do": "place", 
+            "pos": [9, 1, 1], 
+            "block": {"id": "minecraft:stone_stairs", "facing": "west", "half": "bottom", "waterlogged": true}
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 1, 1, 1], "is": {"id": "minecraft:white_concrete"       } }, 
+                { "pos": [ 4, 2, 1], "is": {"id": "minecraft:white_concrete_powder"} }, 
+                { "pos": [ 7, 1, 1], "is": {"id": "minecraft:white_concrete_powder"} }, 
+                { "pos": [10, 1, 1], "is": {"id": "minecraft:white_concrete"       } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
