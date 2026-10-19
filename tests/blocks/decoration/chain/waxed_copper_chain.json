@@ -1,0 +1,34 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_copper_chain", 
+    "description": "Tests the waxed copper chain", 
+    "tags": ["chain", "copper", "weathering", "waxing"], 
+    "minecraftIds": ["minecraft:copper_chain", "minecraft:waxed_copper_chain"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "waxed_copper_chain"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_copper_chain", "waterlogged": false, "axis": "y"} }
+            ]
+        }, 
+        {
+            "at": 200000, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_copper_chain", "waterlogged": false, "axis": "y"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
