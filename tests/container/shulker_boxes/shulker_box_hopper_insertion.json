@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "shulker_box_hopper_insertion", 
+    "description": "A hopper above a shulker box inserts cobblestone into it but refuses to insert a shulker box item.", 
+    "tags": ["container", "shulker-box", "hopper", "item-transfer", "block-entity"], 
+    "minecraftIds": ["minecraft:shulker_box", "minecraft:hopper", "minecraft:cobblestone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:shulker_box", "facing": "up"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:shulker_box\"}]"}
+                    }
+                }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:shulker_box", "facing": "up"} }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:cobblestone\"}]"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [2, 0, 0], 
+                    "is": {
+                        "id": "minecraft:shulker_box", 
+                        "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 1}
+                    }
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:hopper", 
+                        "nbt": {"Items[0].id": "minecraft:shulker_box", "Items[0].count": 1}
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

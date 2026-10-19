@@ -1,0 +1,70 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "shulker_box_dispenser_placement", 
+    "description": "A powered dispenser places a shulker box in front of it, facing up over a supported spot and facing the dispenser direction over an unsupported spot.", 
+    "tags": ["container", "shulker-box", "dispenser", "placement", "redstone"], 
+    "minecraftIds": ["minecraft:shulker_box", "minecraft:dispenser", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 3] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [1, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:shulker_box\"}]"}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 3], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:shulker_box\"}]"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:redstone_block"} }, 
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:redstone_block"} }  
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:shulker_box", "facing": "up"} }, 
+                { "pos": [1, 1, 3], "is": {"id": "minecraft:shulker_box", "facing": "east"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:dispenser", "nbt": {"Items": []} }
+                }, 
+                {
+                    "pos": [0, 1, 3], 
+                    "is": { "id": "minecraft:dispenser", "nbt": {"Items": []} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

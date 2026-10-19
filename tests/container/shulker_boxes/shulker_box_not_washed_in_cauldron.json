@@ -1,0 +1,33 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "shulker_box_not_washed_in_cauldron", 
+    "description": "Using an undyed shulker box on a water cauldron does not wash it: the cauldron keeps its level and the box is placed on top of it.", 
+    "tags": ["container", "shulker-box", "cauldron", "player", "block-state"], 
+    "minecraftIds": ["minecraft:shulker_box", "minecraft:water_cauldron"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:water_cauldron", "level": 3} }, 
+        {"at": 1, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:shulker_box"}, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water_cauldron", "level": 3}                     }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:shulker_box", "facing": "up"}                    }, 
+                {                   "is": "empty"                                        , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

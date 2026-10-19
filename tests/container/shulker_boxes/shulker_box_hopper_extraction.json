@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "shulker_box_hopper_extraction", 
+    "description": "A hopper under a shulker box pulls cobblestone out of it one item at a time and passes it to the chest below.", 
+    "tags": ["container", "shulker-box", "hopper", "item-transfer", "block-entity"], 
+    "minecraftIds": ["minecraft:shulker_box", "minecraft:hopper", "minecraft:chest", "minecraft:cobblestone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:chest"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:hopper", "facing": "down"} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {
+                        "id": "minecraft:shulker_box", 
+                        "facing": "up", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 3, id: \"minecraft:cobblestone\"}]"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:chest", 
+                        "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 3}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
+                }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:shulker_box", "facing": "up"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "red_shulker_box_washed_in_cauldron", 
+    "description": "Using a dyed shulker box on a water cauldron turns it into an undyed shulker box and lowers the cauldron by one level, emptying it from level one.", 
+    "tags": ["container", "shulker-box", "cauldron", "dye", "player", "block-state"], 
+    "minecraftIds": [
+        "minecraft:red_shulker_box", "minecraft:shulker_box"    , "minecraft:water_cauldron" , 
+        "minecraft:cauldron"       
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:water_cauldron", "level": 3} }, 
+        { "at": 0, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:water_cauldron", "level": 1} }, 
+        {"at": 1, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:red_shulker_box"}, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water_cauldron", "level": 2}                    }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"}                                           }, 
+                {                   "is": {"id": "minecraft:shulker_box", "count": 1}   , "slot": "hotbar1" }  
+            ]
+        }, 
+        {"at": 3, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:red_shulker_box"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:cauldron"               }                    }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                {                   "is": {"id": "minecraft:shulker_box", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
