@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "glazed_terracotta_facing_from_player", 
+    "description": "Survival placement on top of stone while looking steeply down gives a glazed terracotta block the direction opposite the player's horizontal facing and consumes the items.", 
+    "tags": ["decoration", "glazed-terracotta", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:white_glazed_terracotta", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [6, 2, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:white_glazed_terracotta", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [90, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [180, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [6.5, 2, 0.5], "rot": [-90, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:white_glazed_terracotta", "facing": "north"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:white_glazed_terracotta", "facing": "east"} } , 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:white_glazed_terracotta", "facing": "south"} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:white_glazed_terracotta", "facing": "west"} } , 
+                {"slot": "hotbar1", "is": "empty"}                                                          
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

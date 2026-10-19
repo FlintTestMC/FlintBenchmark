@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "glazed_terracotta_not_pulled_by_sticky_piston", 
+    "description": "A sticky piston pushes a glazed terracotta block forward but does not pull it back when it retracts.", 
+    "tags": ["decoration", "glazed-terracotta", "piston", "sticky-piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:white_glazed_terracotta", "minecraft:sticky_piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:sticky_piston"          , "facing": "east"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:white_glazed_terracotta"                  } }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head"            } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:white_glazed_terracotta"} }  
+            ]
+        }, 
+        { "at": 6, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:sticky_piston"          , "extended": false} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:air"                                       } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:white_glazed_terracotta"                   } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

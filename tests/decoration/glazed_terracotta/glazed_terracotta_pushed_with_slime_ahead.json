@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "glazed_terracotta_pushed_with_slime_ahead", 
+    "description": "A glazed terracotta block directly in front of a pushed slime block, in the push direction, moves along with it.", 
+    "tags": ["decoration", "glazed-terracotta", "piston", "slime", "push-reaction"], 
+    "minecraftIds": [
+        "minecraft:white_glazed_terracotta", "minecraft:slime_block"            , "minecraft:piston"                 , 
+        "minecraft:redstone_block"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:piston"                 , "facing": "east"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:slime_block"                              } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:white_glazed_terracotta"                  } }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head"            } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:slime_block"            } }, 
+                { "pos": [3, 0, 0], "is": {"id": "minecraft:white_glazed_terracotta"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
