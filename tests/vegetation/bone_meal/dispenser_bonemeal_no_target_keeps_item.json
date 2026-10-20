@@ -1,0 +1,59 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dispenser_bonemeal_no_target_keeps_item", 
+    "description": "A powered dispenser facing air keeps its bone meal: nothing grows and the stack of 3 is not reduced.", 
+    "tags": ["bone-meal", "dispenser", "invalid-target", "redstone"], 
+    "minecraftIds": ["minecraft:dispenser", "minecraft:redstone_block", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [2, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [2, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, 0], [1, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [-1, 1, 0], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 3, id: \"minecraft:bone_meal\"}]"}
+                    }
+                }
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [-1, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "pos": [-1, 1, 0], 
+                    "is": {
+                        "id": "minecraft:dispenser", 
+                        "nbt": {"Items[0].id": "minecraft:bone_meal", "Items[0].count": 3}
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
