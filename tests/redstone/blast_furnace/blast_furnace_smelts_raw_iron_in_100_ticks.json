@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "blast_furnace_smelts_raw_iron_in_100_ticks", 
+    "description": "A lit blast furnace turns raw iron into an iron ingot after the 100-tick blasting recipe time, not before.", 
+    "tags": ["block-entity", "container", "blast-furnace", "blasting"], 
+    "minecraftIds": ["minecraft:blast_furnace", "minecraft:raw_iron", "minecraft:coal", "minecraft:iron_ingot"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:blast_furnace", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, count: 1, id: \"minecraft:raw_iron\"}, {Slot: 1b, count: 1, id: \"minecraft:coal\"}]", 
+                    "cooking_total_time": "100s"
+                }
+            }
+        }, 
+        {
+            "at": 90, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": true, 
+                        "nbt": {"Items[0].id": "minecraft:raw_iron", "Items[0].Slot": "0b"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 105, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": true, 
+                        "nbt": {"Items[0].id": "minecraft:iron_ingot", "Items[0].count": 1, "Items[0].Slot": "2b"}
+                    }
+                }
+            ]
+        }
+    ]
+}
+
