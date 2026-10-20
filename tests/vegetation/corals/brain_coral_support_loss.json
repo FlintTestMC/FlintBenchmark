@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brain_coral_support_loss", 
+    "description": "When the block below is removed a dry brain coral turns into air and a waterlogged one leaves a water source, because destroying a block keeps its fluid.", 
+    "tags": ["vegetation", "coral", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:brain_coral", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 0, "do": "remove", "pos": [4, 1, 0] }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brain_coral", "waterlogged": false} }, 
+        { "at": 1, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:brain_coral", "waterlogged": true} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brain_coral", "waterlogged": false} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:brain_coral", "waterlogged": true } }  
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, 0] }, 
+        { "at": 2, "do": "remove", "pos": [4, 0, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"              } }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:water", "level": 0} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brain_coral_water_decay", 
+    "description": "A dry brain coral with no adjacent water dies into a dry dead brain coral between 60 and 99 ticks after being placed, while a waterlogged brain coral survives.", 
+    "tags": ["vegetation", "coral", "decay", "waterlogged", "scheduled-tick"], 
+    "minecraftIds": ["minecraft:brain_coral", "minecraft:dead_brain_coral", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [9, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brain_coral", "waterlogged": false} }, 
+        { "at": 1, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:brain_coral", "waterlogged": true} }, 
+        {
+            "at": 59, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brain_coral", "waterlogged": false} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:brain_coral", "waterlogged": true } }  
+            ]
+        }, 
+        {
+            "at": 102, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dead_brain_coral", "waterlogged": false} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:brain_coral"     , "waterlogged": true } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
