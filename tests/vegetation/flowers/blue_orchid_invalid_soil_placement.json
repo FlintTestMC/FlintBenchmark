@@ -1,0 +1,68 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "blue_orchid_invalid_soil_placement", 
+    "description": "A blue orchid cannot be planted on stone, sand, glass or soul sand, and the items are not consumed.", 
+    "tags": ["vegetation", "flower", "blue_orchid", "placement", "player"], 
+    "minecraftIds": [
+        "minecraft:blue_orchid", "minecraft:stone"      , "minecraft:sand"       , "minecraft:glass"      , 
+        "minecraft:soul_sand"  
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:blue_orchid", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 3, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [3, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"    } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:sand"     } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:glass"    } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:soul_sand"} }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 7, "do": "interact"}, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [3.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 8, "do": "interact"}, 
+        { "at": 9, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                {                   "is": {"id": "minecraft:blue_orchid", "count": 4}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

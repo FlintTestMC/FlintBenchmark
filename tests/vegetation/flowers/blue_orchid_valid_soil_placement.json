@@ -1,0 +1,97 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "blue_orchid_valid_soil_placement", 
+    "description": "A blue orchid can be planted on every block of the supports_vegetation tag.", 
+    "tags": ["vegetation", "flower", "blue_orchid", "placement", "player"], 
+    "minecraftIds": [
+        "minecraft:blue_orchid"         , "minecraft:dirt"                , "minecraft:coarse_dirt"         , 
+        "minecraft:rooted_dirt"         , "minecraft:grass_block"         , "minecraft:podzol"              , 
+        "minecraft:mycelium"            , "minecraft:moss_block"          , "minecraft:pale_moss_block"     , 
+        "minecraft:mud"                 , "minecraft:muddy_mangrove_roots", "minecraft:farmland"            
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [11, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:blue_orchid", "count": 11} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [11, 3, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [10, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:dirt"                } }, 
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:coarse_dirt"         } }, 
+                { "pos": [ 2, 0, 0], "block": {"id": "minecraft:rooted_dirt"         } }, 
+                { "pos": [ 3, 0, 0], "block": {"id": "minecraft:grass_block"         } }, 
+                { "pos": [ 4, 0, 0], "block": {"id": "minecraft:podzol"              } }, 
+                { "pos": [ 5, 0, 0], "block": {"id": "minecraft:mycelium"            } }, 
+                { "pos": [ 6, 0, 0], "block": {"id": "minecraft:moss_block"          } }, 
+                { "pos": [ 7, 0, 0], "block": {"id": "minecraft:pale_moss_block"     } }, 
+                { "pos": [ 8, 0, 0], "block": {"id": "minecraft:mud"                 } }, 
+                { "pos": [ 9, 0, 0], "block": {"id": "minecraft:muddy_mangrove_roots"} }, 
+                { "pos": [10, 0, 0], "block": {"id": "minecraft:farmland"            } }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 7, "do": "interact"}, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [3.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 8, "do": "interact"}, 
+        { "at": 9, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 9, "do": "interact"}, 
+        { "at": 10, "do": "tp", "entity_alias": "player", "pos": [5.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 10, "do": "interact"}, 
+        { "at": 11, "do": "tp", "entity_alias": "player", "pos": [6.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 11, "do": "interact"}, 
+        { "at": 12, "do": "tp", "entity_alias": "player", "pos": [7.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 12, "do": "interact"}, 
+        { "at": 13, "do": "tp", "entity_alias": "player", "pos": [8.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 13, "do": "interact"}, 
+        { "at": 14, "do": "tp", "entity_alias": "player", "pos": [9.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 14, "do": "interact"}, 
+        { "at": 15, "do": "tp", "entity_alias": "player", "pos": [10.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 15, "do": "interact"}, 
+        { "at": 16, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 17, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [ 1, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [ 2, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [ 3, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [ 4, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [ 5, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [ 6, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [ 7, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [ 8, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [ 9, 1, 0], "is": {"id": "minecraft:blue_orchid"} }, 
+                { "pos": [10, 1, 0], "is": {"id": "minecraft:blue_orchid"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

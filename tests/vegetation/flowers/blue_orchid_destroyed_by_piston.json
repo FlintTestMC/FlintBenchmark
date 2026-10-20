@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "blue_orchid_destroyed_by_piston", 
+    "description": "A piston extending into a blue orchid destroys it and drops one blue orchid item.", 
+    "tags": ["vegetation", "flower", "blue_orchid", "piston", "drops"], 
+    "minecraftIds": ["minecraft:blue_orchid", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 3, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"                                            } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:blue_orchid"                                     } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston"     , "facing": "east", "extended": false} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:blue_orchid"} }
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "extended": true, "facing": "east"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east"} }, 
+                {
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "count": 1, 
+                    "Item": "{count: 1, id: \"minecraft:blue_orchid\"}"
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
