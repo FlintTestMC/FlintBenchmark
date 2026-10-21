@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brown_mushroom_destroyed_by_water", 
+    "description": "Water flowing from a source next to a brown mushroom in a dark room washes the mushroom away and it drops as an item.", 
+    "tags": ["vegetation", "mushroom", "brown-mushroom", "water", "fluid", "drops"], 
+    "minecraftIds": ["minecraft:brown_mushroom", "minecraft:water", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brown_mushroom"} }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brown_mushroom"}                  }, 
+                {                   "is": "minecraft:item"                  , "exists": false }  
+            ]
+        }, 
+        { "at": 8, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:water"} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water"} }, 
+                {
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "count": 1, 
+                    "Item": "{count: 1, id: \"minecraft:brown_mushroom\"}"
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

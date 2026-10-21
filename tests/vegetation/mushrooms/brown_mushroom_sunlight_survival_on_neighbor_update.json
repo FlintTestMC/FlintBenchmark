@@ -1,0 +1,59 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brown_mushroom_sunlight_survival_on_neighbor_update", 
+    "description": "Brown mushrooms set into sunlight stay until a neighbor update; then the one on stone breaks and drops itself while the one on podzol survives.", 
+    "tags": ["vegetation", "mushroom", "brown-mushroom", "light", "podzol", "neighbor-update", "drops"], 
+    "minecraftIds": ["minecraft:brown_mushroom", "minecraft:stone", "minecraft:podzol"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [3, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:podzol"} }, 
+        { "at": 5, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brown_mushroom"} }, 
+        { "at": 5, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:brown_mushroom"} }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brown_mushroom"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:brown_mushroom"} }  
+            ]
+        }, 
+        { "at": 8, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:podzol"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:brown_mushroom"} }, 
+                {
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "count": 1, 
+                    "Item": "{count: 1, id: \"minecraft:brown_mushroom\"}"
+                }
+            ]
+        }, 
+        { "at": 11, "do": "remove", "pos": [2, 1, 0] }
+    ], 
+    "breakpoints": []
+}
+

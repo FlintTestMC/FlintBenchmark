@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brown_mushroom_placement_dark", 
+    "description": "A player can place a brown mushroom on stone inside a fully enclosed dark room, and the item is consumed.", 
+    "tags": ["vegetation", "mushroom", "brown-mushroom", "placement", "light", "player"], 
+    "minecraftIds": ["minecraft:brown_mushroom", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }, 
+        "player": {
+            "game_mode": "Survival", 
+            "inventory": { "hotbar1": {"id": "minecraft:brown_mushroom", "count": 1} }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"}                             }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brown_mushroom"}                    }, 
+                {                   "is": "empty"                           , "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 9, "do": "remove", "pos": [0, 1, 0] }
+    ], 
+    "breakpoints": []
+}
+
