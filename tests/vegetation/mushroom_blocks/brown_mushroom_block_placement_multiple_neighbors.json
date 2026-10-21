@@ -1,0 +1,90 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "brown_mushroom_block_placement_multiple_neighbors", 
+    "description": "A player placing a brown mushroom block with brown mushroom blocks below and to the east hides exactly those two faces, and both neighbours hide their faces toward it.", 
+    "tags": ["vegetation", "mushroom", "block-state", "huge-mushroom", "placement", "player", "neighbor-update"], 
+    "minecraftIds": ["minecraft:brown_mushroom_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:brown_mushroom_block", 
+                "up": true, 
+                "down": true, 
+                "north": true, 
+                "east": true, 
+                "south": true, 
+                "west": true
+            }
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [1, 1, 0], 
+            "block": {
+                "id": "minecraft:brown_mushroom_block", 
+                "up": true, 
+                "down": true, 
+                "north": true, 
+                "east": true, 
+                "south": true, 
+                "west": true
+            }
+        }, 
+        { "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90], "at": 1 }, 
+        {"at": 1, "do": "interact", "item": "minecraft:brown_mushroom_block"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:brown_mushroom_block", 
+                        "up": false, 
+                        "down": true, 
+                        "north": true, 
+                        "east": true, 
+                        "south": true, 
+                        "west": true
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:brown_mushroom_block", 
+                        "up": true, 
+                        "down": false, 
+                        "north": true, 
+                        "east": false, 
+                        "south": true, 
+                        "west": true
+                    }
+                }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "is": {
+                        "id": "minecraft:brown_mushroom_block", 
+                        "up": true, 
+                        "down": true, 
+                        "north": true, 
+                        "east": true, 
+                        "south": true, 
+                        "west": false
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
