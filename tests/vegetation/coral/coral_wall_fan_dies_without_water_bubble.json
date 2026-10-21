@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "coral_wall_fan_dies_without_water_bubble", 
+    "description": "A non-waterlogged bubble coral wall fan with no water on any side is still alive after 30 ticks and has become a dead bubble coral wall fan with the same facing within 100 ticks.", 
+    "tags": ["vegetation", "coral", "wall-fan", "death", "scheduled-tick"], 
+    "minecraftIds": ["minecraft:bubble_coral_wall_fan", "minecraft:dead_bubble_coral_wall_fan"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -3], [2, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, -1], 
+            "block": {"id": "minecraft:bubble_coral_wall_fan", "facing": "north", "waterlogged": false}
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, -1], 
+                    "is": {"id": "minecraft:bubble_coral_wall_fan", "facing": "north", "waterlogged": false}
+                }
+            ]
+        }, 
+        {
+            "at": 105, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, -1], 
+                    "is": {"id": "minecraft:dead_bubble_coral_wall_fan", "facing": "north", "waterlogged": false}
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

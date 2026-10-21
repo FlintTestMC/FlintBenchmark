@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "coral_wall_fan_stays_alive_with_adjacent_water", 
+    "description": "A non-waterlogged brain coral wall fan with a water source directly below it is still a living wall fan after 110 ticks.", 
+    "tags": ["vegetation", "coral", "wall-fan", "water-scan", "scheduled-tick"], 
+    "minecraftIds": ["minecraft:brain_coral_wall_fan"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -3], [2, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -3], [2, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 0, -1], "block": {"id": "minecraft:water"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, -1], 
+            "block": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+        }, 
+        {
+            "at": 110, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, -1], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+                }, 
+                { "pos": [0, 0, -1], "is": {"id": "minecraft:water"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
