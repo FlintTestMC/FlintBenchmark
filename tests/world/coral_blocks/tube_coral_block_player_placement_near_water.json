@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "tube_coral_block_player_placement_near_water", 
+    "description": "A Survival player placing a tube coral block next to water gets a block that is still alive after the dry death delay.", 
+    "tags": ["coral", "coral-block", "player", "placement", "water"], 
+    "minecraftIds": ["minecraft:tube_coral_block", "minecraft:water", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 2, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:tube_coral_block", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [2, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 2, 0], [1, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 2, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:tube_coral_block"}                    }, 
+                {                   "is": "empty"                             , "slot": "hotbar1" }  
+            ]
+        }, 
+        {
+            "at": 130, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:tube_coral_block"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

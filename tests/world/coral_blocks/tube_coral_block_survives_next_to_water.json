@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "tube_coral_block_survives_next_to_water", 
+    "description": "A tube coral block placed beside a water source is still a living tube coral block long after the dry death delay.", 
+    "tags": ["coral", "coral-block", "water", "survival"], 
+    "minecraftIds": ["minecraft:tube_coral_block", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 2, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:tube_coral_block"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:tube_coral_block"} }
+            ]
+        }, 
+        {
+            "at": 130, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:tube_coral_block"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
