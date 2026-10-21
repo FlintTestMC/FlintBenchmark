@@ -1,0 +1,67 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bubble_column_switches_direction_with_base", 
+    "description": "Replacing the base block under a bubble column switches the whole column between pushing up (soul sand) and pulling down (magma).", 
+    "tags": ["fluids", "bubble_column", "soul_sand", "magma"], 
+    "minecraftIds": ["minecraft:bubble_column", "minecraft:soul_sand", "minecraft:magma_block", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 5, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 4, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [1, 1, 1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 0, "do": "place", "pos": [1, 0, 1], "block": {"id": "minecraft:soul_sand"} }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [1, 1, 1], [1, 3, 1] ], 
+            "with": {"id": "minecraft:water", "level": 0}
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }, 
+                { "pos": [1, 3, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }  
+            ]
+        }, 
+        { "at": 31, "do": "place", "pos": [1, 0, 1], "block": {"id": "minecraft:magma_block"} }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 1], "is": {"id": "minecraft:magma_block"                } }, 
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:bubble_column", "drag": true} }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:bubble_column", "drag": true} }, 
+                { "pos": [1, 3, 1], "is": {"id": "minecraft:bubble_column", "drag": true} }  
+            ]
+        }, 
+        { "at": 41, "do": "place", "pos": [1, 0, 1], "block": {"id": "minecraft:soul_sand"} }, 
+        {
+            "at": 50, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }, 
+                { "pos": [1, 3, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

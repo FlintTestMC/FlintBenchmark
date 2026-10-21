@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bubble_column_stops_at_non_water_block", 
+    "description": "A bubble column does not extend through a waterlogged slab: the water sources below it become columns while the water source above stays plain water.", 
+    "tags": ["fluids", "bubble_column", "soul_sand", "waterlogged"], 
+    "minecraftIds": ["minecraft:bubble_column", "minecraft:soul_sand", "minecraft:water", "minecraft:oak_slab"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 6, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 5, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [1, 1, 1], [1, 5, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [1, 3, 1], 
+            "block": {"id": "minecraft:oak_slab", "type": "bottom", "waterlogged": true}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [1, 1, 1], [1, 2, 1] ], 
+            "with": {"id": "minecraft:water", "level": 0}
+        }, 
+        { "at": 0, "do": "place", "pos": [1, 4, 1], "block": {"id": "minecraft:water", "level": 0} }, 
+        { "at": 2, "do": "place", "pos": [1, 0, 1], "block": {"id": "minecraft:soul_sand"} }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:bubble_column", "drag": false}                    }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:bubble_column", "drag": false}                    }, 
+                { "pos": [1, 3, 1], "is": {"id": "minecraft:oak_slab", "type": "bottom", "waterlogged": true} }, 
+                { "pos": [1, 4, 1], "is": {"id": "minecraft:water"}                                           }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
