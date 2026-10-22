@@ -1,0 +1,93 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_flower_raises_wall_post", 
+    "description": "A cactus flower above the middle of a straight wall raises its post, and the post lowers again once the flower is removed.", 
+    "tags": ["vegetation", "cactus-flower", "wall", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:cactus_flower", "minecraft:cobblestone_wall"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -2], [1, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -2], [1, 3, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, -2], [1, 3, 2] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, -1], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [0, 1,  1], "block": {"id": "minecraft:cobblestone_wall"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:cobblestone_wall", 
+                        "north": "low", 
+                        "south": "low", 
+                        "east": "none", 
+                        "west": "none", 
+                        "up": false
+                    }
+                }
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:cactus_flower"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:cobblestone_wall", 
+                        "north": "low", 
+                        "south": "low", 
+                        "east": "none", 
+                        "west": "none", 
+                        "up": true
+                    }
+                }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cactus_flower"} }
+            ]
+        }, 
+        { "at": 6, "do": "remove", "pos": [0, 2, 0] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:cobblestone_wall", 
+                        "north": "low", 
+                        "south": "low", 
+                        "east": "none", 
+                        "west": "none", 
+                        "up": false
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

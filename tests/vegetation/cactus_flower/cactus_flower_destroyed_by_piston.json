@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_flower_destroyed_by_piston", 
+    "description": "A piston extending into a cactus flower destroys it and drops the item instead of pushing it.", 
+    "tags": ["vegetation", "cactus-flower", "piston", "push-reaction", "drops"], 
+    "minecraftIds": [
+        "minecraft:cactus_flower" , "minecraft:piston"        , "minecraft:piston_head"   , "minecraft:redstone_block", 
+        "minecraft:item"          
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [2, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [1, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston"       , "facing": "up", "extended": false} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:cactus_flower"                                   } }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cactus_flower"}                  }, 
+                {                   "is": "minecraft:item"                 , "exists": false }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "facing": "up", "extended": true} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:piston_head", "facing": "up"} }             , 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"} }                                     , 
+                {"is": "minecraft:item", "exists": true, "count": 1}                                      
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

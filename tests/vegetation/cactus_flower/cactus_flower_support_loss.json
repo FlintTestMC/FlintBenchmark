@@ -1,0 +1,70 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_flower_support_loss", 
+    "description": "A cactus flower breaks and drops itself as an item when the stone, farmland or cactus beneath it is removed.", 
+    "tags": ["vegetation", "cactus-flower", "support", "neighbor-update", "drops"], 
+    "minecraftIds": [
+        "minecraft:cactus_flower", "minecraft:stone"        , "minecraft:farmland"     , "minecraft:sand"         , 
+        "minecraft:cactus"       , "minecraft:item"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 5, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 5, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, -1], [5, 5, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"        } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:cactus_flower"} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:farmland"     } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:cactus_flower"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:sand"         } }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:cactus"       } }, 
+                { "pos": [4, 3, 0], "block": {"id": "minecraft:cactus_flower"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cactus_flower"}                  }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:cactus_flower"}                  }, 
+                { "pos": [4, 3, 0], "is": {"id": "minecraft:cactus_flower"}                  }, 
+                {                   "is": "minecraft:item"                 , "exists": false }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 5, "do": "remove", "pos": [2, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [4, 2, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"}                             }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"}                             }, 
+                { "pos": [4, 3, 0], "is": {"id": "minecraft:air"}                             }, 
+                {                   "is": "minecraft:item"       , "exists": true, "count": 3 }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
