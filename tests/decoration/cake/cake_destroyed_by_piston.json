@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "cake_destroyed_by_piston", 
+    "description": "A piston pushing into a cake destroys it instead of moving it, and the piston head extends into its place.", 
+    "tags": ["decoration", "cake", "piston", "push-reaction", "redstone"], 
+    "minecraftIds": ["minecraft:cake", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 3, 2] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [3, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:piston", "facing": "east"} }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:cake"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:cake"} }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 1], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston"     , "extended": true                  } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head",                   "facing": "east"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "cake_eating_updates_comparator", 
+    "description": "Eating a slice of a cake lowers the output of an adjacent comparator from 14 to 12.", 
+    "tags": ["decoration", "cake", "comparator", "eating", "redstone", "player"], 
+    "minecraftIds": ["minecraft:cake", "minecraft:comparator"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Creative"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:comparator", "facing": "east"} }, 
+        { "at": 2, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:cake"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 14} }
+                }
+            ]
+        }, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [2.9, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 7, "do": "interact"}, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:cake", "bites": 1} }
+            ]
+        }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 12} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
