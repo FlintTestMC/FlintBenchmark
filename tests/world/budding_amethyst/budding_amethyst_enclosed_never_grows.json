@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "budding_amethyst_enclosed_never_grows", 
+    "description": "A budding amethyst block fully enclosed by stone stays unchanged and leaves its neighbours untouched under rapid random ticks.", 
+    "tags": ["world", "budding-amethyst", "random-tick", "amethyst"], 
+    "minecraftIds": ["minecraft:budding_amethyst", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [2, 4, 2] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 6000
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [2, 4, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:budding_amethyst"} }
+            ]
+        }, 
+        {
+            "at": 100, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 2,  0], "is": {"id": "minecraft:budding_amethyst"} }, 
+                { "pos": [ 0, 3,  0], "is": {"id": "minecraft:stone"           } }, 
+                { "pos": [ 0, 1,  0], "is": {"id": "minecraft:stone"           } }, 
+                { "pos": [ 1, 2,  0], "is": {"id": "minecraft:stone"           } }, 
+                { "pos": [-1, 2,  0], "is": {"id": "minecraft:stone"           } }, 
+                { "pos": [ 0, 2,  1], "is": {"id": "minecraft:stone"           } }, 
+                { "pos": [ 0, 2, -1], "is": {"id": "minecraft:stone"           } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "budding_amethyst_placement", 
+    "description": "A player in survival mode places budding amethyst on a stone block, which creates the block and consumes the item.", 
+    "tags": ["world", "budding-amethyst", "placement", "player"], 
+    "minecraftIds": ["minecraft:budding_amethyst", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 5, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:budding_amethyst", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"}                               }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:budding_amethyst"}                    }, 
+                {                   "is": "empty"                             , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
