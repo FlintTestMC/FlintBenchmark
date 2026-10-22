@@ -1,0 +1,76 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bush_placement_on_supports", 
+    "description": "Bush items placed on grass block, dirt, podzol, mud, moss block and farmland create a bush on each and consume all six items.", 
+    "tags": ["vegetation", "bush", "placement", "supports-vegetation", "player"], 
+    "minecraftIds": [
+        "minecraft:bush"       , "minecraft:grass_block", "minecraft:dirt"       , "minecraft:podzol"     , 
+        "minecraft:mud"        , "minecraft:moss_block" , "minecraft:farmland"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bush", "count": 6} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [5, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"       } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:podzol"     } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:mud"        } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:moss_block" } }, 
+                { "pos": [5, 0, 0], "block": {"id": "minecraft:farmland"   } }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 7, "do": "interact"}, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [3.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 8, "do": "interact"}, 
+        { "at": 9, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 9, "do": "interact"}, 
+        { "at": 10, "do": "tp", "entity_alias": "player", "pos": [5.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 10, "do": "interact"}, 
+        { "at": 11, "do": "tp", "entity_alias": "player", "pos": [2.5, 6, 0.5] }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:bush"}                    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:bush"}                    }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:bush"}                    }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:bush"}                    }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:bush"}                    }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:bush"}                    }, 
+                {                   "is": "empty"                 , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
