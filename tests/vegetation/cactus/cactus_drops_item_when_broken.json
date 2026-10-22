@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_drops_item_when_broken", 
+    "description": "A cactus that loses its sand support breaks and drops one cactus item.", 
+    "tags": ["vegetation", "cactus", "survival-rules", "drops"], 
+    "minecraftIds": ["minecraft:cactus", "minecraft:sand"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [2, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 0, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:cactus"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cactus"}                  }, 
+                {                   "is": "minecraft:item"          , "exists": false }  
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "count": 1, 
+                    "pos": [0.5, 2.2, 0.5], 
+                    "position_tolerance": 1.5, 
+                    "Item.id": "minecraft:cactus"
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

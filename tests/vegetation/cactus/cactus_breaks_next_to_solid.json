@@ -1,0 +1,67 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_breaks_next_to_solid", 
+    "description": "A cactus breaks when a solid block is placed against any of its four horizontal sides, while a cactus with no neighbors is unaffected.", 
+    "tags": ["vegetation", "cactus", "survival-rules", "neighbor-update"], 
+    "minecraftIds": ["minecraft:cactus", "minecraft:sand", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -2], [13, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -2], [13, 1, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [ 3, 1, 0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [ 6, 1, 0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [ 9, 1, 0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [12, 1, 0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [ 0, 2, 0], "block": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 3, 2, 0], "block": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 6, 2, 0], "block": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 9, 2, 0], "block": {"id": "minecraft:cactus"} }, 
+                { "pos": [12, 2, 0], "block": {"id": "minecraft:cactus"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 2, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 3, 2, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 6, 2, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 9, 2, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [12, 2, 0], "is": {"id": "minecraft:cactus"} }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [0, 2, -1], "block": {"id": "minecraft:stone"} }, 
+        { "at": 3, "do": "place", "pos": [3, 2, 1], "block": {"id": "minecraft:stone"} }, 
+        { "at": 3, "do": "place", "pos": [5, 2, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 3, "do": "place", "pos": [10, 2, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 2,  0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [ 3, 2,  0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [ 6, 2,  0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [ 9, 2,  0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [12, 2,  0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 0, 2, -1], "is": {"id": "minecraft:stone" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

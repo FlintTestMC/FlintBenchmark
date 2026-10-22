@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_placement_rejected", 
+    "description": "Cactus items cannot be placed on dirt or stone, or on sand with a solid block beside the target spot, and the items are kept.", 
+    "tags": ["vegetation", "cactus", "placement", "survival-rules", "player"], 
+    "minecraftIds": ["minecraft:cactus", "minecraft:dirt", "minecraft:stone", "minecraft:sand"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [7, 8, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:cactus", "count": 3} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [7, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt" } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:sand" } }, 
+                { "pos": [5, 2, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3.5, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 3.5, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 3.5, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"               }                    }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:air"               }                    }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:air"               }                    }, 
+                {                   "is": {"id": "minecraft:cactus", "count": 3}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

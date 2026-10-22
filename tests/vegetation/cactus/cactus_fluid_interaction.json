@@ -1,0 +1,59 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_fluid_interaction", 
+    "description": "A cactus breaks when lava is beside it or when water is directly above it (the water then flows into the freed space), but survives water beside it.", 
+    "tags": ["vegetation", "cactus", "survival-rules", "fluid", "neighbor-update"], 
+    "minecraftIds": ["minecraft:cactus", "minecraft:sand", "minecraft:lava", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [11, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [11, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [ 4, 1,  0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [ 9, 1,  0], "block": {"id": "minecraft:sand"  } }, 
+                { "pos": [ 0, 2,  0], "block": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 4, 2,  0], "block": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 9, 2,  0], "block": {"id": "minecraft:cactus"} }, 
+                { "pos": [ 1, 2,  1], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [ 1, 2, -1], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [ 2, 2,  0], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [ 5, 2,  1], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [ 5, 2, -1], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [ 6, 2,  0], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [ 8, 3,  0], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [10, 3,  0], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [ 9, 3,  1], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [ 9, 3, -1], "block": {"id": "minecraft:stone" } }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [1, 2, 0], "block": {"id": "minecraft:lava"} }, 
+        { "at": 2, "do": "place", "pos": [5, 2, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 2, "do": "place", "pos": [9, 3, 0], "block": {"id": "minecraft:water"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [5, 2, 0], "is": {"id": "minecraft:water" } }, 
+                { "pos": [9, 2, 0], "is": {"id": "minecraft:water" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
