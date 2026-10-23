@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "carrot_bonemeal_growth", 
+    "description": "One bone meal on age-zero carrots grows them by two to five ages and is consumed.", 
+    "tags": ["vegetation", "crop", "carrot", "bone-meal", "player"], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:carrots", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"} }, 
+        { "at": 4, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:carrots", "age": 0} }, 
+        {"at": 4, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:bone_meal", "count": 1}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": [
+                        {"id": "minecraft:carrots", "age": 2}, 
+                        {"id": "minecraft:carrots", "age": 3}, 
+                        {"id": "minecraft:carrots", "age": 4}, 
+                        {"id": "minecraft:carrots", "age": 5}  
+                    ]
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }, 
+        { "at": 6, "do": "remove", "pos": [0, 1, 0] }
+    ], 
+    "breakpoints": []
+}
+

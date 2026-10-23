@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "carrot_piston_destroys", 
+    "description": "A piston pushing into carrots destroys them rather than moving them, and its head extends into the space.", 
+    "tags": ["vegetation", "crop", "carrot", "piston", "push-reaction"], 
+    "minecraftIds": [
+        "minecraft:farmland"      , "minecraft:piston"        , "minecraft:redstone_block", "minecraft:carrots"       , 
+        "minecraft:piston_head"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [12, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [12, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, -1], [12, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [10, 0, 0], "block": {"id": "minecraft:farmland"}                                    }, 
+                { "pos": [10, 1, 0], "block": {"id": "minecraft:carrots", "age": 3}                           }, 
+                { "pos": [9, 1, 0] , "block": {"id": "minecraft:piston", "facing": "east", "extended": false} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [9, 1, 0] , "is": {"id": "minecraft:piston", "facing": "east", "extended": false} }, 
+                { "pos": [10, 1, 0], "is": {"id": "minecraft:carrots", "age": 3}                           }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [9, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 9, 1, 0], "is": {"id": "minecraft:piston"     , "facing": "east", "extended": true} }, 
+                { "pos": [10, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east"                  } }, 
+                { "pos": [11, 1, 0], "is": {"id": "minecraft:air"                                            } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

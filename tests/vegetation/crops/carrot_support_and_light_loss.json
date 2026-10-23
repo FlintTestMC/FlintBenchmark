@@ -1,0 +1,77 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "carrot_support_and_light_loss", 
+    "description": "Carrots turn to air when the farmland below is replaced or removed, or when a neighbour update reaches them in a light level below 8.", 
+    "tags": ["vegetation", "crop", "carrot", "support", "light", "neighbor-update"], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:dirt", "minecraft:stone", "minecraft:carrots"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [12, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [12, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, -1], [12, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [2, 0, -1], [6, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [3, 1, 0], [5, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 5, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 4, 0, 0], "block": {"id": "minecraft:farmland"          } }, 
+                { "pos": [ 9, 0, 0], "block": {"id": "minecraft:farmland"          } }, 
+                { "pos": [11, 0, 0], "block": {"id": "minecraft:farmland"          } }, 
+                { "pos": [ 4, 1, 0], "block": {"id": "minecraft:carrots" , "age": 3} }, 
+                { "pos": [ 9, 1, 0], "block": {"id": "minecraft:carrots" , "age": 3} }, 
+                { "pos": [11, 1, 0], "block": {"id": "minecraft:carrots" , "age": 3} }  
+            ]
+        }, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 4, 1, 0], "is": {"id": "minecraft:carrots", "age": 3} }, 
+                { "pos": [ 9, 1, 0], "is": {"id": "minecraft:carrots", "age": 3} }, 
+                { "pos": [11, 1, 0], "is": {"id": "minecraft:carrots", "age": 3} }  
+            ]
+        }, 
+        { "at": 9, "do": "place", "pos": [9, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 9, "do": "remove", "pos": [11, 0, 0] }, 
+        { "at": 9, "do": "place", "pos": [4, 2, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 4, 1, 0], "is": {"id": "minecraft:air" } }, 
+                { "pos": [ 9, 0, 0], "is": {"id": "minecraft:dirt"} }, 
+                { "pos": [ 9, 1, 0], "is": {"id": "minecraft:air" } }, 
+                { "pos": [11, 0, 0], "is": {"id": "minecraft:air" } }, 
+                { "pos": [11, 1, 0], "is": {"id": "minecraft:air" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "carrot_planting_needs_light", 
+    "description": "A carrot used on farmland inside a sealed dark space plants nothing and is not consumed.", 
+    "tags": ["vegetation", "crop", "carrot", "placement", "light", "player"], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:stone", "minecraft:carrot", "minecraft:carrots"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [6, 5, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [6, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-2, 1, -1], [6, 5, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"} }, 
+        { "at": 9, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 9, "do": "interact", "item": "minecraft:carrot"}, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:farmland"            }                    }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                 }                    }, 
+                {                   "is": {"id": "minecraft:carrot"  , "count": 1}, "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 10, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5] }
+    ], 
+    "breakpoints": []
+}
+
