@@ -1,0 +1,29 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:carrot_on_a_stick"], 
+    "name": "Carrot On A Stick Use On Block Not Riding", 
+    "description": "Using a carrot on a stick while looking at a block does not place anything or change the block, and the item stays in the hand.", 
+    "tags": ["item", "carrot-on-a-stick", "player"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 1.5], "rot": [0, 90] }, 
+        {"at": 0, "do": "interact", "item": "minecraft:carrot_on_a_stick"}, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"                        }                    }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                          }                    }, 
+                {                   "is": {"id": "minecraft:carrot_on_a_stick", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ]
+}
+
