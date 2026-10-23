@@ -1,0 +1,67 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cave_vines_support_loss", 
+    "description": "A cave vines tip breaks when the block above it is removed, dropping glow berries only if it had berries.", 
+    "tags": ["vegetation", "cave-vines", "support", "neighbor-update", "drops"], 
+    "minecraftIds": ["minecraft:cave_vines", "minecraft:glow_berries", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 4, 3] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 4, 3] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 3, 3] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:cave_vines", "age": 4, "berries": true } }, 
+                { "pos": [4, 3, 0], "block": {"id": "minecraft:cave_vines", "age": 4, "berries": false} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:cave_vines", "age": 4, "berries": true } }, 
+                { "pos": [4, 3, 0], "is": {"id": "minecraft:cave_vines", "age": 4, "berries": false} }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [0, 4, 0] }, 
+        { "at": 5, "do": "remove", "pos": [4, 4, 0] }, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [2.5, 6, 2.5] }, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"}             }, 
+                { "pos": [4, 3, 0], "is": {"id": "minecraft:air"}             }, 
+                {                   "is": "minecraft:item"       , "count": 1 }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
