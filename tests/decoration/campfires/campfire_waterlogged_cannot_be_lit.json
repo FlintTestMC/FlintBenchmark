@@ -1,0 +1,37 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Campfire Waterlogged Cannot Be Lit", 
+    "description": "Flint and steel used on an unlit waterlogged campfire does not light it (CampfireBlock.canLight requires waterlogged=false), and no fire appears above it because the campfire top cannot support fire.", 
+    "tags": ["campfire", "flint-and-steel", "waterlogging", "edge-case", "block-state", "player"], 
+    "minecraftIds": ["minecraft:campfire", "minecraft:flint_and_steel"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                                      } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:campfire", "lit": false, "waterlogged": true} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:flint_and_steel"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:campfire", "lit": false, "waterlogged": true} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"                                        } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

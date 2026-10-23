@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Campfire Shovel From Below Does Nothing", 
+    "description": "Using a shovel on the bottom face of a floating lit campfire does not put it out, because ShovelItem.useOn returns PASS for a clicked face of DOWN before checking for campfires. As a reachability control, an unlit campfire at the same spot is then lit with flint and steel from the same position (flint and steel does not check the clicked face).", 
+    "tags": ["campfire", "shovel", "edge-case", "block-state", "player"], 
+    "minecraftIds": ["minecraft:campfire", "minecraft:iron_shovel"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, 0], [0, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, -1, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {
+                        "id": "minecraft:campfire", 
+                        "lit": true, 
+                        "waterlogged": false, 
+                        "signal_fire": false, 
+                        "facing": "north"
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, -90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:iron_shovel"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:campfire", "lit": true, "waterlogged": false} }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place", 
+            "pos": [0, 2, 0], 
+            "block": {
+                "id": "minecraft:campfire", 
+                "lit": false, 
+                "waterlogged": false, 
+                "signal_fire": false, 
+                "facing": "north"
+            }
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, -90] }, 
+        {"at": 4, "do": "interact", "item": "minecraft:flint_and_steel"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:campfire", "lit": true, "waterlogged": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

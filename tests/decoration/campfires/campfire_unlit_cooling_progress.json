@@ -1,0 +1,112 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Campfire Unlit Cooling Progress", 
+    "description": "On an unlit campfire the cooldown ticker lowers each slot's cooking progress by 2 per tick, clamped at 0, and keeps the food: a slot preset to 100 reads 98 at tick 1 and 80 at tick 10; a slot preset to 5 goes 3, 1, then stays 0.", 
+    "tags": ["campfire", "block-entity", "cooking", "food", "tick"], 
+    "minecraftIds": ["minecraft:campfire", "minecraft:beef"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:campfire", 
+                        "lit": false, 
+                        "waterlogged": false, 
+                        "signal_fire": false, 
+                        "facing": "north", 
+                        "nbt": {
+                            "Items"            : "[{Slot: 0b, id: \"minecraft:beef\", count: 1}]", 
+                            "CookingTimes"     : "[I; 100, 0, 0, 0]"                             , 
+                            "CookingTotalTimes": "[I; 600, 0, 0, 0]"                               
+                        }
+                    }
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "block": {
+                        "id": "minecraft:campfire", 
+                        "lit": false, 
+                        "waterlogged": false, 
+                        "signal_fire": false, 
+                        "facing": "north", 
+                        "nbt": {
+                            "Items"            : "[{Slot: 0b, id: \"minecraft:beef\", count: 1}]", 
+                            "CookingTimes"     : "[I; 5, 0, 0, 0]"                               , 
+                            "CookingTotalTimes": "[I; 600, 0, 0, 0]"                               
+                        }
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:campfire", "nbt": {"CookingTimes[0]": 98}, "lit": false }
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "is": { "id": "minecraft:campfire", "nbt": {"CookingTimes[0]": 3}, "lit": false }
+                }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [2, 1, 0], 
+                    "is": { "id": "minecraft:campfire", "nbt": {"CookingTimes[0]": 1}, "lit": false }
+                }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [2, 1, 0], 
+                    "is": { "id": "minecraft:campfire", "nbt": {"CookingTimes[0]": 0}, "lit": false }
+                }
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:campfire", 
+                        "nbt": {"Items[0].id": "minecraft:beef", "CookingTimes[0]": 80}, 
+                        "lit": false
+                    }
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "is": {
+                        "id": "minecraft:campfire", 
+                        "nbt": {"Items[0].id": "minecraft:beef", "CookingTimes[0]": 0}, 
+                        "lit": false
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

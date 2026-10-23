@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Campfire Food Placement", 
+    "description": "A survival player using raw beef on a lit campfire puts one beef into the first free slot (Items[0]), sets that slot's total cooking time from the campfire_cooking recipe (600 ticks), and consumes the held item.", 
+    "tags": ["campfire", "block-entity", "cooking", "food", "player"], 
+    "minecraftIds": ["minecraft:campfire", "minecraft:beef"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:campfire", 
+                        "lit": true, 
+                        "waterlogged": false, 
+                        "signal_fire": false, 
+                        "facing": "north"
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:beef"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:campfire", 
+                        "nbt": {"Items[0].id": "minecraft:beef", "Items[0].count": 1, "CookingTotalTimes[0]": 600}, 
+                        "lit": true
+                    }
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Campfire Rejects Non Food Item", 
+    "description": "Using an item that is not a campfire_cooking input (a stick) on a campfire does not put it on the campfire: the campfire stays empty and the survival player keeps the stick.", 
+    "tags": ["campfire", "block-entity", "cooking", "edge-case", "player"], 
+    "minecraftIds": ["minecraft:campfire", "minecraft:stick"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:campfire", 
+                        "lit": true, 
+                        "waterlogged": false, 
+                        "signal_fire": false, 
+                        "facing": "north"
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:stick"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:campfire", "nbt": {"Items": []}, "lit": true }
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:stick", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
