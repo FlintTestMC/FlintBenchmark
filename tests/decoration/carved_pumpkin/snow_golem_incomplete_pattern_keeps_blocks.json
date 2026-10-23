@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "snow_golem_incomplete_pattern_keeps_blocks", 
+    "description": "A carved pumpkin on a single snow block, or snow blocks added after the pumpkin is already placed, does not complete the snow golem pattern and nothing is removed.", 
+    "tags": ["decoration", "carved_pumpkin", "golem", "snow_golem", "pattern"], 
+    "minecraftIds": ["minecraft:carved_pumpkin", "minecraft:snow_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:snow_block"} }, 
+        { "at": 0, "do": "place", "pos": [3, 2, 0], "block": {"id": "minecraft:carved_pumpkin"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        { "at": 1, "do": "place", "pos": [3, 1, 0], "block": {"id": "minecraft:snow_block"} }, 
+        { "at": 2, "do": "place", "pos": [3, 0, 0], "block": {"id": "minecraft:snow_block"} }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:snow_block"    } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:carved_pumpkin"} }, 
+                { "pos": [3, 0, 0], "is": {"id": "minecraft:snow_block"    } }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:snow_block"    } }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:carved_pumpkin"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

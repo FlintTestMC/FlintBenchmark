@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "snow_golem_pattern_clears_blocks", 
+    "description": "A carved pumpkin placed on top of, or underneath, a column of two snow blocks completes the snow golem pattern, so the pumpkin and both snow blocks are removed.", 
+    "tags": ["decoration", "carved_pumpkin", "golem", "snow_golem", "pattern"], 
+    "minecraftIds": ["minecraft:carved_pumpkin", "minecraft:snow_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:snow_block"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:snow_block"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:snow_block"} }, 
+                { "pos": [3, 2, 0], "block": {"id": "minecraft:snow_block"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:snow_block"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:snow_block"} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:snow_block"} }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:snow_block"} }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [3.5, -2, 0.5], "rot": [0, -90] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [3, 0, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:air"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

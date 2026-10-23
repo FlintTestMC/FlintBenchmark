@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "carved_pumpkin_keeps_facing", 
+    "description": "A carved pumpkin set with each of the four horizontal facing values keeps that value.", 
+    "tags": ["decoration", "carved_pumpkin", "block-state", "facing"], 
+    "minecraftIds": ["minecraft:carved_pumpkin"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:carved_pumpkin", "facing": "north"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:carved_pumpkin", "facing": "east" } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:carved_pumpkin", "facing": "south"} }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:carved_pumpkin", "facing": "west" } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:carved_pumpkin", "facing": "north"} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:carved_pumpkin", "facing": "east" } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:carved_pumpkin", "facing": "south"} }, 
+                { "pos": [3, 0, 0], "is": {"id": "minecraft:carved_pumpkin", "facing": "west" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

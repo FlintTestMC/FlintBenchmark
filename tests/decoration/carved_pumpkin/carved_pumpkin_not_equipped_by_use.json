@@ -1,0 +1,28 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "carved_pumpkin_not_equipped_by_use", 
+    "description": "Using a carved pumpkin while looking at the sky does not swap it into the helmet slot because the item is not swappable; it stays in the hotbar.", 
+    "tags": ["decoration", "carved_pumpkin", "item", "equippable", "player"], 
+    "minecraftIds": ["minecraft:carved_pumpkin"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 0.5], "rot": [0, -90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "slot": "hotbar1", "is": {"id": "minecraft:carved_pumpkin", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "carved_pumpkin_faces_opposite_player", 
+    "description": "A carved pumpkin placed by a survival player faces opposite to the player's horizontal look direction, and the item is consumed.", 
+    "tags": ["decoration", "carved_pumpkin", "placement", "facing", "player"], 
+    "minecraftIds": ["minecraft:carved_pumpkin", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [3, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [90, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [180, 90] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [3.5, 2, 0.5], "rot": [270, 90] }, 
+        {"at": 4, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:carved_pumpkin", "facing": "north"}                    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:carved_pumpkin", "facing": "east"}                     }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:carved_pumpkin", "facing": "south"}                    }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:carved_pumpkin", "facing": "west"}                     }, 
+                {                   "is": "empty"                                              , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

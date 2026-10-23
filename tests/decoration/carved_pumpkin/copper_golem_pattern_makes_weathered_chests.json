@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "copper_golem_pattern_makes_weathered_chests", 
+    "description": "A carved pumpkin on a copper block of each weathering stage is removed and the copper block becomes the matching copper chest facing the same way as the pumpkin.", 
+    "tags": ["decoration", "carved_pumpkin", "golem", "copper_golem", "pattern"], 
+    "minecraftIds": [
+        "minecraft:carved_pumpkin"        , "minecraft:copper_block"          , "minecraft:exposed_copper"        , 
+        "minecraft:weathered_copper"      , "minecraft:oxidized_copper"       , "minecraft:copper_chest"          , 
+        "minecraft:exposed_copper_chest"  , "minecraft:weathered_copper_chest", "minecraft:oxidized_copper_chest" 
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [6, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:copper_block"    } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:exposed_copper"  } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:weathered_copper"} }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:oxidized_copper" } }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [90, 90] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [180, 90] }, 
+        {"at": 4, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [6.5, 2, 0.5], "rot": [270, 90] }, 
+        {"at": 5, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:copper_chest", "facing": "north", "type": "single"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "pos": [2, 0, 0], 
+                    "is": {"id": "minecraft:exposed_copper_chest", "facing": "east", "type": "single"}
+                }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "pos": [4, 0, 0], 
+                    "is": {"id": "minecraft:weathered_copper_chest", "facing": "south", "type": "single"}
+                }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "pos": [6, 0, 0], 
+                    "is": {"id": "minecraft:oxidized_copper_chest", "facing": "west", "type": "single"}
+                }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

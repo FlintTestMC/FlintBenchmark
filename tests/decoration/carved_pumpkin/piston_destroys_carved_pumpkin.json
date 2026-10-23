@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "piston_destroys_carved_pumpkin", 
+    "description": "An extending piston destroys a carved pumpkin in front of it instead of pushing it, and the piston head takes its place.", 
+    "tags": ["decoration", "carved_pumpkin", "piston", "push-reaction"], 
+    "minecraftIds": [
+        "minecraft:piston"        , "minecraft:piston_head"   , "minecraft:carved_pumpkin", "minecraft:redstone_block"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:piston"        , "facing": "east" } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:carved_pumpkin", "facing": "north"} }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:piston"     , "facing": "east", "extended": true} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head", "facing": "east"                  } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:air"                                            } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
