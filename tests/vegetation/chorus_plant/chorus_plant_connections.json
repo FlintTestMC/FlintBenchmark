@@ -1,0 +1,105 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "chorus_plant_connections", 
+    "description": "Chorus plants connect up and down in a column topped by a chorus flower, and neighbouring plants gain and lose sideways connections as plants are placed and removed.", 
+    "tags": ["vegetation", "chorus-plant", "connection", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:chorus_plant", "minecraft:chorus_flower", "minecraft:end_stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [6, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:end_stone"} }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:end_stone"} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:end_stone"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:chorus_plant"} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:chorus_plant"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:chorus_plant"} }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:chorus_flower"} }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:chorus_plant", 
+                        "down": true, 
+                        "up": true, 
+                        "north": false, 
+                        "east": false, 
+                        "south": false, 
+                        "west": false
+                    }
+                }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chorus_plant", 
+                        "down": true, 
+                        "up": true, 
+                        "north": false, 
+                        "east": false, 
+                        "south": false, 
+                        "west": false
+                    }
+                }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:chorus_flower"} }, 
+                {
+                    "pos": [3, 1, 0], 
+                    "is": {"id": "minecraft:chorus_plant", "down": true, "up": false, "east": false, "west": false}
+                }
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:chorus_plant"} }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [3, 1, 0], 
+                    "is": {"id": "minecraft:chorus_plant", "down": true, "east": true, "west": false}
+                }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:chorus_plant", "down": true, "east": false, "west": true} }
+            ]
+        }, 
+        { "at": 8, "do": "remove", "pos": [4, 1, 0] }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:chorus_plant", "down": true, "east": false, "west": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
