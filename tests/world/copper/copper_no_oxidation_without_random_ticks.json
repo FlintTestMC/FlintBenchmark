@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "copper_no_oxidation_without_random_ticks", 
+    "description": "With random tick speed 0, copper_block stays unchanged for 450 ticks.", 
+    "tags": ["copper", "weathering", "random-tick"], 
+    "minecraftIds": ["minecraft:copper_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [12, 1, 0] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:copper_block"} }
+            ]
+        }, 
+        {
+            "at": 450, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:copper_block"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
