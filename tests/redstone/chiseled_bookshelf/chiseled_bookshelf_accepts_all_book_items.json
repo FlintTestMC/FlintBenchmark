@@ -1,0 +1,88 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "chiseled_bookshelf_accepts_all_book_items", 
+    "description": "Every item in the bookshelf_books tag (book, written_book, enchanted_book, writable_book, knowledge_book) can be inserted into the front face and is stored in its own slot.", 
+    "tags": ["redstone", "chiseled-bookshelf", "block-entity", "container", "item-tag", "player"], 
+    "minecraftIds": [
+        "minecraft:chiseled_bookshelf", "minecraft:book"              , "minecraft:written_book"      , 
+        "minecraft:enchanted_book"    , "minecraft:writable_book"     , "minecraft:knowledge_book"    
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -3], [2, 3, 2] ]
+        }, 
+        "player": {
+            "inventory": {
+                "hotbar1": {"id": "minecraft:book"          , "count": 1}, 
+                "hotbar2": {"id": "minecraft:written_book"  , "count": 1}, 
+                "hotbar3": {"id": "minecraft:enchanted_book", "count": 1}, 
+                "hotbar4": {"id": "minecraft:writable_book" , "count": 1}, 
+                "hotbar5": {"id": "minecraft:knowledge_book", "count": 1}  
+            }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 2, 0], 
+            "block": {"id": "minecraft:chiseled_bookshelf", "facing": "north"}
+        }, 
+        {"at": 1, "do": "select_hotbar", "slot": 1}, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.83, 1.13, -1.5], "rot": [0, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        {"at": 2, "do": "select_hotbar", "slot": 2}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 1.13, -1.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        {"at": 3, "do": "select_hotbar", "slot": 3}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [0.17, 1.13, -1.5], "rot": [0, 0] }, 
+        {"at": 3, "do": "interact"}, 
+        {"at": 4, "do": "select_hotbar", "slot": 4}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.83, 0.63, -1.5], "rot": [0, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        {"at": 5, "do": "select_hotbar", "slot": 5}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 0.63, -1.5], "rot": [0, 0] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chiseled_bookshelf", 
+                        "slot_0_occupied": true, 
+                        "slot_1_occupied": true, 
+                        "slot_2_occupied": true, 
+                        "slot_3_occupied": true, 
+                        "slot_4_occupied": true, 
+                        "slot_5_occupied": false, 
+                        "nbt": {
+                            "Items[0].id"  : "\"minecraft:book\""          , 
+                            "Items[1].id"  : "\"minecraft:written_book\""  , 
+                            "Items[2].id"  : "\"minecraft:enchanted_book\"", 
+                            "Items[3].id"  : "\"minecraft:writable_book\"" , 
+                            "Items[4].id"  : "\"minecraft:knowledge_book\"", 
+                            "Items[0].Slot": "0b"                          , 
+                            "Items[1].Slot": "1b"                          , 
+                            "Items[2].Slot": "2b"                          , 
+                            "Items[3].Slot": "3b"                          , 
+                            "Items[4].Slot": "4b"                            
+                        }
+                    }
+                }, 
+                {"slot": "hotbar1", "is": "empty"}, 
+                {"slot": "hotbar2", "is": "empty"}, 
+                {"slot": "hotbar3", "is": "empty"}, 
+                {"slot": "hotbar4", "is": "empty"}, 
+                {"slot": "hotbar5", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
