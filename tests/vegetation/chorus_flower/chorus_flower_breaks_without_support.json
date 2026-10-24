@@ -1,0 +1,70 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "chorus_flower_breaks_without_support", 
+    "description": "A chorus flower over air with two chorus plant neighbours, with a plant and a solid side neighbour, on stone, or after losing its end stone breaks without dropping an item.", 
+    "tags": ["vegetation", "chorus-flower", "chorus-plant", "support", "neighbor-update", "drops"], 
+    "minecraftIds": [
+        "minecraft:chorus_flower", "minecraft:chorus_plant" , "minecraft:end_stone"    , "minecraft:stone"        , 
+        "minecraft:item"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [13, 3, 2] ]
+        }, 
+        "world": {
+            "time": "minecraft:day", 
+            "weather": "clear", 
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 1, 1, 0], "block": {"id": "minecraft:end_stone"    } }, 
+                { "pos": [ 3, 1, 0], "block": {"id": "minecraft:end_stone"    } }, 
+                { "pos": [ 5, 1, 0], "block": {"id": "minecraft:end_stone"    } }, 
+                { "pos": [ 9, 0, 0], "block": {"id": "minecraft:end_stone"    } }, 
+                { "pos": [12, 0, 0], "block": {"id": "minecraft:stone"        } }, 
+                { "pos": [ 1, 2, 0], "block": {"id": "minecraft:chorus_plant" } }, 
+                { "pos": [ 3, 2, 0], "block": {"id": "minecraft:chorus_plant" } }, 
+                { "pos": [ 5, 2, 0], "block": {"id": "minecraft:chorus_plant" } }, 
+                { "pos": [ 6, 2, 0], "block": {"id": "minecraft:chorus_flower"} }, 
+                { "pos": [ 9, 1, 0], "block": {"id": "minecraft:chorus_flower"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [2, 2, 0], "block": {"id": "minecraft:chorus_flower"} }, 
+        { "at": 1, "do": "place", "pos": [12, 1, 0], "block": {"id": "minecraft:chorus_flower"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:chorus_flower"} }, 
+                { "pos": [9, 1, 0], "is": {"id": "minecraft:chorus_flower"} }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [6, 2, 1], "block": {"id": "minecraft:stone"} }, 
+        { "at": 3, "do": "remove", "pos": [9, 0, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 2, 2, 0], "is": {"id": "minecraft:air"}                  }, 
+                { "pos": [ 6, 2, 0], "is": {"id": "minecraft:air"}                  }, 
+                { "pos": [ 9, 1, 0], "is": {"id": "minecraft:air"}                  }, 
+                { "pos": [12, 1, 0], "is": {"id": "minecraft:air"}                  }, 
+                {                    "is": "minecraft:item"       , "exists": false }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

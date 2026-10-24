@@ -1,0 +1,64 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "chorus_flower_random_tick_outcomes", 
+    "description": "With a high random tick speed, a dead flower and a flower under a block stay unchanged, a boxed-in flower dies in place, and a flower under a low ceiling grows one plant segment and then dies.", 
+    "tags": ["vegetation", "chorus-flower", "chorus-plant", "growth", "random-tick"], 
+    "minecraftIds": ["minecraft:chorus_flower", "minecraft:chorus_plant", "minecraft:end_stone", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [12, 5, 10] ]
+        }, 
+        "world": {
+            "time": "minecraft:day", 
+            "weather": "clear", 
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 4096
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 2, 0, 0], "block": {"id": "minecraft:end_stone"              } }, 
+                { "pos": [ 6, 0, 0], "block": {"id": "minecraft:end_stone"              } }, 
+                { "pos": [10, 0, 0], "block": {"id": "minecraft:end_stone"              } }, 
+                { "pos": [ 2, 0, 8], "block": {"id": "minecraft:end_stone"              } }, 
+                { "pos": [ 6, 2, 0], "block": {"id": "minecraft:stone"                  } }, 
+                { "pos": [10, 4, 0], "block": {"id": "minecraft:stone"                  } }, 
+                { "pos": [ 2, 3, 8], "block": {"id": "minecraft:stone"                  } }, 
+                { "pos": [ 1, 1, 8], "block": {"id": "minecraft:stone"                  } }, 
+                { "pos": [ 3, 1, 8], "block": {"id": "minecraft:stone"                  } }, 
+                { "pos": [ 2, 1, 7], "block": {"id": "minecraft:stone"                  } }, 
+                { "pos": [ 2, 1, 9], "block": {"id": "minecraft:stone"                  } }, 
+                { "pos": [ 2, 1, 0], "block": {"id": "minecraft:chorus_flower", "age": 5} }, 
+                { "pos": [ 6, 1, 0], "block": {"id": "minecraft:chorus_flower", "age": 0} }, 
+                { "pos": [10, 1, 0], "block": {"id": "minecraft:chorus_flower", "age": 4} }, 
+                { "pos": [ 2, 1, 8], "block": {"id": "minecraft:chorus_flower", "age": 0} }  
+            ]
+        }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 2, 1, 0], "is": {"id": "minecraft:chorus_flower", "age": 5                              } }, 
+                { "pos": [ 2, 2, 0], "is": {"id": "minecraft:air"                                                  } }, 
+                { "pos": [ 6, 1, 0], "is": {"id": "minecraft:chorus_flower", "age": 0                              } }, 
+                { "pos": [ 6, 2, 0], "is": {"id": "minecraft:stone"                                                } }, 
+                { "pos": [10, 1, 0], "is": {"id": "minecraft:chorus_plant" ,           "up": "true", "down": "true"} }, 
+                { "pos": [10, 2, 0], "is": {"id": "minecraft:chorus_flower", "age": 5                              } }, 
+                { "pos": [10, 3, 0], "is": {"id": "minecraft:air"                                                  } }, 
+                { "pos": [ 2, 1, 8], "is": {"id": "minecraft:chorus_flower", "age": 5                              } }, 
+                { "pos": [ 2, 2, 8], "is": {"id": "minecraft:air"                                                  } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
