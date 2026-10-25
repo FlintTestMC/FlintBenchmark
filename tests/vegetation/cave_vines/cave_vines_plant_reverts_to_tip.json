@@ -1,0 +1,127 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cave_vines_plant_reverts_to_tip", 
+    "description": "A cave vines plant whose lower vine block is removed turns into a cave vines tip and keeps its berries value.", 
+    "tags": ["vegetation", "cave-vines", "cave-vines-plant", "neighbor-update", "berries"], 
+    "minecraftIds": ["minecraft:cave_vines", "minecraft:cave_vines_plant", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 4, 3] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 4, 3] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 3, 3] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:cave_vines"      , "age": 4, "berries": false} }, 
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:cave_vines_plant",           "berries": true } }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:cave_vines"      , "age": 4, "berries": false} }, 
+                { "pos": [4, 3, 0], "block": {"id": "minecraft:cave_vines_plant",           "berries": false} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:cave_vines_plant", "berries": true } }, 
+                { "pos": [4, 3, 0], "is": {"id": "minecraft:cave_vines_plant", "berries": false} }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [0, 2, 0] }, 
+        { "at": 5, "do": "remove", "pos": [4, 2, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 3, 0], 
+                    "is": [
+                        {"id": "minecraft:cave_vines", "age":  0, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age":  1, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age":  2, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age":  3, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age":  4, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age":  5, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age":  6, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age":  7, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age":  8, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age":  9, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 10, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 11, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 12, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 13, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 14, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 15, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 16, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 17, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 18, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 19, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 20, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 21, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 22, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 23, "berries": true}, 
+                        {"id": "minecraft:cave_vines", "age": 24, "berries": true}  
+                    ]
+                }, 
+                {
+                    "pos": [4, 3, 0], 
+                    "is": [
+                        {"id": "minecraft:cave_vines", "age":  0, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age":  1, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age":  2, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age":  3, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age":  4, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age":  5, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age":  6, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age":  7, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age":  8, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age":  9, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 10, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 11, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 12, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 13, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 14, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 15, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 16, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 17, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 18, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 19, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 20, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 21, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 22, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 23, "berries": false}, 
+                        {"id": "minecraft:cave_vines", "age": 24, "berries": false}  
+                    ]
+                }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

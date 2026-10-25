@@ -1,0 +1,81 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cave_vines_bonemeal_berries", 
+    "description": "Bone meal gives a berry-less cave vines tip berries without changing its age or growing the vine; on a tip that already has berries the click harvests them instead and the bone meal is kept.", 
+    "tags": ["vegetation", "cave-vines", "bone-meal", "berries", "player"], 
+    "minecraftIds": ["minecraft:cave_vines", "minecraft:bone_meal", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [0, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [2, 0, 0], [2, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:cave_vines", "age": 5, "berries": false} }, 
+                { "pos": [2, 2, 0], "block": {"id": "minecraft:cave_vines", "age": 7, "berries": true } }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, -90] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cave_vines", "age": 5, "berries": true} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }                                  , 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"} }                                  , 
+                { "slot": "hotbar1", "is": {"id": "minecraft:bone_meal", "count": 1} }                 
+            ]
+        }, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [2.5, 0, 0.5], "rot": [0, -90] }, 
+        {"at": 6, "do": "interact"}, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cave_vines", "age": 5, "berries": true} } , 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:cave_vines", "age": 7, "berries": false} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"} }                                   , 
+                { "slot": "hotbar1", "is": {"id": "minecraft:bone_meal", "count": 1} }                  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
