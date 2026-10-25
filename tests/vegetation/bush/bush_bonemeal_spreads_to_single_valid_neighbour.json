@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bush_bonemeal_spreads_to_single_valid_neighbour", 
+    "description": "Bone meal on a bush places a new bush on the only horizontal neighbour that is empty and supported, keeps the original, and consumes the bone meal.", 
+    "tags": ["vegetation", "bush", "bone-meal", "spread", "player"], 
+    "minecraftIds": ["minecraft:bush", "minecraft:grass_block", "minecraft:dirt", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [2, 4, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [2, 4, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [1, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"       } }, 
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:stone"      } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:bush"       } }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [0.5, 6, 0.5] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1,  0], "is": {"id": "minecraft:bush"}                     }, 
+                { "pos": [ 1, 1,  0], "is": {"id": "minecraft:bush"}                     }, 
+                { "pos": [-1, 1,  0], "is": {"id": "minecraft:air"}                      }, 
+                { "pos": [ 0, 1, -1], "is": {"id": "minecraft:air"}                      }, 
+                { "pos": [ 0, 1,  1], "is": {"id": "minecraft:stone"}                    }, 
+                { "pos": [ 0, 2,  0], "is": {"id": "minecraft:air"}                      }, 
+                {                     "is": "empty"                  , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

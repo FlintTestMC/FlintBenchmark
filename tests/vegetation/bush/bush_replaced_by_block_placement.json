@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bush_replaced_by_block_placement", 
+    "description": "Because a bush is replaceable, placing a stone block against it replaces the bush in its own position instead of going on top.", 
+    "tags": ["vegetation", "bush", "replaceable", "placement", "player"], 
+    "minecraftIds": ["minecraft:bush", "minecraft:dirt", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:stone", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 4, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:bush"} }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [0.5, 6, 0.5] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:dirt"}                     }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:stone"}                    }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"}                      }, 
+                {                   "is": "empty"                  , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
