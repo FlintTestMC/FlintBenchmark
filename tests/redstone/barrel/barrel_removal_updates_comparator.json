@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:barrel", "minecraft:comparator", "minecraft:stone"], 
+    "name": "Barrel Removal Updates Comparator", 
+    "description": "A comparator reading a barrel holding two full stacks outputs 2, and drops to 0 once the barrel is removed.", 
+    "tags": ["block-entity", "container", "barrel", "comparator", "neighbor-update", "redstone"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:stone"                       } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:comparator", "facing": "west"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {
+                "id": "minecraft:barrel", 
+                "facing": "up", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, count: 64, id: \"minecraft:stone\"}, {Slot: 1b, count: 64, id: \"minecraft:stone\"}]"
+                }
+            }
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 2} }
+                }
+            ]
+        }, 
+        { "at": 7, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 0} }
+                }
+            ]
+        }
+    ]
+}
+

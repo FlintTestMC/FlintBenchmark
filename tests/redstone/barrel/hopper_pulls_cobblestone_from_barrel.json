@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:hopper", "minecraft:barrel", "minecraft:cobblestone"], 
+    "name": "Hopper Pulls Cobblestone From Barrel", 
+    "description": "A hopper below a barrel pulls cobblestone out of the barrel one item at a time, starting with the first slot.", 
+    "tags": ["block-entity", "container", "barrel", "hopper", "item-transfer"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:hopper", "facing": "east"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:barrel", 
+                        "facing": "up", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 2, id: \"minecraft:cobblestone\"}]"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:barrel", 
+                        "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 1}
+                    }
+                }, 
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:hopper", 
+                        "nbt": {"Items[0].id": "minecraft:cobblestone", "Items[0].count": 1}
+                    }
+                }
+            ]
+        }
+    ]
+}
+
