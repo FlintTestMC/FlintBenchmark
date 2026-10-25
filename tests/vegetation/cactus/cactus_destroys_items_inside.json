@@ -1,0 +1,68 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_destroys_items_inside", 
+    "description": "A dropped item inside a cactus block is destroyed by cactus damage, while an identical item on plain ground survives (only one item entity remains).", 
+    "tags": ["vegetation", "cactus", "damage", "item-entity"], 
+    "minecraftIds": ["minecraft:cactus", "minecraft:sand", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 6, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 0, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:cactus"} }, 
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [-0.5, 6, 0.5] }, 
+        {
+            "at": 1, 
+            "do": "summon", 
+            "entity_alias": "in_cactus", 
+            "entity_type": "minecraft:item", 
+            "pos": [0.5, 2.3, 0.5], 
+            "Item": "{count: 1, id: \"minecraft:stone\"}", 
+            "PickupDelay": "32767s"
+        }, 
+        {
+            "at": 1, 
+            "do": "summon", 
+            "entity_alias": "control", 
+            "entity_type": "minecraft:item", 
+            "pos": [3.5, 1.2, 0.5], 
+            "Item": "{count: 1, id: \"minecraft:stone\"}", 
+            "PickupDelay": "32767s"
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "entity_alias": "in_cactus", "is": "minecraft:item"          , "exists": true                   }, 
+                {                              "is": {"id": "minecraft:cactus"},                 "pos": [0, 2, 0] }  
+            ]
+        }, 
+        {
+            "at": 200, 
+            "do": "assert", 
+            "checks": [
+                {"is": "minecraft:item", "exists": true, "count": 1}, 
+                {
+                    "entity_alias": "control", 
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "pos": [3.5, 1.2, 0.5], 
+                    "position_tolerance": 0.5
+                }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cactus"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

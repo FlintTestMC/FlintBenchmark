@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_support_loss_chain", 
+    "description": "Removing the sand under a three-tall cactus column breaks every cactus in it, while a neighboring column on intact sand is unaffected.", 
+    "tags": ["vegetation", "cactus", "survival-rules", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:cactus", "minecraft:sand"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 5, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:sand"} }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 2, 0], [0, 4, 0] ], 
+            "with": {"id": "minecraft:cactus"}
+        }, 
+        { "at": 0, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:sand"} }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [4, 2, 0], [4, 4, 0] ], 
+            "with": {"id": "minecraft:cactus"}
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [4, 4, 0], "is": {"id": "minecraft:cactus"} }  
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:sand"  } }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [4, 3, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [4, 4, 0], "is": {"id": "minecraft:cactus"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

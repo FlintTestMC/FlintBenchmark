@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_grows_upward_at_max_age", 
+    "description": "With fast random ticks, the top of a two-tall cactus at age 15 grows a third cactus, and the column never exceeds three cacti (a flower or air sits above).", 
+    "tags": ["vegetation", "cactus", "growth", "random-tick"], 
+    "minecraftIds": ["minecraft:cactus", "minecraft:sand", "minecraft:cactus_flower"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 7, 1] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 1000
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 0, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:cactus", "age": 0} }, 
+        { "at": 0, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:cactus", "age": 15} }, 
+        {
+            "at": 80, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:sand"} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:cactus"} }, 
+                {
+                    "pos": [ 0                      , 5                                , 0 ], 
+                    "is" : [ {"id": "minecraft:air"}, {"id": "minecraft:cactus_flower"}    ]  
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

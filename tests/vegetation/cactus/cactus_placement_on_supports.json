@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_placement_on_supports", 
+    "description": "Survival placement of cactus items on sand, red sand, suspicious sand and an existing cactus creates age-zero cactus blocks and consumes the items.", 
+    "tags": ["vegetation", "cactus", "placement", "player"], 
+    "minecraftIds": ["minecraft:cactus", "minecraft:sand", "minecraft:red_sand", "minecraft:suspicious_sand"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 8, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:cactus", "count": 5} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [9, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:sand"           } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:red_sand"       } }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:suspicious_sand"} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:sand"           } }, 
+                { "pos": [6, 2, 0], "block": {"id": "minecraft:cactus"         } }, 
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:sand"           } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3.5, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 3.5, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 3.5, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [6.5, 4.5, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [8.5, 3.5, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cactus", "age": 0}                    }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:cactus", "age": 0}                    }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:cactus", "age": 0}                    }, 
+                { "pos": [6, 3, 0], "is": {"id": "minecraft:cactus", "age": 0}                    }, 
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:cactus", "age": 0}                    }, 
+                {                   "is": "empty"                             , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

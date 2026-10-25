@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cactus_stops_growing_at_three_tall", 
+    "description": "With fast random ticks, a three-tall cactus whose top is at age 15 grows no fourth cactus and no flower, while a two-tall control column beside it does grow.", 
+    "tags": ["vegetation", "cactus", "growth", "random-tick"], 
+    "minecraftIds": ["minecraft:cactus", "minecraft:sand"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 7, 1] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 1000
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:sand"} }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 2, 0], [0, 3, 0] ], 
+            "with": {"id": "minecraft:cactus", "age": 0}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 4, 0], "block": {"id": "minecraft:cactus", "age": 15} }, 
+        { "at": 0, "do": "place", "pos": [3, 1, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 0, "do": "place", "pos": [3, 2, 0], "block": {"id": "minecraft:cactus", "age": 0} }, 
+        { "at": 0, "do": "place", "pos": [3, 3, 0], "block": {"id": "minecraft:cactus", "age": 15} }, 
+        {
+            "at": 80, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:cactus"} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [3, 4, 0], "is": {"id": "minecraft:cactus"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
