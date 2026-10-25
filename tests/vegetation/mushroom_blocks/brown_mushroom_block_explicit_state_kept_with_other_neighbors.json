@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "brown_mushroom_block_explicit_state_kept_with_other_neighbors", 
+    "description": "A brown mushroom block with all faces set to false keeps that state when non-mushroom blocks are placed next to it.", 
+    "tags": ["vegetation", "mushroom", "block-state", "huge-mushroom", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:brown_mushroom_block", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {
+                "id": "minecraft:brown_mushroom_block", 
+                "up": false, 
+                "down": false, 
+                "north": false, 
+                "east": false, 
+                "south": false, 
+                "west": false
+            }
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:brown_mushroom_block", 
+                        "up": false, 
+                        "down": false, 
+                        "north": false, 
+                        "east": false, 
+                        "south": false, 
+                        "west": false
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
