@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "budding_amethyst_destroyed_by_piston", 
+    "description": "A piston pushing budding amethyst destroys it without a drop, while a regular amethyst block in the same setup is pushed along.", 
+    "tags": ["world", "budding-amethyst", "piston", "push-reaction", "amethyst"], 
+    "minecraftIds": [
+        "minecraft:budding_amethyst", "minecraft:amethyst_block"  , "minecraft:piston"          , 
+        "minecraft:piston_head"     , "minecraft:redstone_block"  
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 3, 3] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 3, 3] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:piston", "facing": "east", "extended": false} }, 
+                { "pos": [0, 1, 0] , "block": {"id": "minecraft:budding_amethyst"}                            }, 
+                { "pos": [-1, 1, 2], "block": {"id": "minecraft:piston", "facing": "east", "extended": false} }, 
+                { "pos": [0, 1, 2] , "block": {"id": "minecraft:amethyst_block"}                              }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:budding_amethyst"} }, 
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:amethyst_block"  } }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [-1, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        { "at": 3, "do": "place", "pos": [-1, 2, 2], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:piston", "extended": true, "facing": "east"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east"} }              , 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"} }                                        , 
+                { "pos": [-1, 1, 2], "is": {"id": "minecraft:piston", "extended": true, "facing": "east"} }, 
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:piston_head", "facing": "east"} }              , 
+                { "pos": [1, 1, 2], "is": {"id": "minecraft:amethyst_block"} }                             , 
+                {"is": "minecraft:item", "exists": false}                                                    
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

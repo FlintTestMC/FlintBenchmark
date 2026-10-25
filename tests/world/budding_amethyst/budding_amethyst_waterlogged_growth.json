@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "budding_amethyst_waterlogged_growth", 
+    "description": "A full water source above a budding amethyst block becomes a waterlogged bud that stays waterlogged as it grows into a cluster.", 
+    "tags": ["world", "budding-amethyst", "random-tick", "amethyst"], 
+    "minecraftIds": ["minecraft:budding_amethyst", "minecraft:water", "minecraft:amethyst_cluster"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [2, 4, 2] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 6000
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [2, 4, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:water"           , "level": 0} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:budding_amethyst"            } }  
+            ]
+        }, 
+        {
+            "at": 200, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:budding_amethyst"                                     } }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:amethyst_cluster", "facing": "up", "waterlogged": true} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
