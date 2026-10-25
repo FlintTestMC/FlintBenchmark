@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "carpet_burns_as_furnace_fuel", 
+    "description": "A furnace with a smeltable input uses a white carpet as fuel, which burns for 67 ticks.", 
+    "tags": ["decoration", "carpet", "wool-carpets", "block-entity", "furnace", "fuel"], 
+    "minecraftIds": ["minecraft:white_carpet", "minecraft:furnace", "minecraft:potato"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:furnace", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, count: 1, id: \"minecraft:potato\"}, {Slot: 1b, count: 1, id: \"minecraft:white_carpet\"}]"
+                }
+            }
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:furnace", 
+                        "lit": true, 
+                        "nbt": {"lit_total_time": "67s", "Items[0].id": "minecraft:potato"}
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

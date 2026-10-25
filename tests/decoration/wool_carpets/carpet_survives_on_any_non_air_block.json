@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "carpet_survives_on_any_non_air_block", 
+    "description": "A white carpet stays when the block below is replaced by glass, water or another carpet, because it only requires that the block below is not air.", 
+    "tags": ["decoration", "carpet", "wool-carpets", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:white_carpet", "minecraft:stone", "minecraft:glass", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"       } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:stone"       } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:stone"       } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:white_carpet"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:white_carpet"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:white_carpet"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:glass"} }, 
+        { "at": 1, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 1, "do": "place", "pos": [4, 0, 0], "block": {"id": "minecraft:white_carpet"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:glass"       } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:white_carpet"} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:water"       } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:white_carpet"} }, 
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:white_carpet"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:white_carpet"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
