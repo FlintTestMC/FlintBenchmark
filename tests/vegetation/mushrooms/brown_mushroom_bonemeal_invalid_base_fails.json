@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brown_mushroom_bonemeal_invalid_base_fails", 
+    "description": "Bone meal on a brown mushroom standing on stone (not a valid base for a huge brown mushroom) is consumed each time but the small mushroom always remains.", 
+    "tags": ["vegetation", "mushroom", "brown-mushroom", "bone-meal", "growth", "huge-mushroom", "player"], 
+    "minecraftIds": ["minecraft:brown_mushroom", "minecraft:stone", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }, 
+        "player": {
+            "game_mode": "Survival", 
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 5} }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brown_mushroom"} }, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        { "at": [7, 8, 9, 10, 11], "do": "interact" }, 
+        { "at": 12, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 15, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"}                             }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brown_mushroom"}                    }, 
+                {                   "is": "empty"                           , "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 16, "do": "remove", "pos": [0, 1, 0] }
+    ], 
+    "breakpoints": []
+}
+

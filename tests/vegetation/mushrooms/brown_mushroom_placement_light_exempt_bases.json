@@ -1,0 +1,74 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brown_mushroom_placement_light_exempt_bases", 
+    "description": "Brown mushrooms can be placed under open sky on mycelium, podzol, crimson nylium and warped nylium because those blocks override the light requirement.", 
+    "tags": [
+        "vegetation"    , "mushroom"      , "brown-mushroom", "placement"     , "light"         , "mycelium"      , 
+        "podzol"        , "nylium"        , "player"        
+    ], 
+    "minecraftIds": [
+        "minecraft:brown_mushroom", "minecraft:mycelium"      , "minecraft:podzol"        , "minecraft:crimson_nylium", 
+        "minecraft:warped_nylium" 
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 3, 1] ]
+        }, 
+        "player": {
+            "game_mode": "Survival", 
+            "inventory": { "hotbar1": {"id": "minecraft:brown_mushroom", "count": 4} }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [9, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [9, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:mycelium"      } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:podzol"        } }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:crimson_nylium"} }, 
+                { "pos": [8, 0, 0], "block": {"id": "minecraft:warped_nylium" } }  
+            ]
+        }, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 8, "do": "interact"}, 
+        { "at": 10, "do": "tp", "entity_alias": "player", "pos": [6.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 10, "do": "interact"}, 
+        { "at": 12, "do": "tp", "entity_alias": "player", "pos": [8.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 12, "do": "interact"}, 
+        { "at": 13, "do": "tp", "entity_alias": "player", "pos": [5.5, 6, 0.5] }, 
+        {
+            "at": 17, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:brown_mushroom"}                    }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:brown_mushroom"}                    }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:brown_mushroom"}                    }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:brown_mushroom"}                    }, 
+                {                   "is": "empty"                           , "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 18, "do": "remove", "pos": [2, 1, 0] }, 
+        { "at": 18, "do": "remove", "pos": [4, 1, 0] }, 
+        { "at": 18, "do": "remove", "pos": [6, 1, 0] }, 
+        { "at": 18, "do": "remove", "pos": [8, 1, 0] }
+    ], 
+    "breakpoints": []
+}
+

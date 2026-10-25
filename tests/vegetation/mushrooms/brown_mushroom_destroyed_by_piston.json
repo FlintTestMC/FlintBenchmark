@@ -1,0 +1,65 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brown_mushroom_destroyed_by_piston", 
+    "description": "A piston extending into a brown mushroom destroys it instead of pushing it (push reaction DESTROY) and the mushroom drops as an item.", 
+    "tags": ["vegetation", "mushroom", "brown-mushroom", "piston", "push-reaction", "drops"], 
+    "minecraftIds": [
+        "minecraft:brown_mushroom", "minecraft:piston"        , "minecraft:piston_head"   , "minecraft:redstone_block", 
+        "minecraft:stone"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brown_mushroom"} }, 
+        {
+            "at": 5, 
+            "do": "place", 
+            "pos": [1, 1, 0], 
+            "block": {"id": "minecraft:piston", "facing": "west", "extended": false}
+        }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brown_mushroom"} }                             , 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston", "facing": "west", "extended": false} }, 
+                {"is": "minecraft:item", "exists": false}                                                    
+            ]
+        }, 
+        { "at": 8, "do": "place", "pos": [1, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 14, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston", "facing": "west", "extended": true} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "west"} }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:stone"} }, 
+                {
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "count": 1, 
+                    "Item": "{count: 1, id: \"minecraft:brown_mushroom\"}"
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

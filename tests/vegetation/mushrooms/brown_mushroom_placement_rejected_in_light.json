@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brown_mushroom_placement_rejected_in_light", 
+    "description": "A brown mushroom cannot be placed on stone under open sky because the light level is 13 or more, and the item is not consumed.", 
+    "tags": ["vegetation", "mushroom", "brown-mushroom", "placement", "light", "player"], 
+    "minecraftIds": ["minecraft:brown_mushroom", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 3, 1] ]
+        }, 
+        "player": {
+            "game_mode": "Survival", 
+            "inventory": { "hotbar1": {"id": "minecraft:brown_mushroom", "count": 1} }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [1, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"                     }                    }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                       }                    }, 
+                {                   "is": {"id": "minecraft:brown_mushroom", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
