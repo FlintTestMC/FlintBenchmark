@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bell_floor_loses_support", 
+    "description": "A floor bell is destroyed and drops one bell item when the block beneath it is removed.", 
+    "tags": ["decoration", "bell", "support", "neighbor-update", "drops"], 
+    "minecraftIds": ["minecraft:bell", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:bell", "attachment": "floor", "facing": "north"}
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:bell", "attachment": "floor", "facing": "north", "powered": false}
+                }
+            ]
+        }, 
+        { "at": 1, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"} }                              , 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }                              , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:bell"}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

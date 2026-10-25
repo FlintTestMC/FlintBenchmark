@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bell_double_wall_placement", 
+    "description": "Clicking the east face of a solid block with another solid block directly opposite the placement position places a bell attached on both sides, which survives losing one support by switching to the other side (only a double-wall bell does that). The attachment value is not asserted directly because the flint bot reports it as 'doublewall' rather than the vanilla 'double_wall'.", 
+    "tags": ["decoration", "bell", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:bell", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 5, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bell", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [1.5, 4, 0.5], "rot": [90, 83] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:stone"} }                                   , 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:stone"} }                                   , 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:bell", "facing": "west", "powered": false} }, 
+                { "is": {"id": "minecraft:air", "count": 0}, "slot": "hotbar1" }                          
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                                      } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:stone"                                    } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:bell" , "facing": "east", "powered": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

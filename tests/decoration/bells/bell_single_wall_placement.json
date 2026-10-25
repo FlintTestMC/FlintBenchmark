@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bell_single_wall_placement", 
+    "description": "Clicking the east face of a solid block with nothing opposite places a wall bell facing away from the clicked face (west) and consumes the item. The attachment value is not asserted because the flint bot reports it as 'singlewall' rather than the vanilla 'single_wall'.", 
+    "tags": ["decoration", "bell", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:bell", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bell", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [3.5, 0, 0.5], "rot": [90, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:stone"} }                                   , 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:bell", "facing": "west", "powered": false} }, 
+                { "is": {"id": "minecraft:air", "count": 0}, "slot": "hotbar1" }                          
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
