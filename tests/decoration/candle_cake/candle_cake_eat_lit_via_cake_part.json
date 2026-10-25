@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Candle Cake Eat Lit Via Cake Part", 
+    "description": "Clicking the lower cake part of a lit candle cake with an empty hand eats it instead of putting it out.", 
+    "tags": ["decoration", "candle_cake", "cake", "candle", "interaction", "drops"], 
+    "minecraftIds": ["minecraft:candle_cake", "minecraft:cake", "minecraft:candle"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 4, 0] ]
+        }, 
+        "player": {"game_mode": "Creative"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:stone"                   } }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:stone"                   } }, 
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:candle_cake", "lit": true} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [3.5, 2, 0.5], "rot": [90, 8] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:cake", "bites": 1} }                   , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:candle"}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

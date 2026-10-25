@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Magenta Candle Cake Pairing And Drop", 
+    "description": "Using a magenta candle on a cake makes a magenta candle cake, and eating it drops a magenta candle.", 
+    "tags": ["decoration", "candle_cake", "cake", "candle", "drops"], 
+    "minecraftIds": ["minecraft:magenta_candle_cake", "minecraft:cake", "minecraft:magenta_candle"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 3, 0] ]
+        }, 
+        "player": {
+            "game_mode": "Creative", 
+            "inventory": { "hotbar1": {"id": "minecraft:magenta_candle", "count": 1} }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"            } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:cake" , "bites": 0} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:magenta_candle"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:magenta_candle_cake", "lit": false} }
+            ]
+        }, 
+        {"at": 3, "do": "set_slot", "slot": "hotbar1"}, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:cake", "bites": 1} }                           , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:magenta_candle"}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
