@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cobweb_destroyed_by_piston", 
+    "description": "An extending piston destroys a cobweb in front of it instead of pushing it, and extends fully.", 
+    "tags": ["decoration", "cobweb", "piston", "push-reaction", "redstone"], 
+    "minecraftIds": ["minecraft:cobweb", "minecraft:piston"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston", "facing": "east", "extended": "false"} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:cobweb"                                       } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": "false"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:cobweb"                                       } }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [-1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": "true"}    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east", "type": "normal"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"}                                             }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

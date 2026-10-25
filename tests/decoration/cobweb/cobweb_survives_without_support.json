@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cobweb_survives_without_support", 
+    "description": "A cobweb has no support requirement: removing the block beneath it leaves the cobweb floating in place.", 
+    "tags": ["decoration", "cobweb", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:cobweb"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone" } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:cobweb"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cobweb"} }
+            ]
+        }, 
+        { "at": 1, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:cobweb"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
