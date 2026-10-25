@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:coal_ore", "minecraft:sticky_piston", "minecraft:redstone_block", "minecraft:stone"], 
+    "name": "coal_ore_sticky_piston_pull", 
+    "description": "A sticky piston pulls coal ore back with it when its power is removed, leaving the ore unchanged.", 
+    "tags": ["world", "ore", "coal-ore", "sticky-piston", "push-reaction"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:coal_ore"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {"id": "minecraft:sticky_piston", "facing": "east", "extended": false}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:sticky_piston", "extended": true} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head"                    } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:coal_ore"                       } }  
+            ]
+        }, 
+        { "at": 11, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:sticky_piston", "extended": false} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:coal_ore"                        } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:air"                             } }  
+            ]
+        }
+    ]
+}
+

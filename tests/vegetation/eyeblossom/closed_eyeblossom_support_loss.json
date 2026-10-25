@@ -1,0 +1,70 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "closed_eyeblossom_support_loss", 
+    "description": "A closed eyeblossom breaks into air when the block below is removed or replaced with stone.", 
+    "tags": ["vegetation", "eyeblossom", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:closed_eyeblossom", "minecraft:grass_block", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [3, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:grass_block"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }  
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [0, 0, 0] }, 
+        { "at": 5, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"              } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"              } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:stone"            } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"              } }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

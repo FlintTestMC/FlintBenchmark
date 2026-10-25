@@ -1,0 +1,70 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "closed_eyeblossom_placement_on_supports", 
+    "description": "A closed eyeblossom placed on grass, dirt, farmland, moss, pale moss or mud stays in place as a closed eyeblossom.", 
+    "tags": ["vegetation", "eyeblossom", "placement", "support"], 
+    "minecraftIds": [
+        "minecraft:closed_eyeblossom", "minecraft:grass_block"      , "minecraft:dirt"             , 
+        "minecraft:farmland"         , "minecraft:moss_block"       , "minecraft:pale_moss_block"  , 
+        "minecraft:mud"              
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [5, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"    } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"           } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:farmland"       } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:moss_block"     } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:pale_moss_block"} }, 
+                { "pos": [5, 0, 0], "block": {"id": "minecraft:mud"            } }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

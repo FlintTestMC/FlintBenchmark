@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "closed_eyeblossom_replaced_by_water", 
+    "description": "Water flowing down onto a closed eyeblossom replaces it, because the flower has no collision and is not a liquid container, with falling water (level 8) taking its place.", 
+    "tags": ["vegetation", "eyeblossom", "water", "fluid"], 
+    "minecraftIds": ["minecraft:closed_eyeblossom", "minecraft:water", "minecraft:grass_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 3, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+        { "at": 3, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:water", "level": 0} }, 
+        {
+            "at": 15, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water", "level": 8} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

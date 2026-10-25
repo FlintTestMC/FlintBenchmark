@@ -1,0 +1,33 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:coal_ore", "minecraft:piston", "minecraft:redstone_block", "minecraft:stone"], 
+    "name": "coal_ore_piston_push", 
+    "description": "A piston pushes coal ore one block forward and the ore arrives unchanged, since it is not an immovable block.", 
+    "tags": ["world", "ore", "coal-ore", "piston", "push-reaction"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:coal_ore"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {"id": "minecraft:piston", "facing": "east", "extended": false}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:piston"     , "extended": true} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head"                  } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:coal_ore"                     } }  
+            ]
+        }
+    ]
+}
+
