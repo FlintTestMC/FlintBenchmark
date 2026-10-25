@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "cake_candle_on_bitten_cake_eats", 
+    "description": "A creative player using a candle on a bitten cake gets no candle cake; the empty-hand fallback eats another slice.", 
+    "tags": ["decoration", "cake", "candle", "eating", "player"], 
+    "minecraftIds": ["minecraft:cake", "minecraft:candle"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:candle"} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Creative"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:cake", "bites": 1} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:cake", "bites": 2} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

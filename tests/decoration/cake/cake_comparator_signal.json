@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "cake_comparator_signal", 
+    "description": "A comparator reading a cake outputs (7 - bites) * 2, giving 14, 8 and 2 at 0, 3 and 6 bites.", 
+    "tags": ["decoration", "cake", "comparator", "analog-output", "redstone"], 
+    "minecraftIds": ["minecraft:cake", "minecraft:comparator"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 2, 5] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 2, 5] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:comparator", "facing": "east"} }, 
+                { "pos": [1, 1, 2], "block": {"id": "minecraft:comparator", "facing": "east"} }, 
+                { "pos": [1, 1, 4], "block": {"id": "minecraft:comparator", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:cake", "bites": 0} }, 
+                { "pos": [2, 1, 2], "block": {"id": "minecraft:cake", "bites": 3} }, 
+                { "pos": [2, 1, 4], "block": {"id": "minecraft:cake", "bites": 6} }  
+            ]
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 14} }
+                }, 
+                {
+                    "pos": [1, 1, 2], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 8} }
+                }, 
+                {
+                    "pos": [1, 1, 4], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 2} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

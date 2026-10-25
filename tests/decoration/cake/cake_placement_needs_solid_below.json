@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "cake_placement_needs_solid_below", 
+    "description": "A cake cannot be placed against the side of a block when the position below it is air, and the item is kept.", 
+    "tags": ["decoration", "cake", "placement", "support", "player"], 
+    "minecraftIds": ["minecraft:cake", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:cake"} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [3.5, 1, 0.5], "rot": [90, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:air"             }                    }, 
+                {                   "is": {"id": "minecraft:cake", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
