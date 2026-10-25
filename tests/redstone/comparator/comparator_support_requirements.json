@@ -1,0 +1,64 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "comparator_support_requirements", 
+    "description": "A comparator stays on blocks with a full rigid top face (top slab, glass) and breaks when its support is replaced by a bottom slab or a fence.", 
+    "tags": ["redstone", "comparator", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:comparator", "minecraft:smooth_stone_slab", "minecraft:oak_fence", "minecraft:glass"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, 0], [7, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, 0], [7, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:comparator", "facing": "east"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:comparator", "facing": "east"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:comparator", "facing": "east"} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:comparator", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:comparator"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:comparator"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:comparator"} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:comparator"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:smooth_stone_slab", "type": "bottom"} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:smooth_stone_slab", "type": "top"   } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:oak_fence"                          } }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:glass"                              } }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"       } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:comparator"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"       } }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:comparator"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

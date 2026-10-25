@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "comparator_support_removal", 
+    "description": "Removing the block under a comparator makes the comparator break.", 
+    "tags": ["redstone", "comparator", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:comparator", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, 0], [1, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:comparator", "facing": "east"} }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:comparator"} }
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
