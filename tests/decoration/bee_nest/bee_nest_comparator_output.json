@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bee_nest_comparator_output", 
+    "description": "A comparator reading a bee nest outputs a signal strength equal to the nest's honey level.", 
+    "tags": ["decoration", "bee-nest", "redstone", "comparator", "analog-output"], 
+    "minecraftIds": ["minecraft:bee_nest", "minecraft:comparator", "minecraft:redstone_wire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, 0], [2, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, 0], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-2, 1, 1], "block": {"id": "minecraft:comparator"   , "facing": "north"} }, 
+                { "pos": [ 0, 1, 1], "block": {"id": "minecraft:comparator"   , "facing": "north"} }, 
+                { "pos": [ 2, 1, 1], "block": {"id": "minecraft:comparator"   , "facing": "north"} }, 
+                { "pos": [-2, 1, 2], "block": {"id": "minecraft:redstone_wire"                   } }, 
+                { "pos": [ 0, 1, 2], "block": {"id": "minecraft:redstone_wire"                   } }, 
+                { "pos": [ 2, 1, 2], "block": {"id": "minecraft:redstone_wire"                   } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-2, 1, 0], "block": {"id": "minecraft:bee_nest", "facing": "north", "honey_level": 0} }, 
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:bee_nest", "facing": "north", "honey_level": 3} }, 
+                { "pos": [ 2, 1, 0], "block": {"id": "minecraft:bee_nest", "facing": "north", "honey_level": 5} }  
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-2, 1, 1], "is": {"id": "minecraft:comparator"   , "powered": false            } }, 
+                { "pos": [ 0, 1, 1], "is": {"id": "minecraft:comparator"   , "powered": true             } }, 
+                { "pos": [ 2, 1, 1], "is": {"id": "minecraft:comparator"   , "powered": true             } }, 
+                { "pos": [-2, 1, 2], "is": {"id": "minecraft:redstone_wire",                   "power": 0} }, 
+                { "pos": [ 0, 1, 2], "is": {"id": "minecraft:redstone_wire",                   "power": 3} }, 
+                { "pos": [ 2, 1, 2], "is": {"id": "minecraft:redstone_wire",                   "power": 5} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

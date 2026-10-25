@@ -1,0 +1,70 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bee_nest_campfire_smoked_harvest", 
+    "description": "Shearing a full bee nest with a lit campfire two blocks below it still resets the honey level to zero.", 
+    "tags": ["decoration", "bee-nest", "shears", "harvest", "campfire", "smoke", "player"], 
+    "minecraftIds": ["minecraft:bee_nest", "minecraft:shears", "minecraft:campfire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 6, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:shears", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 5, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 5, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:campfire", 
+                        "lit": true, 
+                        "signal_fire": false, 
+                        "facing": "north", 
+                        "waterlogged": false
+                    }
+                }, 
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:bee_nest", "facing": "south", "honey_level": 5} }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:campfire", "lit": true} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"                  } }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:bee_nest", "facing": "south", "honey_level": 0} }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:shears", "count": 1} }                            
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
