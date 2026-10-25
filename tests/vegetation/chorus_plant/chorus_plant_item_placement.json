@@ -1,0 +1,68 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "chorus_plant_item_placement", 
+    "description": "A survival player can place the chorus plant item on end stone, which consumes the item and connects downward, but cannot place it on stone, which keeps the item and places nothing.", 
+    "tags": ["vegetation", "chorus-plant", "placement", "player", "support"], 
+    "minecraftIds": ["minecraft:chorus_plant", "minecraft:end_stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:chorus_plant", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [4, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:end_stone"} }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:chorus_plant", 
+                        "down": true, 
+                        "up": false, 
+                        "north": false, 
+                        "east": false, 
+                        "south": false, 
+                        "west": false
+                    }
+                }, 
+                { "is": {"id": "minecraft:chorus_plant", "count": 1}, "slot": "hotbar1" }
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [3.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [3, 0, 0], "is": {"id": "minecraft:stone"                   }                    }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:air"                     }                    }, 
+                {                   "is": {"id": "minecraft:chorus_plant", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

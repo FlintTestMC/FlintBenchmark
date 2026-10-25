@@ -1,0 +1,65 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "chorus_plant_piston_destroys", 
+    "description": "A chorus plant in the path of an extending piston is destroyed instead of being pushed, and it does not reappear when the piston retracts.", 
+    "tags": ["vegetation", "chorus-plant", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:chorus_plant", "minecraft:end_stone", "minecraft:piston"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -2], [3, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -2], [3, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 1, -2], [3, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:end_stone"} }, 
+        { "at": 2, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:chorus_plant"} }, 
+        {
+            "at": 2, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:piston", "facing": "east", "extended": false}
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:chorus_plant", "west": false                   } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston"      ,                "extended": false} }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 1, -1], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston"     , "extended": true                  } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head",                   "facing": "east"} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:end_stone"                                      } }  
+            ]
+        }, 
+        { "at": 11, "do": "remove", "pos": [0, 1, -1] }, 
+        {
+            "at": 16, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "extended": false} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"                      } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
