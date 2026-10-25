@@ -1,0 +1,96 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Campfire Finishes Cooking", 
+    "description": "On a lit campfire, cooking progress rises by one per tick; when a slot reaches its total cooking time (598/600 preset) the slot is emptied. (CampfireBlockEntity.cookTick lines 66-72). A second campfire preset to 500/600 still holds its beef. The dropped cooked beef item entity is intentionally not asserted (entities out of scope).", 
+    "tags": ["campfire", "block-entity", "cooking", "food", "tick"], 
+    "minecraftIds": ["minecraft:campfire", "minecraft:beef"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:campfire", 
+                        "lit": true, 
+                        "waterlogged": false, 
+                        "signal_fire": false, 
+                        "facing": "north", 
+                        "nbt": {
+                            "Items"            : "[{Slot: 0b, id: \"minecraft:beef\", count: 1}]", 
+                            "CookingTimes"     : "[I; 598, 0, 0, 0]"                             , 
+                            "CookingTotalTimes": "[I; 600, 0, 0, 0]"                               
+                        }
+                    }
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "block": {
+                        "id": "minecraft:campfire", 
+                        "lit": true, 
+                        "waterlogged": false, 
+                        "signal_fire": false, 
+                        "facing": "north", 
+                        "nbt": {
+                            "Items"            : "[{Slot: 0b, id: \"minecraft:beef\", count: 1}]", 
+                            "CookingTimes"     : "[I; 500, 0, 0, 0]"                             , 
+                            "CookingTotalTimes": "[I; 600, 0, 0, 0]"                               
+                        }
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:campfire", 
+                        "nbt": {"Items[0].id": "minecraft:beef", "CookingTimes[0]": 599}, 
+                        "lit": true
+                    }
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "is": {
+                        "id": "minecraft:campfire", 
+                        "nbt": {"Items[0].id": "minecraft:beef", "CookingTimes[0]": 501}, 
+                        "lit": true
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:campfire", "nbt": {"Items": []}, "lit": true }
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "is": {
+                        "id": "minecraft:campfire", 
+                        "nbt": {"Items[0].id": "minecraft:beef", "CookingTimes[0]": 503}, 
+                        "lit": true
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

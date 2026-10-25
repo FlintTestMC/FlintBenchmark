@@ -1,0 +1,34 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Campfire Signal Fire On Hay Placement", 
+    "description": "A campfire placed by a player on top of a hay bale is a lit signal fire (getStateForPlacement checks the block below for minecraft:hay_block).", 
+    "tags": ["campfire", "signal-fire", "hay", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:campfire", "minecraft:hay_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:hay_block", "axis": "y"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:campfire"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:hay_block"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:campfire", "lit": true, "signal_fire": true, "waterlogged": false}
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
