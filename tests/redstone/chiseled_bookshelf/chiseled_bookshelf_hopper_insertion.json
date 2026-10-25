@@ -1,0 +1,128 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "chiseled_bookshelf_hopper_insertion", 
+    "description": "A hopper facing a chiseled bookshelf skips items that are not bookshelf books, moves one book every eight ticks into the lowest free slot while setting that slot's flag, and stops once all six slots are full.", 
+    "tags": ["redstone", "chiseled-bookshelf", "hopper", "block-entity", "container", "item-transfer"], 
+    "minecraftIds": ["minecraft:chiseled_bookshelf", "minecraft:hopper", "minecraft:cobblestone", "minecraft:book"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [2, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:chiseled_bookshelf", "facing": "north"} }, 
+                {
+                    "pos": [-1, 2, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "east", 
+                        "nbt": {
+                            "Items": "[{Slot: 0b, id: \"minecraft:cobblestone\", count: 2}, {Slot: 1b, id: \"minecraft:book\", count: 7}]", 
+                            "TransferCooldown": 0
+                        }
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chiseled_bookshelf", 
+                        "slot_0_occupied": true, 
+                        "slot_1_occupied": false, 
+                        "slot_2_occupied": false, 
+                        "slot_3_occupied": false, 
+                        "slot_4_occupied": false, 
+                        "slot_5_occupied": false
+                    }
+                }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": { "id": "minecraft:chiseled_bookshelf", "nbt": {"Items[0].Slot": "0b"} }
+                }, 
+                {
+                    "pos": [-1, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 2, "Items[1].count": 6} }
+                }
+            ]
+        }, 
+        {
+            "at": 13, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chiseled_bookshelf", 
+                        "slot_0_occupied": true, 
+                        "slot_1_occupied": true, 
+                        "slot_2_occupied": false, 
+                        "slot_3_occupied": false, 
+                        "slot_4_occupied": false, 
+                        "slot_5_occupied": false
+                    }
+                }, 
+                {
+                    "pos": [-1, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[1].count": 5} }
+                }
+            ]
+        }, 
+        {
+            "at": 45, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chiseled_bookshelf", 
+                        "slot_0_occupied": true, 
+                        "slot_1_occupied": true, 
+                        "slot_2_occupied": true, 
+                        "slot_3_occupied": true, 
+                        "slot_4_occupied": true, 
+                        "slot_5_occupied": true
+                    }
+                }, 
+                {
+                    "pos": [-1, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 2, "Items[1].count": 1} }
+                }
+            ]
+        }, 
+        {
+            "at": 61, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chiseled_bookshelf", 
+                        "slot_0_occupied": true, 
+                        "slot_1_occupied": true, 
+                        "slot_2_occupied": true, 
+                        "slot_3_occupied": true, 
+                        "slot_4_occupied": true, 
+                        "slot_5_occupied": true
+                    }
+                }, 
+                {
+                    "pos": [-1, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 2, "Items[1].count": 1} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,124 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "chiseled_bookshelf_empty_hand_removal", 
+    "description": "With an empty hand, clicking an occupied slot returns exactly that stored book (enchanted or plain) to the inventory and clears its flag, while clicking an empty slot changes nothing.", 
+    "tags": ["redstone", "chiseled-bookshelf", "block-entity", "container", "player"], 
+    "minecraftIds": ["minecraft:chiseled_bookshelf", "minecraft:book", "minecraft:enchanted_book"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -3], [2, 3, 2] ]
+        }, 
+        "player": {
+            "inventory": {
+                "hotbar2": {"id": "minecraft:book"          , "count": 1}, 
+                "hotbar3": {"id": "minecraft:enchanted_book", "count": 1}  
+            }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 2, 0], 
+            "block": {"id": "minecraft:chiseled_bookshelf", "facing": "north"}
+        }, 
+        {"at": 1, "do": "select_hotbar", "slot": 2}, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.83, 1.13, -1.5], "rot": [0, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        {"at": 2, "do": "select_hotbar", "slot": 3}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.17, 0.63, -1.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chiseled_bookshelf", 
+                        "slot_0_occupied": true, 
+                        "slot_1_occupied": false, 
+                        "slot_2_occupied": false, 
+                        "slot_3_occupied": false, 
+                        "slot_4_occupied": false, 
+                        "slot_5_occupied": true
+                    }
+                }, 
+                {"slot": "hotbar2", "is": "empty"}, 
+                {"slot": "hotbar3", "is": "empty"}
+            ]
+        }, 
+        {"at": 3, "do": "select_hotbar", "slot": 1}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [0.17, 0.63, -1.5], "rot": [0, 0] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chiseled_bookshelf", 
+                        "slot_0_occupied": true, 
+                        "slot_1_occupied": false, 
+                        "slot_2_occupied": false, 
+                        "slot_3_occupied": false, 
+                        "slot_4_occupied": false, 
+                        "slot_5_occupied": false
+                    }
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:enchanted_book", "count": 1} }
+            ]
+        }, 
+        {"at": 4, "do": "select_hotbar", "slot": 4}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 0.63, -1.5], "rot": [0, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chiseled_bookshelf", 
+                        "slot_0_occupied": true, 
+                        "slot_1_occupied": false, 
+                        "slot_2_occupied": false, 
+                        "slot_3_occupied": false, 
+                        "slot_4_occupied": false, 
+                        "slot_5_occupied": false
+                    }
+                }
+            ]
+        }, 
+        {"at": 5, "do": "set_slot", "slot": "hotbar1"}, 
+        {"at": 5, "do": "select_hotbar", "slot": 1}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.83, 1.13, -1.5], "rot": [0, 0] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:chiseled_bookshelf", 
+                        "slot_0_occupied": false, 
+                        "slot_1_occupied": false, 
+                        "slot_2_occupied": false, 
+                        "slot_3_occupied": false, 
+                        "slot_4_occupied": false, 
+                        "slot_5_occupied": false
+                    }
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:book", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

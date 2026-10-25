@@ -1,0 +1,77 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "chiseled_bookshelf_comparator_output", 
+    "description": "A comparator reading a chiseled bookshelf outputs 0 for an untouched shelf and otherwise the last interacted slot plus one, whether that slot was last filled or last emptied.", 
+    "tags": ["redstone", "chiseled-bookshelf", "comparator", "analog-output", "player"], 
+    "minecraftIds": [
+        "minecraft:chiseled_bookshelf", "minecraft:comparator"        , "minecraft:redstone_wire"     , 
+        "minecraft:book"              
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -3], [3, 3, 2] ]
+        }, 
+        "player": {
+            "inventory": {
+                "hotbar2": {"id": "minecraft:book", "count": 1}, 
+                "hotbar3": {"id": "minecraft:book", "count": 1}  
+            }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:chiseled_bookshelf", "facing": "north"} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:stone"                                } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:stone"                                } }, 
+                { "pos": [1, 2, 0], "block": {"id": "minecraft:comparator"        , "facing": "west" } }, 
+                { "pos": [2, 2, 0], "block": {"id": "minecraft:redstone_wire"                        } }  
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:redstone_wire", "power": 0} }
+            ]
+        }, 
+        {"at": 4, "do": "select_hotbar", "slot": 2}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.83, 1.13, -1.5], "rot": [0, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:redstone_wire", "power": 1} }
+            ]
+        }, 
+        {"at": 8, "do": "select_hotbar", "slot": 3}, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [0.17, 0.63, -1.5], "rot": [0, 0] }, 
+        {"at": 8, "do": "interact"}, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:redstone_wire", "power": 6} }
+            ]
+        }, 
+        {"at": 12, "do": "select_hotbar", "slot": 1}, 
+        { "at": 12, "do": "tp", "entity_alias": "player", "pos": [0.83, 1.13, -1.5], "rot": [0, 0] }, 
+        {"at": 12, "do": "interact"}, 
+        {
+            "at": 16, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:redstone_wire", "power": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
