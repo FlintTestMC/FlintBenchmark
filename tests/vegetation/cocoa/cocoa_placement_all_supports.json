@@ -1,0 +1,69 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cocoa_placement_all_supports", 
+    "description": "Cocoa can be placed on jungle log, jungle wood, stripped jungle log and stripped jungle wood, each facing its support.", 
+    "tags": ["vegetation", "cocoa", "placement", "supports-cocoa", "player"], 
+    "minecraftIds": [
+        "minecraft:cocoa"               , "minecraft:cocoa_beans"         , "minecraft:jungle_log"          , 
+        "minecraft:jungle_wood"         , "minecraft:stripped_jungle_log" , "minecraft:stripped_jungle_wood"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -3], [7, 3, 1] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 3
+            }
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:cocoa_beans", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -3], [7, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:jungle_log"          } }, 
+                { "pos": [2, 2, 0], "block": {"id": "minecraft:jungle_wood"         } }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:stripped_jungle_log" } }, 
+                { "pos": [6, 2, 0], "block": {"id": "minecraft:stripped_jungle_wood"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, -2.5], "rot": [0, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 1, -2.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 1, -2.5], "rot": [0, 0] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [6.5, 1, -2.5], "rot": [0, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, -1], "is": {"id": "minecraft:cocoa", "age": 0, "facing": "south"}                    }, 
+                { "pos": [2, 2, -1], "is": {"id": "minecraft:cocoa", "age": 0, "facing": "south"}                    }, 
+                { "pos": [4, 2, -1], "is": {"id": "minecraft:cocoa", "age": 0, "facing": "south"}                    }, 
+                { "pos": [6, 2, -1], "is": {"id": "minecraft:cocoa", "age": 0, "facing": "south"}                    }, 
+                {                    "is": "empty"                                               , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
