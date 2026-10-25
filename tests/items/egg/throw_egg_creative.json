@@ -1,0 +1,28 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:egg"], 
+    "name": "Throw Egg Creative", 
+    "description": "A creative player using an egg keeps the full stack, because ItemStack.consume skips players with infinite materials.", 
+    "tags": ["player", "egg", "creative"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [1, 3, 5] ]
+        }, 
+        "player": {"game_mode": "Creative"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, -1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, 0] }, 
+        {"at": 0, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:egg", "count": 1}, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "slot": "hotbar1", "is": {"id": "minecraft:egg", "count": 1} }
+            ]
+        }
+    ]
+}
+
