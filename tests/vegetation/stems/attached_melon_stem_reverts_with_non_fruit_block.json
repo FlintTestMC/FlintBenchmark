@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_melon_stem_reverts_with_non_fruit_block", 
+    "description": "Replacing the melon on an attached melon stem's facing side with a non-fruit block such as stone or dirt reverts it to a mature melon stem.", 
+    "tags": ["vegetation", "stem", "attached-stem", "melon", "neighbor-update", "reversion"], 
+    "minecraftIds": [
+        "minecraft:farmland"           , "minecraft:melon"              , "minecraft:stone"              , 
+        "minecraft:dirt"               , "minecraft:melon_stem"         , "minecraft:attached_melon_stem"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [5, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"                             } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:farmland"                             } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:attached_melon_stem", "facing": "east"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:attached_melon_stem", "facing": "east"} }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 5, "do": "place", "pos": [5, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:melon_stem", "age": 7} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:stone"               } }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:melon_stem", "age": 7} }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:dirt"                } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

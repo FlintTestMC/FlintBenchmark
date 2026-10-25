@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_melon_stem_destroyed_by_piston", 
+    "description": "An extending piston destroys an attached melon stem in its path and its head takes the stem's place, leaving the melon in place.", 
+    "tags": ["vegetation", "stem", "attached-stem", "melon", "piston", "push-reaction"], 
+    "minecraftIds": [
+        "minecraft:farmland"           , "minecraft:melon"              , "minecraft:attached_melon_stem", 
+        "minecraft:piston"             , "minecraft:piston_head"        , "minecraft:redstone_block"     
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -2], [3, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -2], [3, 3, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, -1], [2, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0,  0], "block": {"id": "minecraft:farmland"                              } }, 
+                { "pos": [1, 1, -1], "block": {"id": "minecraft:melon"                                 } }, 
+                { "pos": [1, 1,  0], "block": {"id": "minecraft:attached_melon_stem", "facing": "north"} }, 
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:piston"             , "facing": "east" } }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:attached_melon_stem", "facing": "north"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "extended": false}              }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1,  0], "is": {"id": "minecraft:piston"     , "extended": true, "facing": "east"} }, 
+                { "pos": [1, 1,  0], "is": {"id": "minecraft:piston_head",                   "facing": "east"} }, 
+                { "pos": [1, 1, -1], "is": {"id": "minecraft:melon"                                          } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

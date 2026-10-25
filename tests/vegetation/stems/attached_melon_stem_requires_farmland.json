@@ -1,0 +1,64 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_melon_stem_requires_farmland", 
+    "description": "An attached melon stem placed on dirt, or whose farmland is replaced by dirt, becomes air on the next neighbor update while a stem on farmland is unaffected.", 
+    "tags": ["vegetation", "stem", "attached-stem", "melon", "support", "neighbor-update"], 
+    "minecraftIds": [
+        "minecraft:farmland"           , "minecraft:dirt"               , "minecraft:melon"              , 
+        "minecraft:stone"              , "minecraft:attached_melon_stem"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [10, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [10, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, 0], [9, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"                                 } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:farmland"                             } }, 
+                { "pos": [8, 0, 0], "block": {"id": "minecraft:farmland"                             } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [9, 1, 0], "block": {"id": "minecraft:melon"                                } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:attached_melon_stem", "facing": "east"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:attached_melon_stem", "facing": "east"} }, 
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:attached_melon_stem", "facing": "east"} }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [4, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 5, "do": "place", "pos": [-1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 5, "do": "place", "pos": [7, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                                  } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:melon"                                } }, 
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:dirt"                                 } }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"                                  } }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:melon"                                } }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:attached_melon_stem", "facing": "east"} }, 
+                { "pos": [9, 1, 0], "is": {"id": "minecraft:melon"                                } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
