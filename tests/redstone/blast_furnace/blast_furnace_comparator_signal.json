@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "blast_furnace_comparator_signal", 
+    "description": "A comparator reads 0 from an empty blast furnace and 5 once it holds 64 raw iron.", 
+    "tags": ["block-entity", "container", "blast-furnace", "comparator", "redstone"], 
+    "minecraftIds": [
+        "minecraft:blast_furnace", "minecraft:comparator"   , "minecraft:redstone_wire", "minecraft:raw_iron"     
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, 0], [2, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, -1, 0], "block": {"id": "minecraft:stone"                          } }, 
+                { "pos": [2, -1, 0], "block": {"id": "minecraft:stone"                          } }, 
+                { "pos": [0,  0, 0], "block": {"id": "minecraft:blast_furnace"                  } }, 
+                { "pos": [1,  0, 0], "block": {"id": "minecraft:comparator"   , "facing": "west"} }, 
+                { "pos": [2,  0, 0], "block": {"id": "minecraft:redstone_wire"                  } }  
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:redstone_wire", "power": 0} }
+            ]
+        }, 
+        {
+            "at": 7, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:blast_furnace", 
+                "nbt": {"Items": "[{Slot: 0b, count: 64, id: \"minecraft:raw_iron\"}]"}
+            }
+        }, 
+        {
+            "at": 14, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:redstone_wire", "power": 5} }
+            ]
+        }
+    ]
+}
+

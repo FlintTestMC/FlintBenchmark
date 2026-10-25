@@ -1,0 +1,72 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "blast_furnace_blocked_result_slot", 
+    "description": "A blast furnace with a full stack of iron ingots, or a different item, in the result slot does not light and keeps its fuel.", 
+    "tags": ["block-entity", "container", "blast-furnace", "blasting"], 
+    "minecraftIds": [
+        "minecraft:blast_furnace", "minecraft:raw_iron"     , "minecraft:coal"         , "minecraft:iron_ingot"   , 
+        "minecraft:gold_ingot"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "block": {
+                        "id": "minecraft:blast_furnace", 
+                        "nbt": {
+                            "Items": "[{Slot: 0b, count: 1, id: \"minecraft:raw_iron\"}, {Slot: 1b, count: 1, id: \"minecraft:coal\"}, {Slot: 2b, count: 64, id: \"minecraft:iron_ingot\"}]", 
+                            "cooking_total_time": "100s"
+                        }
+                    }
+                }, 
+                {
+                    "pos": [2, 0, 0], 
+                    "block": {
+                        "id": "minecraft:blast_furnace", 
+                        "nbt": {
+                            "Items": "[{Slot: 0b, count: 1, id: \"minecraft:raw_iron\"}, {Slot: 1b, count: 1, id: \"minecraft:coal\"}, {Slot: 2b, count: 1, id: \"minecraft:gold_ingot\"}]", 
+                            "cooking_total_time": "100s"
+                        }
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": false, 
+                        "nbt": {"Items[1].id": "minecraft:coal", "Items[1].count": 1, "Items[2].count": 64}
+                    }
+                }, 
+                {
+                    "pos": [2, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": false, 
+                        "nbt": {
+                            "Items[1].id": "minecraft:coal", 
+                            "Items[1].count": 1, 
+                            "Items[2].id": "minecraft:gold_ingot"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+

@@ -1,0 +1,67 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "blast_furnace_stick_burns_50_ticks", 
+    "description": "A stick (100 ticks in a furnace) burns only 50 ticks in a blast furnace, so the raw iron is not finished, the furnace goes out, and the cook progress decays back to zero.", 
+    "tags": ["block-entity", "container", "blast-furnace", "fuel"], 
+    "minecraftIds": ["minecraft:blast_furnace", "minecraft:raw_iron", "minecraft:stick"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:blast_furnace", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, count: 1, id: \"minecraft:raw_iron\"}, {Slot: 1b, count: 1, id: \"minecraft:stick\"}]", 
+                    "cooking_total_time": "100s"
+                }
+            }
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": { "id": "minecraft:blast_furnace", "lit": true, "nbt": {"lit_total_time": "50s"} }
+                }
+            ]
+        }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": false, 
+                        "nbt": {"Items[0].id": "minecraft:raw_iron"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 100, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": false, 
+                        "nbt": {"Items[0].id": "minecraft:raw_iron", "cooking_time_spent": "0s"}
+                    }
+                }
+            ]
+        }
+    ]
+}
+

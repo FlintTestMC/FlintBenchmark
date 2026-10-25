@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "blast_furnace_lights_with_half_burn_time", 
+    "description": "A blast furnace with raw iron and coal lights up, uses one coal, and burns for 800 ticks (half of coal's 1600).", 
+    "tags": ["block-entity", "container", "blast-furnace", "fuel"], 
+    "minecraftIds": ["minecraft:blast_furnace", "minecraft:raw_iron", "minecraft:coal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:blast_furnace", 
+                "facing": "north", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, count: 1, id: \"minecraft:raw_iron\"}, {Slot: 1b, count: 2, id: \"minecraft:coal\"}]", 
+                    "cooking_total_time": "100s"
+                }
+            }
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": true, 
+                        "nbt": {"Items[1].id": "minecraft:coal", "Items[1].count": 1, "lit_total_time": "800s"}
+                    }
+                }
+            ]
+        }
+    ]
+}
+

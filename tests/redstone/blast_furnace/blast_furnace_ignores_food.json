@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "blast_furnace_ignores_food", 
+    "description": "A blast furnace has no blasting recipe for raw beef, so it stays unlit and keeps both the beef and the coal.", 
+    "tags": ["block-entity", "container", "blast-furnace", "blasting"], 
+    "minecraftIds": ["minecraft:blast_furnace", "minecraft:beef", "minecraft:coal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:blast_furnace", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, count: 1, id: \"minecraft:beef\"}, {Slot: 1b, count: 1, id: \"minecraft:coal\"}]", 
+                    "cooking_total_time": "100s"
+                }
+            }
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": false, 
+                        "nbt": {"Items[0].id": "minecraft:beef", "Items[1].id": "minecraft:coal", "Items[1].count": 1}
+                    }
+                }
+            ]
+        }
+    ]
+}
+

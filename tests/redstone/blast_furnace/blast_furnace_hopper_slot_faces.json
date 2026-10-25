@@ -1,0 +1,87 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "blast_furnace_hopper_slot_faces", 
+    "description": "A hopper above fills the input slot, a hopper at the side fills only the fuel slot, and a hopper below pulls the result but not the fuel.", 
+    "tags": ["block-entity", "container", "blast-furnace", "hopper", "item-transfer"], 
+    "minecraftIds": [
+        "minecraft:blast_furnace", "minecraft:hopper"       , "minecraft:sand"         , "minecraft:coal"         , 
+        "minecraft:iron_ingot"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, -1, 0], 
+                    "block": { "id": "minecraft:hopper", "facing": "down", "nbt": {"TransferCooldown": 0} }
+                }, 
+                {
+                    "pos": [0, 0, 0], 
+                    "block": {
+                        "id": "minecraft:blast_furnace", 
+                        "nbt": {"Items": "[{Slot: 2b, count: 1, id: \"minecraft:iron_ingot\"}]"}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:sand\"}]", "TransferCooldown": 0}
+                    }
+                }, 
+                {
+                    "pos": [1, 0, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "west", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:coal\"}]", "TransferCooldown": 0}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": false, 
+                        "nbt": {
+                            "Items[0].id"  : "minecraft:sand", 
+                            "Items[0].Slot": "0b"            , 
+                            "Items[1].id"  : "minecraft:coal", 
+                            "Items[1].Slot": "1b"              
+                        }
+                    }
+                }, 
+                {
+                    "pos": [0, -1, 0], 
+                    "is": {
+                        "id": "minecraft:hopper", 
+                        "nbt": {"Items[0].id": "minecraft:iron_ingot", "Items[0].count": 1}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
+                }, 
+                {
+                    "pos": [1, 0, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
+                }
+            ]
+        }
+    ]
+}
+
