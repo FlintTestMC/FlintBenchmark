@@ -1,0 +1,98 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "sapling_survives_on_valid_ground", 
+    "description": "Saplings stay in place after a neighbor update when the block below is grass, dirt, podzol, coarse dirt, rooted dirt, mud, moss block or farmland.", 
+    "tags": ["vegetation", "sapling", "support", "neighbor-update"], 
+    "minecraftIds": [
+        "minecraft:oak_sapling", "minecraft:grass_block", "minecraft:dirt"       , "minecraft:podzol"     , 
+        "minecraft:coarse_dirt", "minecraft:rooted_dirt", "minecraft:mud"        , "minecraft:moss_block" , 
+        "minecraft:farmland"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [8, 4, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [8, 4, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [7, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"            } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"                   } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:podzol"                 } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:coarse_dirt"            } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:rooted_dirt"            } }, 
+                { "pos": [5, 0, 0], "block": {"id": "minecraft:mud"                    } }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:moss_block"             } }, 
+                { "pos": [7, 0, 0], "block": {"id": "minecraft:farmland"               } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [7, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }  
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [1, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [3, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [5, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [6, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [7, 1, 1], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

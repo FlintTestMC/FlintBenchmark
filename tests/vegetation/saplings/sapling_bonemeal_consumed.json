@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "sapling_bonemeal_consumed", 
+    "description": "One bone meal on a stage-0 sapling is always consumed and leaves the sapling at stage 0 or advances it to stage 1 (45% chance).", 
+    "tags": ["vegetation", "sapling", "bone-meal", "player"], 
+    "minecraftIds": ["minecraft:oak_sapling", "minecraft:dirt", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"                   } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:bone_meal", "count": 1}, 
+        {"at": 7, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5] }, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": [ {"id": "minecraft:oak_sapling", "stage": 0}, {"id": "minecraft:oak_sapling", "stage": 1} ]
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

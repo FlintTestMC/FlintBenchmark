@@ -1,0 +1,87 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_sapling_breaks_without_support", 
+    "description": "A bamboo sapling turns into air when the dirt beneath it is replaced by stone, cobblestone, glass or planks, or removed entirely.", 
+    "tags": ["vegetation", "bamboo", "bamboo-sapling", "support", "neighbor-update"], 
+    "minecraftIds": [
+        "minecraft:bamboo_sapling", "minecraft:dirt"          , "minecraft:stone"         , "minecraft:cobblestone"   , 
+        "minecraft:glass"         , "minecraft:oak_planks"    
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 5, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 5, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 2, 0], [4, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"          } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:dirt"          } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:dirt"          } }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:dirt"          } }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:dirt"          } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [1, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [2, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [3, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }  
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"      } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:cobblestone"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:glass"      } }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:oak_planks" } }  
+            ]
+        }, 
+        { "at": 6, "do": "remove", "pos": [4, 1, 0] }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"        } }, 
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:air"        } }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:air"        } }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:air"        } }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:air"        } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:stone"      } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:cobblestone"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:glass"      } }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:oak_planks" } }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"        } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

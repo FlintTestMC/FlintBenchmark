@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "sapling_grows_into_birch_tree", 
+    "description": "With rapid random ticks a birch sapling in open light grows into a birch tree whose trunk starts where the sapling stood. Uses the minecraft:random_tick_speed gamerule set to 1024 (default 3) and waits 400 ticks to speed up growth.", 
+    "tags": ["vegetation", "sapling", "growth", "random-tick", "tree", "birch"], 
+    "minecraftIds": ["minecraft:birch_sapling", "minecraft:dirt", "minecraft:birch_log"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-6, 0, -6], [6, 16, 6] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 1024
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-6, 0, -6], [6, 16, 6] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-5, 1, -5], [5, 16, 5] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"                     } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:birch_sapling", "stage": 0} }  
+            ]
+        }, 
+        {
+            "at": 400, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:birch_log", "axis": "y"} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:birch_log", "axis": "y"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

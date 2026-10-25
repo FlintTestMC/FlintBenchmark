@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "sapling_support_loss", 
+    "description": "A sapling turns into air when the soil beneath it is removed, while a sapling on intact soil stays.", 
+    "tags": ["vegetation", "sapling", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:oak_sapling", "minecraft:dirt", "minecraft:grass_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"                   } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:grass_block"            } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:oak_sapling", "stage": 0} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"                    } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                    } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_sapling", "stage": 0} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
