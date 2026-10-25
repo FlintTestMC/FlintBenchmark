@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "glazed_terracotta_pushed_by_piston", 
+    "description": "A piston pushes a glazed terracotta block one space straight ahead and the block keeps its facing.", 
+    "tags": ["decoration", "glazed-terracotta", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:white_glazed_terracotta", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:piston"                 , "facing": "east" } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:white_glazed_terracotta", "facing": "south"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:piston", "extended": true}                   }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head"}                                }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:white_glazed_terracotta", "facing": "south"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

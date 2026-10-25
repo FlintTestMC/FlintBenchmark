@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "glazed_terracotta_not_dragged_by_slime_sideways", 
+    "description": "A glazed terracotta block beside a slime block is not dragged along when a piston pushes the slime block, because it can only be pushed straight ahead.", 
+    "tags": ["decoration", "glazed-terracotta", "piston", "slime", "push-reaction"], 
+    "minecraftIds": [
+        "minecraft:white_glazed_terracotta", "minecraft:slime_block"            , "minecraft:piston"                 , 
+        "minecraft:redstone_block"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:piston"                 , "facing": "east"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:slime_block"                              } }, 
+                { "pos": [1, 0, 1], "block": {"id": "minecraft:white_glazed_terracotta"                  } }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head"            } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:slime_block"            } }, 
+                { "pos": [1, 0, 1], "is": {"id": "minecraft:white_glazed_terracotta"} }, 
+                { "pos": [2, 0, 1], "is": {"id": "minecraft:air"                    } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,34 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "glazed_terracotta_default_state", 
+    "description": "A glazed terracotta block placed without properties faces north, and an explicit facing is kept.", 
+    "tags": ["decoration", "glazed-terracotta", "block-state"], 
+    "minecraftIds": ["minecraft:white_glazed_terracotta"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:white_glazed_terracotta"                  } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:white_glazed_terracotta", "facing": "west"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:white_glazed_terracotta", "facing": "north"} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:white_glazed_terracotta", "facing": "west" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

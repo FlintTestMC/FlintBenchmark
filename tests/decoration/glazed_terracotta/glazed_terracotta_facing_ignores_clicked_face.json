@@ -1,0 +1,34 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "glazed_terracotta_facing_ignores_clicked_face", 
+    "description": "Placing a glazed terracotta block against the west face of stone while looking mostly south sets facing from the player's horizontal direction, not from the clicked face.", 
+    "tags": ["decoration", "glazed-terracotta", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:white_glazed_terracotta", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 2, 3] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:white_glazed_terracotta", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [2, 1, 3], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [-30, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 3], "is": {"id": "minecraft:white_glazed_terracotta", "facing": "north"} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                          
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
