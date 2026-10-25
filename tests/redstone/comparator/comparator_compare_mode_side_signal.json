@@ -1,0 +1,77 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "comparator_compare_mode_side_signal", 
+    "description": "In compare mode the rear signal passes through when it is equal to or stronger than the side signal, and is cut to zero when the side signal is stronger.", 
+    "tags": ["redstone", "comparator", "compare-mode", "signal-strength"], 
+    "minecraftIds": ["minecraft:comparator", "minecraft:redstone_block", "minecraft:redstone_wire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -3], [4, 1, 10] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -3], [4, 0, 10] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 1, 0] , "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [-1, 1, 5] , "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [-1, 1, 10], "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [0, 1, 0]  , "block": {"id": "minecraft:comparator", "facing": "east", "mode": "compare"} }, 
+                { "pos": [1, 1, 0]  , "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [0, 1, -1] , "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [0, 1, 5]  , "block": {"id": "minecraft:comparator", "facing": "east", "mode": "compare"} }, 
+                { "pos": [1, 1, 5]  , "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [2, 1, 5]  , "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [0, 1, 4]  , "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [0, 1, 10] , "block": {"id": "minecraft:comparator", "facing": "east", "mode": "compare"} }, 
+                { "pos": [1, 1, 10] , "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [0, 1, 9]  , "block": {"id": "minecraft:redstone_wire"}                                   }, 
+                { "pos": [0, 1, 8]  , "block": {"id": "minecraft:redstone_wire"}                                   }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [2, 1,  0], "block": {"id": "minecraft:redstone_block"} }, 
+                { "pos": [0, 1, -2], "block": {"id": "minecraft:redstone_block"} }, 
+                { "pos": [3, 1,  5], "block": {"id": "minecraft:redstone_block"} }, 
+                { "pos": [0, 1,  3], "block": {"id": "minecraft:redstone_block"} }, 
+                { "pos": [2, 1, 10], "block": {"id": "minecraft:redstone_block"} }, 
+                { "pos": [0, 1,  7], "block": {"id": "minecraft:redstone_block"} }  
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "powered": true, "nbt": {"OutputSignal": 15} }
+                }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:redstone_wire", "power": 15} }, 
+                {
+                    "pos": [0, 1, 5], 
+                    "is": { "id": "minecraft:comparator", "powered": false, "nbt": {"OutputSignal": 0} }
+                }, 
+                { "pos": [-1, 1, 5], "is": {"id": "minecraft:redstone_wire", "power": 0} }, 
+                {
+                    "pos": [0, 1, 10], 
+                    "is": { "id": "minecraft:comparator", "powered": true, "nbt": {"OutputSignal": 15} }
+                }, 
+                { "pos": [-1, 1, 10], "is": {"id": "minecraft:redstone_wire", "power": 15} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

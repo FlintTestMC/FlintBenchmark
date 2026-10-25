@@ -1,0 +1,68 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "comparator_basic_power", 
+    "description": "A comparator fed by a redstone block turns on after its 2 tick delay, stores output 15 and powers only the wire in front of it.", 
+    "tags": ["redstone", "comparator", "delay", "block-entity"], 
+    "minecraftIds": ["minecraft:comparator", "minecraft:redstone_block", "minecraft:redstone_wire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [2, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:redstone_wire"                  } }, 
+                { "pos": [ 0, 1, 1], "block": {"id": "minecraft:redstone_wire"                  } }, 
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:comparator"   , "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:comparator", 
+                        "facing": "east", 
+                        "mode": "compare", 
+                        "powered": false, 
+                        "nbt": {"OutputSignal": 0}
+                    }
+                }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:comparator", "powered": false} }
+            ]
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "powered": true, "nbt": {"OutputSignal": 15} }
+                }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:redstone_wire", "power": 15} }, 
+                { "pos": [0, 1, 1], "is": {"id": "minecraft:redstone_wire", "power": 0} }
+            ]
+        }
+    ]
+}
+

@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "comparator_adventure_mode_no_toggle", 
+    "description": "A player in adventure mode cannot change a comparator's mode by right-clicking it.", 
+    "tags": ["redstone", "comparator", "player", "mode", "adventure"], 
+    "minecraftIds": ["minecraft:comparator", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
+        }, 
+        "player": {"inventory": {}, "selected_hotbar": 1, "game_mode": "Adventure"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:comparator", "facing": "east"} }
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [180, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:comparator", "mode": "compare"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,64 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "comparator_placement_and_mode_toggle", 
+    "description": "A comparator placed by a player looking north faces south in compare mode and uses up the item, and right-clicking it toggles between compare and subtract.", 
+    "tags": ["redstone", "comparator", "placement", "player", "mode"], 
+    "minecraftIds": ["minecraft:comparator", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:comparator", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [180, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:comparator", "facing": "south", "mode": "compare", "powered": false}
+                }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "slot": "hotbar1", "is": {"id": "minecraft:air", "count": 0} }
+            ]
+        }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:comparator", "mode": "subtract"} }
+            ]
+        }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:comparator", "mode": "compare"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
