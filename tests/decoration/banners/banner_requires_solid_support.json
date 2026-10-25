@@ -1,0 +1,59 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "banner_requires_solid_support", 
+    "description": "A banner cannot be placed against the underside of a floating block or on top of a torch (no item consumed), but can be placed on top of another banner because banners count as solid.", 
+    "tags": ["decoration", "banner", "placement", "support", "player"], 
+    "minecraftIds": ["minecraft:red_banner", "minecraft:torch", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [8, 3, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:red_banner", "count": 3} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:stone"                    } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:stone"                    } }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:torch"                    } }, 
+                { "pos": [8, 0, 0], "block": {"id": "minecraft:stone"                    } }, 
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:red_banner", "rotation": 0} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, -1, 0.5], "rot": [0, -90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [4.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"                   }                    }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:torch"                 }                    }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:air"                   }                    }, 
+                {                   "is": {"id": "minecraft:red_banner", "count": 3}, "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [8.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:red_banner", "rotation": 0}                    }, 
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:red_banner", "rotation": 8}                    }, 
+                {                   "is": {"id": "minecraft:red_banner", "count": 2}   , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

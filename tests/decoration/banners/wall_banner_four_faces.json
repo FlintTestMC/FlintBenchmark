@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "wall_banner_four_faces", 
+    "description": "Survival placement against each horizontal side of a stone block gives a wall banner facing away from the stone and consumes the banner items.", 
+    "tags": ["decoration", "banner", "wall-banner", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:red_banner", "minecraft:red_wall_banner"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 2, 7] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:red_banner", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 6], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [8, 1, 6], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, -3.5], "rot": [0, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [4.5, 0, 3.5], "rot": [180, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [3.5, 0, 6.5], "rot": [90, 0] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [4.5, 0, 6.5], "rot": [-90, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:red_wall_banner", "facing": "north"} }, 
+                { "pos": [4, 1,  1], "is": {"id": "minecraft:red_wall_banner", "facing": "south"} }, 
+                { "pos": [1, 1,  6], "is": {"id": "minecraft:red_wall_banner", "facing": "east" } }, 
+                { "pos": [7, 1,  6], "is": {"id": "minecraft:red_wall_banner", "facing": "west" } }  
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [ {"slot": "hotbar1", "is": "empty"} ]
+        }
+    ], 
+    "breakpoints": []
+}
+

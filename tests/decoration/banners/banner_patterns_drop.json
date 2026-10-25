@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "banner_patterns_drop", 
+    "description": "A banner block entity keeps its pattern layers, and the item dropped when the banner loses its support carries those patterns.", 
+    "tags": ["decoration", "banner", "block-entity", "patterns", "drops"], 
+    "minecraftIds": ["minecraft:red_banner"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 3, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [0.5, 8, 5.5] }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {
+                "id": "minecraft:red_banner", 
+                "nbt": {"patterns": "[{pattern: \"minecraft:border\", color: \"blue\"}]"}
+            }
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:red_banner", 
+                        "nbt": {"patterns[0].pattern": "minecraft:border", "patterns[0].color": "blue"}
+                    }
+                }, 
+                {"is": "minecraft:item", "exists": false}
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "is": "minecraft:item", 
+                    "count": 1, 
+                    "Item.id": "minecraft:red_banner", 
+                    "Item.components.\"minecraft:banner_patterns\"[0].color": "blue"
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

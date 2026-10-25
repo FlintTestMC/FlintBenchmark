@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "banner_rotation_placement", 
+    "description": "Survival placement of a standing banner on top of stone consumes the item and sets rotation from the player's yaw plus 180 degrees (south 8, west 12, north 0, east 4).", 
+    "tags": ["decoration", "banner", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:red_banner"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [6, 4, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:red_banner", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 3, 0.5], "rot": [90, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 3, 0.5], "rot": [180, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [6.5, 3, 0.5], "rot": [-90, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:red_banner", "rotation": 8}                     }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:red_banner", "rotation": 12}                    }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:red_banner", "rotation": 0}                     }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:red_banner", "rotation": 4}                     }, 
+                {                   "is": "empty"                                       , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
