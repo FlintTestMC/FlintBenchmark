@@ -1,0 +1,96 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "big_dripleaf_stem_support_loss", 
+    "description": "A stem breaks one tick after losing its ground, its top leaf or stem above, or when the leaf is replaced by a solid block; a waterlogged stem leaves water.", 
+    "tags": ["vegetation", "big-dripleaf", "stem", "support", "neighbor-update", "waterlogged"], 
+    "minecraftIds": [
+        "minecraft:big_dripleaf_stem", "minecraft:big_dripleaf"     , "minecraft:dirt"             , 
+        "minecraft:stone"            , "minecraft:water"            
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [13, 5, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [13, 5, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [13, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "north"} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+                { "pos": [6, 2, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [6, 3, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "north"} }, 
+                { "pos": [9, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+                { "pos": [9, 2, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [9, 3, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "north"} }, 
+                { "pos": [12, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+                {
+                    "pos": [12, 2, 0], 
+                    "block": {"id": "minecraft:big_dripleaf_stem", "facing": "north", "waterlogged": "true"}
+                }, 
+                { "pos": [12, 3, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "north"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+                { "pos": [3, 2, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [3, 3, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [3, 4, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "north"} }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [3, 3, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [9, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                {
+                    "pos": [12, 2, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "north", "waterlogged": "true"}
+                }
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 4, "do": "remove", "pos": [3, 4, 0] }, 
+        { "at": 4, "do": "place", "pos": [6, 3, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 4, "do": "place", "pos": [9, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 4, "do": "remove", "pos": [12, 1, 0] }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 2, 0], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [ 0, 3, 0], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [ 3, 3, 0], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [ 3, 2, 0], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [ 3, 1, 0], "is": {"id": "minecraft:dirt" } }, 
+                { "pos": [ 6, 2, 0], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [ 6, 3, 0], "is": {"id": "minecraft:stone"} }, 
+                { "pos": [ 6, 1, 0], "is": {"id": "minecraft:dirt" } }, 
+                { "pos": [ 9, 2, 0], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [ 9, 3, 0], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [ 9, 1, 0], "is": {"id": "minecraft:stone"} }, 
+                { "pos": [12, 2, 0], "is": {"id": "minecraft:water"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

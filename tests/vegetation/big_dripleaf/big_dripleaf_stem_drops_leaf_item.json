@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "big_dripleaf_stem_drops_leaf_item", 
+    "description": "A stem that loses its ground breaks and drops a big dripleaf item, and the leaf above, left unsupported, breaks and drops one too.", 
+    "tags": ["vegetation", "big-dripleaf", "stem", "drops", "support"], 
+    "minecraftIds": ["minecraft:big_dripleaf_stem", "minecraft:big_dripleaf", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 5, 6] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 5, 6] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 0, 6] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [5.5, 4, 5.5] }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"                                } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:big_dripleaf"     , "facing": "north"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:big_dripleaf_stem", "facing": "north"} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:big_dripleaf"     , "facing": "north"} }  
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"} }  
+            ]
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [ {"is": "minecraft:item", "exists": true, "count": 2, "Item.id": "minecraft:big_dripleaf"} ]
+        }
+    ], 
+    "breakpoints": []
+}
+
