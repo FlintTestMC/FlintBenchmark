@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "azalea_bonemeal_blocked_tree", 
+    "description": "With a stone ceiling two blocks above, every bone meal use on an azalea is consumed but the tree never fits, so the azalea stays.", 
+    "tags": ["vegetation", "azalea", "bone-meal", "growth", "tree", "player"], 
+    "minecraftIds": ["minecraft:azalea", "minecraft:dirt", "minecraft:bone_meal", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-5, 0, -5], [5, 11, 5] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-5, 0, -5], [5, 11, 5] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-5, 0, -5], [5, 0, 5] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:azalea"} }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [-5, 3, -5], [5, 3, 5] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 2.5], "rot": [180, 31] }, 
+        {"at": 2, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:bone_meal", "count": 64}, 
+        {
+            "at": [
+                 3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 
+                29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42
+            ], 
+            "do": "interact"
+        }, 
+        {
+            "at": 44, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:azalea"                }                    }, 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:dirt"                  }                    }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"                   }                    }, 
+                {                   "is": {"id": "minecraft:bone_meal", "count": 24}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

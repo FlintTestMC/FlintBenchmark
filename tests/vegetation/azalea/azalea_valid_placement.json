@@ -1,0 +1,72 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "azalea_valid_placement", 
+    "description": "An azalea can be planted on top of grass, dirt, moss, mud, clay and farmland, and each placement consumes the item.", 
+    "tags": ["vegetation", "azalea", "placement", "support", "player"], 
+    "minecraftIds": [
+        "minecraft:azalea"     , "minecraft:grass_block", "minecraft:dirt"       , "minecraft:moss_block" , 
+        "minecraft:mud"        , "minecraft:clay"       , "minecraft:farmland"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [5, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [5, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [5, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"       } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:moss_block" } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:mud"        } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:clay"       } }, 
+                { "pos": [5, 0, 0], "block": {"id": "minecraft:farmland"   } }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:azalea"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:azalea"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact", "item": "minecraft:azalea"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [3.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact", "item": "minecraft:azalea"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact", "item": "minecraft:azalea"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [5.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 7, "do": "interact", "item": "minecraft:azalea"}, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [5.5, 5, 0.5] }, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:azalea"}                    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:azalea"}                    }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:azalea"}                    }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:azalea"}                    }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:azalea"}                    }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:azalea"}                    }, 
+                {                   "is": "empty"                   , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
