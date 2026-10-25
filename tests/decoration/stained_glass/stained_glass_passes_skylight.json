@@ -1,0 +1,65 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "stained_glass_passes_skylight", 
+    "description": "A daylight detector in a sealed stone chamber is powered when its roof is red stained glass and stays unpowered when its roof is stone.", 
+    "tags": ["decoration", "stained-glass", "light", "daylight-sensor"], 
+    "minecraftIds": [
+        "minecraft:red_stained_glass", "minecraft:stone"            , "minecraft:daylight_detector", 
+        "minecraft:redstone_lamp"    
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, -1], [8, 1, 1] ]
+        }, 
+        "world": {"time": "minecraft:day"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, -1, -1], [3, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [5, -1, -1], [8, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [1, 0, 0], [2, 0, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [6, 0, 0], [7, 0, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:red_stained_glass"                   } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:daylight_detector", "inverted": false} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:redstone_lamp"                       } }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:daylight_detector", "inverted": false} }, 
+                { "pos": [7, 0, 0], "block": {"id": "minecraft:redstone_lamp"                       } }  
+            ]
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:redstone_lamp", "lit": true } }, 
+                { "pos": [7, 0, 0], "is": {"id": "minecraft:redstone_lamp", "lit": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

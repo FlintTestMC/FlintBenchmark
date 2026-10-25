@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "stained_glass_neighbor_connections", 
+    "description": "Glass panes, fences and walls connect to a red stained glass block because it has a sturdy side face.", 
+    "tags": ["decoration", "stained-glass", "connectible", "neighbor-update"], 
+    "minecraftIds": [
+        "minecraft:red_stained_glass", "minecraft:glass_pane"       , "minecraft:oak_fence"        , 
+        "minecraft:cobblestone_wall" 
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 0, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:red_stained_glass"} }, 
+                { "pos": [0, 0, 2], "block": {"id": "minecraft:red_stained_glass"} }, 
+                { "pos": [0, 0, 4], "block": {"id": "minecraft:red_stained_glass"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:glass_pane"      } }, 
+                { "pos": [1, 0, 2], "block": {"id": "minecraft:oak_fence"       } }, 
+                { "pos": [1, 0, 4], "block": {"id": "minecraft:cobblestone_wall"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 0, 0], 
+                    "is": {"id": "minecraft:glass_pane", "west": true, "east": false, "north": false, "south": false}
+                }, 
+                {
+                    "pos": [1, 0, 2], 
+                    "is": {"id": "minecraft:oak_fence", "west": true, "east": false, "north": false, "south": false}
+                }, 
+                {
+                    "pos": [1, 0, 4], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "west" : "low"                       , 
+                        "east" : "none"                      , 
+                        "north": "none"                      , 
+                        "south": "none"                        
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

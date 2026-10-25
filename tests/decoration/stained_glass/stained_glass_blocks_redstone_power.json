@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "stained_glass_blocks_redstone_power", 
+    "description": "A powered repeater lights a lamp through stone but not through red stained glass, which is not a redstone conductor.", 
+    "tags": ["decoration", "stained-glass", "redstone", "power"], 
+    "minecraftIds": [
+        "minecraft:red_stained_glass", "minecraft:stone"            , "minecraft:repeater"         , 
+        "minecraft:redstone_block"   , "minecraft:redstone_lamp"    
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"                     } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:repeater"         , "facing": "west"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:red_stained_glass"                  } }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:redstone_lamp"                      } }, 
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:redstone_block"                     } }, 
+                { "pos": [1, 1, 2], "block": {"id": "minecraft:repeater"         , "facing": "west"} }, 
+                { "pos": [2, 1, 2], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [3, 1, 2], "block": {"id": "minecraft:redstone_lamp"                      } }  
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:repeater"     , "powered": true              } }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:redstone_lamp",                  "lit": false} }, 
+                { "pos": [1, 1, 2], "is": {"id": "minecraft:repeater"     , "powered": true              } }, 
+                { "pos": [3, 1, 2], "is": {"id": "minecraft:redstone_lamp",                  "lit": true } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

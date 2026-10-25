@@ -1,0 +1,32 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "stained_glass_empty_hand_interaction", 
+    "description": "Right-clicking red stained glass with an empty hand has no effect: the block stays unchanged and nothing is placed next to it.", 
+    "tags": ["decoration", "stained-glass", "interaction", "player"], 
+    "minecraftIds": ["minecraft:red_stained_glass"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -2], [1, 2, 1] ]
+        }, 
+        "player": {"inventory": {}, "selected_hotbar": 1, "game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:red_stained_glass"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, -3.5], "rot": [0, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1,  0], "is": {"id": "minecraft:red_stained_glass"}                    }, 
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:air"}                                  }, 
+                { "pos": [0, 2,  0], "is": {"id": "minecraft:air"}                                  }, 
+                {                    "is": "empty"                              , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
