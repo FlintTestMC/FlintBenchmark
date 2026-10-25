@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "closed_eyeblossom_item_pots_in_flower_pot", 
+    "description": "A player using a closed eyeblossom item on an empty flower pot turns it into a potted closed eyeblossom and consumes the item.", 
+    "tags": ["vegetation", "eyeblossom", "flower-pot", "player"], 
+    "minecraftIds": ["minecraft:closed_eyeblossom", "minecraft:flower_pot", "minecraft:potted_closed_eyeblossom"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 5, 1] ]
+        }, 
+        "player": {
+            "game_mode": "Survival", 
+            "selected_hotbar": 1, 
+            "inventory": { "hotbar1": {"id": "minecraft:closed_eyeblossom", "count": 1} }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 5, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 3, 0], [0, 5, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:flower_pot"} }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 8, 0.5] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:potted_closed_eyeblossom"}                    }, 
+                {                   "is": "empty"                                     , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

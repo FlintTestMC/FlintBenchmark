@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "closed_eyeblossom_destroyed_by_piston", 
+    "description": "A piston extending into a closed eyeblossom destroys it instead of pushing it.", 
+    "tags": ["vegetation", "eyeblossom", "piston", "push-reaction"], 
+    "minecraftIds": [
+        "minecraft:closed_eyeblossom", "minecraft:piston"           , "minecraft:piston_head"      , 
+        "minecraft:redstone_block"   , "minecraft:grass_block"      
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 3, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 2, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+        { "at": 3, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+        {
+            "at": 3, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:piston", "facing": "east", "extended": false}
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"                   } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston"           , "extended": false} }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston"     , "extended": true                  } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head",                   "facing": "east"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

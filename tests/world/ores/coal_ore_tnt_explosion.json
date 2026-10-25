@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:coal_ore", "minecraft:tnt", "minecraft:stone"], 
+    "name": "coal_ore_tnt_explosion", 
+    "description": "Coal ore next to a primed TNT is destroyed by the explosion because its blast resistance of 3.0 is too low to stop the rays.", 
+    "tags": ["world", "ore", "coal-ore", "explosion", "tnt"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, -1, -3], [3, 4, 3] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-3, -1, -3], [3, -1, 3] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:coal_ore"} }, 
+        {
+            "at": 1, 
+            "do": "summon", 
+            "entity_alias": "tnt", 
+            "entity_type": "minecraft:tnt", 
+            "pos": [1.5, 0, 0.5], 
+            "fuse": "10s"
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:coal_ore"} }
+            ]
+        }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ]
+}
+

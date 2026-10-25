@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "closed_eyeblossom_no_random_tick_stays_closed", 
+    "description": "At night with random_tick_speed 0 a closed eyeblossom stays closed because only ticks trigger the change.", 
+    "tags": ["vegetation", "eyeblossom", "random-tick", "world-config"], 
+    "minecraftIds": ["minecraft:closed_eyeblossom", "minecraft:open_eyeblossom", "minecraft:grass_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 2, 1] ]
+        }, 
+        "world": {
+            "time": "minecraft:midnight", 
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+        { "at": 3, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:closed_eyeblossom"} }, 
+        {
+            "at": 80, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:closed_eyeblossom"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
