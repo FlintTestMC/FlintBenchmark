@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "allium_flower_pot", 
+    "description": "Using an allium on an empty flower pot turns it into a potted allium and consumes one item, while using a second allium on the filled pot changes nothing and keeps the item.", 
+    "tags": ["vegetation", "allium", "flower", "flower-pot", "player"], 
+    "minecraftIds": ["minecraft:allium", "minecraft:flower_pot", "minecraft:potted_allium"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:allium", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:flower_pot"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:potted_allium"            }                    }, 
+                {                   "is": {"id": "minecraft:allium"       , "count": 1}, "slot": "hotbar1" }  
+            ]
+        }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:potted_allium"            }                    }, 
+                {                   "is": {"id": "minecraft:allium"       , "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "allium_support_loss", 
+    "description": "An allium breaks into air when the dirt beneath it is removed, while an allium whose dirt stays in place is unaffected.", 
+    "tags": ["vegetation", "allium", "flower", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:allium", "minecraft:dirt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"  } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:dirt"  } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:allium"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:allium"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:allium"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:allium"} }  
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:dirt"  } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:allium"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

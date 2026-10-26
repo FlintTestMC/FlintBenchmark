@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "allium_destroyed_by_piston", 
+    "description": "An extending piston destroys an allium in front of it instead of pushing it, so the allium is gone and nothing sits behind the piston head.", 
+    "tags": ["vegetation", "allium", "flower", "piston", "push-reaction", "redstone"], 
+    "minecraftIds": [
+        "minecraft:allium"        , "minecraft:piston"        , "minecraft:piston_head"   , "minecraft:redstone_block", 
+        "minecraft:dirt"          
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:piston", "facing": "east", "extended": false}
+        }, 
+        { "at": 0, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:allium"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "extended": false} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:allium"                   } }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 1], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston"     , "extended": true, "facing": "east"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head",                   "facing": "east"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                                            } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
