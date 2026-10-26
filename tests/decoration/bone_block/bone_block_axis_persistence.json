@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bone_block_axis_persistence", 
+    "description": "A bone block set without properties defaults to axis y, and each axis value is kept over time and when neighbouring blocks are placed and removed.", 
+    "tags": ["decoration", "bone-block", "pillar", "block-state"], 
+    "minecraftIds": ["minecraft:bone_block", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:bone_block"             } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:bone_block", "axis": "x"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:bone_block", "axis": "z"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:bone_block", "axis": "y"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:bone_block", "axis": "x"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:bone_block", "axis": "z"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 3, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 5, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 2, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 2, 2, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 4, 2, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [1, 1, 0] }, 
+        { "at": 3, "do": "remove", "pos": [2, 2, 0] }, 
+        { "at": 3, "do": "remove", "pos": [5, 1, 0] }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:bone_block", "axis": "y"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:bone_block", "axis": "x"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:bone_block", "axis": "z"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
