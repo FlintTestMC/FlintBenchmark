@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:beehive", "minecraft:comparator", "minecraft:redstone_wire"], 
+    "name": "Beehive Comparator Output", 
+    "description": "A comparator reading a beehive outputs a signal equal to the honey level (0 to 5).", 
+    "tags": ["beehive", "redstone", "comparator", "analog-output"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [10, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [10, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:beehive"      , "honey_level": 0, "facing": "north"} }, 
+                { "pos": [ 0, 1, 1], "block": {"id": "minecraft:comparator"   ,                   "facing": "north"} }, 
+                { "pos": [ 0, 1, 2], "block": {"id": "minecraft:redstone_wire"                                     } }, 
+                { "pos": [ 2, 1, 0], "block": {"id": "minecraft:beehive"      , "honey_level": 1, "facing": "north"} }, 
+                { "pos": [ 2, 1, 1], "block": {"id": "minecraft:comparator"   ,                   "facing": "north"} }, 
+                { "pos": [ 2, 1, 2], "block": {"id": "minecraft:redstone_wire"                                     } }, 
+                { "pos": [ 4, 1, 0], "block": {"id": "minecraft:beehive"      , "honey_level": 2, "facing": "north"} }, 
+                { "pos": [ 4, 1, 1], "block": {"id": "minecraft:comparator"   ,                   "facing": "north"} }, 
+                { "pos": [ 4, 1, 2], "block": {"id": "minecraft:redstone_wire"                                     } }, 
+                { "pos": [ 6, 1, 0], "block": {"id": "minecraft:beehive"      , "honey_level": 3, "facing": "north"} }, 
+                { "pos": [ 6, 1, 1], "block": {"id": "minecraft:comparator"   ,                   "facing": "north"} }, 
+                { "pos": [ 6, 1, 2], "block": {"id": "minecraft:redstone_wire"                                     } }, 
+                { "pos": [ 8, 1, 0], "block": {"id": "minecraft:beehive"      , "honey_level": 4, "facing": "north"} }, 
+                { "pos": [ 8, 1, 1], "block": {"id": "minecraft:comparator"   ,                   "facing": "north"} }, 
+                { "pos": [ 8, 1, 2], "block": {"id": "minecraft:redstone_wire"                                     } }, 
+                { "pos": [10, 1, 0], "block": {"id": "minecraft:beehive"      , "honey_level": 5, "facing": "north"} }, 
+                { "pos": [10, 1, 1], "block": {"id": "minecraft:comparator"   ,                   "facing": "north"} }, 
+                { "pos": [10, 1, 2], "block": {"id": "minecraft:redstone_wire"                                     } }  
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1, 2], "is": {"id": "minecraft:redstone_wire", "power": 0} }, 
+                { "pos": [ 2, 1, 2], "is": {"id": "minecraft:redstone_wire", "power": 1} }, 
+                { "pos": [ 4, 1, 2], "is": {"id": "minecraft:redstone_wire", "power": 2} }, 
+                { "pos": [ 6, 1, 2], "is": {"id": "minecraft:redstone_wire", "power": 3} }, 
+                { "pos": [ 8, 1, 2], "is": {"id": "minecraft:redstone_wire", "power": 4} }, 
+                { "pos": [10, 1, 2], "is": {"id": "minecraft:redstone_wire", "power": 5} }  
+            ]
+        }
+    ]
+}
+
