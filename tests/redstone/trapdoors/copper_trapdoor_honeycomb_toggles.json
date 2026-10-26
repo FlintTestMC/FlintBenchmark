@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Copper Trapdoor Honeycomb Toggles", 
+    "description": "Using honeycomb on an unwaxed copper trapdoor (not sneaking) opens it instead of waxing it: the trapdoor's own use runs before the item, so the block stays copper_trapdoor and the honeycomb is not consumed.", 
+    "tags": ["trapdoor", "copper", "interaction", "waxing"], 
+    "minecraftIds": ["minecraft:copper_trapdoor", "minecraft:honeycomb"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {"gamemode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id"     : "minecraft:copper_trapdoor", 
+                        "facing" : "north"                    , 
+                        "half"   : "bottom"                   , 
+                        "open"   : "false"                    , 
+                        "powered": "false"                      
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:honeycomb"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id"     : "minecraft:copper_trapdoor", 
+                        "facing" : "north"                    , 
+                        "half"   : "bottom"                   , 
+                        "open"   : "true"                     , 
+                        "powered": "false"                      
+                    }
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:honeycomb", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

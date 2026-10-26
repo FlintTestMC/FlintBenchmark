@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Iron Trapdoor Use Passes To Item", 
+    "description": "Clicking the top of a closed iron trapdoor while holding stone places the stone above it, because the trapdoor passes the interaction on to the held item; the trapdoor stays closed.", 
+    "tags": ["trapdoor", "iron", "interaction", "placement"], 
+    "minecraftIds": ["minecraft:iron_trapdoor", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {"gamemode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id"     : "minecraft:iron_trapdoor", 
+                        "facing" : "north"                  , 
+                        "half"   : "bottom"                 , 
+                        "open"   : "false"                  , 
+                        "powered": "false"                    
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:stone"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id"     : "minecraft:iron_trapdoor", 
+                        "facing" : "north"                  , 
+                        "half"   : "bottom"                 , 
+                        "open"   : "false"                  , 
+                        "powered": "false"                    
+                    }
+                }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:stone"} }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

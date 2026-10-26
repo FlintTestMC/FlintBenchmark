@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Oak Trapdoor Place In Water", 
+    "description": "Placing an oak trapdoor into a water source makes it waterlogged.", 
+    "tags": ["trapdoor", "placement", "waterlogging"], 
+    "minecraftIds": ["minecraft:oak_trapdoor"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 1, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-1, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1,  1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1, -1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:water"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water"} }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:oak_trapdoor"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:oak_trapdoor", "half": "bottom", "open": "false", "waterlogged": "true"}
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

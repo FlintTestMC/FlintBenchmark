@@ -1,0 +1,115 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Copper Trapdoor Weathering", 
+    "description": "With a high random tick speed an unwaxed copper trapdoor weathers only along its successor chain (exposed, weathered, oxidized) and keeps its facing, half, open and powered state. Representative of copper, exposed, and weathered copper trapdoors (WeatheringCopperTrapDoorBlock). Weathering is random: at about one random tick per block per game tick, failing to move at least one stage in 300 ticks has a probability of roughly 2e-6.", 
+    "tags": ["trapdoor", "copper", "weathering", "random-tick", "modifies-gamerule"], 
+    "minecraftIds": [
+        "minecraft:copper_trapdoor"          , 
+        "minecraft:exposed_copper_trapdoor"  , 
+        "minecraft:weathered_copper_trapdoor", 
+        "minecraft:oxidized_copper_trapdoor"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 4096
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id"         : "minecraft:copper_trapdoor", 
+                "facing"     : "east"                     , 
+                "half"       : "top"                      , 
+                "open"       : "true"                     , 
+                "powered"    : "false"                    , 
+                "waterlogged": "false"                      
+            }
+        }, 
+        {
+            "at": [1, 50, 100, 150, 200, 250], 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": [
+                        {
+                            "id"     : "minecraft:copper_trapdoor", 
+                            "facing" : "east"                     , 
+                            "half"   : "top"                      , 
+                            "open"   : "true"                     , 
+                            "powered": "false"                      
+                        }, 
+                        {
+                            "id"     : "minecraft:exposed_copper_trapdoor", 
+                            "facing" : "east"                             , 
+                            "half"   : "top"                              , 
+                            "open"   : "true"                             , 
+                            "powered": "false"                              
+                        }, 
+                        {
+                            "id"     : "minecraft:weathered_copper_trapdoor", 
+                            "facing" : "east"                               , 
+                            "half"   : "top"                                , 
+                            "open"   : "true"                               , 
+                            "powered": "false"                                
+                        }, 
+                        {
+                            "id"     : "minecraft:oxidized_copper_trapdoor", 
+                            "facing" : "east"                              , 
+                            "half"   : "top"                               , 
+                            "open"   : "true"                              , 
+                            "powered": "false"                               
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "at": 300, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": [
+                        {
+                            "id"     : "minecraft:exposed_copper_trapdoor", 
+                            "facing" : "east"                             , 
+                            "half"   : "top"                              , 
+                            "open"   : "true"                             , 
+                            "powered": "false"                              
+                        }, 
+                        {
+                            "id"     : "minecraft:weathered_copper_trapdoor", 
+                            "facing" : "east"                               , 
+                            "half"   : "top"                                , 
+                            "open"   : "true"                               , 
+                            "powered": "false"                                
+                        }, 
+                        {
+                            "id"     : "minecraft:oxidized_copper_trapdoor", 
+                            "facing" : "east"                              , 
+                            "half"   : "top"                               , 
+                            "open"   : "true"                              , 
+                            "powered": "false"                               
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

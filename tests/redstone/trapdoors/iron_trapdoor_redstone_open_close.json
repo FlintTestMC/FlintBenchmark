@@ -1,0 +1,69 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Iron Trapdoor Redstone Open Close", 
+    "description": "A redstone block next to an iron trapdoor opens and powers it; removing the redstone block closes and unpowers it.", 
+    "tags": ["trapdoor", "iron", "redstone", "neighbor-update"], 
+    "minecraftIds": ["minecraft:iron_trapdoor"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id"     : "minecraft:iron_trapdoor", 
+                        "facing" : "north"                  , 
+                        "half"   : "bottom"                 , 
+                        "open"   : "false"                  , 
+                        "powered": "false"                    
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id"     : "minecraft:iron_trapdoor", 
+                        "facing" : "north"                  , 
+                        "half"   : "bottom"                 , 
+                        "open"   : "true"                   , 
+                        "powered": "true"                     
+                    }
+                }
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [1, 1, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id"     : "minecraft:iron_trapdoor", 
+                        "facing" : "north"                  , 
+                        "half"   : "bottom"                 , 
+                        "open"   : "false"                  , 
+                        "powered": "false"                    
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

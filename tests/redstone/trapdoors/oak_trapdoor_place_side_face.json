@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Oak Trapdoor Place Side Face", 
+    "description": "Clicking the side of a block faces the oak trapdoor towards the clicked face; clicking above the middle gives half=top, below the middle gives half=bottom.", 
+    "tags": ["trapdoor", "placement", "block-state"], 
+    "minecraftIds": ["minecraft:oak_trapdoor"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0.13, 2.5], "rot": [180, 0] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:oak_trapdoor"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, -0.37, 2.5], "rot": [180, 0] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:oak_trapdoor"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 1], 
+                    "is": {
+                        "id"     : "minecraft:oak_trapdoor", 
+                        "facing" : "south"                 , 
+                        "half"   : "top"                   , 
+                        "open"   : "false"                 , 
+                        "powered": "false"                   
+                    }
+                }, 
+                {
+                    "pos": [2, 1, 1], 
+                    "is": {
+                        "id"     : "minecraft:oak_trapdoor", 
+                        "facing" : "south"                 , 
+                        "half"   : "bottom"                , 
+                        "open"   : "false"                 , 
+                        "powered": "false"                   
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

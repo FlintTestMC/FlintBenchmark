@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Oak Trapdoor Waterlogged Flow", 
+    "description": "A closed bottom-half waterlogged oak trapdoor blocks its water from flowing into the air below (its collision shape covers the whole down face); once opened, the water flows down.", 
+    "tags": ["trapdoor", "waterlogging", "fluids", "interaction"], 
+    "minecraftIds": ["minecraft:oak_trapdoor", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 2, 0], 
+            "block": {
+                "id"         : "minecraft:oak_trapdoor", 
+                "facing"     : "north"                 , 
+                "half"       : "bottom"                , 
+                "open"       : "false"                 , 
+                "powered"    : "false"                 , 
+                "waterlogged": "true"                    
+            }
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 15, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                                                 } }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:oak_trapdoor", "open": "false", "waterlogged": "true"} }  
+            ]
+        }, 
+        { "at": 15, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 15, "do": "interact"}, 
+        {
+            "at": 16, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:oak_trapdoor", "open": "true", "waterlogged": "true"} }
+            ]
+        }, 
+        {
+            "at": 25, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

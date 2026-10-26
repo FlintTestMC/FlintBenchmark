@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Waxed Copper Trapdoor No Weathering", 
+    "description": "A waxed copper trapdoor never weathers: with a very high random tick speed it stays waxed_copper_trapdoor with its state unchanged. Note: flintcli does not reset random_tick_speed after the test.", 
+    "tags": ["trapdoor", "copper", "waxed", "weathering", "random-tick", "modifies-gamerule"], 
+    "minecraftIds": ["minecraft:waxed_copper_trapdoor"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 4096
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id"         : "minecraft:waxed_copper_trapdoor", 
+                "facing"     : "east"                           , 
+                "half"       : "top"                            , 
+                "open"       : "true"                           , 
+                "powered"    : "false"                          , 
+                "waterlogged": "false"                            
+            }
+        }, 
+        {
+            "at": [1, 100, 200, 300], 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"     : "minecraft:waxed_copper_trapdoor", 
+                        "facing" : "east"                           , 
+                        "half"   : "top"                            , 
+                        "open"   : "true"                           , 
+                        "powered": "false"                            
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
