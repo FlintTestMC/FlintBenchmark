@@ -1,0 +1,64 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "amethyst_cluster_support_loss", 
+    "description": "Amethyst clusters break when the block they are attached to is removed (a waterlogged one leaves water behind), but stay when any other neighbouring block is removed.", 
+    "tags": ["decoration", "amethyst-cluster", "support", "neighbor-update", "waterlogged"], 
+    "minecraftIds": ["minecraft:amethyst_cluster", "minecraft:stone", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [10, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [10, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:amethyst_cluster", "facing": "up"} }, 
+                { "pos": [3, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [3, 2, 0], "block": {"id": "minecraft:amethyst_cluster", "facing": "north"} }, 
+                { "pos": [6, 2, 0], "block": {"id": "minecraft:amethyst_cluster", "facing": "up"} }, 
+                { "pos": [7, 2, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [8, 2, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [10, 2, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [9, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [9, 2, -1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [9, 2, 0], "block": {"id": "minecraft:amethyst_cluster", "facing": "up", "waterlogged": true} }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:amethyst_cluster", "facing": "up"}                      }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:amethyst_cluster", "facing": "north"}                   }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:amethyst_cluster", "facing": "up"}                      }, 
+                { "pos": [9, 2, 0], "is": {"id": "minecraft:amethyst_cluster", "facing": "up", "waterlogged": true} }  
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 2, "do": "remove", "pos": [3, 2, 1] }, 
+        { "at": 2, "do": "remove", "pos": [7, 2, 0] }, 
+        { "at": 2, "do": "remove", "pos": [9, 1, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"                             } }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:air"                             } }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:amethyst_cluster", "facing": "up"} }, 
+                { "pos": [9, 2, 0], "is": {"id": "minecraft:water"                           } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

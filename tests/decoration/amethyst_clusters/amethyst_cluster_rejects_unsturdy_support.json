@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "amethyst_cluster_rejects_unsturdy_support", 
+    "description": "An amethyst cluster cannot be placed on top of a bottom slab because its top face is not sturdy, but it can be placed on a full block; only the successful placement consumes an item.", 
+    "tags": ["decoration", "amethyst-cluster", "placement", "support", "player"], 
+    "minecraftIds": ["minecraft:amethyst_cluster", "minecraft:stone_slab", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 2, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:amethyst_cluster", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone_slab", "type": "bottom"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:stone"                       } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"                         }                    }, 
+                {                   "is": {"id": "minecraft:amethyst_cluster", "count": 2}, "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [3.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"}                                                 }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:amethyst_cluster", "facing": "up"}                    }, 
+                {                   "is": {"id": "minecraft:amethyst_cluster", "count": 1}    , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
