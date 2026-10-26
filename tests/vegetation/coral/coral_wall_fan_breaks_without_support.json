@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "coral_wall_fan_breaks_without_support", 
+    "description": "Removing the block a brain coral wall fan is attached to turns the fan into air immediately.", 
+    "tags": ["vegetation", "coral", "wall-fan", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:brain_coral_wall_fan"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -3], [2, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, -1], 
+            "block": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north"} }
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1,  0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:air"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

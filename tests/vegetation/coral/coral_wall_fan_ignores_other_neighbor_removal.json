@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "coral_wall_fan_ignores_other_neighbor_removal", 
+    "description": "Removing the blocks on the other five sides of a waterlogged brain coral wall fan leaves it unchanged, since only its supporting block matters.", 
+    "tags": ["vegetation", "coral", "wall-fan", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:brain_coral_wall_fan"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -3], [2, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 1, 1, -1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-1, 1, -1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 2, -1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 0, -1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1, -2], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, -1], 
+            "block": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": true}
+        }, 
+        { "at": 2, "do": "remove", "pos": [1, 1, -1] }, 
+        { "at": 2, "do": "remove", "pos": [-1, 1, -1] }, 
+        { "at": 2, "do": "remove", "pos": [0, 2, -1] }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, -1] }, 
+        { "at": 2, "do": "remove", "pos": [0, 1, -2] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, -1], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": true}
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

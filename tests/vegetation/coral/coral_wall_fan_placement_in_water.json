@@ -1,0 +1,70 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "coral_wall_fan_placement_in_water", 
+    "description": "Survival placement of a brain coral fan against each horizontal side of a stone block inside water gives a waterlogged wall fan facing away from the stone and consumes the items.", 
+    "tags": ["vegetation", "coral", "wall-fan", "placement", "waterlogged", "player"], 
+    "minecraftIds": ["minecraft:brain_coral_fan", "minecraft:brain_coral_wall_fan"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -5], [13, 2, 5] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:brain_coral_fan", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -5], [13, 2, 5] ], 
+            "with": {"id": "minecraft:water"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 4, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 8, 1,  4], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [12, 1, -4], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, -3.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 0, 3.5], "rot": [180, 0] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [11.5, 0, 4.5], "rot": [90, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [9.5, 0, -3.5], "rot": [-90, 0] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, -1], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": true}
+                }, 
+                {
+                    "pos": [4, 1, 1], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "south", "waterlogged": true}
+                }, 
+                {
+                    "pos": [9, 1, 4], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "east", "waterlogged": true}
+                }, 
+                {
+                    "pos": [11, 1, -4], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "west", "waterlogged": true}
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

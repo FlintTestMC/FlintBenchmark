@@ -1,0 +1,69 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "coral_wall_fan_dies_after_water_removed", 
+    "description": "Removing the only adjacent water from a living non-waterlogged brain coral wall fan schedules a die tick, so it is still alive 30 ticks later and is a dead brain coral wall fan within 100 ticks.", 
+    "tags": ["vegetation", "coral", "wall-fan", "death", "neighbor-update", "scheduled-tick"], 
+    "minecraftIds": ["minecraft:brain_coral_wall_fan", "minecraft:dead_brain_coral_wall_fan"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -3], [2, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -3], [2, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 0, -1], "block": {"id": "minecraft:water"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, -1], 
+            "block": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, -1], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+                }
+            ]
+        }, 
+        { "at": 6, "do": "remove", "pos": [0, 0, -1] }, 
+        {
+            "at": 36, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, -1], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+                }
+            ]
+        }, 
+        {
+            "at": 110, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, -1], 
+                    "is": {"id": "minecraft:dead_brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "coral_wall_fan_destroyed_by_piston", 
+    "description": "A piston extending into a brain coral wall fan destroys it instead of pushing it, so the piston head ends up in the fan's position.", 
+    "tags": ["vegetation", "coral", "wall-fan", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:brain_coral_wall_fan", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -3], [2, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, -2], "block": {"id": "minecraft:stone"                                       } }, 
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:piston", "facing": "north", "extended": false} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, -1], 
+            "block": {"id": "minecraft:brain_coral_wall_fan", "facing": "south", "waterlogged": true}
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "south"} }, 
+                { "pos": [0, 1, 0] , "is": {"id": "minecraft:piston", "extended": false}               }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1,  0], "is": {"id": "minecraft:piston"     , "facing": "north", "extended": true} }, 
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:piston_head", "facing": "north"                  } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
