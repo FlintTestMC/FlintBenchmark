@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_stem_replaced_by_flowing_water", 
+    "description": "Water flowing into the space of an attached pumpkin stem destroys the stem and replaces it with water, while its pumpkin remains.", 
+    "tags": ["vegetation", "stem", "attached-stem", "pumpkin", "fluid", "water"], 
+    "minecraftIds": ["minecraft:farmland", "minecraft:pumpkin", "minecraft:water", "minecraft:attached_pumpkin_stem"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [2, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [2, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-1, 1, 0], [1, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [-1, 1, 0], "block": {"id": "minecraft:water"} }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water"  } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:pumpkin"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

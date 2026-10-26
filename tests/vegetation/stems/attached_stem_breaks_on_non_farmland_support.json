@@ -1,0 +1,67 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_stem_breaks_on_non_farmland_support", 
+    "description": "Replacing the farmland under an attached pumpkin stem with dirt or grass breaks the stem, because only farmland supports it, while its pumpkin remains.", 
+    "tags": ["vegetation", "stem", "attached-stem", "pumpkin", "support", "neighbor-update"], 
+    "minecraftIds": [
+        "minecraft:farmland"             , "minecraft:dirt"                 , "minecraft:grass_block"          , 
+        "minecraft:pumpkin"              , "minecraft:attached_pumpkin_stem"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [5, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:farmland"                               } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:pumpkin"                                } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "east"} }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 5, "do": "place", "pos": [4, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:dirt"       } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"        } }, 
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:grass_block"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"        } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:pumpkin"    } }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:pumpkin"    } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,72 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "attached_stem_reverts_for_each_facing", 
+    "description": "An attached pumpkin stem facing north, south or west reverts to a mature pumpkin stem when the pumpkin on its facing side is removed.", 
+    "tags": ["vegetation", "stem", "attached-stem", "pumpkin", "neighbor-update", "reversion", "facing"], 
+    "minecraftIds": [
+        "minecraft:farmland"             , "minecraft:pumpkin"              , "minecraft:attached_pumpkin_stem", 
+        "minecraft:pumpkin_stem"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -2], [9, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -2], [9, 2, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, -1], [8, 1, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0,  0], "block": {"id": "minecraft:farmland"                                } }, 
+                { "pos": [4, 0,  0], "block": {"id": "minecraft:farmland"                                } }, 
+                { "pos": [8, 0,  0], "block": {"id": "minecraft:farmland"                                } }, 
+                { "pos": [0, 1, -1], "block": {"id": "minecraft:pumpkin"                                 } }, 
+                { "pos": [4, 1,  1], "block": {"id": "minecraft:pumpkin"                                 } }, 
+                { "pos": [7, 1,  0], "block": {"id": "minecraft:pumpkin"                                 } }, 
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "north"} }, 
+                { "pos": [4, 1,  0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "south"} }, 
+                { "pos": [8, 1,  0], "block": {"id": "minecraft:attached_pumpkin_stem", "facing": "west" } }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "north"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "south"} }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:attached_pumpkin_stem", "facing": "west" } }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [0, 1, -1] }, 
+        { "at": 5, "do": "remove", "pos": [4, 1, 1] }, 
+        { "at": 5, "do": "remove", "pos": [7, 1, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1,  0], "is": {"id": "minecraft:pumpkin_stem", "age": 7} }, 
+                { "pos": [4, 1,  0], "is": {"id": "minecraft:pumpkin_stem", "age": 7} }, 
+                { "pos": [8, 1,  0], "is": {"id": "minecraft:pumpkin_stem", "age": 7} }, 
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:air"                   } }, 
+                { "pos": [4, 1,  1], "is": {"id": "minecraft:air"                   } }, 
+                { "pos": [7, 1,  0], "is": {"id": "minecraft:air"                   } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
