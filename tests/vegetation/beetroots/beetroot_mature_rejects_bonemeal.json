@@ -1,0 +1,97 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "beetroot_mature_rejects_bonemeal", 
+    "description": "A dispenser (not a player interaction) keeps its bone meal when firing at fully grown beetroots, while the same dispenser setup consumes bone meal on young beetroots. The player-interaction path for bone meal on mature beetroots is not tested here.", 
+    "tags": ["vegetation", "crop", "beetroots", "bone-meal", "mature", "dispenser"], 
+    "minecraftIds": [
+        "minecraft:farmland"      , "minecraft:beetroots"     , "minecraft:bone_meal"     , "minecraft:dispenser"     , 
+        "minecraft:redstone_block"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 4, 1] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 3
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [4, 1, 0], [4, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:farmland"} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:farmland"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:beetroots", "age": 3} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:beetroots", "age": 0} }, 
+                {
+                    "pos": [-1, 1, 0], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:bone_meal\"}]"}
+                    }
+                }, 
+                {
+                    "pos": [3, 1, 0], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:bone_meal\"}]"}
+                    }
+                }
+            ]
+        }, 
+        { "at": 6, "do": "place", "pos": [-1, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        { "at": 6, "do": "place", "pos": [3, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [3, 1, 0], 
+                    "is": { "id": "minecraft:dispenser", "nbt": {"Items": []} }
+                }, 
+                {
+                    "pos": [ 4                                      , 1                                      , 0 ], 
+                    "is" : [ {"id": "minecraft:beetroots", "age": 0}, {"id": "minecraft:beetroots", "age": 1}    ]  
+                }, 
+                {
+                    "pos": [-1, 1, 0], 
+                    "is": {
+                        "id": "minecraft:dispenser", 
+                        "nbt": {"Items[0].id": "minecraft:bone_meal", "Items[0].count": 1}
+                    }
+                }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:beetroots", "age": 3} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
