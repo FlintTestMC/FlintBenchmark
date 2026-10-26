@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "pale_oak_wood_creaking_heart_dormant", 
+    "description": "An uprooted creaking heart with pale oak wood of the same axis on both ends becomes dormant in daytime, while the same setup with oak wood stays uprooted.", 
+    "tags": ["decoration", "wood", "pale-oak", "creaking-heart", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:pale_oak_wood", "minecraft:oak_wood", "minecraft:creaking_heart"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 4, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {"id": "minecraft:creaking_heart", "axis": "y", "creaking_heart_state": "uprooted"}
+                }, 
+                {
+                    "pos": [2, 2, 0], 
+                    "block": {"id": "minecraft:creaking_heart", "axis": "y", "creaking_heart_state": "uprooted"}
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:pale_oak_wood", "axis": "y"} }, 
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:pale_oak_wood", "axis": "y"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:oak_wood"     , "axis": "y"} }, 
+                { "pos": [2, 3, 0], "block": {"id": "minecraft:oak_wood"     , "axis": "y"} }  
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:creaking_heart", "axis": "y", "creaking_heart_state": "dormant"}
+                }, 
+                {
+                    "pos": [2, 2, 0], 
+                    "is": {"id": "minecraft:creaking_heart", "axis": "y", "creaking_heart_state": "uprooted"}
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

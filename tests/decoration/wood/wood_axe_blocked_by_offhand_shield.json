@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "wood_axe_blocked_by_offhand_shield", 
+    "description": "With a shield in the off hand and no sneaking, using an axe on oak wood does not strip it.", 
+    "tags": ["decoration", "wood", "axe", "stripping", "player"], 
+    "minecraftIds": ["minecraft:oak_wood", "minecraft:shield"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 4, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:iron_axe"}, "off_hand": {"id": "minecraft:shield"} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_wood", "axis": "x"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:oak_wood", "axis": "y"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:oak_wood", "axis": "z"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_wood", "axis": "x"}                     }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_wood", "axis": "y"}                     }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:oak_wood", "axis": "z"}                     }, 
+                {                   "is": {"id": "minecraft:iron_axe"             }, "slot": "hotbar1"  }, 
+                {                   "is": {"id": "minecraft:shield"               }, "slot": "off_hand" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
