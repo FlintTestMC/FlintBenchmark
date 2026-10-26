@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "powered_rail_redstone_block_power", 
+    "description": "A powered rail becomes powered when a redstone block is next to it and unpowers again when the block is removed.", 
+    "tags": ["transportation", "powered-rail", "redstone", "block-state"], 
+    "minecraftIds": ["minecraft:powered_rail", "minecraft:redstone_block", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:powered_rail"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:powered_rail", "powered": false} }
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:powered_rail", "powered": true} }
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [1, 2, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:powered_rail", "powered": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

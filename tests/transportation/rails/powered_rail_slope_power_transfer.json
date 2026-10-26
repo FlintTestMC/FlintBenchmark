@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "powered_rail_slope_power_transfer", 
+    "description": "Power passes between a powered rail on a slope and the powered rail above it, both from the upper rail down and from the lower rail up.", 
+    "tags": ["transportation", "powered-rail", "redstone", "slope", "block-state"], 
+    "minecraftIds": ["minecraft:powered_rail", "minecraft:redstone_block", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [7, 5, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [1, 2, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [6, 2, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 3, 0], "block": {"id": "minecraft:powered_rail"} }, 
+        { "at": 1, "do": "place", "pos": [6, 3, 0], "block": {"id": "minecraft:powered_rail"} }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:powered_rail"} }, 
+        { "at": 2, "do": "place", "pos": [5, 2, 0], "block": {"id": "minecraft:powered_rail"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:powered_rail", "powered": false} }, 
+                { "pos": [1, 3, 0], "is": {"id": "minecraft:powered_rail", "powered": false} }, 
+                { "pos": [5, 2, 0], "is": {"id": "minecraft:powered_rail", "powered": false} }, 
+                { "pos": [6, 3, 0], "is": {"id": "minecraft:powered_rail", "powered": false} }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [1, 4, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        { "at": 3, "do": "place", "pos": [4, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 3, 0], "is": {"id": "minecraft:powered_rail", "powered": true} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:powered_rail", "powered": true} }, 
+                { "pos": [5, 2, 0], "is": {"id": "minecraft:powered_rail", "powered": true} }, 
+                { "pos": [6, 3, 0], "is": {"id": "minecraft:powered_rail", "powered": true} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

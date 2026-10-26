@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "rail_rejected_on_bottom_slab", 
+    "description": "A rail cannot be placed on top of a bottom slab (its top face is not a rigid full face) and no item is used, while the same click on stone places a rail.", 
+    "tags": ["transportation", "rail", "placement", "support", "player"], 
+    "minecraftIds": ["minecraft:rail", "minecraft:stone_slab", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:rail", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone_slab", "type": "bottom"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:stone"                       } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"             }                    }, 
+                {                   "is": {"id": "minecraft:rail", "count": 2}, "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:rail"            }                    }, 
+                {                   "is": {"id": "minecraft:rail", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
