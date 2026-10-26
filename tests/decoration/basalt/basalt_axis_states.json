@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "basalt_axis_states", 
+    "description": "Basalt placed without an axis defaults to axis y, and explicit x, y and z axes are kept when neighbouring blocks are placed and removed.", 
+    "tags": ["pillar", "basalt", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:basalt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:basalt"             } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:basalt", "axis": "x"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:basalt", "axis": "z"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:basalt", "axis": "y"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:basalt", "axis": "x"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:basalt", "axis": "z"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [3, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 2,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 1,  1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 1, -1], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [1, 1, 0] }, 
+        { "at": 3, "do": "remove", "pos": [3, 1, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:basalt", "axis": "y"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:basalt", "axis": "x"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:basalt", "axis": "z"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"                } }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:air"                } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

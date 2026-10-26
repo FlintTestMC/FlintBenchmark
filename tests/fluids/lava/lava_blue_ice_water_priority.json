@@ -1,0 +1,99 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "lava_blue_ice_water_priority", 
+    "description": "Lava on soul soil touching both water and blue ice checks above, north, south, west, then east, and water wins over blue ice on the same neighbour, so it becomes obsidian or basalt depending on which comes first.", 
+    "tags": ["fluids", "lava", "basalt", "obsidian", "blue-ice", "soul-soil", "water", "block-conversion"], 
+    "minecraftIds": [
+        "minecraft:basalt"   , "minecraft:obsidian" , "minecraft:lava"     , "minecraft:water"    , 
+        "minecraft:soul_soil", "minecraft:blue_ice" 
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, 0], [9, 4, 6] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, 0], [9, 0, 6] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:soul_soil"            } }, 
+                { "pos": [4, 1, 1], "block": {"id": "minecraft:soul_soil"            } }, 
+                { "pos": [8, 1, 1], "block": {"id": "minecraft:soul_soil"            } }, 
+                { "pos": [0, 1, 5], "block": {"id": "minecraft:soul_soil"            } }, 
+                { "pos": [4, 1, 5], "block": {"id": "minecraft:soul_soil"            } }, 
+                { "pos": [8, 1, 5], "block": {"id": "minecraft:soul_soil"            } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:blue_ice"             } }, 
+                { "pos": [0, 2, 2], "block": {"id": "minecraft:water"    , "level": 0} }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:water"    , "level": 0} }, 
+                { "pos": [4, 2, 2], "block": {"id": "minecraft:blue_ice"             } }, 
+                { "pos": [8, 3, 1], "block": {"id": "minecraft:water"    , "level": 0} }, 
+                { "pos": [8, 2, 0], "block": {"id": "minecraft:blue_ice"             } }, 
+                { "pos": [0, 3, 5], "block": {"id": "minecraft:blue_ice"             } }, 
+                { "pos": [0, 2, 4], "block": {"id": "minecraft:water"    , "level": 0} }, 
+                { "pos": [3, 2, 5], "block": {"id": "minecraft:blue_ice"             } }, 
+                { "pos": [5, 2, 5], "block": {"id": "minecraft:water"    , "level": 0} }, 
+                { "pos": [7, 2, 5], "block": {"id": "minecraft:water"    , "level": 0} }, 
+                { "pos": [9, 2, 5], "block": {"id": "minecraft:blue_ice"             } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [0, 2, 1], [0, 2, 1] ], 
+            "with": {"id": "minecraft:lava", "level": 0}
+        }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [4, 2, 1], [4, 2, 1] ], 
+            "with": {"id": "minecraft:lava", "level": 0}
+        }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [8, 2, 1], [8, 2, 1] ], 
+            "with": {"id": "minecraft:lava", "level": 0}
+        }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [0, 2, 5], [0, 2, 5] ], 
+            "with": {"id": "minecraft:lava", "level": 0}
+        }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [4, 2, 5], [4, 2, 5] ], 
+            "with": {"id": "minecraft:lava", "level": 0}
+        }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [8, 2, 5], [8, 2, 5] ], 
+            "with": {"id": "minecraft:lava", "level": 0}
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 1], "is": {"id": "minecraft:basalt"  , "axis": "y"} }, 
+                { "pos": [4, 2, 1], "is": {"id": "minecraft:obsidian"             } }, 
+                { "pos": [8, 2, 1], "is": {"id": "minecraft:obsidian"             } }, 
+                { "pos": [0, 2, 5], "is": {"id": "minecraft:basalt"  , "axis": "y"} }, 
+                { "pos": [4, 2, 5], "is": {"id": "minecraft:basalt"  , "axis": "y"} }, 
+                { "pos": [8, 2, 5], "is": {"id": "minecraft:obsidian"             } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

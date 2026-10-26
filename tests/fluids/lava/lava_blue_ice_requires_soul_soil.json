@@ -1,0 +1,74 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "lava_blue_ice_requires_soul_soil", 
+    "description": "Lava stays lava next to blue ice unless soul soil is directly below it, and soul soil lava stays lava next to packed ice, regular ice, diagonal blue ice or no ice at all.", 
+    "tags": ["fluids", "lava", "basalt", "blue-ice", "soul-soil", "negative"], 
+    "minecraftIds": [
+        "minecraft:lava"      , "minecraft:soul_soil" , "minecraft:soul_sand" , "minecraft:netherrack", 
+        "minecraft:blue_ice"  , "minecraft:packed_ice", "minecraft:ice"       
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, 0], [9, 3, 6] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, 0], [9, 0, 6] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:soul_sand" } }, 
+                { "pos": [4, 1, 1], "block": {"id": "minecraft:netherrack"} }, 
+                { "pos": [8, 1, 1], "block": {"id": "minecraft:soul_soil" } }, 
+                { "pos": [0, 1, 5], "block": {"id": "minecraft:soul_soil" } }, 
+                { "pos": [4, 1, 5], "block": {"id": "minecraft:soul_soil" } }, 
+                { "pos": [8, 1, 5], "block": {"id": "minecraft:soul_soil" } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 1], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [4, 2, 1], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [8, 2, 1], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [0, 2, 5], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [4, 2, 5], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [8, 2, 5], "block": {"id": "minecraft:lava", "level": 0} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:blue_ice"  } }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:blue_ice"  } }, 
+                { "pos": [8, 2, 0], "block": {"id": "minecraft:packed_ice"} }, 
+                { "pos": [0, 2, 4], "block": {"id": "minecraft:ice"       } }, 
+                { "pos": [5, 2, 4], "block": {"id": "minecraft:blue_ice"  } }  
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 1], "is": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [4, 2, 1], "is": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [8, 2, 1], "is": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [0, 2, 5], "is": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [4, 2, 5], "is": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [8, 2, 5], "is": {"id": "minecraft:lava", "level": 0} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,78 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "lava_blue_ice_basalt", 
+    "description": "Lava on soul soil turns into basalt with axis y when blue ice touches it above or on any horizontal side, for source and flowing lava alike.", 
+    "tags": ["fluids", "lava", "basalt", "blue-ice", "soul-soil", "block-conversion"], 
+    "minecraftIds": ["minecraft:basalt", "minecraft:lava", "minecraft:soul_soil", "minecraft:blue_ice"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, 0], [9, 3, 6] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, 0], [9, 0, 6] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:soul_soil"} }, 
+                { "pos": [4, 1, 1], "block": {"id": "minecraft:soul_soil"} }, 
+                { "pos": [8, 1, 1], "block": {"id": "minecraft:soul_soil"} }, 
+                { "pos": [0, 1, 5], "block": {"id": "minecraft:soul_soil"} }, 
+                { "pos": [4, 1, 5], "block": {"id": "minecraft:soul_soil"} }, 
+                { "pos": [8, 1, 5], "block": {"id": "minecraft:soul_soil"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 1], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [4, 2, 1], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [8, 2, 1], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [0, 2, 5], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [4, 2, 5], "block": {"id": "minecraft:lava", "level": 0} }, 
+                { "pos": [8, 2, 5], "block": {"id": "minecraft:lava", "level": 3} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 1], "is": {"id": "minecraft:lava"} }, 
+                { "pos": [4, 2, 1], "is": {"id": "minecraft:lava"} }, 
+                { "pos": [8, 2, 1], "is": {"id": "minecraft:lava"} }, 
+                { "pos": [0, 2, 5], "is": {"id": "minecraft:lava"} }, 
+                { "pos": [4, 2, 5], "is": {"id": "minecraft:lava"} }, 
+                { "pos": [8, 2, 5], "is": {"id": "minecraft:lava"} }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:blue_ice"} }, 
+        { "at": 3, "do": "place", "pos": [4, 2, 2], "block": {"id": "minecraft:blue_ice"} }, 
+        { "at": 3, "do": "place", "pos": [9, 2, 1], "block": {"id": "minecraft:blue_ice"} }, 
+        { "at": 3, "do": "place", "pos": [-1, 2, 5], "block": {"id": "minecraft:blue_ice"} }, 
+        { "at": 3, "do": "place", "pos": [4, 3, 5], "block": {"id": "minecraft:blue_ice"} }, 
+        { "at": 3, "do": "place", "pos": [8, 2, 4], "block": {"id": "minecraft:blue_ice"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 1], "is": {"id": "minecraft:basalt", "axis": "y"} }, 
+                { "pos": [4, 2, 1], "is": {"id": "minecraft:basalt", "axis": "y"} }, 
+                { "pos": [8, 2, 1], "is": {"id": "minecraft:basalt", "axis": "y"} }, 
+                { "pos": [0, 2, 5], "is": {"id": "minecraft:basalt", "axis": "y"} }, 
+                { "pos": [4, 2, 5], "is": {"id": "minecraft:basalt", "axis": "y"} }, 
+                { "pos": [8, 2, 5], "is": {"id": "minecraft:basalt", "axis": "y"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
