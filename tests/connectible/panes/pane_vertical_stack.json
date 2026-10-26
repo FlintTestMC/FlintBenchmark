@@ -1,0 +1,76 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Pane Vertical Stack", 
+    "description": "Stacked panes never connect to each other vertically, and a solid neighbour only connects the pane at its own height.", 
+    "tags": ["glass_pane", "block-state", "neighbor-update", "connectible"], 
+    "minecraftIds": ["minecraft:glass_pane", "minecraft:red_stained_glass_pane"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:glass_pane"            } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:red_stained_glass_pane"} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:glass_pane"            } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:glass_pane", 
+                        "north": false, 
+                        "east": false, 
+                        "south": false, 
+                        "west": false, 
+                        "waterlogged": false
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:red_stained_glass_pane", 
+                        "north": false, 
+                        "east": false, 
+                        "south": false, 
+                        "west": false, 
+                        "waterlogged": false
+                    }
+                }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:glass_pane", 
+                        "north": false, 
+                        "east": false, 
+                        "south": false, 
+                        "west": false, 
+                        "waterlogged": false
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:glass_pane"            , "east": false} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:red_stained_glass_pane", "east": true } }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:glass_pane"            , "east": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

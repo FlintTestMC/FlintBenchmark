@@ -1,0 +1,71 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Pane Waterlogged Spread", 
+    "description": "A waterlogged pane acts as a water source: once a neighbour update schedules its fluid tick, water flows out of it to both free sides, and removing the pane leaves air.", 
+    "tags": ["glass_pane", "block-state", "waterlogging", "fluid", "neighbor-update"], 
+    "minecraftIds": ["minecraft:glass_pane"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [4, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [4, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:glass_pane", "waterlogged": true} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:glass_pane", "waterlogged": true} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"                            } }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:air"                            } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [0, 1, -1], [4, 1, -1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [0, 1, 1], [4, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:glass_pane", "waterlogged": true            } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water"     ,                      "level": 1} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:water"     ,                      "level": 1} }  
+            ]
+        }, 
+        { "at": 12, "do": "remove", "pos": [2, 1, 0] }, 
+        {
+            "at": 13, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

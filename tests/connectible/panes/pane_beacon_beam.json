@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Pane Beacon Beam", 
+    "description": "A beacon activates through panes above it, while an opaque block directly above keeps it inactive.", 
+    "tags": ["glass_pane", "beacon", "block-entity"], 
+    "minecraftIds": ["minecraft:glass_pane", "minecraft:red_stained_glass_pane", "minecraft:beacon"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [10, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 2] ], 
+            "with": {"id": "minecraft:iron_block"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [4, 0, 0], [6, 0, 2] ], 
+            "with": {"id": "minecraft:iron_block"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [8, 0, 0], [10, 0, 2] ], 
+            "with": {"id": "minecraft:iron_block"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1, 1], "block": {"id": "minecraft:beacon"                } }, 
+                { "pos": [5, 1, 1], "block": {"id": "minecraft:beacon"                } }, 
+                { "pos": [9, 1, 1], "block": {"id": "minecraft:beacon"                } }, 
+                { "pos": [1, 2, 1], "block": {"id": "minecraft:glass_pane"            } }, 
+                { "pos": [5, 2, 1], "block": {"id": "minecraft:red_stained_glass_pane"} }, 
+                { "pos": [9, 2, 1], "block": {"id": "minecraft:stone"                 } }  
+            ]
+        }, 
+        {
+            "at": 170, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 1, 1], 
+                    "is": { "id": "minecraft:beacon", "nbt": {"Levels": 1} }
+                }, 
+                {
+                    "pos": [5, 1, 1], 
+                    "is": { "id": "minecraft:beacon", "nbt": {"Levels": 1} }
+                }, 
+                {
+                    "pos": [9, 1, 1], 
+                    "is": { "id": "minecraft:beacon", "nbt": {"Levels": 0} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
