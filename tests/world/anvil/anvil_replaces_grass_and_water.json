@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "anvil_replaces_grass_and_water", 
+    "description": "A falling anvil replaces short grass one block below it and drops through a three-block water column, settling intact on the floor in both cases.", 
+    "tags": ["world", "anvil", "falling-block", "replaceable", "fluid"], 
+    "minecraftIds": ["minecraft:anvil", "minecraft:short_grass", "minecraft:water", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 8, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 2, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [-1, 2, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:short_grass"} }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [4, 2, 0], [4, 4, 0] ], 
+            "with": {"id": "minecraft:water"}
+        }, 
+        { "at": 3, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:anvil", "facing": "east"} }, 
+        { "at": 3, "do": "place", "pos": [4, 5, 0], "block": {"id": "minecraft:anvil", "facing": "east"} }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"                    } }, 
+                { "pos": [4, 5, 0], "is": {"id": "minecraft:air"                    } }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:anvil", "facing": "east"} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:anvil", "facing": "east"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

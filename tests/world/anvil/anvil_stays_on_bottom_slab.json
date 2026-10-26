@@ -1,0 +1,34 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "anvil_stays_on_bottom_slab", 
+    "description": "An anvil placed on a bottom slab does not fall because the slab is not a replaceable block.", 
+    "tags": ["world", "anvil", "falling-block", "support"], 
+    "minecraftIds": ["minecraft:anvil", "minecraft:stone_slab", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 5, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:stone_slab", "type": "bottom"} }, 
+        { "at": 2, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:anvil", "facing": "south"} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:stone_slab", "type": "bottom"                   } }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:anvil"     ,                   "facing": "south"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
