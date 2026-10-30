@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brain_coral_water_removal", 
+    "description": "A dry brain coral that was kept alive by an adjacent water source dies 60 to 99 ticks after that water is removed.", 
+    "tags": ["vegetation", "coral", "decay", "water", "neighbor-update", "scheduled-tick"], 
+    "minecraftIds": ["minecraft:brain_coral", "minecraft:dead_brain_coral", "minecraft:water", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 0, "do": "remove", "pos": [1, 1, 0] }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brain_coral", "waterlogged": false} }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:water"} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brain_coral", "waterlogged": false} }
+            ]
+        }, 
+        { "at": 21, "do": "remove", "pos": [1, 1, 0] }, 
+        {
+            "at": 80, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brain_coral", "waterlogged": false} }
+            ]
+        }, 
+        {
+            "at": 122, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dead_brain_coral", "waterlogged": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

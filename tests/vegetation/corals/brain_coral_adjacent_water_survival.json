@@ -1,0 +1,39 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brain_coral_adjacent_water_survival", 
+    "description": "A dry brain coral next to a water source survives past the 99 tick decay window, while a dry brain coral with no adjacent water dies in the same time. The adjacent source spreads only flowing water sideways, and SimpleWaterloggedBlock.placeLiquid waterlogs only for the source fluid (fluidState.is(Fluids.WATER)), so the coral stays waterlogged=false and survives purely through the adjacent-water scan in BaseCoralPlantTypeBlock.scanForWater.", 
+    "tags": ["vegetation", "coral", "decay", "water", "scheduled-tick"], 
+    "minecraftIds": ["minecraft:brain_coral", "minecraft:dead_brain_coral", "minecraft:water", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [9, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 0, "do": "remove", "pos": [1, 1, 0] }, 
+        { "at": 0, "do": "remove", "pos": [6, 1, 0] }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brain_coral", "waterlogged": false} }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 1, "do": "place", "pos": [6, 1, 0], "block": {"id": "minecraft:brain_coral", "waterlogged": false} }, 
+        {
+            "at": 102, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brain_coral"     , "waterlogged": false} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water"                                 } }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:dead_brain_coral", "waterlogged": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,78 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brain_coral_wall_fan_support_loss", 
+    "description": "A brain coral wall fan survives losing the block below it because it only needs the block it is attached to, and turns into air (waterlogged: a water source) when that attached block is removed (BaseCoralWallFanBlock.canSurvive and updateShape).", 
+    "tags": ["vegetation", "coral", "wall-fan", "support", "neighbor-update", "waterlogged"], 
+    "minecraftIds": ["minecraft:brain_coral_wall_fan", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 1, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 0, "do": "remove", "pos": [4, 1, 0] }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [4, 1, 0], 
+            "block": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": true}
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+                }, 
+                {
+                    "pos": [4, 1, 0], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": true}
+                }
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, 0] }, 
+        { "at": 2, "do": "remove", "pos": [4, 0, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": false}
+                }, 
+                {
+                    "pos": [4, 1, 0], 
+                    "is": {"id": "minecraft:brain_coral_wall_fan", "facing": "north", "waterlogged": true}
+                }
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 1, 1] }, 
+        { "at": 3, "do": "remove", "pos": [4, 1, 1] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"              } }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:water", "level": 0} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

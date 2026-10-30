@@ -1,0 +1,68 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "brain_coral_fan_water_decay", 
+    "description": "A dry brain coral fan with no adjacent water dies into a dry dead brain coral fan between 60 and 99 ticks after placement, while a waterlogged fan and a dry fan next to a water source survive.", 
+    "tags": ["vegetation", "coral", "coral-fan", "decay", "waterlogged", "scheduled-tick"], 
+    "minecraftIds": [
+        "minecraft:brain_coral_fan"     , "minecraft:dead_brain_coral_fan", "minecraft:water"               , 
+        "minecraft:stone"               
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [11, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [11, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 0, "do": "remove", "pos": [4, 1, 0] }, 
+        { "at": 0, "do": "remove", "pos": [8, 1, 0] }, 
+        { "at": 0, "do": "remove", "pos": [9, 1, 0] }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:brain_coral_fan", "waterlogged": false}
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [4, 1, 0], 
+            "block": {"id": "minecraft:brain_coral_fan", "waterlogged": true}
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [8, 1, 0], 
+            "block": {"id": "minecraft:brain_coral_fan", "waterlogged": false}
+        }, 
+        { "at": 1, "do": "place", "pos": [9, 1, 0], "block": {"id": "minecraft:water"} }, 
+        {
+            "at": 59, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:brain_coral_fan", "waterlogged": false} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:brain_coral_fan", "waterlogged": true } }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:brain_coral_fan", "waterlogged": false} }  
+            ]
+        }, 
+        {
+            "at": 102, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dead_brain_coral_fan", "waterlogged": false} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:brain_coral_fan"     , "waterlogged": true } }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:brain_coral_fan"     , "waterlogged": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
