@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "tube_coral_block_water_in_each_direction", 
+    "description": "A tube coral block with water on only one of its six faces (east, west, up, down, south or north) stays alive.", 
+    "tags": ["coral", "coral-block", "water", "directions"], 
+    "minecraftIds": ["minecraft:tube_coral_block", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [10, 2, 6] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [10, 2, 6] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 2, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:tube_coral_block"} }, 
+        { "at": 2, "do": "place", "pos": [3, 1, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 2, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:tube_coral_block"} }, 
+        { "at": 2, "do": "place", "pos": [8, 2, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 2, "do": "place", "pos": [8, 1, 0], "block": {"id": "minecraft:tube_coral_block"} }, 
+        { "at": 2, "do": "place", "pos": [0, 0, 4], "block": {"id": "minecraft:water"} }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 4], "block": {"id": "minecraft:tube_coral_block"} }, 
+        { "at": 2, "do": "place", "pos": [4, 1, 5], "block": {"id": "minecraft:water"} }, 
+        { "at": 2, "do": "place", "pos": [4, 1, 4], "block": {"id": "minecraft:tube_coral_block"} }, 
+        { "at": 2, "do": "place", "pos": [8, 1, 3], "block": {"id": "minecraft:water"} }, 
+        { "at": 2, "do": "place", "pos": [8, 1, 4], "block": {"id": "minecraft:tube_coral_block"} }, 
+        {
+            "at": 130, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:tube_coral_block"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:tube_coral_block"} }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:tube_coral_block"} }, 
+                { "pos": [0, 1, 4], "is": {"id": "minecraft:tube_coral_block"} }, 
+                { "pos": [4, 1, 4], "is": {"id": "minecraft:tube_coral_block"} }, 
+                { "pos": [8, 1, 4], "is": {"id": "minecraft:tube_coral_block"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

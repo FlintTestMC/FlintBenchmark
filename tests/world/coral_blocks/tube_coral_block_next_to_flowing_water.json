@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "tube_coral_block_next_to_flowing_water", 
+    "description": "A tube coral block whose only adjacent water is flowing, not a source, stays alive.", 
+    "tags": ["coral", "coral-block", "water", "flowing"], 
+    "minecraftIds": ["minecraft:tube_coral_block", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [1, 1, 0], [2, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:water"} }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water", "level": 1} }
+            ]
+        }, 
+        { "at": 30, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:tube_coral_block"} }, 
+        {
+            "at": 31, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:tube_coral_block"            } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water"           , "level": 1} }  
+            ]
+        }, 
+        {
+            "at": 150, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:tube_coral_block"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

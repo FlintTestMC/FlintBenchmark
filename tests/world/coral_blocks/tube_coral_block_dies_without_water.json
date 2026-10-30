@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "tube_coral_block_dies_without_water", 
+    "description": "A tube coral block with no adjacent water is still alive before the minimum 60 tick delay and has become a dead tube coral block by 100 ticks.", 
+    "tags": ["coral", "coral-block", "dry", "death"], 
+    "minecraftIds": ["minecraft:tube_coral_block", "minecraft:dead_tube_coral_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:tube_coral_block"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:tube_coral_block"} }
+            ]
+        }, 
+        {
+            "at": 55, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:tube_coral_block"} }
+            ]
+        }, 
+        {
+            "at": 110, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dead_tube_coral_block"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
