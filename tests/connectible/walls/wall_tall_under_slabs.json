@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "Wall Tall Under Slabs", 
+    "description": "A bottom slab above a straight wall makes the connected sides tall, while a top slab leaves them low.", 
+    "tags": ["wall", "connectible", "block-state", "neighbor-update", "slab"], 
+    "minecraftIds": ["minecraft:cobblestone_wall", "minecraft:stone_slab"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [2, 2, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [-1, 0, 3], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 0, 0, 3], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 1, 0, 3], "block": {"id": "minecraft:cobblestone_wall"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone_slab", "type": "bottom"} }, 
+                { "pos": [0, 1, 3], "block": {"id": "minecraft:stone_slab", "type": "top"   } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "none"                      , 
+                        "east" : "tall"                      , 
+                        "west" : "tall"                      , 
+                        "up"   : "false"                       
+                    }
+                }, 
+                {
+                    "pos": [0, 0, 3], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "none"                      , 
+                        "east" : "low"                       , 
+                        "west" : "low"                       , 
+                        "up"   : "false"                       
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

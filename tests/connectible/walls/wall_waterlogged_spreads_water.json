@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "Wall Waterlogged Spreads Water", 
+    "description": "A waterlogged wall acts as a water source and spreads flowing water into an adjacent empty space while staying waterlogged.", 
+    "tags": ["wall", "waterlogging", "fluid"], 
+    "minecraftIds": ["minecraft:cobblestone_wall", "minecraft:water", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [3, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, -1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 1, -1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-1,  0,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0,  0,  1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0,  0, -1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 1,  0,  1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 1,  0, -1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 2,  0,  0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {"id": "minecraft:cobblestone_wall", "waterlogged": "true"}
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:water"                                  } }, 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:cobblestone_wall", "waterlogged": "true"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

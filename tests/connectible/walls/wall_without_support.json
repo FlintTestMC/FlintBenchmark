@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "Wall Without Support", 
+    "description": "A wall has no support requirement and stays in place when the block below it is removed.", 
+    "tags": ["wall", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:cobblestone_wall", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [1, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, -1, 0], "block": {"id": "minecraft:stone"           } }, 
+                { "pos": [0,  0, 0], "block": {"id": "minecraft:cobblestone_wall"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:cobblestone_wall"} }
+            ]
+        }, 
+        { "at": 1, "do": "remove", "pos": [0, -1, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, -1, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:cobblestone_wall", 
+                        "north"      : "none"                      , 
+                        "south"      : "none"                      , 
+                        "east"       : "none"                      , 
+                        "west"       : "none"                      , 
+                        "up"         : "true"                      , 
+                        "waterlogged": "false"                       
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

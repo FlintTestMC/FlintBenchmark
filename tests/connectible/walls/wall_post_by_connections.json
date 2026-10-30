@@ -1,0 +1,132 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "Wall Post By Connections", 
+    "description": "A wall keeps its post for corners, T-junctions, end caps and lone posts, and loses it for a straight line or a four-way cross with nothing above.", 
+    "tags": ["wall", "connectible", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:cobblestone_wall"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [7, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 1, 0,  0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [-1, 0,  0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 0, 0,  1], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 0, 0, -1], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 5, 0,  0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 6, 0,  0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [ 5, 0, -1], "block": {"id": "minecraft:cobblestone_wall"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "low"                       , 
+                        "south": "low"                       , 
+                        "east" : "low"                       , 
+                        "west" : "low"                       , 
+                        "up"   : "false"                       
+                    }
+                }, 
+                {
+                    "pos": [5, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "low"                       , 
+                        "south": "none"                      , 
+                        "east" : "low"                       , 
+                        "west" : "none"                      , 
+                        "up"   : "true"                        
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "remove", "pos": [0, 0, -1] }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "low"                       , 
+                        "east" : "low"                       , 
+                        "west" : "low"                       , 
+                        "up"   : "true"                        
+                    }
+                }
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, 1] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "none"                      , 
+                        "east" : "low"                       , 
+                        "west" : "low"                       , 
+                        "up"   : "false"                       
+                    }
+                }
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [1, 0, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "none"                      , 
+                        "east" : "none"                      , 
+                        "west" : "low"                       , 
+                        "up"   : "true"                        
+                    }
+                }
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [-1, 0, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "none"                      , 
+                        "east" : "none"                      , 
+                        "west" : "none"                      , 
+                        "up"   : "true"                        
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

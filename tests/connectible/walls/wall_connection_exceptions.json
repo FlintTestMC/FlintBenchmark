@@ -1,0 +1,74 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "Wall Connection Exceptions", 
+    "description": "A wall does not connect to leaves, a fence gate across its line or the stepped side of stairs, but connects to glass, an in-line fence gate and the back of stairs.", 
+    "tags": ["wall", "connectible", "block-state", "neighbor-update", "fence_gate", "stairs"], 
+    "minecraftIds": [
+        "minecraft:cobblestone_wall", "minecraft:oak_leaves"      , "minecraft:oak_fence_gate"  , 
+        "minecraft:stone_stairs"    , "minecraft:glass"           
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [2, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0] , "block": {"id": "minecraft:cobblestone_wall"}                                  }, 
+                { "pos": [0, 0, -1], "block": {"id": "minecraft:oak_leaves", "persistent": "true"}                  }, 
+                { "pos": [1, 0, 0] , "block": {"id": "minecraft:oak_fence_gate", "facing": "east"}                  }, 
+                { "pos": [0, 0, 1] , "block": {"id": "minecraft:stone_stairs", "facing": "south", "half": "bottom"} }, 
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:glass"}                                             }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "none"                      , 
+                        "east" : "none"                      , 
+                        "west" : "low"                       , 
+                        "up"   : "true"                        
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:oak_fence_gate", "facing": "north"                  } }, 
+                { "pos": [0, 0, 1], "block": {"id": "minecraft:stone_stairs"  , "facing": "north", "half": "bottom"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"   : "minecraft:cobblestone_wall", 
+                        "north": "none"                      , 
+                        "south": "low"                       , 
+                        "east" : "low"                       , 
+                        "west" : "low"                       , 
+                        "up"   : "true"                        
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
