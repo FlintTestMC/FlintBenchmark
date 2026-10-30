@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "azure_bluet_destroyed_by_piston", 
+    "description": "A piston powered by an adjacent redstone block pushes into an azure bluet, destroying it, and extends its head into the flower's space.", 
+    "tags": ["vegetation", "flower", "azure_bluet", "piston", "redstone"], 
+    "minecraftIds": [
+        "minecraft:azure_bluet"   , "minecraft:dirt"          , "minecraft:piston"        , "minecraft:piston_head"   , 
+        "minecraft:redstone_block"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [3, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [3, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [-1, 1, 0], [2, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:azure_bluet"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:piston", "facing": "east"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston"     , "extended": false, "facing": "east"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:azure_bluet"                                     } }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [-1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston"     , "extended": true, "facing": "east"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head",                   "facing": "east"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

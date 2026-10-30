@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "azure_bluet_unpotting", 
+    "description": "Using an empty hand on a potted azure bluet turns it back into an empty flower pot and gives the player an azure bluet.", 
+    "tags": ["vegetation", "flower", "azure_bluet", "player", "unpotting"], 
+    "minecraftIds": ["minecraft:azure_bluet", "minecraft:flower_pot", "minecraft:potted_azure_bluet"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }, 
+        "player": {"selected_hotbar": 1, "game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:potted_azure_bluet"} }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:flower_pot"             }                    }, 
+                {                   "is": {"id": "minecraft:azure_bluet", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
