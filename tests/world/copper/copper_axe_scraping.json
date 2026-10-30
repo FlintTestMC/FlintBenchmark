@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "copper_axe_scraping", 
+    "description": "An axe scrapes exposed, weathered and oxidized copper back one stage each, while unaffected copper has no earlier stage and stays unchanged.", 
+    "tags": ["copper", "weathering", "axe", "scrape", "player"], 
+    "minecraftIds": [
+        "minecraft:copper_block"    , "minecraft:exposed_copper"  , "minecraft:weathered_copper", 
+        "minecraft:oxidized_copper" , "minecraft:iron_axe"        
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [6, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:copper_block"    } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:exposed_copper"  } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:weathered_copper"} }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:oxidized_copper" } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:iron_axe"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact", "item": "minecraft:iron_axe"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact", "item": "minecraft:iron_axe"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [6.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 8, "do": "interact", "item": "minecraft:iron_axe"}, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:copper_block"    } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:copper_block"    } }, 
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:exposed_copper"  } }, 
+                { "pos": [6, 0, 0], "is": {"id": "minecraft:weathered_copper"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

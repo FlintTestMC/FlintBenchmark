@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "copper_axe_blocked_by_offhand_shield", 
+    "description": "An axe used from the main hand does not scrape exposed copper while a shield is held in the off-hand.", 
+    "tags": ["copper", "weathering", "axe", "shield", "player"], 
+    "minecraftIds": ["minecraft:exposed_copper", "minecraft:iron_axe", "minecraft:shield"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:random_tick_speed": 0
+            }
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:exposed_copper"} }, 
+        {"at": 0, "do": "set_slot", "slot": "off_hand", "item": "minecraft:shield"}, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:iron_axe"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:exposed_copper"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
