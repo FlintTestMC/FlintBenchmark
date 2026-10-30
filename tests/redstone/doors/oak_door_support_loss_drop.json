@@ -1,0 +1,64 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "oak_door_support_loss_drop", 
+    "description": "Removing the block under a door breaks both halves and drops exactly one door item.", 
+    "tags": ["redstone", "door", "block-state", "player", "drops", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:oak_door"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [2, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {
+                        "id"     : "minecraft:oak_door", 
+                        "half"   : "upper"             , 
+                        "facing" : "north"             , 
+                        "hinge"  : "left"              , 
+                        "open"   : "false"             , 
+                        "powered": "false"               
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id"     : "minecraft:oak_door", 
+                        "half"   : "lower"             , 
+                        "facing" : "north"             , 
+                        "hinge"  : "left"              , 
+                        "open"   : "false"             , 
+                        "powered": "false"               
+                    }
+                }
+            ]
+        }, 
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [8.5, 5, 8.5], "rot": [0, 0] }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"}                                              }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"}                                              }, 
+                {                   "is": "minecraft:item"       , "count": 1, "Item.id": "minecraft:oak_door" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

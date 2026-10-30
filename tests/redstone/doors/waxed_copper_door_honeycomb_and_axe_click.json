@@ -1,0 +1,95 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "waxed_copper_door_honeycomb_and_axe_click", 
+    "description": "Without sneaking, right-clicking a waxed copper door with an axe or honeycomb toggles the door instead of removing the wax or re-waxing it: the door stays waxed and the items are not used. Representative for the four waxed copper doors (waxed_copper, waxed_exposed, waxed_weathered, waxed_oxidized), which share one implementation.", 
+    "tags": ["redstone", "door", "block-state", "player", "copper", "interaction", "honeycomb", "axe"], 
+    "minecraftIds": ["minecraft:waxed_exposed_copper_door", "minecraft:honeycomb", "minecraft:stone_axe"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, 0], [5, 4, 4] ]
+        }, 
+        "player": {
+            "inventory": {
+                "hotbar1": {"id": "minecraft:honeycomb", "count": 1}, 
+                "hotbar2": {"id": "minecraft:stone_axe", "count": 1}  
+            }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, 0], [5, 0, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {
+                        "id"     : "minecraft:waxed_exposed_copper_door", 
+                        "half"   : "upper"                              , 
+                        "facing" : "north"                              , 
+                        "hinge"  : "left"                               , 
+                        "open"   : "false"                              , 
+                        "powered": "false"                                
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id"     : "minecraft:waxed_exposed_copper_door", 
+                        "half"   : "lower"                              , 
+                        "facing" : "north"                              , 
+                        "hinge"  : "left"                               , 
+                        "open"   : "false"                              , 
+                        "powered": "false"                                
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 2.5], "rot": [180, 40] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:waxed_exposed_copper_door", "half": "lower", "open": "true"}
+                }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:waxed_exposed_copper_door", "half": "upper", "open": "true"}
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:honeycomb", "count": 1} }
+            ]
+        }, 
+        {"at": 2, "do": "select_hotbar", "slot": 2}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.1, 1, 2.5], "rot": [180, 40] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:waxed_exposed_copper_door", "half": "lower", "open": "false"}
+                }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:waxed_exposed_copper_door", "half": "upper", "open": "false"}
+                }, 
+                { "slot": "hotbar2", "is": {"id": "minecraft:stone_axe", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

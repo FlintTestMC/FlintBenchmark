@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "oak_door_invalid_placement", 
+    "description": "A door is not placed when the block above the target position is solid or when the support is a bottom slab whose top face is not sturdy; in both cases the item stays in the hotbar.", 
+    "tags": ["redstone", "door", "block-state", "player", "placement", "support"], 
+    "minecraftIds": ["minecraft:oak_door", "minecraft:stone", "minecraft:stone_slab"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-4, 0, -1], [7, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:oak_door", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-4, 0, 0], [1, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:stone"                       } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:stone"                       } }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:stone_slab", "type": "bottom"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [-2.5, 1, 0.5], "rot": [-90, 17] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [6.5, 3, 0.5], "rot": [90, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                 }                    }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:air"                 }                    }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:air"                 }                    }, 
+                {                   "is": {"id": "minecraft:oak_door", "count": 2}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
