@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "snow_golem_takes_priority_over_iron_golem", 
+    "description": "When a carved pumpkin completes both a snow golem pattern and an iron golem pattern at once, only the snow golem pattern is consumed and the iron blocks remain.", 
+    "tags": ["decoration", "carved_pumpkin", "golem", "snow_golem", "iron_golem", "pattern"], 
+    "minecraftIds": ["minecraft:carved_pumpkin", "minecraft:snow_block", "minecraft:iron_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:iron_block"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:iron_block"} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:iron_block"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:iron_block"} }, 
+                { "pos": [1, 2, 1], "block": {"id": "minecraft:snow_block"} }, 
+                { "pos": [1, 2, 2], "block": {"id": "minecraft:snow_block"} }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [1.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:carved_pumpkin"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:air"       } }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:air"       } }, 
+                { "pos": [1, 2, 2], "is": {"id": "minecraft:air"       } }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:iron_block"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:iron_block"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:iron_block"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:iron_block"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
