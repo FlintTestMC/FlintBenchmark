@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_age_propagation", 
+    "description": "When a thick (age 1) bamboo stalk is placed on top of a column of thin (age 0) stalks, every stalk below switches to age 1.", 
+    "tags": ["vegetation", "bamboo", "age", "neighbor-update"], 
+    "minecraftIds": ["minecraft:bamboo", "minecraft:dirt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 6, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [0, 6, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:bamboo", "age": 0} }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:bamboo", "age": 0} }, 
+        { "at": 1, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:bamboo", "age": 0} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:bamboo", "age": 0} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo", "age": 0} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:bamboo", "age": 0} }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 4, 0], "block": {"id": "minecraft:bamboo", "age": 1} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:bamboo", "age": 1} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo", "age": 1} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:bamboo", "age": 1} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:bamboo", "age": 1} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

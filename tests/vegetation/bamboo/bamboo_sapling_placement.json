@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_sapling_placement", 
+    "description": "The bamboo item placed on dirt, sand, gravel or grass creates a bamboo sapling and consumes the item.", 
+    "tags": ["vegetation", "bamboo", "placement", "player"], 
+    "minecraftIds": [
+        "minecraft:bamboo"        , "minecraft:bamboo_sapling", "minecraft:dirt"          , "minecraft:sand"          , 
+        "minecraft:gravel"        , "minecraft:grass_block"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [7, 5, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [7, 5, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [6, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"       } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:sand"       } }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:gravel"     } }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:grass_block"} }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:bamboo"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:bamboo"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [4.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact", "item": "minecraft:bamboo"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [6.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact", "item": "minecraft:bamboo"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo_sapling"}                    }, 
+                { "pos": [2, 2, 0], "is": {"id": "minecraft:bamboo_sapling"}                    }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:bamboo_sapling"}                    }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:bamboo_sapling"}                    }, 
+                {                   "is": "empty"                           , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_stacking_on_sapling", 
+    "description": "The bamboo item placed on a bamboo sapling creates an age-zero bamboo stalk above it, and the sapling is converted into a bamboo stalk.", 
+    "tags": ["vegetation", "bamboo", "bamboo-sapling", "placement", "player"], 
+    "minecraftIds": ["minecraft:bamboo", "minecraft:bamboo_sapling", "minecraft:dirt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 5, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 5, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:bamboo_sapling"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo_sapling"} }
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:bamboo"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo", "age": 0, "leaves": "none", "stage": 0} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:bamboo", "age": 0, "leaves": "none", "stage": 0} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                              
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

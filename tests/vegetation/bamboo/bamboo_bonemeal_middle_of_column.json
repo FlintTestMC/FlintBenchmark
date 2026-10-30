@@ -1,0 +1,72 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_bonemeal_middle_of_column", 
+    "description": "Bone meal used on the middle stalk of a bamboo column grows new stalks at the top of the column, shifts the leaf sizes down the column and turns every stalk thick (age 1).", 
+    "tags": ["vegetation", "bamboo", "bone-meal", "growth", "age", "player"], 
+    "minecraftIds": ["minecraft:bamboo", "minecraft:dirt", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -2], [1, 7, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -2], [1, 7, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, -2], [0, 7, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 2, 0], 
+            "block": {"id": "minecraft:bamboo", "age": 0, "leaves": "none", "stage": 0}
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 3, 0], 
+            "block": {"id": "minecraft:bamboo", "age": 0, "leaves": "large", "stage": 0}
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 4, 0], 
+            "block": {"id": "minecraft:bamboo", "age": 0, "leaves": "none", "stage": 0}
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 1.88, -1.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:bone_meal"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 9, -1.5] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo", "age": 1, "leaves": "none"} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:bamboo", "age": 1, "leaves": "small"} }, 
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:bamboo", "age": 1, "leaves": "none"} }, 
+                { "pos": [0, 5, 0], "is": {"id": "minecraft:bamboo", "age": 1, "leaves": "large", "stage": 0} }, 
+                {
+                    "pos": [0, 6, 0], 
+                    "is": [
+                        {"id": "minecraft:air"                                            }, 
+                        {"id": "minecraft:bamboo", "age": 1, "leaves": "small", "stage": 0}  
+                    ]
+                }, 
+                { "pos": [0, 7, 0], "is": {"id": "minecraft:air"} }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bamboo_stacking_on_stalk", 
+    "description": "The bamboo item placed on top of a bamboo stalk creates a new stalk that copies the lower stalk's age: thick (age 1) on a thick stalk, thin (age 0) on a thin one.", 
+    "tags": ["vegetation", "bamboo", "placement", "age", "player"], 
+    "minecraftIds": ["minecraft:bamboo", "minecraft:dirt", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, 0, -1], [5, 5, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-3, 0, -1], [5, 5, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [-3, 1, 0], [5, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"            } }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:dirt"            } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:bamboo", "age": 0} }, 
+                { "pos": [3, 2, 0], "block": {"id": "minecraft:bamboo", "age": 1} }, 
+                { "pos": [1, 3, 0], "block": {"id": "minecraft:stone"           } }, 
+                { "pos": [4, 3, 0], "block": {"id": "minecraft:stone"           } }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [-1.5, 1.88, 0.5], "rot": [-90, 0] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:bamboo"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 1.88, 0.5], "rot": [-90, 0] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:bamboo"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:bamboo", "age": 0} }                              , 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:bamboo", "age": 0, "leaves": "none", "stage": 0} }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:bamboo", "age": 1} }                              , 
+                { "pos": [3, 3, 0], "is": {"id": "minecraft:bamboo", "age": 1, "leaves": "none", "stage": 0} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                              
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
