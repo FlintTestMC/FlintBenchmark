@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "jungle_log_cocoa_support", 
+    "description": "A cocoa pod stays on a jungle log that is stripped with an axe, and disappears once the stripped log is removed.", 
+    "tags": ["world", "log", "jungle-log", "cocoa", "axe", "stripping", "support", "player"], 
+    "minecraftIds": ["minecraft:jungle_log", "minecraft:stripped_jungle_log", "minecraft:cocoa", "minecraft:iron_axe"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:iron_axe"} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:jungle_log", "axis": "y"                            } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:cocoa"     ,              "age": 2, "facing": "west"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:stripped_jungle_log", "axis": "y"}  }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:cocoa", "age": 2, "facing": "west"} }  
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

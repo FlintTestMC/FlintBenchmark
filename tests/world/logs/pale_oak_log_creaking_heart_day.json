@@ -1,0 +1,82 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "pale_oak_log_creaking_heart_day", 
+    "description": "In daytime a creaking heart becomes dormant only when pale oak logs with its own axis sit on both ends, including logs added after the heart, which update it exactly one tick later.", 
+    "tags": ["world", "log", "pale-oak-log", "creaking-heart", "block-state", "daytime", "player"], 
+    "minecraftIds": ["minecraft:pale_oak_log", "minecraft:oak_log", "minecraft:creaking_heart"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 5, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:creaking_heart"} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }, 
+        "world": {"time": "6000"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:pale_oak_log", "axis": "y"} }, 
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:pale_oak_log", "axis": "y"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:oak_log", "axis": "y"} }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:creaking_heart", "axis": "y"} }, 
+                { "pos": [4, 3, 0], "block": {"id": "minecraft:oak_log", "axis": "y"} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:pale_oak_log", "axis": "x"} }, 
+                { "pos": [6, 2, 0], "block": {"id": "minecraft:creaking_heart", "axis": "y"} }, 
+                { "pos": [6, 3, 0], "block": {"id": "minecraft:pale_oak_log", "axis": "x"} }, 
+                {
+                    "pos": [8, 2, 0], 
+                    "block": {"id": "minecraft:creaking_heart", "axis": "y", "creaking_heart_state": "uprooted"}
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [90, 39] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:creaking_heart", "creaking_heart_state": "uprooted"} }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:pale_oak_log", "axis": "y"} }, 
+                { "pos": [8, 3, 0], "block": {"id": "minecraft:pale_oak_log", "axis": "y"} }  
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:creaking_heart", "axis": "y", "creaking_heart_state": "dormant"}
+                }, 
+                {
+                    "pos": [4, 2, 0], 
+                    "is": {"id": "minecraft:creaking_heart", "axis": "y", "creaking_heart_state": "uprooted"}
+                }, 
+                {
+                    "pos": [6, 2, 0], 
+                    "is": {"id": "minecraft:creaking_heart", "axis": "y", "creaking_heart_state": "uprooted"}
+                }, 
+                {
+                    "pos": [8, 2, 0], 
+                    "is": {"id": "minecraft:creaking_heart", "axis": "y", "creaking_heart_state": "dormant"}
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

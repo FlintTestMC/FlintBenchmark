@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "oak_log_axe_stripping", 
+    "description": "An axe turns an oak log into a stripped oak log and keeps its axis, but not with a shield in the off-hand and not with a non-axe item.", 
+    "tags": ["world", "log", "oak-log", "axe", "stripping", "player"], 
+    "minecraftIds": [
+        "minecraft:oak_log"         , "minecraft:stripped_oak_log", "minecraft:iron_axe"        , 
+        "minecraft:shield"          , "minecraft:stick"           
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:iron_axe"} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:oak_log", "axis": "x"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:oak_log", "axis": "z"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:oak_log", "axis": "y"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {"at": 2, "do": "set_slot", "slot": "off_hand", "item": "minecraft:shield"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {"at": 3, "do": "set_slot", "slot": "off_hand"}, 
+        {"at": 3, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:stick"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:stripped_oak_log", "axis": "x"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_log"         , "axis": "z"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:oak_log"         , "axis": "y"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

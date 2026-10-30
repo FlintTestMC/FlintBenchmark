@@ -1,0 +1,65 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "natural_logs_axe_stripping_mappings", 
+    "description": "An axe turns each of spruce, birch, acacia, dark oak, mangrove and cherry logs into its own stripped log and keeps the axis.", 
+    "tags": ["world", "log", "axe", "stripping", "player"], 
+    "minecraftIds": [
+        "minecraft:spruce_log"           , "minecraft:birch_log"            , "minecraft:acacia_log"           , 
+        "minecraft:dark_oak_log"         , "minecraft:mangrove_log"         , "minecraft:cherry_log"           , 
+        "minecraft:stripped_spruce_log"  , "minecraft:stripped_birch_log"   , "minecraft:stripped_acacia_log"  , 
+        "minecraft:stripped_dark_oak_log", "minecraft:stripped_mangrove_log", "minecraft:stripped_cherry_log"  , 
+        "minecraft:iron_axe"             
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [11, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:iron_axe"} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:spruce_log"  , "axis": "x"} }, 
+                { "pos": [ 2, 1, 0], "block": {"id": "minecraft:birch_log"   , "axis": "y"} }, 
+                { "pos": [ 4, 1, 0], "block": {"id": "minecraft:acacia_log"  , "axis": "z"} }, 
+                { "pos": [ 6, 1, 0], "block": {"id": "minecraft:dark_oak_log", "axis": "x"} }, 
+                { "pos": [ 8, 1, 0], "block": {"id": "minecraft:mangrove_log", "axis": "y"} }, 
+                { "pos": [10, 1, 0], "block": {"id": "minecraft:cherry_log"  , "axis": "z"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [6.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [8.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [10.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1, 0], "is": {"id": "minecraft:stripped_spruce_log"  , "axis": "x"} }, 
+                { "pos": [ 2, 1, 0], "is": {"id": "minecraft:stripped_birch_log"   , "axis": "y"} }, 
+                { "pos": [ 4, 1, 0], "is": {"id": "minecraft:stripped_acacia_log"  , "axis": "z"} }, 
+                { "pos": [ 6, 1, 0], "is": {"id": "minecraft:stripped_dark_oak_log", "axis": "x"} }, 
+                { "pos": [ 8, 1, 0], "is": {"id": "minecraft:stripped_mangrove_log", "axis": "y"} }, 
+                { "pos": [10, 1, 0], "is": {"id": "minecraft:stripped_cherry_log"  , "axis": "z"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
