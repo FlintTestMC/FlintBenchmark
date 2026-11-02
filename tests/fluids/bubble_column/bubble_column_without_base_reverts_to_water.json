@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bubble_column_without_base_reverts_to_water", 
+    "description": "A bubble column placed on stone (not soul sand, magma or a column) stays for 4 ticks and is replaced by a water source on the 5th tick: updateColumn -> getColumnState returns Blocks.WATER (BubbleColumnBlock line 119). Source path: /setblock placement (BlockInput.place -> Block.updateFromNeighbourShapes) calls BubbleColumnBlock.updateShape (lines 161-179) for every direction; for DOWN it runs scheduleTick(pos, this, 5) (line 175), so tick() (lines 67-70) runs updateColumn exactly 5 ticks after placement.", 
+    "tags": ["fluids", "bubble_column", "support"], 
+    "minecraftIds": ["minecraft:bubble_column", "minecraft:stone", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 4, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 3, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [1, 1, 1], [1, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:bubble_column", "drag": false} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 1], "is": {"id": "minecraft:stone"            } }, 
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:water", "level": 0} }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:air"              } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

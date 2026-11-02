@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bubble_column_forms_in_existing_water_shaft", 
+    "description": "Placing soul sand under an existing shaft of water sources turns every source in the shaft into an upward bubble column.", 
+    "tags": ["fluids", "bubble_column", "soul_sand"], 
+    "minecraftIds": ["minecraft:bubble_column", "minecraft:soul_sand", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 5, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 4, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [1, 1, 1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [1, 1, 1], [1, 3, 1] ], 
+            "with": {"id": "minecraft:water", "level": 0}
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:water"} }, 
+                { "pos": [1, 3, 1], "is": {"id": "minecraft:water"} }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [1, 0, 1], "block": {"id": "minecraft:soul_sand"} }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 1], "is": {"id": "minecraft:soul_sand"                   } }, 
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }, 
+                { "pos": [1, 3, 1], "is": {"id": "minecraft:bubble_column", "drag": false} }, 
+                { "pos": [1, 4, 1], "is": {"id": "minecraft:air"                         } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
