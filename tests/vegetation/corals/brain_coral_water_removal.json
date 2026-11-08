@@ -20,8 +20,8 @@
         }, 
         { "at": 0, "do": "remove", "pos": [0, 1, 0] }, 
         { "at": 0, "do": "remove", "pos": [1, 1, 0] }, 
-        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brain_coral", "waterlogged": false} }, 
         { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:brain_coral", "waterlogged": false} }, 
         {
             "at": 20, 
             "do": "assert", 
