@@ -56,17 +56,17 @@
             ]
         }, 
         { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
-        {"at": 1, "do": "interact"}, 
-        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [3.5, 4, 0.5], "rot": [0, 90] }, 
         {"at": 2, "do": "interact"}, 
-        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [6.5, 4, 0.5], "rot": [0, 90] }, 
-        {"at": 3, "do": "interact"}, 
-        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [9.5, 4, 0.5], "rot": [0, 90] }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [3.5, 4, 0.5], "rot": [0, 90] }, 
         {"at": 4, "do": "interact"}, 
-        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [12.5, 4, 0.5], "rot": [0, 90] }, 
-        {"at": 5, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [6.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [9.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 8, "do": "interact"}, 
+        { "at": 9, "do": "tp", "entity_alias": "player", "pos": [12.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 10, "do": "interact"}, 
         {
-            "at": 6, 
+            "at": 11, 
             "do": "assert", 
             "checks": [
                 {

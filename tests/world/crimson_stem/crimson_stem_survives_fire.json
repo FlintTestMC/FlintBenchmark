@@ -9,8 +9,13 @@
     "setup": {
         "cleanup": {
             "region": [ [0, 0, -1], [6, 2, 1] ]
+        },
+        "world": {
+            "gamerules": {
+                "minecraft:fire_spread_radius_around_player": -1
+            }
         }
-    }, 
+    },
     "timeline": [
         {
             "at": 0, 

@@ -11,7 +11,7 @@
     "dependencies": [], 
     "setup": {
         "cleanup": {
-            "region": [ [0, 0, 0], [12, 2, 0] ]
+            "region": [ [0, 0, -2], [12, 2, 2] ]
         }
     }, 
     "timeline": [
