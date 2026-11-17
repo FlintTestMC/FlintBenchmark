@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "grindstone_ceiling_placement_facing", 
+    "description": "A survival player looking straight up at the underside of a block places a face=ceiling grindstone whose facing is the player's horizontal direction, consuming one item each time.", 
+    "tags": ["grindstone", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:grindstone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:grindstone", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 3, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, -90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [4.5, 0, 0.5], "rot": [90, -90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:grindstone", "face": "ceiling", "facing": "south"} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:grindstone", "face": "ceiling", "facing": "west"} } , 
+                {"slot": "hotbar1", "is": "empty"}                                                                
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

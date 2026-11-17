@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "big_dripleaf_redstone_resets_tilt", 
+    "description": "Big dripleaves set to tilt full, partial or unstable, with no tick scheduled, keep their tilt until a redstone block is placed next to them. Each one then resets to tilt none, and unpowered leaves are unaffected.", 
+    "tags": ["vegetation", "big-dripleaf", "redstone", "tilt", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:big_dripleaf", "minecraft:redstone_block", "minecraft:dirt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"} }, 
+                { "pos": [0, 0, 2], "block": {"id": "minecraft:dirt"} }, 
+                { "pos": [0, 0, 4], "block": {"id": "minecraft:dirt"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "full"    } }, 
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "partial" } }, 
+                { "pos": [0, 1, 4], "block": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "unstable"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "full"    } }, 
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "partial" } }, 
+                { "pos": [0, 1, 4], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "unstable"} }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "none"    } }, 
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "partial" } }, 
+                { "pos": [0, 1, 4], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "unstable"} }  
+            ]
+        }, 
+        { "at": 6, "do": "place", "pos": [1, 1, 2], "block": {"id": "minecraft:redstone_block"} }, 
+        { "at": 6, "do": "place", "pos": [1, 1, 4], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "none"} }, 
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "none"} }, 
+                { "pos": [0, 1, 4], "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "none"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

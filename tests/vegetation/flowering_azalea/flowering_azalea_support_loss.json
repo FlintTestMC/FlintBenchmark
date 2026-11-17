@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "flowering_azalea_support_loss", 
+    "description": "A flowering azalea on grass block or clay becomes air once the block beneath it is removed.", 
+    "tags": ["vegetation", "flowering-azalea", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:flowering_azalea", "minecraft:grass_block", "minecraft:clay"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [6, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [6, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [4, 1, 0], [5, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:grass_block"     } }, 
+                { "pos": [5, 0, 0], "block": {"id": "minecraft:clay"            } }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:flowering_azalea"} }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:flowering_azalea"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:flowering_azalea"} }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:flowering_azalea"} }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [4, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [5, 0, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [5, 0, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:air"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

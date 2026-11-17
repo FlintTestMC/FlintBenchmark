@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "flint_and_steel_dispenser_lights_candle", 
+    "description": "A powered dispenser holding flint and steel lights an unlit candle in front of it instead of placing fire.", 
+    "tags": ["item", "flint-and-steel", "dispenser", "redstone"], 
+    "minecraftIds": [
+        "minecraft:flint_and_steel", "minecraft:dispenser"      , "minecraft:redstone_block" , 
+        "minecraft:candle"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [1, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [1, 1, 0], 
+                    "block": {"id": "minecraft:candle", "candles": 1, "lit": false, "waterlogged": false}
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:flint_and_steel\"}]"}
+                    }
+                }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 1, 0], 
+                    "is": {"id": "minecraft:candle", "candles": 1, "lit": true, "waterlogged": false}
+                }, 
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

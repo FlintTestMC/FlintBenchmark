@@ -1,0 +1,68 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "crimson_fungus_placement_rejected_on_invalid_support", 
+    "description": "Crimson fungus items used on stone, netherrack, soul sand and sand place nothing and are not consumed, because none of them supports a fungus.", 
+    "tags": ["vegetation", "crimson_fungus", "placement", "player"], 
+    "minecraftIds": [
+        "minecraft:crimson_fungus", "minecraft:stone"         , "minecraft:netherrack"    , "minecraft:soul_sand"     , 
+        "minecraft:sand"          
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:crimson_fungus", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [3, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"     } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:netherrack"} }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:soul_sand" } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:sand"      } }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 7, "do": "interact"}, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [3.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 8, "do": "interact"}, 
+        { "at": 9, "do": "tp", "entity_alias": "player", "pos": [1.5, 6, 0.5] }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"                       }                    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"                       }                    }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                       }                    }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:air"                       }                    }, 
+                {                   "is": {"id": "minecraft:crimson_fungus", "count": 4}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

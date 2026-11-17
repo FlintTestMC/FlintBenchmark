@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "grindstone_survives_support_removal", 
+    "description": "Wall, floor and ceiling grindstones stay in place with their state unchanged after the block they are attached to is removed, because canSurvive always returns true.", 
+    "tags": ["grindstone", "block-state", "support"], 
+    "minecraftIds": ["minecraft:grindstone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [8, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [8, 3, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:grindstone", "face": "wall"   , "facing": "north"} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:grindstone", "face": "floor"  , "facing": "east" } }, 
+                { "pos": [8, 2, 0], "block": {"id": "minecraft:grindstone", "face": "ceiling", "facing": "west" } }  
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 1, 1] }, 
+        { "at": 2, "do": "remove", "pos": [4, 0, 0] }, 
+        { "at": 2, "do": "remove", "pos": [8, 3, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 1], "is": {"id": "minecraft:air"                                             } }, 
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:air"                                             } }, 
+                { "pos": [8, 3, 0], "is": {"id": "minecraft:air"                                             } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:grindstone", "face": "wall"   , "facing": "north"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:grindstone", "face": "floor"  , "facing": "east" } }, 
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:grindstone", "face": "ceiling", "facing": "west" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "axe_wax_off_golem_statue", 
+    "description": "Using an axe on a waxed copper golem statue removes the wax (the waxed statue passes axes through to AxeItem) instead of freeing the golem, keeping facing and pose.", 
+    "tags": ["item", "axe", "interaction", "player", "copper", "statue", "wax-off"], 
+    "minecraftIds": ["minecraft:golden_axe", "minecraft:waxed_copper_golem_statue", "minecraft:copper_golem_statue"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:golden_axe", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:waxed_copper_golem_statue", 
+                "facing": "north", 
+                "copper_golem_pose": "star", 
+                "waterlogged": false
+            }
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {"id": "minecraft:copper_golem_statue", "facing": "north", "copper_golem_pose": "star"}
+                }, 
+                {"is": "minecraft:copper_golem", "exists": false}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

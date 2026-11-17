@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "jukebox_hopper_extracts_idle_disc", 
+    "description": "A hopper below a jukebox that holds a disc without playing it pulls the disc out: has_record becomes false and the hopper holds the disc.", 
+    "tags": ["jukebox", "hopper", "music-disc", "container", "block-entity", "item-transfer"], 
+    "minecraftIds": ["minecraft:jukebox", "minecraft:hopper", "minecraft:music_disc_cat", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 2, 0], 
+            "block": {
+                "id": "minecraft:jukebox", 
+                "has_record": true, 
+                "nbt": {"RecordItem": "{id: \"minecraft:music_disc_cat\", count: 1}"}
+            }
+        }, 
+        {
+            "at": 2, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": { "id": "minecraft:hopper", "facing": "down", "nbt": {"TransferCooldown": 0} }
+        }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:jukebox", "has_record": false} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:hopper", 
+                        "nbt": {"Items[0].id": "minecraft:music_disc_cat", "Items[0].count": 1}
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

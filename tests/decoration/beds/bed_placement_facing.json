@@ -1,0 +1,86 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bed_placement_facing", 
+    "description": "A survival player placing a bed creates a foot at the clicked spot and a head one block ahead in the player's facing direction, consuming the item.", 
+    "tags": ["decoration", "bed", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:red_bed"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [8, 3, 8] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:red_bed"} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [5, 0, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [1, 0, 6], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [5, 0, 6], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [1.5, 3, 1.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 1, 1], 
+                    "is": {"id": "minecraft:red_bed", "facing": "south", "part": "foot", "occupied": false}
+                }, 
+                {
+                    "pos": [1, 1, 2], 
+                    "is": {"id": "minecraft:red_bed", "facing": "south", "part": "head", "occupied": false}
+                }, 
+                {"is": "empty", "slot": "hotbar1"}
+            ]
+        }, 
+        {"at": 2, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:red_bed"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [5.5, 3, 1.5], "rot": [90, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [5, 1, 1], "is": {"id": "minecraft:red_bed", "facing": "west", "part": "foot"} }, 
+                { "pos": [4, 1, 1], "is": {"id": "minecraft:red_bed", "facing": "west", "part": "head"} }, 
+                {"is": "empty", "slot": "hotbar1"}                                                         
+            ]
+        }, 
+        {"at": 4, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:red_bed"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [1.5, 3, 6.5], "rot": [180, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 6], "is": {"id": "minecraft:red_bed", "facing": "north", "part": "foot"} }, 
+                { "pos": [1, 1, 5], "is": {"id": "minecraft:red_bed", "facing": "north", "part": "head"} }, 
+                {"is": "empty", "slot": "hotbar1"}                                                          
+            ]
+        }, 
+        {"at": 6, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:red_bed"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [5.5, 3, 6.5], "rot": [-90, 90] }, 
+        {"at": 7, "do": "interact"}, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [5, 1, 6], "is": {"id": "minecraft:red_bed", "facing": "east", "part": "foot"} }, 
+                { "pos": [6, 1, 6], "is": {"id": "minecraft:red_bed", "facing": "east", "part": "head"} }, 
+                {"is": "empty", "slot": "hotbar1"}                                                         
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

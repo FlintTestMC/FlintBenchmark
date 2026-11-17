@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "fire_charge_tnt_primes", 
+    "description": "With tnt_explodes enabled, using a fire charge on TNT replaces the block with air, spawns a primed TNT entity and consumes one charge (TntBlock.useItemOn). The player moves to a stone platform away from the blast, and the entity is gone after the fuse runs out and the obsidian floor survives.", 
+    "tags": ["item", "fire_charge", "tnt", "ignite", "gamerule", "player"], 
+    "minecraftIds": ["minecraft:fire_charge", "minecraft:tnt", "minecraft:obsidian"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 12] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:fire_charge", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs"     : false, 
+                "minecraft:advance_time"   : false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:tnt_explodes"   : true   
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0,  0], "block": {"id": "minecraft:obsidian"} }, 
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:tnt"     } }, 
+                { "pos": [0, 0, 12], "block": {"id": "minecraft:stone"   } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 12.5], "rot": [0, 90] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }                     , 
+                {"is": "minecraft:tnt", "exists": true, "count": 1}                     , 
+                { "slot": "hotbar1", "is": {"id": "minecraft:fire_charge", "count": 1} }  
+            ]
+        }, 
+        {
+            "at": 100, 
+            "do": "assert", 
+            "checks": [
+                { "is": "minecraft:tnt"             , "exists": false                   }, 
+                { "is": {"id": "minecraft:obsidian"},                  "pos": [0, 0, 0] }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

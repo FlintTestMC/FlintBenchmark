@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "grindstone_floor_placement_facing", 
+    "description": "A survival player looking straight down at the top of a block places a face=floor grindstone whose facing is the player's horizontal direction (yaw 0 = south, 90 = west, 180 = north, -90 = east), consuming one item each time.", 
+    "tags": ["grindstone", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:grindstone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [13, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:grindstone", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 4, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 8, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [12, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [4.5, 4, 0.5], "rot": [90, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [8.5, 4, 0.5], "rot": [180, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [12.5, 4, 0.5], "rot": [-90, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:grindstone", "face": "floor", "facing": "south"} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:grindstone", "face": "floor", "facing": "west"} } , 
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:grindstone", "face": "floor", "facing": "north"} }, 
+                { "pos": [12, 2, 0], "is": {"id": "minecraft:grindstone", "face": "floor", "facing": "east"} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                              
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

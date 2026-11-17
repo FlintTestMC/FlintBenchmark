@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "heavy_core_pushed_by_piston", 
+    "description": "A piston extending into a heavy core pushes it one block instead of destroying it.", 
+    "tags": ["decoration", "heavy_core", "piston", "push-reaction"], 
+    "minecraftIds": [
+        "minecraft:heavy_core"    , "minecraft:piston"        , "minecraft:piston_head"   , "minecraft:redstone_block", 
+        "minecraft:stone"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [3, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [3, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:piston"    , "facing": "east"                      } }, 
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:heavy_core",                   "waterlogged": false} }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [-1, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:piston", "extended": true, "facing": "east"} }, 
+                { "pos": [0, 1, 0] , "is": {"id": "minecraft:piston_head", "facing": "east"}              }, 
+                { "pos": [1, 1, 0] , "is": {"id": "minecraft:heavy_core", "waterlogged": false}           }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

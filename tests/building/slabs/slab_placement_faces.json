@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "slab_placement_faces", 
+    "description": "A slab placed on a block's top face is a bottom slab, on its bottom face a top slab, and on a side face it is bottom or top depending on which half of the face was clicked.", 
+    "tags": ["building", "slab", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:oak_slab"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [10, 3, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:oak_slab", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Creative"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [3, 2, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [9, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [3.5, -2, 0.5], "rot": [0, -90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [6.5, -0.42, -3.5], "rot": [0, 0] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [9.5, 0.18, -3.5], "rot": [0, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1,  0], "is": {"id": "minecraft:oak_slab", "type": "bottom", "waterlogged": false} }, 
+                { "pos": [3, 1,  0], "is": {"id": "minecraft:oak_slab", "type": "top"   , "waterlogged": false} }, 
+                { "pos": [6, 1, -1], "is": {"id": "minecraft:oak_slab", "type": "bottom", "waterlogged": false} }, 
+                { "pos": [9, 1, -1], "is": {"id": "minecraft:oak_slab", "type": "top"   , "waterlogged": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

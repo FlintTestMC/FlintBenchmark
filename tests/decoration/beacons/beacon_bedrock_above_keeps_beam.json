@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "beacon_bedrock_above_keeps_beam", 
+    "description": "Bedrock above a beacon does not block the beam, so the pyramid level is reached.", 
+    "tags": ["decoration", "beacon", "levels", "beam"], 
+    "minecraftIds": ["minecraft:beacon"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-4, 0, -4], [4, 6, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 3, -1], [1, 3, 1] ], 
+            "with": {"id": "minecraft:iron_block"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 5, 0], "block": {"id": "minecraft:bedrock"} }, 
+        { "at": 0, "do": "place", "pos": [0, 4, 0], "block": {"id": "minecraft:beacon"} }, 
+        {
+            "at": 170, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 4, 0], 
+                    "is": { "id": "minecraft:beacon", "nbt": {"Levels": 1} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

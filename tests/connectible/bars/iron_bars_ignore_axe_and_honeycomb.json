@@ -1,0 +1,73 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "iron_bars_ignore_axe_and_honeycomb", 
+    "description": "Iron bars are not in any copper map: an axe does not scrape or unwax them and honeycomb does not wax them, and the honeycomb is not consumed.", 
+    "tags": ["connectible", "bars", "iron-bars", "axe", "honeycomb", "player"], 
+    "minecraftIds": ["minecraft:iron_bars", "minecraft:iron_axe", "minecraft:honeycomb"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": {
+                "hotbar1": {"id": "minecraft:iron_axe" , "count": 1}, 
+                "hotbar2": {"id": "minecraft:honeycomb", "count": 1}  
+            }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"    } }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:iron_bars"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "north"      : "false"              , 
+                        "south"      : "false"              , 
+                        "east"       : "false"              , 
+                        "west"       : "false"              , 
+                        "waterlogged": "false"                
+                    }
+                }
+            ]
+        }, 
+        {"at": 3, "do": "select_hotbar", "slot": 2}, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "north"      : "false"              , 
+                        "south"      : "false"              , 
+                        "east"       : "false"              , 
+                        "west"       : "false"              , 
+                        "waterlogged": "false"                
+                    }
+                }, 
+                { "slot": "hotbar2", "is": {"id": "minecraft:honeycomb", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

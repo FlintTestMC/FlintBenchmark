@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "crafting_table_sets_note_block_bass", 
+    "description": "A note block above a crafting table takes the bass instrument from the table's block properties, and returns to basedrum when the table below is replaced by stone.", 
+    "tags": ["decoration", "crafting_table", "note_block", "instrument", "block-update"], 
+    "minecraftIds": ["minecraft:crafting_table", "minecraft:note_block", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:note_block", "instrument": "harp", "note": 0, "powered": false}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:crafting_table"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:note_block", "instrument": "bass", "note": 0, "powered": false}
+                }
+            ]
+        }, 
+        { "at": 4, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:note_block", "instrument": "basedrum", "note": 0, "powered": false}
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

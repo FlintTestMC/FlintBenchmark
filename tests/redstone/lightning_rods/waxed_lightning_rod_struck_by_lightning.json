@@ -1,0 +1,76 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_lightning_rod_struck_by_lightning", 
+    "description": "A lightning bolt striking a waxed lightning rod powers it and powers a lamp beside it, the rod stays waxed (waxed copper is not reset by lightning), and the rod turns unpowered again after the 8 tick pulse.", 
+    "tags": ["redstone", "lightning-rod", "waxed", "lightning", "powered", "scheduled-tick"], 
+    "minecraftIds": ["minecraft:waxed_lightning_rod", "minecraft:lightning_bolt", "minecraft:redstone_lamp"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+                {
+                    "pos": [0, 0, 0], 
+                    "block": {
+                        "id": "minecraft:waxed_lightning_rod", 
+                        "facing": "up", 
+                        "powered": false, 
+                        "waterlogged": false
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_lightning_rod", "powered": false              } }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:redstone_lamp"      ,                   "lit": false} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "bolt", 
+            "entity_type": "minecraft:lightning_bolt", 
+            "pos": [0.5, 1, 0.5]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {"id": "minecraft:waxed_lightning_rod", "facing": "up", "powered": true, "waterlogged": false}
+                }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:redstone_lamp", "lit": true} }
+            ]
+        }, 
+        {
+            "at": 25, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:waxed_lightning_rod", 
+                        "facing": "up", 
+                        "powered": false, 
+                        "waterlogged": false
+                    }
+                }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:redstone_lamp", "lit": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

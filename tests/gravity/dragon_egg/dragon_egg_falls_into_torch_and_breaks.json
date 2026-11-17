@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "dragon_egg_falls_into_torch_and_breaks", 
+    "description": "A falling dragon egg passes through the collisionless torch (Blocks.TORCH is noCollision) and reaches the obsidian floor inside the torch's cell. FallingBlockEntity then finds that the torch cannot be replaced, so the egg does not become a block: it is discarded and drops one dragon egg item. The torch stays. The floor is wide so the dropped item (random sideways velocity) cannot slide off it.", 
+    "tags": ["gravity", "dragon-egg", "falling", "torch", "drops"], 
+    "minecraftIds": ["minecraft:dragon_egg", "minecraft:torch", "minecraft:obsidian"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, 0, -3], [3, 4, 3] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs"     : false, 
+                "minecraft:advance_time"   : false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:entity_drops"   : true   
+            }
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [10.5, 1, 10.5] }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-3, 0, -3], [3, 0, 3] ], 
+            "with": {"id": "minecraft:obsidian"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:torch"} }, 
+        { "at": 1, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:dragon_egg"} }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:torch"} }                                  , 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"} }                                    , 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"} }                                    , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:dragon_egg"}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

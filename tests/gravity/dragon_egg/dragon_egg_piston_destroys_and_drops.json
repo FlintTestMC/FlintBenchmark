@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "dragon_egg_piston_destroys_and_drops", 
+    "description": "A piston pushing a dragon egg destroys it (PushReaction.DESTROY) instead of moving it, and the egg drops exactly one dragon egg item.", 
+    "tags": ["gravity", "dragon-egg", "piston", "drops"], 
+    "minecraftIds": ["minecraft:dragon_egg", "minecraft:piston", "minecraft:redstone_block", "minecraft:obsidian"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, 0, -3], [4, 4, 3] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-3, 0, -3], [4, 0, 3] ], 
+            "with": {"id": "minecraft:obsidian"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston"    , "facing": "up", "extended": "false"} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:dragon_egg"                                     } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:dragon_egg"} }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "extended": "true"} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:piston_head"} }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"} }, 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:dragon_egg", "Item.count": 1}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

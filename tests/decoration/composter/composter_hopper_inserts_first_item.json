@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "composter_hopper_inserts_first_item", 
+    "description": "A hopper above an empty composter feeds it through the top face: the first seed always composts, raising it to level 1 and removing one seed from the hopper.", 
+    "tags": ["composter", "hopper", "block-entity", "insertion"], 
+    "minecraftIds": ["minecraft:composter", "minecraft:hopper", "minecraft:wheat_seeds", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:composter", "level": 0} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 2, id: \"minecraft:wheat_seeds\"}]", "TransferCooldown": 0}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 1} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 1} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

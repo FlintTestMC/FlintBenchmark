@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "honeycomb_keeps_weathering_stage", 
+    "description": "Using honeycomb on weathered cut copper gives waxed weathered cut copper, so the weathering stage is kept.", 
+    "tags": ["item", "honeycomb", "waxing", "interaction"], 
+    "minecraftIds": ["minecraft:honeycomb", "minecraft:weathered_cut_copper", "minecraft:waxed_weathered_cut_copper"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:honeycomb", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"               } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:weathered_cut_copper"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:waxed_weathered_cut_copper"}                    }, 
+                {                   "is": {"id": "minecraft:honeycomb", "count": 1}     , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_torch_on_wall_and_fence_posts", 
+    "description": "A copper torch can be placed on top of a cobblestone wall post and an oak fence post, which are not full blocks but still support the torch's center, and it stays there.", 
+    "tags": ["decoration", "copper_torch", "support", "placement", "player"], 
+    "minecraftIds": ["minecraft:copper_torch", "minecraft:cobblestone_wall", "minecraft:oak_fence"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:copper_torch", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:cobblestone_wall"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:oak_fence"       } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [3.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:copper_torch"            }                    }, 
+                { "pos": [3, 2, 0], "is": {"id": "minecraft:copper_torch"            }                    }, 
+                {                   "is": {"id": "minecraft:air"         , "count": 0}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

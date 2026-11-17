@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "glass_bottle_dispenser_beehive_not_full", 
+    "description": "A powered dispenser facing a beehive below honey level 5 does not fill the glass bottle: it shoots the bottle out as an item and the hive keeps its honey level.", 
+    "tags": ["glass-bottle", "dispenser", "beehive", "edge-case", "redstone"], 
+    "minecraftIds": ["minecraft:glass_bottle", "minecraft:dispenser", "minecraft:beehive", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [3, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {
+                "id": "minecraft:dispenser", 
+                "facing": "east", 
+                "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:glass_bottle\"}]"}
+            }
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [1, 1, 0], 
+            "block": {"id": "minecraft:beehive", "honey_level": 4, "facing": "east"}
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 1, 1], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:dispenser", "nbt": {"Items": "[]"} }
+                }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:beehive", "honey_level": 4, "facing": "east"} }, 
+                {"is": "minecraft:item", "exists": true, "count": 1}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_lightning_rod_honeycomb_does_nothing", 
+    "description": "Using honeycomb on an already waxed lightning rod does nothing: the rod is unchanged and the honeycomb is not consumed.", 
+    "tags": ["redstone", "lightning-rod", "waxed", "honeycomb", "player"], 
+    "minecraftIds": ["minecraft:waxed_lightning_rod", "minecraft:honeycomb"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:honeycomb", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:waxed_lightning_rod", 
+                        "facing": "up", 
+                        "powered": false, 
+                        "waterlogged": false
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:waxed_lightning_rod", 
+                        "facing": "up", 
+                        "powered": false, 
+                        "waterlogged": false
+                    }
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:honeycomb", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

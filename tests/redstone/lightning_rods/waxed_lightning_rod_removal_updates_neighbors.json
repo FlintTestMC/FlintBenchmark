@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_lightning_rod_removal_updates_neighbors", 
+    "description": "Removing a powered lightning rod updates the block it stood on: a lamp that only touches that block, and was lit through the rod's strong power, goes out after the lamp's 4 tick delay. Nothing else would update the lamp, because the cancelled reset tick never runs.", 
+    "tags": ["redstone", "lightning-rod", "waxed", "signal", "strong-power", "removal"], 
+    "minecraftIds": ["minecraft:waxed_lightning_rod", "minecraft:redstone_lamp", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, 0], [0, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, -1, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:waxed_lightning_rod", 
+                        "facing": "up", 
+                        "powered": true, 
+                        "waterlogged": false
+                    }
+                }
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, -1, 0], "is": {"id": "minecraft:redstone_lamp", "lit": true} }
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0,  1, 0], "is": {"id": "minecraft:air"                        } }, 
+                { "pos": [0, -1, 0], "is": {"id": "minecraft:redstone_lamp", "lit": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

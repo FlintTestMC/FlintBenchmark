@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "big_dripleaf_place_on_leaf", 
+    "description": "Placing a big dripleaf on top of another leaf turns the lower leaf into a stem with the same facing, and the new leaf copies that facing instead of the player's look direction.", 
+    "tags": ["vegetation", "big-dripleaf", "placement", "player", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:big_dripleaf", "minecraft:big_dripleaf_stem", "minecraft:dirt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"                          } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "east", "tilt": "none"} }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:big_dripleaf"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "east", "waterlogged": false}
+                }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:big_dripleaf", "facing": "east", "tilt": "none", "waterlogged": false}
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

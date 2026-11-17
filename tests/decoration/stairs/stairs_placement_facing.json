@@ -1,0 +1,88 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "stairs_placement_facing", 
+    "description": "Survival placement on top of a block gives a stair the player's horizontal facing, bottom half, straight shape, no waterlogging, and consumes the items.", 
+    "tags": ["decoration", "stairs", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:stone_stairs"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [12, 3, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:stone_stairs", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 4, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 8, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [12, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [4.5, 4, 0.5], "rot": [90, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [8.5, 4, 0.5], "rot": [180, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [12.5, 4, 0.5], "rot": [-90, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:stone_stairs", 
+                        "facing": "south", 
+                        "half": "bottom", 
+                        "shape": "straight", 
+                        "waterlogged": false
+                    }
+                }, 
+                {
+                    "pos": [4, 2, 0], 
+                    "is": {
+                        "id": "minecraft:stone_stairs", 
+                        "facing": "west", 
+                        "half": "bottom", 
+                        "shape": "straight", 
+                        "waterlogged": false
+                    }
+                }, 
+                {
+                    "pos": [8, 2, 0], 
+                    "is": {
+                        "id": "minecraft:stone_stairs", 
+                        "facing": "north", 
+                        "half": "bottom", 
+                        "shape": "straight", 
+                        "waterlogged": false
+                    }
+                }, 
+                {
+                    "pos": [12, 2, 0], 
+                    "is": {
+                        "id": "minecraft:stone_stairs", 
+                        "facing": "east", 
+                        "half": "bottom", 
+                        "shape": "straight", 
+                        "waterlogged": false
+                    }
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

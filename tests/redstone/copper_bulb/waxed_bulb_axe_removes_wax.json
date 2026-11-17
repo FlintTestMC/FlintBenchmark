@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_bulb_axe_removes_wax", 
+    "description": "Using an axe on a lit, powered waxed copper bulb removes the wax, turning it into a copper bulb that keeps its lit and powered state.", 
+    "tags": ["copper-bulb", "waxed-copper-bulb", "axe", "wax-off", "interaction", "player"], 
+    "minecraftIds": [
+        "minecraft:waxed_copper_bulb", "minecraft:copper_bulb"      , "minecraft:iron_axe"         , 
+        "minecraft:redstone_block"   
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [2, 3, 3] ]
+        }, 
+        "player": {
+            "selected_hotbar": 1, 
+            "game_mode": "Survival", 
+            "inventory": { "hotbar1": {"id": "minecraft:iron_axe", "count": 1} }
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, -1, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:waxed_copper_bulb"} }, 
+                { "pos": [1, 1, 2], "block": {"id": "minecraft:redstone_block"   } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:copper_bulb", "lit": true, "powered": true} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

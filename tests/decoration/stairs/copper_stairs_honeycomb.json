@@ -1,0 +1,98 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_stairs_honeycomb", 
+    "description": "Honeycomb waxes each cut copper stair stage into its waxed variant and uses one honeycomb per stair, but does nothing to an already waxed stair.", 
+    "tags": ["decoration", "stairs", "copper", "wax", "player"], 
+    "minecraftIds": [
+        "minecraft:cut_copper_stairs"                , 
+        "minecraft:exposed_cut_copper_stairs"        , 
+        "minecraft:weathered_cut_copper_stairs"      , 
+        "minecraft:oxidized_cut_copper_stairs"       , 
+        "minecraft:waxed_cut_copper_stairs"          , 
+        "minecraft:waxed_exposed_cut_copper_stairs"  , 
+        "minecraft:waxed_weathered_cut_copper_stairs", 
+        "minecraft:waxed_oxidized_cut_copper_stairs" , 
+        "minecraft:honeycomb"                          
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [12, 3, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:honeycomb", "count": 5} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:cut_copper_stairs", "facing": "west", "half": "top"} }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [3, 2, 0], 
+                    "block": {"id": "minecraft:exposed_cut_copper_stairs", "facing": "west", "half": "top"}
+                }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [6, 2, 0], 
+                    "block": {"id": "minecraft:weathered_cut_copper_stairs", "facing": "west", "half": "top"}
+                }, 
+                { "pos": [9, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [9, 2, 0], 
+                    "block": {"id": "minecraft:oxidized_cut_copper_stairs", "facing": "west", "half": "top"}
+                }, 
+                { "pos": [12, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [12, 2, 0], 
+                    "block": {"id": "minecraft:waxed_cut_copper_stairs", "facing": "west", "half": "top"}
+                }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [3.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [6.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [9.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 8, "do": "interact"}, 
+        { "at": 9, "do": "tp", "entity_alias": "player", "pos": [12.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 10, "do": "interact"}, 
+        {
+            "at": 11, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:waxed_cut_copper_stairs", "facing": "west", "half": "top"}
+                }, 
+                {
+                    "pos": [3, 2, 0], 
+                    "is": {"id": "minecraft:waxed_exposed_cut_copper_stairs", "facing": "west", "half": "top"}
+                }, 
+                {
+                    "pos": [6, 2, 0], 
+                    "is": {"id": "minecraft:waxed_weathered_cut_copper_stairs", "facing": "west", "half": "top"}
+                }, 
+                {
+                    "pos": [9, 2, 0], 
+                    "is": {"id": "minecraft:waxed_oxidized_cut_copper_stairs", "facing": "west", "half": "top"}
+                }, 
+                {
+                    "pos": [12, 2, 0], 
+                    "is": {"id": "minecraft:waxed_cut_copper_stairs", "facing": "west", "half": "top"}
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:honeycomb", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

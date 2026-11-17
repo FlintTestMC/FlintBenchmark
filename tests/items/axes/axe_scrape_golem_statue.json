@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "axe_scrape_golem_statue", 
+    "description": "Using an axe on an oxidized copper golem statue does not free the golem (only unaffected statues do) and instead scrapes it to a weathered statue, keeping facing and pose.", 
+    "tags": ["item", "axe", "interaction", "player", "copper", "statue", "scrape"], 
+    "minecraftIds": [
+        "minecraft:golden_axe"                   , 
+        "minecraft:oxidized_copper_golem_statue" , 
+        "minecraft:weathered_copper_golem_statue"  
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:golden_axe", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:oxidized_copper_golem_statue", 
+                "facing": "north", 
+                "copper_golem_pose": "sitting", 
+                "waterlogged": false
+            }
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"               : "minecraft:weathered_copper_golem_statue", 
+                        "facing"           : "north"                                  , 
+                        "copper_golem_pose": "sitting"                                  
+                    }
+                }, 
+                {"is": "minecraft:copper_golem", "exists": false}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

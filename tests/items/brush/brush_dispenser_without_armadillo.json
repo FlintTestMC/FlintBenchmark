@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "brush_dispenser_without_armadillo", 
+    "description": "A powered dispenser holding a brush with no armadillo in front fires (triggered stays true), keeps the brush and does not brush the suspicious sand in front of it.", 
+    "tags": ["item", "brush", "dispenser", "suspicious-sand"], 
+    "minecraftIds": [
+        "minecraft:brush"          , "minecraft:dispenser"      , "minecraft:suspicious_sand", 
+        "minecraft:redstone_block" 
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:suspicious_sand"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, id: \"minecraft:brush\", count: 1}]"}
+                    }
+                }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:dispenser", 
+                        "nbt": {"Items[0].id": "minecraft:brush", "Items[0].count": 1}, 
+                        "triggered": true
+                    }
+                }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:suspicious_sand", "dusted": 0} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

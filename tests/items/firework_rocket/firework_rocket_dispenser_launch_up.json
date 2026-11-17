@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:firework_rocket", "minecraft:dispenser", "minecraft:redstone_block"], 
+    "name": "Firework Rocket Dispenser Launch Up", 
+    "description": "A powered dispenser facing up fires its firework rocket as an entity above itself and its inventory is emptied.", 
+    "tags": ["item", "firework-rocket", "dispenser", "redstone"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 4, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {
+                "id": "minecraft:dispenser", 
+                "facing": "up", 
+                "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:firework_rocket\"}]"}
+            }
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:dispenser", "nbt": {"Items": []} }
+                }, 
+                {
+                    "is": "minecraft:firework_rocket", 
+                    "exists": true, 
+                    "count": 1, 
+                    "pos": [0.5, 4, 0.5], 
+                    "position_tolerance": 1
+                }
+            ]
+        }
+    ]
+}
+

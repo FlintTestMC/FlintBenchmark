@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "flower_pot_fill_creative_keeps_item", 
+    "description": "Using an allium on an empty flower pot as a creative player turns it into a potted allium but does not consume the item, because ItemStack.consume skips players with infinite materials.", 
+    "tags": ["decoration", "flower-pot", "creative", "player"], 
+    "minecraftIds": ["minecraft:flower_pot", "minecraft:potted_allium", "minecraft:allium"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:allium", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Creative"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:flower_pot"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:potted_allium"            }                    }, 
+                {                   "is": {"id": "minecraft:allium"       , "count": 2}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "daylight_sensor_placed_by_player", 
+    "description": "A Survival player placing a daylight detector from the hotbar onto stone gets a normal detector, consumes the item, and the detector reaches full daytime power within one 20-tick update.", 
+    "tags": ["redstone", "daylight-sensor", "placement", "player"], 
+    "minecraftIds": ["minecraft:daylight_detector", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -1], [2, 3, 1] ]
+        }, 
+        "world": {"time": "6000"}, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:daylight_detector", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 105, "do": "place", "pos": [1, -1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 106, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 107, "do": "interact"}, 
+        {
+            "at": 109, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": false} }, 
+                {"is": "empty", "slot": "hotbar1"}                                                    
+            ]
+        }, 
+        {
+            "at": 135, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": false, "power": 15} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

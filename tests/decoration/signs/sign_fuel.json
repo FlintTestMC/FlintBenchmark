@@ -1,0 +1,75 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "sign_fuel", 
+    "description": "Oak signs and oak hanging signs burn as furnace fuel, while crimson signs and crimson hanging signs, which are non-flammable wood, do not.", 
+    "tags": ["decoration", "sign", "fuel", "furnace", "item"], 
+    "minecraftIds": [
+        "minecraft:oak_sign"            , "minecraft:oak_hanging_sign"    , "minecraft:crimson_sign"        , 
+        "minecraft:crimson_hanging_sign"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:furnace", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, id: \"minecraft:raw_iron\", count: 1}, {Slot: 1b, id: \"minecraft:oak_sign\", count: 1}]"
+                }
+            }
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [1, 0, 0], 
+            "block": {
+                "id": "minecraft:furnace", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, id: \"minecraft:raw_iron\", count: 1}, {Slot: 1b, id: \"minecraft:crimson_sign\", count: 1}]"
+                }
+            }
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [2, 0, 0], 
+            "block": {
+                "id": "minecraft:furnace", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, id: \"minecraft:raw_iron\", count: 1}, {Slot: 1b, id: \"minecraft:oak_hanging_sign\", count: 1}]"
+                }
+            }
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [3, 0, 0], 
+            "block": {
+                "id": "minecraft:furnace", 
+                "nbt": {
+                    "Items": "[{Slot: 0b, id: \"minecraft:raw_iron\", count: 1}, {Slot: 1b, id: \"minecraft:crimson_hanging_sign\", count: 1}]"
+                }
+            }
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:furnace", "lit": true } }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:furnace", "lit": false} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:furnace", "lit": true } }, 
+                { "pos": [3, 0, 0], "is": {"id": "minecraft:furnace", "lit": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

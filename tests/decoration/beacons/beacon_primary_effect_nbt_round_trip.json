@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "beacon_primary_effect_nbt_round_trip", 
+    "description": "A placed beacon keeps a valid primary effect in its block entity data.", 
+    "tags": ["decoration", "beacon", "nbt"], 
+    "minecraftIds": ["minecraft:beacon"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-4, 0, -4], [4, 6, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 3, -1], [1, 3, 1] ], 
+            "with": {"id": "minecraft:iron_block"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 4, 0], 
+            "block": { "id": "minecraft:beacon", "nbt": {"primary_effect": "minecraft:speed"} }
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 4, 0], 
+                    "is": { "id": "minecraft:beacon", "nbt": {"primary_effect": "minecraft:speed"} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

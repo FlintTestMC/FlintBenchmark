@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "fern_bonemeal_grows_large_fern", 
+    "description": "Bone meal on a fern with air above it replaces it with a two-block large fern, lower half in the fern's position and upper half above, and consumes the bone meal.", 
+    "tags": ["vegetation", "fern", "bone-meal", "large-fern", "player"], 
+    "minecraftIds": ["minecraft:fern", "minecraft:large_fern", "minecraft:grass_block", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [0, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+        { "at": 4, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:fern"} }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [0.5, 6, 0.5] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:large_fern", "half": "lower"}                    }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:large_fern", "half": "upper"}                    }, 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"}                                            }, 
+                {                   "is": "empty"                                        , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

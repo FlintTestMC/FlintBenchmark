@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "flowering_azalea_bonemeal_build_height_limit", 
+    "description": "Bone meal on a flowering azalea at y=313 is consumed, but at y=314 the check that the tree's height stays inside the build limit fails, so the azalea stays an azalea and the bone meal is not consumed.", 
+    "tags": ["vegetation", "flowering-azalea", "bone-meal", "build-height", "edge-case", "player"], 
+    "minecraftIds": ["minecraft:flowering_azalea", "minecraft:grass_block", "minecraft:bone_meal"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [3, 318, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [3, 318, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 312, 0], "block": {"id": "minecraft:grass_block"     } }, 
+                { "pos": [0, 313, 0], "block": {"id": "minecraft:flowering_azalea"} }, 
+                { "pos": [3, 313, 0], "block": {"id": "minecraft:grass_block"     } }, 
+                { "pos": [3, 314, 0], "block": {"id": "minecraft:flowering_azalea"} }  
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 314, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "slot": "hotbar1", "is": {"id": "minecraft:bone_meal", "count": 1} }
+            ]
+        }, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [3.5, 315, 0.5], "rot": [0, 90] }, 
+        {"at": 9, "do": "interact"}, 
+        {
+            "at": 11, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [3, 314, 0], "is": {"id": "minecraft:flowering_azalea"            }                    }, 
+                {                     "is": {"id": "minecraft:bone_meal"       , "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "dependencies": [], 
+    "breakpoints": []
+}
+

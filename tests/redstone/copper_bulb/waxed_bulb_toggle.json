@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_bulb_toggle", 
+    "description": "A waxed copper bulb starts unlit and unpowered, toggles lit when power turns on, keeps its lit state when power turns off, and toggles unlit on the next power-on.", 
+    "tags": ["redstone", "copper-bulb", "waxed-copper-bulb", "toggle", "power"], 
+    "minecraftIds": ["minecraft:waxed_copper_bulb", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [2, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:waxed_copper_bulb"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_copper_bulb", "lit": false, "powered": false} }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_copper_bulb", "lit": true, "powered": true} }
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [1, 0, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_copper_bulb", "lit": true, "powered": false} }
+            ]
+        }, 
+        { "at": 6, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_copper_bulb", "lit": false, "powered": true} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "potted_allium_destroyed_by_piston", 
+    "description": "A piston extending into a potted allium destroys it instead of pushing it, because the pot's push reaction is destroy, and the loot table drops exactly two items (the flower pot and the allium).", 
+    "tags": ["decoration", "flower-pot", "piston", "push-reaction", "drops", "redstone"], 
+    "minecraftIds": [
+        "minecraft:potted_allium" , "minecraft:piston"        , "minecraft:piston_head"   , "minecraft:redstone_block", 
+        "minecraft:item"          
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [2, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [1, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston"       , "facing": "up", "extended": false} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:potted_allium"                                   } }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:potted_allium"}                  }, 
+                {                   "is": "minecraft:item"                 , "exists": false }  
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "facing": "up", "extended": true} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:piston_head", "facing": "up"} }             , 
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:air"} }                                     , 
+                {"is": "minecraft:item", "exists": true, "count": 2}                                      
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

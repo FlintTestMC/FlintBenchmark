@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "daylight_sensor_toggle_to_normal", 
+    "description": "Right-clicking an inverted daylight detector at noon with an empty hand makes it normal again and immediately raises its power from 0 to 15.", 
+    "tags": ["redstone", "daylight-sensor", "player"], 
+    "minecraftIds": ["minecraft:daylight_detector"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -1], [2, 3, 1] ]
+        }, 
+        "world": {"time": "6000"}, 
+        "player": {"game_mode": "Creative"}
+    }, 
+    "timeline": [
+        {
+            "at": 105, 
+            "do": "place", 
+            "pos": [1, 0, 0], 
+            "block": {"id": "minecraft:daylight_detector", "inverted": true, "power": 0}
+        }, 
+        { "at": 106, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 107, "do": "interact"}, 
+        {
+            "at": 110, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": false, "power": 15} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

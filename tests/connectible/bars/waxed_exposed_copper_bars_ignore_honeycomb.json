@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "waxed_exposed_copper_bars_ignore_honeycomb", 
+    "description": "Using honeycomb on already waxed exposed copper bars does nothing and the honeycomb is not consumed.", 
+    "tags": ["connectible", "bars", "copper-bars", "waxed", "honeycomb", "player"], 
+    "minecraftIds": ["minecraft:waxed_exposed_copper_bars", "minecraft:honeycomb"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [2, 4, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:honeycomb", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:waxed_exposed_copper_bars"} }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 2, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 2, 1], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id"         : "minecraft:waxed_exposed_copper_bars", 
+                        "north"      : "false"                              , 
+                        "south"      : "true"                               , 
+                        "east"       : "false"                              , 
+                        "west"       : "true"                               , 
+                        "waterlogged": "false"                                
+                    }
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:honeycomb", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,65 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cauldron_comparator_output", 
+    "description": "A comparator reads 0 from an empty cauldron, the fill level from water and powder snow cauldrons, and 3 from a lava cauldron.", 
+    "tags": ["decoration", "cauldron", "comparator", "redstone", "analog-output"], 
+    "minecraftIds": [
+        "minecraft:cauldron"            , "minecraft:water_cauldron"      , "minecraft:lava_cauldron"       , 
+        "minecraft:powder_snow_cauldron", "minecraft:comparator"          , "minecraft:redstone_wire"       
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 2, 9] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 0, 9] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:cauldron"                                          } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:comparator"          , "facing": "west"            } }, 
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:water_cauldron"      ,                   "level": 1} }, 
+                { "pos": [1, 1, 2], "block": {"id": "minecraft:comparator"          , "facing": "west"            } }, 
+                { "pos": [0, 1, 4], "block": {"id": "minecraft:water_cauldron"      ,                   "level": 3} }, 
+                { "pos": [1, 1, 4], "block": {"id": "minecraft:comparator"          , "facing": "west"            } }, 
+                { "pos": [0, 1, 6], "block": {"id": "minecraft:lava_cauldron"                                     } }, 
+                { "pos": [1, 1, 6], "block": {"id": "minecraft:comparator"          , "facing": "west"            } }, 
+                { "pos": [0, 1, 8], "block": {"id": "minecraft:powder_snow_cauldron",                   "level": 2} }, 
+                { "pos": [1, 1, 8], "block": {"id": "minecraft:comparator"          , "facing": "west"            } }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:redstone_wire"} }, 
+                { "pos": [2, 1, 2], "block": {"id": "minecraft:redstone_wire"} }, 
+                { "pos": [2, 1, 4], "block": {"id": "minecraft:redstone_wire"} }, 
+                { "pos": [2, 1, 6], "block": {"id": "minecraft:redstone_wire"} }, 
+                { "pos": [2, 1, 8], "block": {"id": "minecraft:redstone_wire"} }  
+            ]
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:redstone_wire", "power": 0} }, 
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:redstone_wire", "power": 1} }, 
+                { "pos": [2, 1, 4], "is": {"id": "minecraft:redstone_wire", "power": 3} }, 
+                { "pos": [2, 1, 6], "is": {"id": "minecraft:redstone_wire", "power": 3} }, 
+                { "pos": [2, 1, 8], "is": {"id": "minecraft:redstone_wire", "power": 2} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

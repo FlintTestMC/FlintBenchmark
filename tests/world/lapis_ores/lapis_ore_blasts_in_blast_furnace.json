@@ -1,0 +1,68 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "lapis_ore_blasts_in_blast_furnace", 
+    "description": "Lapis ore fed into a blast furnace by a hopper is still cooking at tick 90 and has produced one lapis lazuli by tick 115 (100 tick recipe).", 
+    "tags": ["lapis-ore", "ore", "blast_furnace", "smelting", "block-entity", "hopper"], 
+    "minecraftIds": ["minecraft:lapis_ore", "minecraft:blast_furnace", "minecraft:hopper", "minecraft:coal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:blast_furnace"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:lapis_ore\"}]"}
+                    }
+                }, 
+                {
+                    "pos": [1, 0, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "west", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:coal\"}]"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 90, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "lit": "true", 
+                        "nbt": {"Items[0].id": "\"minecraft:lapis_ore\""}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 115, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:blast_furnace", 
+                        "nbt": {"Items[0].id": "\"minecraft:lapis_lazuli\"", "Items[0].count": "1"}
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

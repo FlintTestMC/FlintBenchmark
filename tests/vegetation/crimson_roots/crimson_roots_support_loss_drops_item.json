@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "crimson_roots_support_loss_drops_item", 
+    "description": "Crimson roots that lose their support are removed and drop one crimson roots item.", 
+    "tags": ["vegetation", "crimson_roots", "support", "drops", "neighbor-update"], 
+    "minecraftIds": ["minecraft:crimson_nylium", "minecraft:crimson_roots", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [12, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [12, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [10, 1, 0], [10, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [10, 0, 0], "block": {"id": "minecraft:crimson_nylium"} }, 
+        { "at": 4, "do": "place", "pos": [10, 1, 0], "block": {"id": "minecraft:crimson_roots"} }, 
+        { "at": 5, "do": "remove", "pos": [10, 0, 0] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [10, 1, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "count": 1, 
+                    "Item": "{count: 1, id: \"minecraft:crimson_roots\"}"
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

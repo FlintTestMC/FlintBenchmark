@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "daylight_sensor_not_pushable_by_piston", 
+    "description": "A daylight detector is a BaseEntityBlock, so its state has a block entity, and PistonBaseBlock.isPushable ends with return !state.hasBlockEntity() (its push reaction is the default NORMAL and its destroy speed is not -1): a powered piston facing it stays retracted and the detector stays in place, while a control piston facing a stone block extends and moves it.", 
+    "tags": ["redstone", "daylight-sensor", "piston"], 
+    "minecraftIds": ["minecraft:daylight_detector", "minecraft:piston", "minecraft:stone", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -1], [2, 3, 1] ]
+        }, 
+        "world": {"time": "6000"}
+    }, 
+    "timeline": [
+        {
+            "at": 105, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:daylight_detector", "inverted": false} }, 
+                { "pos": [1, 0, 1], "block": {"id": "minecraft:stone"}                                }, 
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:piston", "facing": "east"}             }, 
+                { "pos": [0, 0, 1], "block": {"id": "minecraft:piston", "facing": "east"}             }  
+            ]
+        }, 
+        {
+            "at": 106, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, -1], "block": {"id": "minecraft:redstone_block"} }, 
+                { "pos": [0, 1,  1], "block": {"id": "minecraft:redstone_block"} }  
+            ]
+        }, 
+        {
+            "at": 115, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 1], "is": {"id": "minecraft:piston"           , "facing": "east", "extended": true } }, 
+                { "pos": [2, 0, 1], "is": {"id": "minecraft:stone"                                                 } }, 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:piston"           , "facing": "east", "extended": false} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:daylight_detector"                                     } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:air"                                                   } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

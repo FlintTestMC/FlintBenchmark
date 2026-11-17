@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_bulb_honeycomb_no_effect", 
+    "description": "Using honeycomb on an already waxed copper bulb does nothing: the bulb is unchanged and the honeycomb is not consumed.", 
+    "tags": ["copper-bulb", "waxed-copper-bulb", "honeycomb", "interaction", "player"], 
+    "minecraftIds": ["minecraft:waxed_copper_bulb", "minecraft:honeycomb"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [2, 3, 3] ]
+        }, 
+        "player": {
+            "selected_hotbar": 1, 
+            "game_mode": "Survival", 
+            "inventory": { "hotbar1": {"id": "minecraft:honeycomb", "count": 2} }
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, -1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 2], "block": {"id": "minecraft:waxed_copper_bulb"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:waxed_copper_bulb", "lit": false, "powered": false} }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:honeycomb", "count": 2} }                             
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

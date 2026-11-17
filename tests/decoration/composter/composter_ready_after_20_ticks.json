@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "composter_ready_after_20_ticks", 
+    "description": "A composter placed at level 7 schedules a 20-tick block tick in onPlace and then cycles to level 8; it is still level 7 just before that.", 
+    "tags": ["composter", "scheduled-tick", "timing"], 
+    "minecraftIds": ["minecraft:composter", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:composter", "level": 7} }  
+            ]
+        }, 
+        {
+            "at": 18, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 7} }
+            ]
+        }, 
+        {
+            "at": 21, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 8} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "hay_block_reduces_fall_damage", 
+    "description": "A 15 block fall onto hay deals floor((15 - 3) * 0.2) = 2 damage, while the same fall onto stone is lethal.", 
+    "tags": ["decoration", "hay-block", "fall-damage", "entity"], 
+    "minecraftIds": ["minecraft:hay_block", "minecraft:stone", "minecraft:pig"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [8, 17, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:hay_block", "axis": "y"} }, 
+        { "at": 0, "do": "place", "pos": [6, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "summon", 
+            "entity_alias": "pig_on_hay", 
+            "entity_type": "minecraft:pig", 
+            "pos": [2.5, 16, 0.5], 
+            "Health": "10f"
+        }, 
+        {
+            "at": 1, 
+            "do": "summon", 
+            "entity_alias": "pig_on_stone", 
+            "entity_type": "minecraft:pig", 
+            "pos": [6.5, 16, 0.5], 
+            "Health": "10f"
+        }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "entity_alias": "pig_on_hay", 
+                    "is": "minecraft:pig", 
+                    "pos": [2.5, 1, 0.5], 
+                    "position_tolerance": 0.5, 
+                    "Health": "8.0f"
+                }, 
+                {"is": "minecraft:pig", "exists": true, "count": 1}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

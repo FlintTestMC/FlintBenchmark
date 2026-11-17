@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "piston_pushes_honey_block", 
+    "description": "A piston powered by a redstone block pushes a honey block one block forward and its head takes the old position.", 
+    "tags": ["decoration", "honey-block", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:honey_block", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:piston"     , "facing": "east"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:honey_block"                  } }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": true}      }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head", "facing": "east", "type": "normal"} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:honey_block"}                                     }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

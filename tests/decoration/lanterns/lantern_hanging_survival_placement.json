@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "lantern_hanging_survival_placement", 
+    "description": "Clicking the bottom face of a ceiling block puts UP first in the nearest looking directions, so the lantern is placed hanging (hanging=true) and the item is consumed.", 
+    "tags": ["decoration", "lantern", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:lantern"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, 0], [0, 3, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:lantern", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, -1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0,  3, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, -90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:lantern", "hanging": true, "waterlogged": false} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                              
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

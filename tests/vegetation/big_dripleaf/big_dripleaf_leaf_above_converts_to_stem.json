@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "big_dripleaf_leaf_above_converts_to_stem", 
+    "description": "When a big dripleaf is set directly above another leaf, the lower leaf turns into a big dripleaf stem that keeps its facing and waterlogged state.", 
+    "tags": ["vegetation", "big-dripleaf", "block-state", "neighbor-update", "waterlogging"], 
+    "minecraftIds": ["minecraft:big_dripleaf", "minecraft:big_dripleaf_stem", "minecraft:dirt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:dirt" } }, 
+                { "pos": [ 1, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-1, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1,  1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1, -1], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:big_dripleaf", "facing": "south", "waterlogged": true}
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf", "facing": "south", "waterlogged": true, "tilt": "none"}
+                }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "north"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south", "waterlogged": true}
+                }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:big_dripleaf", "facing": "north", "waterlogged": false, "tilt": "none"}
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

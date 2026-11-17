@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dead_coral_fan_pushed_by_piston", 
+    "description": "A piston pushes a dead coral fan one block onto stone and it survives there, because dead fans do not use the destroy push reaction.", 
+    "tags": ["decoration", "coral", "coral-fan", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:dead_tube_coral_fan", "minecraft:piston"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [1, 1, 0], 
+            "block": {"id": "minecraft:dead_tube_coral_fan", "waterlogged": false}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:piston", "facing": "east"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 1], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "extended": true}      }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:dead_tube_coral_fan"}           }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "axe_blocked_by_offhand_shield", 
+    "description": "While a shield is in the off hand, an axe in the main hand does not strip a log (AxeItem.playerHasBlockingItemUseIntent returns PASS); after the shield is removed the same use strips it.", 
+    "tags": ["item", "axe", "interaction", "player", "strip", "shield", "edge-case"], 
+    "minecraftIds": ["minecraft:golden_axe", "minecraft:shield", "minecraft:oak_log", "minecraft:stripped_oak_log"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }, 
+        "player": {
+            "inventory": {
+                "hotbar1" : {"id": "minecraft:golden_axe", "count": 1}, 
+                "off_hand": {"id": "minecraft:shield"    , "count": 1}  
+            }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:oak_log", "axis": "y"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:oak_log"   , "axis": "y"}                    }, 
+                {                   "is": {"id": "minecraft:golden_axe"             }, "slot": "hotbar1" }  
+            ]
+        }, 
+        {"at": 2, "do": "set_slot", "slot": "off_hand"}, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stripped_oak_log", "axis": "y"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "crimson_stem_survives_fire", 
+    "description": "A crimson stem surrounded by fire is never burned, while a wool control block surrounded by the same fire is consumed, so the fire was active.", 
+    "tags": ["crimson_stem", "fire", "flammability", "control"], 
+    "minecraftIds": ["minecraft:crimson_stem", "minecraft:white_wool", "minecraft:fire", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [6, 2, 1] ]
+        }, 
+        "world": { "gamerules": {"minecraft:fire_spread_radius_around_player": -1} }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [6, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:crimson_stem", "axis": "y"} }, 
+        { "at": 0, "do": "place", "pos": [5, 1, 0], "block": {"id": "minecraft:white_wool"} }, 
+        { "at": 0, "do": "place", "pos": [5, 2, 0], "block": {"id": "minecraft:white_wool"} }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [2, 1,  0], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [1, 1, -1], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [1, 1,  1], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [4, 1,  0], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [6, 1,  0], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [5, 1, -1], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [5, 1,  1], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [4, 2,  0], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [6, 2,  0], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [5, 2, -1], "block": {"id": "minecraft:fire"} }, 
+                { "pos": [5, 2,  1], "block": {"id": "minecraft:fire"} }  
+            ]
+        }, 
+        {
+            "at": 200, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [ 5                      , 2                       , 0 ], 
+                    "is" : [ {"id": "minecraft:air"}, {"id": "minecraft:fire"}    ]  
+                }, 
+                {
+                    "pos": [ 5                      , 1                       , 0 ], 
+                    "is" : [ {"id": "minecraft:air"}, {"id": "minecraft:fire"}    ]  
+                }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:crimson_stem", "axis": "y"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

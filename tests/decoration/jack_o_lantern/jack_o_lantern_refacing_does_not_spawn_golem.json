@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "jack_o_lantern_refacing_does_not_spawn_golem", 
+    "description": "Replacing a jack o'lantern on top of a complete snow golem pattern with a jack o'lantern facing another way only changes its facing: onPlace skips the golem check when the old state was already the same block.", 
+    "tags": ["decoration", "jack-o-lantern", "golem", "snow-golem", "block-state"], 
+    "minecraftIds": ["minecraft:jack_o_lantern", "minecraft:snow_block", "minecraft:snow_golem", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, 0], [1, 3, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, -1, 3], "block": {"id": "minecraft:stone"                            } }, 
+                { "pos": [0,  2, 3], "block": {"id": "minecraft:jack_o_lantern", "facing": "north"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 3], "block": {"id": "minecraft:snow_block"} }, 
+        { "at": 2, "do": "place", "pos": [0, 0, 3], "block": {"id": "minecraft:snow_block"} }, 
+        { "at": 3, "do": "place", "pos": [0, 2, 3], "block": {"id": "minecraft:jack_o_lantern", "facing": "east"} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 3], "is": {"id": "minecraft:jack_o_lantern", "facing": "east"} }                   , 
+                { "pos": [0, 1, 3], "is": {"id": "minecraft:snow_block"} }                                         , 
+                { "pos": [0, 0, 3], "is": {"id": "minecraft:snow_block"} }                                         , 
+                { "is": "minecraft:snow_golem", "exists": false, "pos": [0.5, 0.05, 3.5], "position_tolerance": 5 }  
+            ]
+        }
+    ]
+}
+

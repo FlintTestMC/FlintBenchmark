@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "axe_wax_off_keeps_bulb_state", 
+    "description": "Removing wax from a lit waxed copper bulb keeps its lit and powered values (Block.withPropertiesOf).", 
+    "tags": ["item", "axe", "interaction", "player", "wax-off", "copper", "block-state"], 
+    "minecraftIds": ["minecraft:golden_axe", "minecraft:waxed_copper_bulb", "minecraft:copper_bulb"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:golden_axe", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {"id": "minecraft:waxed_copper_bulb", "lit": true, "powered": false}
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:copper_bulb", "lit": true, "powered": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

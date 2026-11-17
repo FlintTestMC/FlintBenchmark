@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "cornflower_replaced_by_flowing_lava", 
+    "description": "Lava flowing sideways into the space of a cornflower replaces it with lava, because a cornflower has no collision and cannot block fluids.", 
+    "tags": ["vegetation", "cornflower", "fluid", "lava", "replaced"], 
+    "minecraftIds": ["minecraft:cornflower", "minecraft:lava", "minecraft:grass_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+        { "at": 4, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:cornflower"} }, 
+        { "at": 4, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:grass_block"} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:cornflower"} }
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:lava"} }, 
+        {
+            "at": 95, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:lava"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:lava"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:lava"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

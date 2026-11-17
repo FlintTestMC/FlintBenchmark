@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "jukebox_hopper_inserts_disc", 
+    "description": "A hopper above an empty jukebox inserts the music disc it holds: the jukebox gets has_record true and the disc in RecordItem, and the hopper is left empty.", 
+    "tags": ["jukebox", "hopper", "music-disc", "container", "block-entity", "item-transfer"], 
+    "minecraftIds": ["minecraft:jukebox", "minecraft:hopper", "minecraft:music_disc_cat", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:jukebox"} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {
+                            "Items": "[{Slot: 0b, count: 1, id: \"minecraft:music_disc_cat\"}]", 
+                            "TransferCooldown": 0
+                        }
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:jukebox", 
+                        "has_record": true, 
+                        "nbt": {"RecordItem.id": "minecraft:music_disc_cat", "RecordItem.count": 1}
+                    }
+                }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

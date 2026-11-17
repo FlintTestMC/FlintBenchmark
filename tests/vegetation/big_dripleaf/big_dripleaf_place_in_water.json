@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "big_dripleaf_place_in_water", 
+    "description": "Placing a big dripleaf into a water source on top of dirt produces a waterlogged leaf.", 
+    "tags": ["vegetation", "big-dripleaf", "placement", "player", "waterlogging"], 
+    "minecraftIds": ["minecraft:big_dripleaf", "minecraft:dirt", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:dirt" } }, 
+                { "pos": [ 1, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-1, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1,  1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1, -1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:water"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water", "level": 0} }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:big_dripleaf"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "none", "waterlogged": true}
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "iron_ore_pulled_by_sticky_piston", 
+    "description": "An iron ore block pushed one block by a sticky piston is pulled back again when the piston retracts, and is iron ore at both positions.", 
+    "tags": ["ore", "iron-ore", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:iron_ore", "minecraft:sticky_piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:sticky_piston", "facing": "east", "extended": false} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:iron_ore"                                          } }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head", "type": "sticky"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:iron_ore"                     } }  
+            ]
+        }, 
+        { "at": 11, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:sticky_piston", "extended": false} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:iron_ore"                        } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                             } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

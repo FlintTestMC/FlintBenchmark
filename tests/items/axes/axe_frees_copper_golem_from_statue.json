@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "axe_frees_copper_golem_from_statue", 
+    "description": "Using an axe on an unaffected copper golem statue removes the block and spawns a copper golem (CopperGolemStatueBlock / WeatheringCopperGolemStatueBlock.useItemOn).", 
+    "tags": ["item", "axe", "interaction", "player", "copper", "statue"], 
+    "minecraftIds": ["minecraft:golden_axe", "minecraft:copper_golem_statue"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:golden_axe", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:copper_golem_statue", 
+                "facing": "north", 
+                "copper_golem_pose": "standing", 
+                "waterlogged": false
+            }
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"} }         , 
+                {"is": "minecraft:copper_golem", "exists": true, "count": 1}, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:golden_axe"} }   
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

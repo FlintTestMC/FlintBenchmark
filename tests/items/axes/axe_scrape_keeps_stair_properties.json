@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "axe_scrape_keeps_stair_properties", 
+    "description": "Scraping an exposed cut copper stair gives a cut copper stair that keeps facing, half, shape and waterlogged (BlockState.withPropertiesOf).", 
+    "tags": ["item", "axe", "interaction", "player", "scrape", "copper", "block-state"], 
+    "minecraftIds": ["minecraft:golden_axe", "minecraft:exposed_cut_copper_stairs", "minecraft:cut_copper_stairs"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:golden_axe", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:exposed_cut_copper_stairs", 
+                "facing": "east", 
+                "half": "top", 
+                "shape": "straight", 
+                "waterlogged": true
+            }
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:cut_copper_stairs", 
+                        "facing": "east", 
+                        "half": "top", 
+                        "shape": "straight", 
+                        "waterlogged": true
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

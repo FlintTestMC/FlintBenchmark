@@ -1,0 +1,32 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dead_coral_fan_stays_dead_without_water", 
+    "description": "A dead coral fan outside water is unchanged long after the 60-100 tick window in which a living fan would die, because dead fans have no die tick.", 
+    "tags": ["decoration", "coral", "coral-fan", "ticking"], 
+    "minecraftIds": ["minecraft:dead_tube_coral_fan"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 2, 0], 
+            "block": {"id": "minecraft:dead_tube_coral_fan", "waterlogged": false}
+        }, 
+        {
+            "at": [1, 110], 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:dead_tube_coral_fan", "waterlogged": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

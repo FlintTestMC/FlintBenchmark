@@ -1,0 +1,89 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "crimson_fungus_placement_on_supports", 
+    "description": "Crimson fungus items placed on crimson nylium, warped nylium, mycelium, soul soil, grass block, dirt, moss block, mud and farmland create a fungus on each and consume all nine items.", 
+    "tags": ["vegetation", "crimson_fungus", "placement", "supports-fungus", "player"], 
+    "minecraftIds": [
+        "minecraft:crimson_fungus", "minecraft:crimson_nylium", "minecraft:warped_nylium" , "minecraft:mycelium"      , 
+        "minecraft:soul_soil"     , "minecraft:grass_block"   , "minecraft:dirt"          , "minecraft:moss_block"    , 
+        "minecraft:mud"           , "minecraft:farmland"      
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:crimson_fungus", "count": 9} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [9, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [8, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:crimson_nylium"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:warped_nylium" } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:mycelium"      } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:soul_soil"     } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:grass_block"   } }, 
+                { "pos": [5, 0, 0], "block": {"id": "minecraft:dirt"          } }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:moss_block"    } }, 
+                { "pos": [7, 0, 0], "block": {"id": "minecraft:mud"           } }, 
+                { "pos": [8, 0, 0], "block": {"id": "minecraft:farmland"      } }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [1.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 7, "do": "interact"}, 
+        { "at": 8, "do": "tp", "entity_alias": "player", "pos": [3.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 8, "do": "interact"}, 
+        { "at": 9, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 9, "do": "interact"}, 
+        { "at": 10, "do": "tp", "entity_alias": "player", "pos": [5.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 10, "do": "interact"}, 
+        { "at": 11, "do": "tp", "entity_alias": "player", "pos": [6.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 11, "do": "interact"}, 
+        { "at": 12, "do": "tp", "entity_alias": "player", "pos": [7.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 12, "do": "interact"}, 
+        { "at": 13, "do": "tp", "entity_alias": "player", "pos": [8.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 13, "do": "interact"}, 
+        { "at": 14, "do": "tp", "entity_alias": "player", "pos": [4.5, 6, 0.5] }, 
+        {
+            "at": 15, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:crimson_fungus"}                    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:crimson_fungus"}                    }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:crimson_fungus"}                    }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:crimson_fungus"}                    }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:crimson_fungus"}                    }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:crimson_fungus"}                    }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:crimson_fungus"}                    }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:crimson_fungus"}                    }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:crimson_fungus"}                    }, 
+                {                   "is": "empty"                           , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

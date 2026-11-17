@@ -1,0 +1,32 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:end_gateway"], 
+    "name": "End Gateway Placement Persists", 
+    "description": "An end gateway set by command exists immediately and is still there 40 ticks later.", 
+    "tags": ["portal", "end_gateway", "placement"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:obsidian"} }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:end_gateway"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:end_gateway"} }
+            ]
+        }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:end_gateway"} }
+            ]
+        }
+    ]
+}
+

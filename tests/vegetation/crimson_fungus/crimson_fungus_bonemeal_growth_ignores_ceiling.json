@@ -1,0 +1,72 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "crimson_fungus_bonemeal_growth_ignores_ceiling", 
+    "description": "Bone meal on a crimson fungus on crimson nylium with stone directly above still grows it into a single crimson stem, and the stone above is not replaced.", 
+    "tags": ["vegetation", "crimson_fungus", "bone-meal", "growth", "player"], 
+    "minecraftIds": [
+        "minecraft:crimson_fungus", "minecraft:crimson_nylium", "minecraft:crimson_stem"  , "minecraft:stone"         , 
+        "minecraft:bone_meal"     
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-5, 0, -4], [4, 6, 4] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 15} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-5, 0, -4], [4, 0, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [-5, 1, -4], [4, 6, 4] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:crimson_nylium"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:crimson_fungus"} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:stone"         } }  
+            ]
+        }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [-3.5, 1, 0.5], "rot": [-90, 19] }, 
+        {"at": 6, "do": "interact"}, 
+        {"at": 7, "do": "interact"}, 
+        {"at": 8, "do": "interact"}, 
+        {"at": 9, "do": "interact"}, 
+        {"at": 10, "do": "interact"}, 
+        {"at": 11, "do": "interact"}, 
+        {"at": 12, "do": "interact"}, 
+        {"at": 13, "do": "interact"}, 
+        {"at": 14, "do": "interact"}, 
+        {"at": 15, "do": "interact"}, 
+        {"at": 16, "do": "interact"}, 
+        {"at": 17, "do": "interact"}, 
+        {"at": 18, "do": "interact"}, 
+        {"at": 19, "do": "interact"}, 
+        {"at": 20, "do": "interact"}, 
+        {
+            "at": 22, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:crimson_nylium"             } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:crimson_stem"  , "axis": "y"} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:stone"                      } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

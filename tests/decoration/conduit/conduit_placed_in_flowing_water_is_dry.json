@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Conduit Placed In Flowing Water Is Dry", 
+    "description": "A conduit placed into non-source (flowing) water is not waterlogged because getStateForPlacement requires the fluid state to be full.", 
+    "tags": ["conduit", "placement", "waterlogging", "water", "edge-case", "block-state", "player"], 
+    "minecraftIds": ["minecraft:conduit", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:stone"            } }, 
+                { "pos": [ 1, 1,  0], "block": {"id": "minecraft:stone"            } }, 
+                { "pos": [-1, 1,  0], "block": {"id": "minecraft:stone"            } }, 
+                { "pos": [ 0, 1,  1], "block": {"id": "minecraft:stone"            } }, 
+                { "pos": [ 0, 1, -1], "block": {"id": "minecraft:stone"            } }, 
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:water", "level": 3} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water", "level": 3} }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:conduit"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:conduit", "waterlogged": false}                    }, 
+                {                   "is": "empty"                                          , "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

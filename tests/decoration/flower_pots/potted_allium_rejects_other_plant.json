@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "potted_allium_rejects_other_plant", 
+    "description": "Using a poppy on a potted allium changes nothing: the poppy has a potted variant so the click is consumed, but the pot is not empty, so the pot keeps its allium and the poppy stack is unchanged.", 
+    "tags": ["decoration", "flower-pot", "interaction", "player"], 
+    "minecraftIds": ["minecraft:potted_allium", "minecraft:poppy"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:poppy", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:potted_allium"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:potted_allium"}                        }, 
+                {                   "is": {"id": "minecraft:poppy", "count": 2}, "slot": "hotbar1" }, 
+                {                   "is": "empty"                              , "slot": "hotbar2" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

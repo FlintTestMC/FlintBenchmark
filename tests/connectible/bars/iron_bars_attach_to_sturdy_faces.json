@@ -1,0 +1,73 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "iron_bars_attach_to_sturdy_faces", 
+    "description": "Iron bars connect to a neighbour only when its face toward the bars is fully sturdy: a stair's back connects, its stepped front and a bottom slab's side do not.", 
+    "tags": ["connectible", "bars", "iron-bars", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:iron_bars", "minecraft:oak_stairs", "minecraft:oak_slab"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [2, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:iron_bars"} }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [-1, 0, 0], 
+                    "block": {
+                        "id"         : "minecraft:oak_stairs", 
+                        "facing"     : "east"                , 
+                        "half"       : "bottom"              , 
+                        "shape"      : "straight"            , 
+                        "waterlogged": "false"                 
+                    }
+                }, 
+                {
+                    "pos": [0, 0, -1], 
+                    "block": {
+                        "id"         : "minecraft:oak_stairs", 
+                        "facing"     : "south"               , 
+                        "half"       : "bottom"              , 
+                        "shape"      : "straight"            , 
+                        "waterlogged": "false"                 
+                    }
+                }, 
+                {
+                    "pos": [0, 0, 1], 
+                    "block": {
+                        "id"         : "minecraft:oak_stairs", 
+                        "facing"     : "south"               , 
+                        "half"       : "bottom"              , 
+                        "shape"      : "straight"            , 
+                        "waterlogged": "false"                 
+                    }
+                }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:oak_slab", "type": "bottom", "waterlogged": "false"} }
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "north"      : "true"               , 
+                        "south"      : "false"              , 
+                        "east"       : "false"              , 
+                        "west"       : "true"               , 
+                        "waterlogged": "false"                
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

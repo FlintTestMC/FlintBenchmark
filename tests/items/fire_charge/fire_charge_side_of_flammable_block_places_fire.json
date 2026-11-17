@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "fire_charge_side_of_flammable_block_places_fire", 
+    "description": "Using a fire charge on the west face of a floating oak planks block places fire beside it with no floor below, because the flammable neighbour lets the fire survive. One charge is consumed.", 
+    "tags": ["item", "fire_charge", "fire", "flammability", "player"], 
+    "minecraftIds": ["minecraft:fire_charge", "minecraft:oak_planks", "minecraft:stone", "minecraft:fire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:fire_charge", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-3, 0, 0], "block": {"id": "minecraft:stone"     } }, 
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:oak_planks"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [-2.5, 1, 0.5], "rot": [-90, 24] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1, 0], "is": {"id": "minecraft:oak_planks"             }                    }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:fire"                   }                    }, 
+                { "pos": [-1, 0, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                {                    "is": {"id": "minecraft:fire_charge", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

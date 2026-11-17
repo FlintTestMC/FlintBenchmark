@@ -1,0 +1,73 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "furnace_hopper_below_extracts_result_and_buckets", 
+    "description": "A hopper below a furnace pulls the result slot but not coal from the fuel slot, and does pull an empty bucket from the fuel slot.", 
+    "tags": ["container", "furnace", "block-entity", "hopper", "item-transfer"], 
+    "minecraftIds": [
+        "minecraft:furnace"   , "minecraft:hopper"    , "minecraft:iron_ingot", "minecraft:coal"      , 
+        "minecraft:bucket"    
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:furnace", 
+                        "nbt": {
+                            "Items": "[{Slot: 1b, count: 1, id: \"minecraft:coal\"}, {Slot: 2b, count: 1, id: \"minecraft:iron_ingot\"}]"
+                        }
+                    }
+                }, 
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:hopper", "facing": "down"} }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "block": {
+                        "id": "minecraft:furnace", 
+                        "nbt": {"Items": "[{Slot: 1b, count: 1, id: \"minecraft:bucket\"}]"}
+                    }
+                }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:hopper", "facing": "down"} }
+            ]
+        }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:furnace", 
+                        "nbt": {"Items[0].id": "minecraft:coal", "Items[0].Slot": "1b", "Items[0].count": 1}
+                    }
+                }, 
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:hopper", 
+                        "nbt": {"Items[0].id": "minecraft:iron_ingot", "Items[0].count": 1}
+                    }
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "is": { "id": "minecraft:furnace", "nbt": {"Items": []} }
+                }, 
+                {
+                    "pos": [2, 0, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].id": "minecraft:bucket", "Items[0].count": 1} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

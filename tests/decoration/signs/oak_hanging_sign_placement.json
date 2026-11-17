@@ -1,0 +1,77 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_hanging_sign_placement", 
+    "description": "A hanging sign placed under a full block gets a cardinal rotation and attached=false, under a fence it gets attached=true with the player's exact rotation, and it is waterlogged when it replaces water.", 
+    "tags": ["decoration", "sign", "hanging-sign", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:oak_hanging_sign"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [10, 5, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:oak_hanging_sign", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [10, 5, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [10, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 5, 0], "block": {"id": "minecraft:stone"    } }, 
+                { "pos": [3, 5, 0], "block": {"id": "minecraft:stone"    } }, 
+                { "pos": [6, 5, 0], "block": {"id": "minecraft:oak_fence"} }, 
+                { "pos": [9, 5, 0], "block": {"id": "minecraft:stone"    } }, 
+                { "pos": [9, 4, 0], "block": {"id": "minecraft:water"    } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 0.5], "rot": [0, -90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [3.5, 1, 0.5], "rot": [90, -90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [6.5, 1, 0.5], "rot": [45, -90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [9.5, 1, 0.5], "rot": [0, -90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 4, 0], 
+                    "is": {"id": "minecraft:oak_hanging_sign", "rotation": 8, "attached": false, "waterlogged": false}
+                }, 
+                {
+                    "pos": [3, 4, 0], 
+                    "is": {"id": "minecraft:oak_hanging_sign", "rotation": 12, "attached": false, "waterlogged": false}
+                }, 
+                {
+                    "pos": [6, 4, 0], 
+                    "is": {"id": "minecraft:oak_hanging_sign", "rotation": 10, "attached": true, "waterlogged": false}
+                }, 
+                {
+                    "pos": [9, 4, 0], 
+                    "is": {"id": "minecraft:oak_hanging_sign", "rotation": 8, "attached": false, "waterlogged": true}
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_wall_torch_destroyed_by_piston", 
+    "description": "A piston extending into a copper wall torch destroys it and drops one copper torch item instead of pushing it.", 
+    "tags": ["decoration", "copper-torch", "wall-torch", "piston", "push-reaction", "drops"], 
+    "minecraftIds": [
+        "minecraft:copper_wall_torch", "minecraft:copper_torch"     , "minecraft:stone"            , 
+        "minecraft:piston"           , "minecraft:piston_head"      , "minecraft:redstone_block"   , 
+        "minecraft:item"             
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [11, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [11, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [8, 2, 0], "block": {"id": "minecraft:stone"}                                     }, 
+                { "pos": [9, 1, 0], "block": {"id": "minecraft:piston", "facing": "up", "extended": false} }, 
+                { "pos": [9, 2, 0], "block": {"id": "minecraft:copper_wall_torch", "facing": "east"}       }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [9, 2, 0], "is": {"id": "minecraft:copper_wall_torch", "facing": "east"} }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [10, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 15, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [9, 1, 0], "is": {"id": "minecraft:piston", "facing": "up", "extended": true} } , 
+                { "pos": [9, 2, 0], "is": {"id": "minecraft:piston_head", "facing": "up"} }              , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:copper_torch"}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

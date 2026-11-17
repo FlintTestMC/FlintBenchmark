@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:end_gateway", "minecraft:lava"], 
+    "name": "End Gateway Not Replaced By Lava", 
+    "description": "In a walled corridor, a lava source flows into the open cell on one side but does not replace the end gateway on the other side.", 
+    "tags": ["portal", "end_gateway", "fluid", "lava"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [4, 1, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 1, 2], [4, 1, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:stone"      } }, 
+                { "pos": [4, 1, 1], "block": {"id": "minecraft:stone"      } }, 
+                { "pos": [1, 1, 1], "block": {"id": "minecraft:end_gateway"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [2, 1, 1], "block": {"id": "minecraft:lava"} }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 1], "is": {"id": "minecraft:lava"       , "level": 0} }, 
+                { "pos": [3, 1, 1], "is": {"id": "minecraft:lava"       , "level": 2} }, 
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:end_gateway"            } }  
+            ]
+        }
+    ]
+}
+

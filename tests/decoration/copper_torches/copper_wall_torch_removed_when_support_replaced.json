@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_wall_torch_removed_when_support_replaced", 
+    "description": "A copper wall torch with nothing behind it stays until a neighbor update arrives from behind, and a non-sturdy block placed there removes it, while a torch on an unchanged stone block stays.", 
+    "tags": ["decoration", "copper_torch", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:copper_wall_torch", "minecraft:stone", "minecraft:oak_leaves"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [9, 3, 3] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [2, 1, 1], "block": {"id": "minecraft:copper_wall_torch", "facing": "south"} }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:stone"                               } }, 
+                { "pos": [5, 1, 1], "block": {"id": "minecraft:copper_wall_torch", "facing": "south"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 1], "is": {"id": "minecraft:copper_wall_torch", "facing": "south"} }, 
+                { "pos": [5, 1, 1], "is": {"id": "minecraft:copper_wall_torch", "facing": "south"} }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:oak_leaves", "persistent": true} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_leaves"                          } }, 
+                { "pos": [2, 1, 1], "is": {"id": "minecraft:air"                                 } }, 
+                { "pos": [5, 1, 1], "is": {"id": "minecraft:copper_wall_torch", "facing": "south"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

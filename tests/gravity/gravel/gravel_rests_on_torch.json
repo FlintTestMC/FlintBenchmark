@@ -1,0 +1,34 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "gravel_rests_on_torch", 
+    "description": "Gravel placed on top of a torch is not on free space (a torch is not replaceable), so it stays and the torch survives.", 
+    "tags": ["gravity", "gravel", "support"], 
+    "minecraftIds": ["minecraft:gravel", "minecraft:stone", "minecraft:torch"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 4, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:torch"} }, 
+        { "at": 1, "do": "place", "pos": [1, 2, 1], "block": {"id": "minecraft:gravel"} }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:gravel"} }, 
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:torch" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

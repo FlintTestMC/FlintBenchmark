@@ -1,0 +1,30 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "flint_and_steel_side_of_stone_without_support_places_no_fire", 
+    "description": "Using flint and steel on the side of a floating stone block places no fire: the target has air below and no flammable neighbour, so BaseFireBlock.canBePlacedAt fails and useOn returns FAIL.", 
+    "tags": ["item", "flint-and-steel", "fire", "edge-case", "player"], 
+    "minecraftIds": ["minecraft:flint_and_steel", "minecraft:fire", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [-1.5, 0, 0.5], "rot": [-90, 0] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:flint_and_steel"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [ 0, 1, 0], "is": {"id": "minecraft:stone"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

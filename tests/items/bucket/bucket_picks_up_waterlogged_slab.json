@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "bucket_picks_up_waterlogged_slab", 
+    "description": "A survival player using an empty bucket on a waterlogged slab receives a water bucket and the slab stays in place without water.", 
+    "tags": ["item", "bucket", "water", "waterlogged", "slab", "player"], 
+    "minecraftIds": ["minecraft:bucket", "minecraft:water_bucket", "minecraft:stone_slab"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 3, 3] ]
+        }, 
+        "player": {
+            "game_mode": "Survival", 
+            "inventory": { "hotbar1": {"id": "minecraft:bucket", "count": 1} }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 3] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1, 2], "block": {"id": "minecraft:stone"                                            } }, 
+                { "pos": [ 1, 2, 2], "block": {"id": "minecraft:stone"                                            } }, 
+                { "pos": [-1, 2, 2], "block": {"id": "minecraft:stone"                                            } }, 
+                { "pos": [ 0, 2, 2], "block": {"id": "minecraft:stone_slab", "type": "bottom", "waterlogged": true} }  
+            ]
+        }, 
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 0.5], "rot": [0, 0] }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 2], "is": {"id": "minecraft:stone_slab", "type": "bottom", "waterlogged": true} }
+            ]
+        }, 
+        {"at": 1, "do": "interact", "item": "minecraft:bucket"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 2], "is": {"id": "minecraft:stone_slab", "type": "bottom", "waterlogged": false} }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:water_bucket", "count": 1} }                           
+            ]
+        }
+    ]
+}
+

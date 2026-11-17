@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:end_gateway", "minecraft:dirt", "minecraft:tnt"], 
+    "name": "End Gateway Survives TNT Explosion", 
+    "description": "A TNT explosion between an end gateway and a dirt block destroys the dirt, but the gateway (explosion resistance 3600000) stays in place.", 
+    "tags": ["portal", "end_gateway", "explosion", "blast-resistance"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 0, 2] ], 
+            "with": {"id": "minecraft:obsidian"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1, 1], "block": {"id": "minecraft:end_gateway"} }, 
+                { "pos": [3, 1, 1], "block": {"id": "minecraft:dirt"       } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:end_gateway"} }, 
+                { "pos": [3, 1, 1], "is": {"id": "minecraft:dirt"       } }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "tnt", 
+            "entity_type": "minecraft:tnt", 
+            "pos": [2.5, 1, 1.5], 
+            "nbt": {"fuse": "1s"}
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:end_gateway"} }, 
+                { "pos": [3, 1, 1], "is": {"id": "minecraft:air"        } }  
+            ]
+        }
+    ]
+}
+

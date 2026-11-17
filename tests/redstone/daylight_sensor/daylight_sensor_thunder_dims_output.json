@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "daylight_sensor_thunder_dims_output", 
+    "description": "At noon in full thunder the sky light level is 15 - 11 * 0.52734375 = 9.199 so sky darkening is 5; a normal detector outputs 10 and an inverted one outputs 5.", 
+    "tags": ["redstone", "daylight-sensor", "weather"], 
+    "minecraftIds": ["minecraft:daylight_detector"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -1], [2, 3, 1] ]
+        }, 
+        "world": {"time": "6000", "weather": "thunder"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, -1], "block": {"id": "minecraft:daylight_detector", "inverted": false} }, 
+                { "pos": [1, 0,  1], "block": {"id": "minecraft:daylight_detector", "inverted": true } }  
+            ]
+        }, 
+        {
+            "at": 160, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, -1], "is": {"id": "minecraft:daylight_detector", "inverted": false, "power": 10} }, 
+                { "pos": [1, 0,  1], "is": {"id": "minecraft:daylight_detector", "inverted": true , "power":  5} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

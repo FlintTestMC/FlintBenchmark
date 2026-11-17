@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "deepslate_note_block_instrument_updates", 
+    "description": "A harp note block switches to basedrum when deepslate is placed beneath it and back to harp when that deepslate is removed.", 
+    "tags": ["decoration", "deepslate", "note-block", "instrument", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:deepslate", "minecraft:note_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 8, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 6, 0], "block": {"id": "minecraft:note_block"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:note_block", "instrument": "harp"} }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 5, 0], "block": {"id": "minecraft:deepslate"} }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:note_block", "instrument": "basedrum"} }
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [0, 5, 0] }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:note_block", "instrument": "harp"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

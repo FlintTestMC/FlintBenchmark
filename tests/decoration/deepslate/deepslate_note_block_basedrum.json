@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "deepslate_note_block_basedrum", 
+    "description": "A note block placed on top of deepslate gets the basedrum instrument, while one placed on top of air keeps the harp instrument.", 
+    "tags": ["decoration", "deepslate", "note-block", "instrument", "block-state"], 
+    "minecraftIds": ["minecraft:deepslate", "minecraft:note_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 8, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 5, 0], "block": {"id": "minecraft:deepslate"} }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 6, 0], "block": {"id": "minecraft:note_block"} }, 
+                { "pos": [2, 6, 0], "block": {"id": "minecraft:note_block"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 6, 0], "is": {"id": "minecraft:note_block", "instrument": "basedrum"} }, 
+                { "pos": [2, 6, 0], "is": {"id": "minecraft:note_block", "instrument": "harp"    } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

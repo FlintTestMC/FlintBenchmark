@@ -1,0 +1,34 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "gravel_sets_note_block_instrument", 
+    "description": "A note block above gravel switches to the snare instrument once gravel is placed below it.", 
+    "tags": ["gravity", "gravel", "note-block", "neighbor-update"], 
+    "minecraftIds": ["minecraft:gravel", "minecraft:stone", "minecraft:note_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 4, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [1, 2, 1], "block": {"id": "minecraft:note_block"} }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:gravel"} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:gravel"                           } }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:note_block", "instrument": "snare"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

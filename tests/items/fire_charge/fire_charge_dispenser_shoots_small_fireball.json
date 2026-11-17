@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "fire_charge_dispenser_shoots_small_fireball", 
+    "description": "A powered upward-facing dispenser holding one fire charge empties itself and spawns a small fireball entity (ProjectileItem dispense behaviour). Only the spawn is checked, not the flight; the player stands aside and the cleanup region is tall so the rising fireball stays in the checked area.", 
+    "tags": ["item", "fire_charge", "dispenser", "projectile", "redstone"], 
+    "minecraftIds": [
+        "minecraft:fire_charge"   , "minecraft:dispenser"     , "minecraft:redstone_block", "minecraft:small_fireball"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 40, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [3, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [3.5, 1, 0.5] }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {
+                "id": "minecraft:dispenser", 
+                "facing": "up", 
+                "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:fire_charge\"}]"}
+            }
+        }, 
+        { "at": 2, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:dispenser", "nbt": {"Items": []} }
+                }, 
+                {"is": "minecraft:small_fireball", "exists": true, "count": 1}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_pressure_plate_activation", 
+    "description": "An entity landing on a wooden pressure plate powers it, strongly powers the block below (lighting an adjacent lamp), and the plate releases about 20 ticks after the entity is removed.", 
+    "tags": ["redstone", "pressure-plate", "entity-trigger", "strong-power"], 
+    "minecraftIds": ["minecraft:oak_pressure_plate", "minecraft:redstone_lamp"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:oak_pressure_plate"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_pressure_plate", "powered": false              } }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:redstone_lamp"     ,                   "lit": false} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "summon", 
+            "entity_alias": "trigger", 
+            "entity_type": "minecraft:item", 
+            "pos": [0.5, 1, 0.5], 
+            "Item": "{count: 1, id: \"minecraft:stone\"}", 
+            "PickupDelay": "32767s"
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_pressure_plate", "powered": true             } }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:redstone_lamp"     ,                  "lit": true} }  
+            ]
+        }, 
+        { "at": 10, "do": "tp", "entity_alias": "trigger", "pos": [0.5, 10, 5.5] }, 
+        {
+            "at": 11, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_pressure_plate", "powered": true             } }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:redstone_lamp"     ,                  "lit": true} }  
+            ]
+        }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_pressure_plate", "powered": false              } }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:redstone_lamp"     ,                   "lit": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

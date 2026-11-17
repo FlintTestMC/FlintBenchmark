@@ -1,0 +1,69 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "furnace_wet_sponge_turns_bucket_to_water", 
+    "description": "Smelting a wet sponge while an empty bucket sits in the fuel slot produces a sponge and replaces the bucket with a water bucket.", 
+    "tags": ["container", "furnace", "block-entity", "smelting"], 
+    "minecraftIds": [
+        "minecraft:furnace"     , "minecraft:wet_sponge"  , "minecraft:sponge"      , "minecraft:bucket"      , 
+        "minecraft:water_bucket"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {
+                "id": "minecraft:furnace", 
+                "nbt": {
+                    "cooking_total_time": "200s", 
+                    "lit_time_remaining": "300s", 
+                    "lit_total_time": "300s", 
+                    "Items": "[{Slot: 0b, count: 1, id: \"minecraft:wet_sponge\"}, {Slot: 1b, count: 1, id: \"minecraft:bucket\"}]"
+                }, 
+                "lit": "true"
+            }
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:furnace", 
+                        "lit": "true", 
+                        "nbt": {"Items[0].id": "minecraft:wet_sponge", "Items[1].id": "minecraft:bucket"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 215, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:furnace", 
+                        "nbt": {
+                            "Items[0].id": "minecraft:water_bucket", 
+                            "Items[0].Slot": "1b", 
+                            "Items[1].id": "minecraft:sponge", 
+                            "Items[1].Slot": "2b", 
+                            "Items[1].count": 1
+                        }
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

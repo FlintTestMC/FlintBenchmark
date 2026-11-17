@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "big_dripleaf_piston_destroys", 
+    "description": "A piston extending into a big dripleaf destroys the leaf instead of pushing it, because the leaf's push reaction is DESTROY. The piston head takes its place and nothing is pushed into the next block.", 
+    "tags": ["vegetation", "big-dripleaf", "piston", "push-reaction", "redstone"], 
+    "minecraftIds": ["minecraft:big_dripleaf", "minecraft:piston", "minecraft:redstone_block", "minecraft:dirt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:dirt"                    } }, 
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:piston", "facing": "east"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:big_dripleaf", "facing": "north"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0] , "is": {"id": "minecraft:big_dripleaf", "facing": "north", "tilt": "none"} }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": false}     }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [-2, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:piston"     , "facing": "east", "extended": true} }, 
+                { "pos": [ 0, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east"                  } }, 
+                { "pos": [ 1, 1, 0], "is": {"id": "minecraft:air"                                            } }, 
+                { "pos": [ 0, 0, 0], "is": {"id": "minecraft:dirt"                                           } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

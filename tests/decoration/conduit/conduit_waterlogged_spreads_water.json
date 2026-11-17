@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Conduit Waterlogged Spreads Water", 
+    "description": "A waterlogged conduit acts as a water source (getFluidState returns source water) and, once a neighbour update schedules its water tick (updateShape), spreads flowing water to adjacent open floor.", 
+    "tags": ["conduit", "waterlogging", "water", "fluids", "block-state"], 
+    "minecraftIds": ["minecraft:conduit", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [2, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [2, 1, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 1, -1], [1, 1, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:conduit", "waterlogged": true} }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1,  0], "is": {"id": "minecraft:conduit", "waterlogged": true            } }, 
+                { "pos": [ 1, 1,  0], "is": {"id": "minecraft:water"  ,                      "level": 1} }, 
+                { "pos": [-1, 1,  0], "is": {"id": "minecraft:water"  ,                      "level": 1} }, 
+                { "pos": [ 0, 1,  1], "is": {"id": "minecraft:water"  ,                      "level": 1} }, 
+                { "pos": [ 0, 1, -1], "is": {"id": "minecraft:water"  ,                      "level": 1} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

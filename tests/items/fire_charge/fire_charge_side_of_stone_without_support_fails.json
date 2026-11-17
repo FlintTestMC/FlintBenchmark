@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "fire_charge_side_of_stone_without_support_fails", 
+    "description": "Using a fire charge on the west face of a floating stone block places nothing: the target spot has no sturdy floor and no flammable neighbour, so FireChargeItem.useOn returns FAIL and the stack is kept.", 
+    "tags": ["item", "fire_charge", "fire", "edge-case", "player"], 
+    "minecraftIds": ["minecraft:fire_charge", "minecraft:stone", "minecraft:fire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:fire_charge", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-3, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [-2.5, 1, 0.5], "rot": [-90, 24] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1, 0], "is": {"id": "minecraft:stone"                  }                    }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:air"                    }                    }, 
+                {                    "is": {"id": "minecraft:fire_charge", "count": 2}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

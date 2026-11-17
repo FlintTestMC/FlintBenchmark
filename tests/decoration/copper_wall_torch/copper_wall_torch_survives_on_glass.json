@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_wall_torch_survives_on_glass", 
+    "description": "A copper wall torch attached to glass stays, because glass has a sturdy side face even though it is transparent.", 
+    "tags": ["decoration", "copper-torch", "wall-torch", "support", "glass"], 
+    "minecraftIds": ["minecraft:copper_wall_torch", "minecraft:glass"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [11, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [11, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:glass"                              } }, 
+                { "pos": [9, 1, 0], "block": {"id": "minecraft:copper_wall_torch", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:glass"                              } }, 
+                { "pos": [9, 1, 0], "is": {"id": "minecraft:copper_wall_torch", "facing": "east"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "air_fill_clears_region", 
+    "description": "Filling a stone region with air turns every position in it into air and leaves blocks outside untouched.", 
+    "tags": ["world", "air", "fill"], 
+    "minecraftIds": ["minecraft:air"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 2, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 2, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [1, 1, 1], [3, 2, 3] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [2, 2, 2], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [3, 2, 3], "is": {"id": "minecraft:air"  } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:stone"} }, 
+                { "pos": [2, 0, 2], "is": {"id": "minecraft:stone"} }, 
+                { "pos": [4, 2, 4], "is": {"id": "minecraft:stone"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

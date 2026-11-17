@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "fire_charge_use_in_air_does_nothing", 
+    "description": "Using a fire charge while facing open air does nothing: FireChargeItem only overrides useOn, not use, so the stack is kept and no fire appears.", 
+    "tags": ["item", "fire_charge", "edge-case", "player"], 
+    "minecraftIds": ["minecraft:fire_charge", "minecraft:fire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 4, 3] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:fire_charge", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 1], "is": {"id": "minecraft:air"                    }                    }, 
+                { "pos": [0, 3, 2], "is": {"id": "minecraft:air"                    }                    }, 
+                { "pos": [0, 2, 1], "is": {"id": "minecraft:air"                    }                    }, 
+                {                   "is": {"id": "minecraft:fire_charge", "count": 2}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

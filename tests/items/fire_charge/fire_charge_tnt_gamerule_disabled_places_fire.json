@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "fire_charge_tnt_gamerule_disabled_places_fire", 
+    "description": "With tnt_explodes disabled, TNT does not prime and returns PASS, so the fire charge falls through to FireChargeItem.useOn and places fire above the TNT (a flammable support), consuming one charge. The TNT block stays.", 
+    "tags": ["item", "fire_charge", "tnt", "gamerule", "edge-case", "player"], 
+    "minecraftIds": ["minecraft:fire_charge", "minecraft:tnt", "minecraft:obsidian", "minecraft:fire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:fire_charge", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs"     : false, 
+                "minecraft:advance_time"   : false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:tnt_explodes"   : false  
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:obsidian"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:tnt"     } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:tnt"} }                     , 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:fire"} }                    , 
+                {"is": "minecraft:tnt", "exists": false}                                , 
+                { "slot": "hotbar1", "is": {"id": "minecraft:fire_charge", "count": 1} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

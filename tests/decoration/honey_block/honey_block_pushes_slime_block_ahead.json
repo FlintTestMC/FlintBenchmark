@@ -1,0 +1,37 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "honey_block_pushes_slime_block_ahead", 
+    "description": "A honey block pushed by a piston still pushes a slime block directly ahead of it in the push direction.", 
+    "tags": ["decoration", "honey-block", "slime", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:honey_block", "minecraft:slime_block", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:piston"     , "facing": "east"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:honey_block"                  } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:slime_block"                  } }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head"} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:honey_block"} }, 
+                { "pos": [3, 0, 0], "is": {"id": "minecraft:slime_block"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

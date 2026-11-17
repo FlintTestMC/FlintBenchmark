@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "beacon_full_pyramid_level_four", 
+    "description": "A beacon on a four layer iron pyramid reaches the maximum level 4.", 
+    "tags": ["decoration", "beacon", "levels", "pyramid"], 
+    "minecraftIds": ["minecraft:beacon"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-4, 0, -4], [4, 6, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-4, 0, -4], [4, 0, 4] ], 
+            "with": {"id": "minecraft:iron_block"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-3, 1, -3], [3, 1, 3] ], 
+            "with": {"id": "minecraft:iron_block"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 2, -2], [2, 2, 2] ], 
+            "with": {"id": "minecraft:iron_block"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 3, -1], [1, 3, 1] ], 
+            "with": {"id": "minecraft:iron_block"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 4, 0], "block": {"id": "minecraft:beacon"} }, 
+        {
+            "at": 170, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 4, 0], 
+                    "is": { "id": "minecraft:beacon", "nbt": {"Levels": 4} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

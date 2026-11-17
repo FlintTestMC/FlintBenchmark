@@ -1,0 +1,34 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "air_place_replaces_block", 
+    "description": "Placing air over a stone block replaces it with plain air that has no block states.", 
+    "tags": ["world", "air", "placement"], 
+    "minecraftIds": ["minecraft:air"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:stone"} }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:air"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

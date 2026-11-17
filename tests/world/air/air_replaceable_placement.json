@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "air_replaceable_placement", 
+    "description": "A survival player placing stone against the top face of a stone block fills the replaceable air cell above it and consumes one item.", 
+    "tags": ["world", "air", "replaceable", "placement", "player"], 
+    "minecraftIds": ["minecraft:air"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 4, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:stone", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:air"} }
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [1.5, 4, 1.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:stone"            }                    }, 
+                {                   "is": {"id": "minecraft:stone", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

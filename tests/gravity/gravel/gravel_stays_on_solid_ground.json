@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "gravel_stays_on_solid_ground", 
+    "description": "Gravel placed directly on stone does not fall and is still there later.", 
+    "tags": ["gravity", "gravel", "support"], 
+    "minecraftIds": ["minecraft:gravel", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 3, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:gravel"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:gravel"} }
+            ]
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:gravel"} }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:air"   } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

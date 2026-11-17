@@ -1,0 +1,131 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_sign_dyeing", 
+    "description": "Dye recolours only the side of an oak sign the player faces, is used up on success, and is kept when the side has no text or already has that colour.", 
+    "tags": ["decoration", "sign", "dye", "block-entity", "player"], 
+    "minecraftIds": ["minecraft:oak_sign", "minecraft:red_dye", "minecraft:black_dye"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -3], [10, 3, 4] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -3], [10, 3, 4] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -3], [10, 0, -2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, 2], [10, 0, 4] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [9, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:oak_sign", 
+                        "rotation": 8, 
+                        "nbt": {"front_text": "{messages: [\"hi\", \"\", \"\", \"\"]}"}
+                    }
+                }, 
+                {
+                    "pos": [3, 1, 0], 
+                    "block": {
+                        "id": "minecraft:oak_sign", 
+                        "rotation": 8, 
+                        "nbt": {
+                            "front_text": "{messages: [\"hi\", \"\", \"\", \"\"]}", 
+                            "back_text" : "{messages: [\"hi\", \"\", \"\", \"\"]}"  
+                        }
+                    }
+                }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:oak_sign", "rotation": 8} }, 
+                {
+                    "pos": [9, 1, 0], 
+                    "block": {
+                        "id": "minecraft:oak_sign", 
+                        "rotation": 8, 
+                        "nbt": {"front_text": "{messages: [\"hi\", \"\", \"\", \"\"]}"}
+                    }
+                }
+            ]
+        }, 
+        {"at": 1, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:red_dye", "count": 1}, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, -1.5], "rot": [0, 29] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:oak_sign", "nbt": {"front_text.color": "red"} }
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }, 
+        {"at": 3, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:red_dye", "count": 1}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [3.5, 1, 2.5], "rot": [180, 29] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [3, 1, 0], 
+                    "is": { "id": "minecraft:oak_sign", "nbt": {"front_text.color": "black", "back_text.color": "red"} }
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }, 
+        {"at": 5, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:red_dye", "count": 1}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [6.5, 1, -1.5], "rot": [0, 29] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [6, 1, 0], 
+                    "is": { "id": "minecraft:oak_sign", "nbt": {"front_text.color": "black"} }
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:red_dye", "count": 1} }
+            ]
+        }, 
+        {"at": 7, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:black_dye", "count": 1}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [9.5, 1, -1.5], "rot": [0, 29] }, 
+        {"at": 7, "do": "interact"}, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [9, 1, 0], 
+                    "is": { "id": "minecraft:oak_sign", "nbt": {"front_text.color": "black"} }
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:black_dye", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

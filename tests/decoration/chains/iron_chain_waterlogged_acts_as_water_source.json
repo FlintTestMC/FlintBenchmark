@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "iron_chain_waterlogged_acts_as_water_source", 
+    "description": "A waterlogged iron chain reports a water source fluid state (ChainBlock.getFluidState), so the fluid tick pending at its position (from the replaced source, LiquidBlock.onPlace, and from ChainBlock.updateShape after the stone is placed) spreads water into adjacent air while the chain stays waterlogged. The tick-3 air check is a precondition: the water delay is 5 ticks (WaterFluid.getTickDelay), so no spread has happened yet and the later water must come from the chain.", 
+    "tags": ["chain", "iron_chain", "waterlogged", "fluid", "player"], 
+    "minecraftIds": ["minecraft:iron_chain", "minecraft:stone", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [2, 3, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:iron_chain", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:water", "level": 0} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "place", "pos": [0, 1, -1], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": true} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"                                         } }  
+            ]
+        }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0] , "is": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": true} }, 
+                { "pos": [1, 1, 0] , "is": {"id": "minecraft:water", "level": 1}                            }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:water", "level": 1}                            }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

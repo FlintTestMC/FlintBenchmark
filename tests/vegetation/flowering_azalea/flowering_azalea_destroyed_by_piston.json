@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "flowering_azalea_destroyed_by_piston", 
+    "description": "An extending piston destroys a flowering azalea in front of it instead of pushing it, so the block behind the azalea is untouched and the azalea drops itself.", 
+    "tags": ["vegetation", "flowering-azalea", "piston", "push-reaction", "drops"], 
+    "minecraftIds": [
+        "minecraft:flowering_azalea", "minecraft:piston"          , "minecraft:redstone_block"  , 
+        "minecraft:dirt"            , "minecraft:stone"           , "minecraft:item"            
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [7, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:piston", "facing": "east", "extended": false} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:dirt"}                                        }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:flowering_azalea"}                            }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:stone"}                                       }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:flowering_azalea"} }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [3, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:piston"     , "extended": true, "facing": "east"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:piston_head",                   "facing": "east"} }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:stone"                                          } }  
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [ {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:flowering_azalea"} ]
+        }
+    ], 
+    "breakpoints": []
+}
+

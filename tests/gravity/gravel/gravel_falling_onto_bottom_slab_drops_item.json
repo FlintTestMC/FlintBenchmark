@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "gravel_falling_onto_bottom_slab_drops_item", 
+    "description": "Gravel falling onto a bottom slab cannot replace it and does not settle on the half block, so it breaks into a gravel item.", 
+    "tags": ["gravity", "gravel", "falling", "drops", "slab"], 
+    "minecraftIds": ["minecraft:gravel", "minecraft:stone", "minecraft:stone_slab", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [14, 6, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [10, 0, 0], [12, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [11, 1, 1], "block": {"id": "minecraft:stone_slab", "type": "bottom"} }, 
+        { "at": 1, "do": "place", "pos": [11, 5, 1], "block": {"id": "minecraft:gravel"} }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [11, 5, 1], "is": {"id": "minecraft:air"} }                         , 
+                { "pos": [11, 1, 1], "is": {"id": "minecraft:stone_slab", "type": "bottom"} }, 
+                { "pos": [11, 2, 1], "is": {"id": "minecraft:air"} }                         , 
+                {"is": "minecraft:item", "exists": true, "count": 1}                           
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

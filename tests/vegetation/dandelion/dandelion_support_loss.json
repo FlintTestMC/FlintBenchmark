@@ -1,0 +1,64 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dandelion_support_loss", 
+    "description": "A dandelion survives on dirt and farmland, then breaks and drops itself as an item when the block beneath it is removed.", 
+    "tags": ["vegetation", "dandelion", "support", "neighbor-update", "drops"], 
+    "minecraftIds": [
+        "minecraft:dandelion", "minecraft:stone"    , "minecraft:dirt"     , "minecraft:farmland" , 
+        "minecraft:item"     
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 5, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [9, 5, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, -1], [9, 5, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:dirt"     } }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:dandelion"} }, 
+                { "pos": [8, 0, 0], "block": {"id": "minecraft:farmland" } }, 
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:dandelion"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:dandelion"}                  }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:dandelion"}                  }, 
+                {                   "is": "minecraft:item"             , "exists": false }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [6, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [8, 0, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:air"}                             }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:air"}                             }, 
+                {                   "is": "minecraft:item"       , "exists": true, "count": 2 }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

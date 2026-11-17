@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "flint_and_steel_primes_tnt", 
+    "description": "Using flint and steel on TNT removes the TNT block and spawns a primed tnt entity (TntBlock.useItemOn); the TNT sits on obsidian and the player moves 13 blocks away, so after the explosion nothing is left behind.", 
+    "tags": ["item", "flint-and-steel", "tnt", "explosion", "player"], 
+    "minecraftIds": ["minecraft:flint_and_steel", "minecraft:tnt", "minecraft:obsidian"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 14] ]
+        }, 
+        "player": {"game_mode": "Survival"}, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs"     : false, 
+                "minecraft:advance_time"   : false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:tnt_explodes"   : true   
+            }
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0,  0], "block": {"id": "minecraft:obsidian"} }, 
+                { "pos": [0, 0, 13], "block": {"id": "minecraft:obsidian"} }, 
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:tnt"     } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:flint_and_steel"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 13.5], "rot": [0, 0] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"}                             }, 
+                {                   "is": "minecraft:tnt"        , "exists": true, "count": 1 }  
+            ]
+        }, 
+        {
+            "at": 100, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:obsidian"}                  }, 
+                {                   "is": "minecraft:tnt"             , "exists": false }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

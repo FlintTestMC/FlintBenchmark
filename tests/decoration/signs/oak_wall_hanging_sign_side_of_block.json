@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_wall_hanging_sign_side_of_block", 
+    "description": "A hanging sign used on the side of a block becomes a wall hanging sign at right angles to the clicked face, attached to the clicked block's side.", 
+    "tags": ["decoration", "sign", "wall-hanging-sign", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:oak_wall_hanging_sign", "minecraft:oak_hanging_sign"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, 0, -3], [2, 3, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:oak_hanging_sign", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-3, 0, -3], [2, 3, 2] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-3, 0, -3], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [-0.94, 1, -2.5], "rot": [-30, 21] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, -1], 
+                    "is": {"id": "minecraft:oak_wall_hanging_sign", "facing": "west", "waterlogged": false}
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

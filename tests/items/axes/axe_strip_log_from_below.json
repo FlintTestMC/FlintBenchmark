@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "axe_strip_log_from_below", 
+    "description": "An axe used on the bottom face of a floating oak log still strips it, because AxeItem.useOn does not look at the clicked face (unlike ShovelItem).", 
+    "tags": ["item", "axe", "interaction", "player", "strip", "edge-case"], 
+    "minecraftIds": ["minecraft:golden_axe", "minecraft:oak_log", "minecraft:stripped_oak_log"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, 0], [0, 2, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:golden_axe", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, -1, 0], "block": {"id": "minecraft:stone"               } }, 
+                { "pos": [0,  2, 0], "block": {"id": "minecraft:oak_log", "axis": "y"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, -90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:stripped_oak_log", "axis": "y"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

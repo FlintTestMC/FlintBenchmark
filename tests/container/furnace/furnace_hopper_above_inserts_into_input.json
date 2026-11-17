@@ -1,0 +1,71 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "furnace_hopper_above_inserts_into_input", 
+    "description": "A hopper above a furnace inserts any item into the input slot, including coal, which does not go to the fuel slot.", 
+    "tags": ["container", "furnace", "block-entity", "hopper", "item-transfer"], 
+    "minecraftIds": ["minecraft:furnace", "minecraft:hopper", "minecraft:raw_iron", "minecraft:coal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:furnace"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:raw_iron\"}]"}
+                    }
+                }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:furnace"} }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:coal\"}]"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:furnace", 
+                        "nbt": {"Items[0].id": "minecraft:raw_iron", "Items[0].Slot": "0b", "Items[0].count": 1}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
+                }, 
+                {
+                    "pos": [2, 0, 0], 
+                    "is": {
+                        "id": "minecraft:furnace", 
+                        "lit": "false", 
+                        "nbt": {"Items[0].id": "minecraft:coal", "Items[0].Slot": "0b", "Items[0].count": 1}
+                    }
+                }, 
+                {
+                    "pos": [2, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

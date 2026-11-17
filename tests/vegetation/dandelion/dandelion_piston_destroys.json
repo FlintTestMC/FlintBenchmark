@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dandelion_piston_destroys", 
+    "description": "An extending piston destroys a dandelion in its path instead of pushing it, dropping it as an item and leaving the piston head in its place.", 
+    "tags": ["vegetation", "dandelion", "piston", "push-reaction", "drops"], 
+    "minecraftIds": [
+        "minecraft:dandelion"     , "minecraft:dirt"          , "minecraft:stone"         , "minecraft:piston"        , 
+        "minecraft:piston_head"   , "minecraft:redstone_block", "minecraft:item"          
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [9, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, -1], [9, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [7, 0, 0], "block": {"id": "minecraft:dirt"                       } }, 
+                { "pos": [7, 1, 0], "block": {"id": "minecraft:dandelion"                  } }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:piston"   , "facing": "east"} }, 
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:stone"                      } }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:dandelion"}                  }, 
+                {                   "is": "minecraft:item"             , "exists": false }  
+            ]
+        }, 
+        { "at": 6, "do": "place", "pos": [6, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:piston", "extended": true, "facing": "east"} }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east"} }             , 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:stone"} }                                     , 
+                {"is": "minecraft:item", "exists": true, "count": 1}                                        
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

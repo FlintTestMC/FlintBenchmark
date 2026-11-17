@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "honeycomb_dispenser_drops_on_stone", 
+    "description": "A powered dispenser holding honeycomb facing stone cannot wax it, so the stone is unchanged and the honeycomb is ejected from the dispenser.", 
+    "tags": ["item", "honeycomb", "waxing", "interaction"], 
+    "minecraftIds": ["minecraft:honeycomb", "minecraft:dispenser", "minecraft:stone", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [1, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:honeycomb\"}]"}
+                    }
+                }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:stone"} }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:dispenser", "nbt": {"Items": []} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

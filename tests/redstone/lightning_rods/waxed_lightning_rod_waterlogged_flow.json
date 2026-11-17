@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_lightning_rod_waterlogged_flow", 
+    "description": "A waterlogged lightning rod acts as a water source: in a walled corridor it spreads flowing water to the open blocks beside it with decreasing level, and the rod itself stays waterlogged.", 
+    "tags": ["redstone", "lightning-rod", "waxed", "waterlogged", "fluid"], 
+    "minecraftIds": ["minecraft:waxed_lightning_rod", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [3, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:waxed_lightning_rod", "facing": "up", "powered": false, "waterlogged": true}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, -1], [3, 1, -1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 1], [3, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 4, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:waxed_lightning_rod", "facing": "up", "waterlogged": true}
+                }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water", "level": 1} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:water", "level": 2} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:water", "level": 3} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

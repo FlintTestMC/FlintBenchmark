@@ -1,0 +1,39 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dead_coral_wall_fan_survives_without_floor", 
+    "description": "Removing the block under a wall fan leaves it in place, because a wall fan only depends on the block behind it.", 
+    "tags": ["decoration", "coral", "coral-fan", "wall-fan", "support"], 
+    "minecraftIds": ["minecraft:dead_tube_coral_wall_fan"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "block": {"id": "minecraft:dead_tube_coral_wall_fan", "facing": "east", "waterlogged": false}
+                }
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [1, 0, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:air"                                       } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:dead_tube_coral_wall_fan", "facing": "east"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

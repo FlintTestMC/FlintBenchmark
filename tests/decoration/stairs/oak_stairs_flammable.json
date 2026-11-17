@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "oak_stairs_flammable", 
+    "description": "Flint and steel on top of a floating oak stair places fire because the stair is flammable, while the same on a stone stair or a crimson stair places no fire.", 
+    "tags": ["decoration", "stairs", "fire", "flammable", "player"], 
+    "minecraftIds": ["minecraft:oak_stairs", "minecraft:stone_stairs", "minecraft:crimson_stairs"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [8, 4, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:flint_and_steel", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 3, 0], "block": {"id": "minecraft:oak_stairs"    } }, 
+                { "pos": [4, 3, 0], "block": {"id": "minecraft:stone_stairs"  } }, 
+                { "pos": [8, 3, 0], "block": {"id": "minecraft:crimson_stairs"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 5, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [4.5, 5, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [8.5, 5, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 4, 0], "is": {"id": "minecraft:fire"} }, 
+                { "pos": [4, 4, 0], "is": {"id": "minecraft:air" } }, 
+                { "pos": [8, 4, 0], "is": {"id": "minecraft:air" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,58 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_hanging_sign_chaining", 
+    "description": "A hanging sign used on the bottom of another hanging sign chains below it, with attached=false when facing along the sign's axis and attached=true when facing across it.", 
+    "tags": ["decoration", "sign", "hanging-sign", "chain", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:oak_hanging_sign"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [4, 5, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:oak_hanging_sign", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 5, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [4, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 5, 0], "block": {"id": "minecraft:stone"                                             } }, 
+                { "pos": [0, 4, 0], "block": {"id": "minecraft:oak_hanging_sign", "rotation": 8, "attached": false} }, 
+                { "pos": [3, 5, 0], "block": {"id": "minecraft:stone"                                             } }, 
+                { "pos": [3, 4, 0], "block": {"id": "minecraft:oak_hanging_sign", "rotation": 8, "attached": false} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 0.5], "rot": [0, -90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [3.5, 1, 0.5], "rot": [90, -90] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 3, 0], "is": {"id": "minecraft:oak_hanging_sign", "rotation": 8, "attached": false} }, 
+                { "pos": [3, 3, 0], "is": {"id": "minecraft:oak_hanging_sign", "rotation": 12, "attached": true} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                                  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

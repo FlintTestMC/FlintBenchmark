@@ -1,0 +1,55 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_hanging_sign_wax", 
+    "description": "Honeycomb used on the face of a hanging sign waxes it and is used up, so the hanging sign's own interaction code still passes other items to the shared sign handling.", 
+    "tags": ["decoration", "sign", "hanging-sign", "wax", "block-entity", "player"], 
+    "minecraftIds": ["minecraft:oak_hanging_sign", "minecraft:honeycomb"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -3], [1, 5, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:honeycomb", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -3], [1, 5, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -3], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 4, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 3, 0], 
+            "block": {"id": "minecraft:oak_hanging_sign", "rotation": 8, "attached": false}
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, -1.5], "rot": [0, -19] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 3, 0], 
+                    "is": { "id": "minecraft:oak_hanging_sign", "nbt": {"is_waxed": "1b"} }
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

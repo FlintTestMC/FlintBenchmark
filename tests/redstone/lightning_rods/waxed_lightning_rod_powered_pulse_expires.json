@@ -1,0 +1,59 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_lightning_rod_powered_pulse_expires", 
+    "description": "A lightning rod placed already powered schedules its own reset: it stays powered for the 8 tick activation delay, then turns unpowered and keeps its facing and waxed variant.", 
+    "tags": ["redstone", "lightning-rod", "waxed", "powered", "scheduled-tick"], 
+    "minecraftIds": ["minecraft:waxed_lightning_rod"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {
+                        "id": "minecraft:waxed_lightning_rod", 
+                        "facing": "up", 
+                        "powered": true, 
+                        "waterlogged": false
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": [1, 4, 7], 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:waxed_lightning_rod", "facing": "up", "powered": true, "waterlogged": false}
+                }
+            ]
+        }, 
+        {
+            "at": [10, 14], 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:waxed_lightning_rod", 
+                        "facing": "up", 
+                        "powered": false, 
+                        "waterlogged": false
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

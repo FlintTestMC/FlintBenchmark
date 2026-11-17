@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "lantern_standing_breaks_without_floor", 
+    "description": "A standing lantern turns to air and drops one lantern item when the block under it is removed (updateShape checks canSurvive toward its connected direction).", 
+    "tags": ["decoration", "lantern", "support", "block-update", "drops"], 
+    "minecraftIds": ["minecraft:lantern", "minecraft:stone", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [12, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [12, 0, 0], "block": {"id": "minecraft:stone"                                          } }, 
+                { "pos": [12, 1, 0], "block": {"id": "minecraft:lantern", "hanging": false, "waterlogged": false} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [12, 1, 0], "is": {"id": "minecraft:lantern", "hanging": false, "waterlogged": false} }, 
+                {"is": "minecraft:item", "exists": false}                                                         
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [12, 0, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [12, 1, 0], "is": {"id": "minecraft:air"} }                                                 , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:lantern", "Item.count": 1}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

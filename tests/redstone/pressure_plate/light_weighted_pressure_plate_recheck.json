@@ -1,0 +1,106 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "light_weighted_pressure_plate_recheck", 
+    "description": "Entities added to an already pressed light weighted plate only raise its power at the next scheduled 10 tick re-check, and it returns to power 0 after they leave.", 
+    "tags": ["redstone", "pressure-plate", "weighted", "scheduled-tick", "entity-trigger"], 
+    "minecraftIds": ["minecraft:light_weighted_pressure_plate"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:light_weighted_pressure_plate"} }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "first", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [0.5, 1, 0.5]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power": 1} }
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "summon", 
+            "entity_alias": "extra0", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [0.5, 1, 0.5]
+        }, 
+        {
+            "at": 5, 
+            "do": "summon", 
+            "entity_alias": "extra1", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [0.5, 1, 0.5]
+        }, 
+        {
+            "at": 5, 
+            "do": "summon", 
+            "entity_alias": "extra2", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [0.5, 1, 0.5]
+        }, 
+        {
+            "at": 5, 
+            "do": "summon", 
+            "entity_alias": "extra3", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [0.5, 1, 0.5]
+        }, 
+        {
+            "at": 5, 
+            "do": "summon", 
+            "entity_alias": "extra4", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [0.5, 1, 0.5]
+        }, 
+        {
+            "at": 5, 
+            "do": "summon", 
+            "entity_alias": "extra5", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [0.5, 1, 0.5]
+        }, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power": 1} }
+            ]
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power": 7} }
+            ]
+        }, 
+        { "at": 31, "do": "tp", "entity_alias": "first", "pos": [0.5, 10, 5.5] }, 
+        { "at": 31, "do": "tp", "entity_alias": "extra0", "pos": [0.5, 10, 5.5] }, 
+        { "at": 31, "do": "tp", "entity_alias": "extra1", "pos": [0.5, 10, 5.5] }, 
+        { "at": 31, "do": "tp", "entity_alias": "extra2", "pos": [0.5, 10, 5.5] }, 
+        { "at": 31, "do": "tp", "entity_alias": "extra3", "pos": [0.5, 10, 5.5] }, 
+        { "at": 31, "do": "tp", "entity_alias": "extra4", "pos": [0.5, 10, 5.5] }, 
+        { "at": 31, "do": "tp", "entity_alias": "extra5", "pos": [0.5, 10, 5.5] }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power": 0} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:redstone_lamp", "lit": false}               }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

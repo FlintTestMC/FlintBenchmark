@@ -1,0 +1,59 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "flowering_azalea_bonemeal_consumed", 
+    "description": "A single bone meal on a flowering azalea in open air is always consumed (2 become 1), and the block is afterwards either still a flowering azalea or has become the base of an azalea tree (the growth roll succeeds 45% of the time).", 
+    "tags": ["vegetation", "flowering-azalea", "bone-meal", "consumption", "player"], 
+    "minecraftIds": [
+        "minecraft:flowering_azalea", "minecraft:grass_block"     , "minecraft:oak_log"         , 
+        "minecraft:bone_meal"       
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-5, 0, -5], [5, 14, 5] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-5, 0, -5], [5, 14, 5] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-5, 0, -5], [5, 0, 5] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"     } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:flowering_azalea"} }  
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [ 0                                   , 1                          , 0 ], 
+                    "is" : [ {"id": "minecraft:flowering_azalea"}, {"id": "minecraft:oak_log"}    ]  
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:bone_meal", "count": 1} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

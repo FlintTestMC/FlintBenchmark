@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "gravel_falls_into_water_pool", 
+    "description": "Falling gravel passes through water, sinks to the pool floor, and replaces the bottom water block while the water above remains.", 
+    "tags": ["gravity", "gravel", "falling", "water"], 
+    "minecraftIds": ["minecraft:gravel", "minecraft:stone", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 8, 3] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [3, 3, 3] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [2, 3, 2] ], 
+            "with": {"id": "minecraft:water", "level": 0}
+        }, 
+        { "at": 3, "do": "place", "pos": [1, 7, 1], "block": {"id": "minecraft:gravel"} }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 7, 1], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:gravel"} }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:water" } }, 
+                { "pos": [1, 3, 1], "is": {"id": "minecraft:water" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

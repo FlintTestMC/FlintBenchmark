@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "diamond_ore_pushed_by_piston", 
+    "description": "A piston pushes a diamond ore block one block intact and no item is dropped.", 
+    "tags": ["world", "ore", "diamond-ore", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:diamond_ore", "minecraft:piston", "minecraft:redstone_block", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:piston"     , "facing": "east"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:diamond_ore"                  } }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head"}                  }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:diamond_ore"}                  }, 
+                {                   "is": "minecraft:item"               , "exists": false }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

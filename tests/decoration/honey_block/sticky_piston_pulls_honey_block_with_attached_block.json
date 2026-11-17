@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "sticky_piston_pulls_honey_block_with_attached_block", 
+    "description": "A retracting sticky piston pulls a honey block touching its head back one block, and a block stuck to the side of the honey block is pulled along with it.", 
+    "tags": ["decoration", "honey-block", "piston", "sticky-piston", "sticky", "push-reaction"], 
+    "minecraftIds": [
+        "minecraft:honey_block"   , "minecraft:stone"         , "minecraft:sticky_piston" , "minecraft:redstone_block"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {"id": "minecraft:sticky_piston", "facing": "east", "extended": "false"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:sticky_piston", "facing": "east", "extended": "true"} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston_head", "facing": "east", "type": "sticky"}     }  
+            ]
+        }, 
+        { "at": 6, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:honey_block"} }, 
+        { "at": 6, "do": "place", "pos": [2, 0, 1], "block": {"id": "minecraft:stone"} }, 
+        { "at": 7, "do": "remove", "pos": [0, 1, 0] }, 
+        {
+            "at": 14, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:sticky_piston", "facing": "east", "extended": "false"} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:honey_block"                                         } }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:air"                                                 } }, 
+                { "pos": [1, 0, 1], "is": {"id": "minecraft:stone"                                               } }, 
+                { "pos": [2, 0, 1], "is": {"id": "minecraft:air"                                                 } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

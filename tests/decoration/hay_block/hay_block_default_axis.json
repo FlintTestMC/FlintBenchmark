@@ -1,0 +1,26 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "hay_block_default_axis", 
+    "description": "A hay block placed without explicit properties has the default axis y.", 
+    "tags": ["decoration", "hay-block", "pillar", "block-state"], 
+    "minecraftIds": ["minecraft:hay_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 0, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:hay_block"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:hay_block", "axis": "y"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

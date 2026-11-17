@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_wall_torch_washed_away_by_water", 
+    "description": "Flowing water spreading into a copper wall torch replaces it and drops one copper torch item.", 
+    "tags": ["decoration", "copper-torch", "wall-torch", "fluid", "water", "drops"], 
+    "minecraftIds": [
+        "minecraft:copper_wall_torch", "minecraft:copper_torch"     , "minecraft:stone"            , 
+        "minecraft:water"            , "minecraft:item"             
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [11, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [11, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [8, 2, 0], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [9, 1, 0], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [9, 2, 0], "block": {"id": "minecraft:copper_wall_torch", "facing": "east"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [9, 2, 0], "is": {"id": "minecraft:copper_wall_torch", "facing": "east"} }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [9, 3, 0], "block": {"id": "minecraft:water", "level": 0} }, 
+        {
+            "at": 18, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [9, 2, 0], "is": {"id": "minecraft:water"} }                                    , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:copper_torch"}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

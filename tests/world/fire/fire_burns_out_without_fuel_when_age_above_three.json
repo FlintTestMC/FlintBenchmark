@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Fire Burns Out Without Fuel When Age Above Three", 
+    "description": "Fire with age 4 on stone and no flammable neighbours is still there shortly after placement and is gone long after its first scheduled tick (30 to 39 game ticks), because age above 3 on a non-flammable floor burns out.", 
+    "tags": ["fire", "burn-out", "scheduled-tick"], 
+    "minecraftIds": ["minecraft:fire", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:fire_spread_radius_around_player": -1
+            }
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {
+                "id": "minecraft:fire", 
+                "age": 4, 
+                "north": false, 
+                "east": false, 
+                "south": false, 
+                "west": false, 
+                "up": false
+            }
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:fire", 
+                        "age": 4, 
+                        "north": false, 
+                        "east": false, 
+                        "south": false, 
+                        "west": false, 
+                        "up": false
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 80, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

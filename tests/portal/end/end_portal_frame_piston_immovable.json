@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "end_portal_frame_piston_immovable", 
+    "description": "An end portal frame (destroy speed -1) cannot be pushed: a powered piston facing it does not extend and the frame keeps its position and state, while a control piston powered by the same redstone block pushes stone.", 
+    "tags": ["portal", "end_portal_frame", "piston", "redstone"], 
+    "minecraftIds": ["minecraft:end_portal_frame", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 2] ], 
+            "with": {"id": "minecraft:obsidian"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston", "facing": "east", "extended": false}      }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:end_portal_frame", "facing": "north", "eye": true} }, 
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:piston", "facing": "east", "extended": false}      }, 
+                { "pos": [1, 1, 2], "block": {"id": "minecraft:stone"}                                            }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 1], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": false}      }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:end_portal_frame", "facing": "north", "eye": true} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"}                                              }, 
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:piston", "facing": "east", "extended": true}       }, 
+                { "pos": [1, 1, 2], "is": {"id": "minecraft:piston_head", "facing": "east"}                    }, 
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:stone"}                                            }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

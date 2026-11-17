@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "iron_ore_pushed_by_piston", 
+    "description": "A piston powered by a redstone block pushes an iron ore block one block forward (normal push reaction) and its head takes the ore's old position.", 
+    "tags": ["ore", "iron-ore", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:iron_ore", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston"  , "facing": "east", "extended": false} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:iron_ore"                                     } }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": true}      }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east", "type": "normal"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:iron_ore"}                                        }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

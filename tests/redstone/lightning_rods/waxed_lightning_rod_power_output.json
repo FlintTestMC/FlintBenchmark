@@ -1,0 +1,72 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_lightning_rod_power_output", 
+    "description": "A powered upward lightning rod weakly powers a lamp beside it and above it, and strongly powers the block it stands on, which lights lamps below and beside that block (the stone is placed after the rod, because a rod placed powered does not update the block behind it). An unpowered rod powers nothing. After the pulse expires all lamps go out.", 
+    "tags": ["redstone", "lightning-rod", "waxed", "signal", "strong-power"], 
+    "minecraftIds": ["minecraft:waxed_lightning_rod", "minecraft:redstone_lamp", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, 0], [6, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+                { "pos": [0, -1, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [5, 1, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+                { "pos": [4, -1, 0], "block": {"id": "minecraft:redstone_lamp"} }, 
+                {
+                    "pos": [4, 1, 0], 
+                    "block": {
+                        "id": "minecraft:waxed_lightning_rod", 
+                        "facing": "up", 
+                        "powered": false, 
+                        "waterlogged": false
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:waxed_lightning_rod", "facing": "up", "powered": true, "waterlogged": false}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1,  1, 0], "is": {"id": "minecraft:redstone_lamp", "lit": true } }, 
+                { "pos": [0,  2, 0], "is": {"id": "minecraft:redstone_lamp", "lit": true } }, 
+                { "pos": [0, -1, 0], "is": {"id": "minecraft:redstone_lamp", "lit": true } }, 
+                { "pos": [1,  0, 0], "is": {"id": "minecraft:redstone_lamp", "lit": true } }, 
+                { "pos": [5,  1, 0], "is": {"id": "minecraft:redstone_lamp", "lit": false} }, 
+                { "pos": [4,  2, 0], "is": {"id": "minecraft:redstone_lamp", "lit": false} }, 
+                { "pos": [4, -1, 0], "is": {"id": "minecraft:redstone_lamp", "lit": false} }  
+            ]
+        }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0,  1, 0], "is": {"id": "minecraft:waxed_lightning_rod", "powered": false              } }, 
+                { "pos": [1,  1, 0], "is": {"id": "minecraft:redstone_lamp"      ,                   "lit": false} }, 
+                { "pos": [0,  2, 0], "is": {"id": "minecraft:redstone_lamp"      ,                   "lit": false} }, 
+                { "pos": [0, -1, 0], "is": {"id": "minecraft:redstone_lamp"      ,                   "lit": false} }, 
+                { "pos": [1,  0, 0], "is": {"id": "minecraft:redstone_lamp"      ,                   "lit": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

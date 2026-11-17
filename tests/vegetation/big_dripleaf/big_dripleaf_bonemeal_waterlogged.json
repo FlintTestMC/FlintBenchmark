@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "big_dripleaf_bonemeal_waterlogged", 
+    "description": "Bone meal on a waterlogged big dripleaf leaves a waterlogged stem behind; the new leaf grown into the air above is not waterlogged.", 
+    "tags": ["vegetation", "big-dripleaf", "bone-meal", "growth", "player", "waterlogging"], 
+    "minecraftIds": ["minecraft:big_dripleaf", "minecraft:big_dripleaf_stem", "minecraft:bone_meal", "minecraft:dirt"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 2, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:dirt" } }, 
+                { "pos": [ 1, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-1, 1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1,  1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 1, -1], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:big_dripleaf", "facing": "south", "waterlogged": true}
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:big_dripleaf", "facing": "south", "waterlogged": true} }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:air"                                                 } }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:bone_meal"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {"id": "minecraft:big_dripleaf_stem", "facing": "south", "waterlogged": true}
+                }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {"id": "minecraft:big_dripleaf", "facing": "south", "tilt": "none", "waterlogged": false}
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

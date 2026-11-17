@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "furnace_placement_faces_player", 
+    "description": "A furnace placed by a survival player faces back toward the player (the opposite of their horizontal look direction), starts unlit and consumes the held item.", 
+    "tags": ["container", "furnace", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:furnace", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [12, 3, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 4, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 8, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [12, 1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {"at": 1, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:furnace"}, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {"at": 2, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:furnace"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [4.5, 4, 0.5], "rot": [90, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        {"at": 3, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:furnace"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [8.5, 4, 0.5], "rot": [180, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {"at": 4, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:furnace"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [12.5, 4, 0.5], "rot": [-90, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:furnace", "facing": "north", "lit": "false"} }, 
+                { "pos": [4, 2, 0], "is": {"id": "minecraft:furnace", "facing": "east", "lit": "false"} } , 
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:furnace", "facing": "south", "lit": "false"} }, 
+                { "pos": [12, 2, 0], "is": {"id": "minecraft:furnace", "facing": "west", "lit": "false"} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                          
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

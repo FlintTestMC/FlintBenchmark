@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Soul Fire Flint And Steel On Soul Soil Places Soul Fire", 
+    "description": "Flint and steel on the top of soul soil places soul fire instead of fire, because BaseFireBlock.getState picks soul fire for blocks in the soul_fire_base_blocks tag.", 
+    "tags": ["soul_fire", "flint-and-steel", "placement", "player"], 
+    "minecraftIds": ["minecraft:soul_fire", "minecraft:soul_soil", "minecraft:flint_and_steel"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}, 
+        "world": {
+            "gamerules": {
+                "minecraft:spawn_mobs": false, 
+                "minecraft:advance_time": false, 
+                "minecraft:advance_weather": false, 
+                "minecraft:fire_spread_radius_around_player": -1
+            }
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:soul_soil"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "set_slot", "slot": "hotbar1", "item": "minecraft:flint_and_steel"}, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:soul_fire"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

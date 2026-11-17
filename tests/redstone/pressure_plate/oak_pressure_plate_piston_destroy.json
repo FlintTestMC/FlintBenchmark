@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_pressure_plate_piston_destroy", 
+    "description": "A piston extending into a wooden pressure plate destroys it and takes its place.", 
+    "tags": ["redstone", "pressure-plate", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:oak_pressure_plate", "minecraft:piston"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:piston", "facing": "up"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:oak_pressure_plate"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_pressure_plate"} }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:piston"     , "extended": true                } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston_head",                   "facing": "up"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

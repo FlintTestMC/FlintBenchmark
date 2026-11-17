@@ -1,0 +1,30 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "beacon_no_pyramid_level_zero", 
+    "description": "A beacon with open sky but no base blocks stays at level 0.", 
+    "tags": ["decoration", "beacon", "levels"], 
+    "minecraftIds": ["minecraft:beacon"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-4, 0, -4], [4, 6, 4] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 4, 0], "block": {"id": "minecraft:beacon"} }, 
+        {
+            "at": 170, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 4, 0], 
+                    "is": { "id": "minecraft:beacon", "nbt": {"Levels": 0} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

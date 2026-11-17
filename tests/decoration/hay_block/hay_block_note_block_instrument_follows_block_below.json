@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "hay_block_note_block_instrument_follows_block_below", 
+    "description": "A note block with air below plays harp; replacing the air with hay switches it to banjo, and removing the hay switches it back.", 
+    "tags": ["decoration", "hay-block", "note-block", "instrument", "block-state"], 
+    "minecraftIds": ["minecraft:hay_block", "minecraft:note_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:note_block"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:note_block", "instrument": "harp"} }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:hay_block"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:note_block", "instrument": "banjo"} }
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:note_block", "instrument": "harp"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

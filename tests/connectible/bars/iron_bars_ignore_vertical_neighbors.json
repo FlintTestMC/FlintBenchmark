@@ -1,0 +1,64 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "iron_bars_ignore_vertical_neighbors", 
+    "description": "Placing and removing solid blocks above and below connected iron bars never changes the bars' connection properties.", 
+    "tags": ["connectible", "bars", "iron-bars", "block-state", "neighbor-update"], 
+    "minecraftIds": ["minecraft:iron_bars"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [2, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:iron_bars"} }, 
+        { "at": 1, "do": "place", "pos": [-1, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0,  1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, -1, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "north"      : "false"              , 
+                        "south"      : "false"              , 
+                        "east"       : "false"              , 
+                        "west"       : "true"               , 
+                        "waterlogged": "false"                
+                    }
+                }
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 4, "do": "remove", "pos": [0, -1, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id"         : "minecraft:iron_bars", 
+                        "north"      : "false"              , 
+                        "south"      : "false"              , 
+                        "east"       : "false"              , 
+                        "west"       : "true"               , 
+                        "waterlogged": "false"                
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

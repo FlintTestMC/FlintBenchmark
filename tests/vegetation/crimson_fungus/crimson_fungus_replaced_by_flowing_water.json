@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "crimson_fungus_replaced_by_flowing_water", 
+    "description": "Flowing water from a neighbouring source replaces a crimson fungus with water.", 
+    "tags": ["vegetation", "crimson_fungus", "fluid", "replaceable"], 
+    "minecraftIds": ["minecraft:crimson_fungus", "minecraft:crimson_nylium", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [14, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [14, 3, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [12, 1, 0], [13, 2, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [13, 0, 0], "block": {"id": "minecraft:crimson_nylium"} }, 
+                { "pos": [13, 1, 0], "block": {"id": "minecraft:crimson_fungus"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [13, 1, 0], "is": {"id": "minecraft:crimson_fungus"} }
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [12, 1, 0], "block": {"id": "minecraft:water", "level": 0} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [13, 1, 0], "is": {"id": "minecraft:water"         } }, 
+                { "pos": [13, 0, 0], "is": {"id": "minecraft:crimson_nylium"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

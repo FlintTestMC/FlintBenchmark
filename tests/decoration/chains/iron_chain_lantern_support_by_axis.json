@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "iron_chain_lantern_support_by_axis", 
+    "description": "LanternBlock.canSurvive needs the chain's face support shape to cover the 2x2 centre. A vertical chain spans the whole block so a lantern hangs below it and stands on top of it; a horizontal chain (axis x or z) floats mid-block and does not touch the block face, so the hanging lantern is destroyed. Removing a vertical chain also destroys the lantern below.", 
+    "tags": ["chain", "iron_chain", "lantern", "support", "block-state"], 
+    "minecraftIds": ["minecraft:iron_chain", "minecraft:lantern"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:lantern", "hanging": true, "waterlogged": false}  }, 
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false}   }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:lantern", "hanging": true, "waterlogged": false}  }, 
+                { "pos": [2, 2, 0], "block": {"id": "minecraft:iron_chain", "axis": "x", "waterlogged": false}   }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:lantern", "hanging": true, "waterlogged": false}  }, 
+                { "pos": [4, 2, 0], "block": {"id": "minecraft:iron_chain", "axis": "z", "waterlogged": false}   }, 
+                { "pos": [6, 2, 0], "block": {"id": "minecraft:lantern", "hanging": false, "waterlogged": false} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false}   }, 
+                { "pos": [8, 1, 0], "block": {"id": "minecraft:lantern", "hanging": true, "waterlogged": false}  }, 
+                { "pos": [8, 2, 0], "block": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false}   }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:lantern", "hanging": true , "waterlogged": false} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"                                            } }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"                                            } }, 
+                { "pos": [6, 2, 0], "is": {"id": "minecraft:lantern", "hanging": false, "waterlogged": false} }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:lantern", "hanging": true , "waterlogged": false} }  
+            ]
+        }, 
+        { "at": 3, "do": "remove", "pos": [8, 2, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:air"                                          } }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:iron_chain", "axis": "y", "waterlogged": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

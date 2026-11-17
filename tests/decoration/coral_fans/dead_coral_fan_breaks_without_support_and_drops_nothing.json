@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dead_coral_fan_breaks_without_support_and_drops_nothing", 
+    "description": "Removing the block under a dead coral fan turns the fan into air and drops no item, since its loot table needs silk touch.", 
+    "tags": ["decoration", "coral", "coral-fan", "support", "drops"], 
+    "minecraftIds": ["minecraft:dead_tube_coral_fan"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [9, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [8, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [8, 2, 0], 
+            "block": {"id": "minecraft:dead_tube_coral_fan", "waterlogged": false}
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:dead_tube_coral_fan"} }
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [8, 1, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:air"}                  }, 
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:air"}                  }, 
+                {                   "is": "minecraft:item"       , "exists": false }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

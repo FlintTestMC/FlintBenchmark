@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "gravel_replaces_short_grass", 
+    "description": "Falling gravel lands in the position of short grass, replacing it, because short grass is replaceable.", 
+    "tags": ["gravity", "gravel", "falling", "replaceable"], 
+    "minecraftIds": ["minecraft:gravel", "minecraft:stone", "minecraft:short_grass"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 6, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:short_grass"} }, 
+        { "at": 1, "do": "place", "pos": [1, 5, 1], "block": {"id": "minecraft:gravel"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:short_grass"} }
+            ]
+        }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 5, 1], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:gravel"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

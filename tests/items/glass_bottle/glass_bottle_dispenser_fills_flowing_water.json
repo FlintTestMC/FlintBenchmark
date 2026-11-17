@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "glass_bottle_dispenser_fills_flowing_water", 
+    "description": "A powered dispenser facing flowing (non-source) water still turns the glass bottle into a water potion and does not remove the water.", 
+    "tags": ["glass-bottle", "dispenser", "water", "flowing", "redstone"], 
+    "minecraftIds": [
+        "minecraft:glass_bottle"  , "minecraft:potion"        , "minecraft:dispenser"     , "minecraft:water"         , 
+        "minecraft:redstone_block"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [3, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 2, 0], "block": {"id": "minecraft:water", "level": 0} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {
+                "id": "minecraft:dispenser", 
+                "facing": "east", 
+                "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:glass_bottle\"}]"}
+            }
+        }, 
+        {
+            "at": 15, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water", "level": 8} }
+            ]
+        }, 
+        { "at": 16, "do": "place", "pos": [0, 1, 1], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 25, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:dispenser", 
+                        "nbt": {
+                            "Items": "[{components: {\"minecraft:potion_contents\": {potion: \"minecraft:water\"}}, count: 1, Slot: 0b, id: \"minecraft:potion\"}]"
+                        }
+                    }
+                }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water", "level": 8} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

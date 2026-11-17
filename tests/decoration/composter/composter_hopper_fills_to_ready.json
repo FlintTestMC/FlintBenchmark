@@ -1,0 +1,78 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "composter_hopper_fills_to_ready", 
+    "description": "A hopper above a composter feeds pumpkin pies (chance 1.0) one per 8 ticks up to level 7, stops there keeping the last pie, and the composter then turns ready (level 8) 20 ticks later.", 
+    "tags": ["composter", "hopper", "block-entity", "insertion", "timing"], 
+    "minecraftIds": ["minecraft:composter", "minecraft:hopper", "minecraft:pumpkin_pie", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:composter", "level": 0} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 8, id: \"minecraft:pumpkin_pie\"}]", "TransferCooldown": 0}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 1} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 7} }
+                }
+            ]
+        }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 5} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 3} }
+                }
+            ]
+        }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 7} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 1} }
+                }
+            ]
+        }, 
+        {
+            "at": 80, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 8} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 1} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

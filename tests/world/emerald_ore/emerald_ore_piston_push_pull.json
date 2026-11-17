@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "emerald_ore_piston_push_pull", 
+    "description": "An emerald ore is pushed one block by a sticky piston and pulled back, staying emerald ore without dropping an item. This mostly exercises generic piston behaviour (ores are not destroyed by pistons); it only confirms the ore has no special push reaction.", 
+    "tags": ["world", "emerald-ore", "piston"], 
+    "minecraftIds": ["minecraft:emerald_ore", "minecraft:sticky_piston", "minecraft:redstone_block", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {"id": "minecraft:sticky_piston", "facing": "east", "extended": "false"}
+                }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:emerald_ore"} }
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:emerald_ore"}                  }, 
+                {                   "is": "minecraft:item"               , "exists": false }  
+            ]
+        }, 
+        { "at": 7, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:emerald_ore"}                  }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"}                          }, 
+                {                   "is": "minecraft:item"               , "exists": false }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

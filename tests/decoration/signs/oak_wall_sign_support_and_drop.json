@@ -1,0 +1,69 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_wall_sign_support_and_drop", 
+    "description": "An oak wall sign breaks and drops an oak sign item when the block it hangs on is removed, but stays when a neighbouring block that is not its support is removed.", 
+    "tags": ["decoration", "sign", "wall-sign", "support", "neighbor-update", "drops"], 
+    "minecraftIds": ["minecraft:oak_wall_sign"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -2], [5, 3, 2] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -2], [5, 3, 2] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -2], [5, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1,  0], "block": {"id": "minecraft:stone"                           } }, 
+                { "pos": [0, 1, -1], "block": {"id": "minecraft:oak_wall_sign", "facing": "north"} }, 
+                { "pos": [4, 1,  0], "block": {"id": "minecraft:stone"                           } }, 
+                { "pos": [4, 1, -1], "block": {"id": "minecraft:oak_wall_sign", "facing": "north"} }, 
+                { "pos": [5, 1, -1], "block": {"id": "minecraft:stone"                           } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:oak_wall_sign", "facing": "north"} }, 
+                { "pos": [4, 1, -1], "is": {"id": "minecraft:oak_wall_sign", "facing": "north"} }  
+            ]
+        }, 
+        { "at": 1, "do": "remove", "pos": [0, 1, 0] }, 
+        { "at": 1, "do": "remove", "pos": [5, 1, -1] }, 
+        { "at": 1, "do": "remove", "pos": [4, 0, -1] }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, -1], "is": {"id": "minecraft:air"} }, 
+                { "pos": [4, 1, -1], "is": {"id": "minecraft:oak_wall_sign", "facing": "north"} }, 
+                {
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "count": 1, 
+                    "pos": [0.5, 1, -0.5], 
+                    "position_tolerance": 1.5, 
+                    "Item.id": "minecraft:oak_sign"
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

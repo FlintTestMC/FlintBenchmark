@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "crimson_fungus_support_loss", 
+    "description": "A crimson fungus on crimson nylium or soul soil becomes air once the block beneath it is removed.", 
+    "tags": ["vegetation", "crimson_fungus", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:crimson_fungus", "minecraft:crimson_nylium", "minecraft:soul_soil"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [13, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -1], [13, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [12, 1, 0], [13, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [12, 0, 0], "block": {"id": "minecraft:crimson_nylium"} }, 
+                { "pos": [13, 0, 0], "block": {"id": "minecraft:soul_soil"     } }, 
+                { "pos": [12, 1, 0], "block": {"id": "minecraft:crimson_fungus"} }, 
+                { "pos": [13, 1, 0], "block": {"id": "minecraft:crimson_fungus"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [12, 1, 0], "is": {"id": "minecraft:crimson_fungus"} }, 
+                { "pos": [13, 1, 0], "is": {"id": "minecraft:crimson_fungus"} }  
+            ]
+        }, 
+        { "at": 5, "do": "remove", "pos": [12, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [13, 0, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [12, 0, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [12, 1, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [13, 0, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [13, 1, 0], "is": {"id": "minecraft:air"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

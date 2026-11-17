@@ -1,0 +1,59 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "copper_ore_sticky_piston_pull", 
+    "description": "A sticky piston pushes copper ore out ahead of it when powered and pulls it back when power is removed.", 
+    "tags": ["copper_ore", "sticky_piston", "push-reaction", "redstone"], 
+    "minecraftIds": [
+        "minecraft:copper_ore"    , "minecraft:sticky_piston" , "minecraft:piston_head"   , "minecraft:redstone_block"
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -1], [3, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -1], [3, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [-1, 1, 0], 
+                    "block": {"id": "minecraft:sticky_piston", "facing": "east", "extended": "false"}
+                }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:copper_ore"} }
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [-2, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:sticky_piston", "facing": "east", "extended": "true"} }, 
+                { "pos": [0, 1, 0] , "is": {"id": "minecraft:piston_head", "facing": "east", "type": "sticky"}     }, 
+                { "pos": [1, 1, 0] , "is": {"id": "minecraft:copper_ore"}                                          }, 
+                { "pos": [2, 1, 0] , "is": {"id": "minecraft:air"}                                                 }  
+            ]
+        }, 
+        { "at": 9, "do": "remove", "pos": [-2, 1, 0] }, 
+        {
+            "at": 16, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:sticky_piston", "facing": "east", "extended": "false"} }, 
+                { "pos": [ 0, 1, 0], "is": {"id": "minecraft:copper_ore"                                          } }, 
+                { "pos": [ 1, 1, 0], "is": {"id": "minecraft:air"                                                 } }, 
+                { "pos": [ 2, 1, 0], "is": {"id": "minecraft:air"                                                 } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

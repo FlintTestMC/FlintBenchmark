@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "dragon_egg_right_click_with_block_in_hand", 
+    "description": "Right-clicking a dragon egg while holding stone still teleports the egg (the block passes the click to useWithoutItem), and the stone is neither placed nor consumed. Like the empty-hand test it only asserts that the original position becomes air; it does not locate the destination.", 
+    "tags": ["gravity", "dragon-egg", "interaction", "teleport", "player"], 
+    "minecraftIds": ["minecraft:dragon_egg", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-7, 0, -7], [7, 4, 7] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:stone", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-7, 0, -7], [7, 0, 7] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:dragon_egg"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"              }                    }, 
+                {                   "is": {"id": "minecraft:stone", "count": 2}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

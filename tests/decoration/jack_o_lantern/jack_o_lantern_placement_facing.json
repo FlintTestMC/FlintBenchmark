@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "jack_o_lantern_placement_facing", 
+    "description": "A jack o'lantern placed by a player faces back towards the player: CarvedPumpkinBlock.getStateForPlacement uses the opposite of the player's horizontal direction.", 
+    "tags": ["decoration", "jack-o-lantern", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:jack_o_lantern", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -2], [2, 2, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:jack_o_lantern", "count": 4} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, -1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0,  1,  2], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-2,  1,  0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0,  1, -2], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 2,  1,  0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [90, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [180, 0] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [0.5, 0, 0.5], "rot": [-90, 0] }, 
+        {"at": 8, "do": "interact"}, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1,  1], "is": {"id": "minecraft:jack_o_lantern", "facing": "north"}                    }, 
+                { "pos": [-1, 1,  0], "is": {"id": "minecraft:jack_o_lantern", "facing": "east"}                     }, 
+                { "pos": [ 0, 1, -1], "is": {"id": "minecraft:jack_o_lantern", "facing": "south"}                    }, 
+                { "pos": [ 1, 1,  0], "is": {"id": "minecraft:jack_o_lantern", "facing": "west"}                     }, 
+                {                     "is": "empty"                                              , "slot": "hotbar1" }  
+            ]
+        }
+    ]
+}
+

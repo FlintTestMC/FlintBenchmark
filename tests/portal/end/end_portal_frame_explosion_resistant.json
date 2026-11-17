@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "end_portal_frame_explosion_resistant", 
+    "description": "End portal frames (blast resistance 3600000) survive a TNT explosion right next to them with their facing and eye state unchanged, while glass next to the TNT is destroyed.", 
+    "tags": ["portal", "end_portal_frame", "explosion", "tnt"], 
+    "minecraftIds": ["minecraft:end_portal_frame", "minecraft:tnt", "minecraft:glass", "minecraft:obsidian"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [4, 0, 2] ], 
+            "with": {"id": "minecraft:obsidian"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1, 1], "block": {"id": "minecraft:end_portal_frame", "facing": "east", "eye": false} }, 
+                { "pos": [3, 1, 1], "block": {"id": "minecraft:end_portal_frame", "facing": "west", "eye": true } }, 
+                { "pos": [2, 1, 2], "block": {"id": "minecraft:glass"                                           } }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "summon", 
+            "entity_alias": "tnt", 
+            "entity_type": "minecraft:tnt", 
+            "pos": [2.5, 1, 1.5], 
+            "nbt": {"fuse": "1s"}
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:end_portal_frame", "facing": "east", "eye": false} }, 
+                { "pos": [3, 1, 1], "is": {"id": "minecraft:end_portal_frame", "facing": "west", "eye": true } }, 
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:air"                                             } }, 
+                { "pos": [2, 0, 1], "is": {"id": "minecraft:obsidian"                                        } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

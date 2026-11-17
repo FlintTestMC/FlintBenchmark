@@ -1,0 +1,77 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dead_bush_support_loss_drops_sticks", 
+    "description": "Ten dead bushes that break because their sand support is removed (no shears) drop sticks from the loot table fallback, so at least one stick item appears.", 
+    "tags": ["vegetation", "dead_bush", "support", "drops", "neighbor-update"], 
+    "minecraftIds": ["minecraft:dead_bush", "minecraft:sand", "minecraft:stick", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [10, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, -1, -1], [10, 3, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [9, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 4, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [1, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 4, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 4, "do": "place", "pos": [3, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [3, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 4, "do": "place", "pos": [4, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 4, "do": "place", "pos": [5, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [5, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 4, "do": "place", "pos": [6, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [6, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 4, "do": "place", "pos": [7, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [7, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 4, "do": "place", "pos": [8, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [8, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 4, "do": "place", "pos": [9, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 4, "do": "place", "pos": [9, 1, 0], "block": {"id": "minecraft:dead_bush"} }, 
+        { "at": 5, "do": "remove", "pos": [0, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [1, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [2, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [3, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [4, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [5, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [6, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [7, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [8, 0, 0] }, 
+        { "at": 5, "do": "remove", "pos": [9, 0, 0] }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                { "pos": [5, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                { "pos": [9, 1, 0], "is": {"id": "minecraft:air"}                                                   }, 
+                {                   "is": "minecraft:item"       , "exists": true, "Item.id": "\"minecraft:stick\"" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dead_coral_fan_placed_in_water_is_waterlogged", 
+    "description": "A survival player using a dead coral fan on stone under a water source block places a waterlogged floor fan (getStateForPlacement uses the replaced full water).", 
+    "tags": ["decoration", "coral", "coral-fan", "placement", "waterlogging", "water", "player"], 
+    "minecraftIds": ["minecraft:dead_tube_coral_fan", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:dead_tube_coral_fan", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:water"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:dead_tube_coral_fan", "waterlogged": true} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                        
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,39 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "crimson_pressure_plate_default_state", 
+    "description": "A placed crimson pressure plate is unpowered and stays unpowered while nothing stands on it.", 
+    "tags": ["redstone", "pressure-plate", "block-state"], 
+    "minecraftIds": ["minecraft:crimson_pressure_plate"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:crimson_pressure_plate"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:crimson_pressure_plate", "powered": false} }
+            ]
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:crimson_pressure_plate", "powered": false} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

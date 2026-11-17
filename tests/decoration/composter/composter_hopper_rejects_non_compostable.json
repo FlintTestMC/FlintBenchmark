@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "composter_hopper_rejects_non_compostable", 
+    "description": "A hopper above a composter holding a non-compostable item (stone) inserts nothing.", 
+    "tags": ["composter", "hopper", "block-entity", "insertion"], 
+    "minecraftIds": ["minecraft:composter", "minecraft:hopper", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:composter", "level": 0} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "down", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 4, id: \"minecraft:stone\"}]", "TransferCooldown": 0}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 0} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 4} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

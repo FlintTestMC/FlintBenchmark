@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "flowering_azalea_bonemeal_grows_tree", 
+    "description": "Repeated bone meal on a flowering azalea in open air eventually grows an azalea tree: the azalea is replaced by an oak log and the block below it becomes rooted dirt.", 
+    "tags": ["vegetation", "flowering-azalea", "bone-meal", "growth", "tree", "player"], 
+    "minecraftIds": [
+        "minecraft:flowering_azalea", "minecraft:grass_block"     , "minecraft:oak_log"         , 
+        "minecraft:rooted_dirt"     , "minecraft:bone_meal"       
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-5, 0, -5], [5, 14, 5] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 40} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-5, 0, -5], [5, 14, 5] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-5, 0, -5], [5, 0, 5] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:grass_block"     } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:flowering_azalea"} }  
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {
+            "at": [
+                 6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 
+                32, 33, 34, 35
+            ], 
+            "do": "interact"
+        }, 
+        {
+            "at": 37, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:rooted_dirt"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_log"    } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

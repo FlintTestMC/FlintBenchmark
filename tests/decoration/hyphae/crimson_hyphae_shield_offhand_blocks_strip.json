@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "Crimson Hyphae Shield Offhand Blocks Strip", 
+    "description": "With a shield in the off hand and no sneaking, a main-hand axe leaves crimson hyphae unstripped.", 
+    "tags": ["hyphae", "axe", "shield", "player"], 
+    "minecraftIds": [
+        "minecraft:crimson_hyphae", "minecraft:crimson_hyphae", "minecraft:iron_axe"      , "minecraft:stone"         , 
+        "minecraft:shield"        
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:iron_axe"}, "off_hand": {"id": "minecraft:shield"} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                      } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:crimson_hyphae", "axis": "y"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:crimson_hyphae", "axis": "y"}                    }, 
+                {                   "is": {"id": "minecraft:iron_axe"                   }, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

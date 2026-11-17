@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_wall_torch_ignores_other_neighbors", 
+    "description": "A copper wall torch stays when the blocks below, above and beside it are removed, because only its attached side is checked.", 
+    "tags": ["decoration", "copper-torch", "wall-torch", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:copper_wall_torch", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [11, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [11, 4, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 8, 1,  0], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [ 9, 1,  0], "block": {"id": "minecraft:copper_wall_torch", "facing": "east"} }, 
+                { "pos": [ 9, 0,  0], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [ 9, 2,  0], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [10, 1,  0], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [ 9, 1,  1], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [ 9, 1, -1], "block": {"id": "minecraft:stone"                              } }  
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [9, 0, 0] }, 
+        { "at": 2, "do": "remove", "pos": [9, 2, 0] }, 
+        { "at": 2, "do": "remove", "pos": [10, 1, 0] }, 
+        { "at": 2, "do": "remove", "pos": [9, 1, 1] }, 
+        { "at": 2, "do": "remove", "pos": [9, 1, -1] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [9, 0, 0], "is": {"id": "minecraft:air"                                } }, 
+                { "pos": [9, 1, 1], "is": {"id": "minecraft:air"                                } }, 
+                { "pos": [9, 1, 0], "is": {"id": "minecraft:copper_wall_torch", "facing": "east"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

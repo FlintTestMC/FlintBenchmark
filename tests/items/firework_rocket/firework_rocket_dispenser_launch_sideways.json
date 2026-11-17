@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:firework_rocket", "minecraft:dispenser", "minecraft:redstone_block"], 
+    "name": "Firework Rocket Dispenser Launch Sideways", 
+    "description": "A powered dispenser facing east fires its firework rocket as an entity out of its east face and its inventory is emptied.", 
+    "tags": ["item", "firework-rocket", "dispenser", "redstone"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 4, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {
+                "id": "minecraft:dispenser", 
+                "facing": "east", 
+                "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:firework_rocket\"}]"}
+            }
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:dispenser", "nbt": {"Items": []} }
+                }, 
+                {
+                    "is": "minecraft:firework_rocket", 
+                    "exists": true, 
+                    "count": 1, 
+                    "pos": [3, 1.5, 0.5], 
+                    "position_tolerance": 1
+                }
+            ]
+        }
+    ]
+}
+

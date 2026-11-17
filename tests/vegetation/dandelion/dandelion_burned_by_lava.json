@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dandelion_burned_by_lava", 
+    "description": "Lava flowing into a dandelion replaces it and the dandelion is destroyed without dropping an item.", 
+    "tags": ["vegetation", "dandelion", "fluid", "drops"], 
+    "minecraftIds": ["minecraft:dandelion", "minecraft:dirt", "minecraft:stone", "minecraft:lava", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [9, 3, 1] ]
+        }, 
+        "player": {"game_mode": "Spectator"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [9, 3, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [9, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 4, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [7, 0, 0], "block": {"id": "minecraft:dirt"     } }, 
+                { "pos": [7, 1, 0], "block": {"id": "minecraft:dandelion"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:dandelion"}                  }, 
+                {                   "is": "minecraft:item"             , "exists": false }  
+            ]
+        }, 
+        { "at": 6, "do": "place", "pos": [6, 1, 0], "block": {"id": "minecraft:lava"} }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:lava"}                  }, 
+                {                   "is": "minecraft:item"        , "exists": false }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "ender_chest_not_pushed_by_piston", 
+    "description": "A powered piston facing an ender chest cannot push it because it has a block entity, so the piston stays retracted and the chest is unchanged.", 
+    "tags": ["container", "ender-chest", "piston", "push-reaction", "redstone"], 
+    "minecraftIds": ["minecraft:ender_chest", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [3, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston", "facing": "east", "extended": false} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:ender_chest", "facing": "south", "waterlogged": false} }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [0, 1, 1], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": false}          }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:ender_chest", "facing": "south", "waterlogged": false} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:air"}                                                  }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

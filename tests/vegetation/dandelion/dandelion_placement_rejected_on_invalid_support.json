@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dandelion_placement_rejected_on_invalid_support", 
+    "description": "Dandelion items used on stone and sand do not place a dandelion and are not consumed, because neither block supports vegetation.", 
+    "tags": ["vegetation", "dandelion", "placement", "supports-vegetation", "player"], 
+    "minecraftIds": ["minecraft:dandelion", "minecraft:stone", "minecraft:sand"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, -1], [9, 4, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:dandelion", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "tp", "entity_alias": "player", "pos": [7.5, 6, 0.5] }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [6, -1, -1], [9, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 4, 
+            "do": "fill", 
+            "region": [ [7, 1, 0], [8, 3, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 4, "do": "place", "pos": [8, 0, 0], "block": {"id": "minecraft:sand"} }, 
+        { "at": 5, "do": "tp", "entity_alias": "player", "pos": [7.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        { "at": 6, "do": "tp", "entity_alias": "player", "pos": [8.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 6, "do": "interact"}, 
+        { "at": 7, "do": "tp", "entity_alias": "player", "pos": [7.5, 6, 0.5] }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [7, 0, 0], "is": {"id": "minecraft:stone"                }                    }, 
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:air"                  }                    }, 
+                { "pos": [8, 0, 0], "is": {"id": "minecraft:sand"                 }                    }, 
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:air"                  }                    }, 
+                {                   "is": {"id": "minecraft:dandelion", "count": 2}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

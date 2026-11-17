@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bed_use_thunderstorm_daytime", 
+    "description": "Using a bed during a daytime thunderstorm lets the player sleep, so both halves become occupied.", 
+    "tags": ["decoration", "bed", "sleeping", "player"], 
+    "minecraftIds": ["minecraft:red_bed"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 4, 3] ]
+        }, 
+        "player": {"game_mode": "Survival"}, 
+        "world": {"time": "minecraft:noon", "weather": "thunder"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {"id": "minecraft:red_bed", "facing": "south", "part": "foot"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 1], 
+            "block": {"id": "minecraft:red_bed", "facing": "south", "part": "head"}
+        }, 
+        { "at": 150, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 150, "do": "interact"}, 
+        {
+            "at": 152, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:red_bed", "part": "foot", "occupied": true} }, 
+                { "pos": [0, 0, 1], "is": {"id": "minecraft:red_bed", "part": "head", "occupied": true} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

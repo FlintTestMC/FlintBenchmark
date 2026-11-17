@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "composter_hopper_side_cannot_insert", 
+    "description": "A hopper feeding the composter from the side inserts nothing, because the input container only accepts items through its top face.", 
+    "tags": ["composter", "hopper", "block-entity", "insertion", "side-face"], 
+    "minecraftIds": ["minecraft:composter", "minecraft:hopper", "minecraft:pumpkin_pie", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:composter", "level": 0} }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "west", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 4, id: \"minecraft:pumpkin_pie\"}]", "TransferCooldown": 0}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 0} }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items[0].count": 4} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

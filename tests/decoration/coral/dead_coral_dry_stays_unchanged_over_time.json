@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "dead_coral_dry_stays_unchanged_over_time", 
+    "description": "A non-waterlogged dead tube coral away from water stays exactly as it was after well over the maximum 100 tick die delay, unlike living coral.", 
+    "tags": ["decoration", "coral", "ticking", "block-state"], 
+    "minecraftIds": ["minecraft:dead_tube_coral", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"                                  } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:dead_tube_coral", "waterlogged": "false"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dead_tube_coral", "waterlogged": "false"} }
+            ]
+        }, 
+        {
+            "at": 150, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dead_tube_coral", "waterlogged": "false"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

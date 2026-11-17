@@ -1,0 +1,30 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "flint_and_steel_adventure_mode_places_no_fire", 
+    "description": "In adventure mode flint and steel does nothing on plain stone: ItemStack.useOn returns PASS because the player may not build and the block is not in the can_place_on list. The game mode is set per test, so the next test starts with its own mode again.", 
+    "tags": ["item", "flint-and-steel", "adventure", "edge-case", "player"], 
+    "minecraftIds": ["minecraft:flint_and_steel", "minecraft:stone", "minecraft:fire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Adventure"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:flint_and_steel"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"            }                    }, 
+                {                   "is": {"id": "minecraft:flint_and_steel"}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

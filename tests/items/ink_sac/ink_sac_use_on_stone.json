@@ -1,0 +1,40 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "minecraftIds": ["minecraft:ink_sac", "minecraft:stone"], 
+    "name": "ink_sac_use_on_stone", 
+    "description": "Using an ink sac on a stone block does nothing: InkSacItem has no useOn behaviour, so the block and the stack stay unchanged.", 
+    "tags": ["item", "ink_sac", "sign", "block-entity", "interaction", "player"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 3] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:ink_sac", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 1, 0.5], "rot": [0, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 2], "is": {"id": "minecraft:stone"              }                    }, 
+                { "pos": [0, 1, 1], "is": {"id": "minecraft:air"                }                    }, 
+                {                   "is": {"id": "minecraft:ink_sac", "count": 2}, "slot": "hotbar1" }  
+            ]
+        }
+    ]
+}
+

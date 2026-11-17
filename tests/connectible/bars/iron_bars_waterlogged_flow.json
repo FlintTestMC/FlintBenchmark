@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "iron_bars_waterlogged_flow", 
+    "description": "Waterlogged iron bars act as a water source: water spreads sideways from them onto a floor wide enough that no drop within 4 blocks biases the direction.", 
+    "tags": ["connectible", "bars", "iron-bars", "waterlogged", "fluid"], 
+    "minecraftIds": ["minecraft:iron_bars", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-5, 0, -5], [5, 2, 5] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-5, 0, -5], [5, 0, 5] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:iron_bars", "waterlogged": "true"} }, 
+        {
+            "at": 20, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1,  0], "is": {"id": "minecraft:iron_bars", "waterlogged": "true"} }, 
+                { "pos": [ 1, 1,  0], "is": {"id": "minecraft:water"                           } }, 
+                { "pos": [-1, 1,  0], "is": {"id": "minecraft:water"                           } }, 
+                { "pos": [ 0, 1,  1], "is": {"id": "minecraft:water"                           } }, 
+                { "pos": [ 0, 1, -1], "is": {"id": "minecraft:water"                           } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

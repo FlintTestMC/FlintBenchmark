@@ -1,0 +1,39 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_bulb_placed_state_recheck", 
+    "description": "Placing a waxed copper bulb re-runs the power check against its stored state: a lit unpowered bulb next to a power source toggles off and becomes powered, while a powered bulb with no power only clears its powered flag and keeps its lit state.", 
+    "tags": ["redstone", "copper-bulb", "waxed-copper-bulb", "placement", "power"], 
+    "minecraftIds": ["minecraft:waxed_copper_bulb", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [2, 1, 4] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [0, 0, 0] ], 
+            "with": {"id": "minecraft:waxed_copper_bulb", "lit": true, "powered": false}
+        }, 
+        {
+            "at": 2, 
+            "do": "fill", 
+            "region": [ [0, 0, 3], [0, 0, 3] ], 
+            "with": {"id": "minecraft:waxed_copper_bulb", "lit": true, "powered": true}
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_copper_bulb", "lit": false, "powered": true } }, 
+                { "pos": [0, 0, 3], "is": {"id": "minecraft:waxed_copper_bulb", "lit": true , "powered": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

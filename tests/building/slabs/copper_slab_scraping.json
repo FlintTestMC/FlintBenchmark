@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_slab_scraping", 
+    "description": "An axe scrapes an exposed cut copper slab back to a plain cut copper slab keeping its type and waterlogging, and does nothing to an unaffected one.", 
+    "tags": ["building", "slab", "copper", "weathering", "scrape", "player"], 
+    "minecraftIds": ["minecraft:exposed_cut_copper_slab", "minecraft:cut_copper_slab", "minecraft:iron_axe"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [10, 3, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:iron_axe", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Creative"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "block": {"id": "minecraft:exposed_cut_copper_slab", "type": "top", "waterlogged": true}
+                }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:exposed_cut_copper_slab", "type": "double"} }, 
+                { "pos": [6, 1, 0], "block": {"id": "minecraft:cut_copper_slab", "type": "bottom"} }
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [3.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [6.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:cut_copper_slab", "type": "top"   , "waterlogged": true} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:cut_copper_slab", "type": "double"                     } }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:cut_copper_slab", "type": "bottom"                     } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

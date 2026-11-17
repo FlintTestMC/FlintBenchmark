@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "ender_chest_comparator_signal_zero", 
+    "description": "A comparator reading an ender chest outputs 0 because it has no container to measure, while one reading a chest holding an item outputs 1.", 
+    "tags": ["container", "ender-chest", "comparator", "redstone", "block-entity"], 
+    "minecraftIds": ["minecraft:ender_chest", "minecraft:comparator", "minecraft:chest", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [1, 1, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [1, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:comparator", "facing": "west"} }, 
+                { "pos": [1, 1, 2], "block": {"id": "minecraft:comparator", "facing": "west"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:ender_chest", "facing": "east", "waterlogged": false} }, 
+                {
+                    "pos": [0, 1, 2], 
+                    "block": {
+                        "id": "minecraft:chest", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:stone\"}]"}
+                    }
+                }
+            ]
+        }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [1, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 0} }
+                }, 
+                {
+                    "pos": [1, 1, 2], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 1} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

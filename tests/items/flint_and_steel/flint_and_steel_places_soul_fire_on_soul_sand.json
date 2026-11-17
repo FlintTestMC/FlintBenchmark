@@ -1,0 +1,29 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "flint_and_steel_places_soul_fire_on_soul_sand", 
+    "description": "Using flint and steel on the top of soul sand places soul fire instead of fire, because soul sand is in the soul_fire_base_blocks tag (BaseFireBlock.getState).", 
+    "tags": ["item", "flint-and-steel", "soul-fire", "player"], 
+    "minecraftIds": ["minecraft:flint_and_steel", "minecraft:soul_fire", "minecraft:soul_sand"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:soul_sand"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact", "item": "minecraft:flint_and_steel"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:soul_fire"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

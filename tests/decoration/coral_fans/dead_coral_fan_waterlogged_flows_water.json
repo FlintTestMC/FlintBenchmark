@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "dead_coral_fan_waterlogged_flows_water", 
+    "description": "A waterlogged dead coral fan acts as a water source: after a neighbour update, water flows out of it down a walled one-wide corridor with increasing levels.", 
+    "tags": ["decoration", "coral", "coral-fan", "waterlogging", "water", "fluid"], 
+    "minecraftIds": ["minecraft:dead_tube_coral_fan", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 2, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [0, 1, 0], [3, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 2, 
+            "do": "place", 
+            "pos": [0, 1, 0], 
+            "block": {"id": "minecraft:dead_tube_coral_fan", "waterlogged": true}
+        }, 
+        { "at": 3, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:glass"} }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dead_tube_coral_fan", "waterlogged": true            } }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:water"              ,                      "level": 1} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:water"              ,                      "level": 2} }, 
+                { "pos": [3, 1, 0], "is": {"id": "minecraft:water"              ,                      "level": 3} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

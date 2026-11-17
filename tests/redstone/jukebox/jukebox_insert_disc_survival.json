@@ -1,0 +1,76 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "jukebox_insert_disc_survival", 
+    "description": "A survival player using a cat music disc on an empty jukebox inserts it: has_record becomes true, RecordItem holds the disc, the held disc is consumed, the playing jukebox powers an adjacent lamp, and a comparator reads the disc's output of 2.", 
+    "tags": ["jukebox", "music-disc", "block-entity", "comparator", "redstone", "player"], 
+    "minecraftIds": [
+        "minecraft:jukebox"       , "minecraft:music_disc_cat", "minecraft:redstone_lamp" , "minecraft:comparator"    , 
+        "minecraft:stone"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 1, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:music_disc_cat", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 1, 0], "block": {"id": "minecraft:jukebox"                        } }, 
+                { "pos": [-1, 1, 0], "block": {"id": "minecraft:redstone_lamp"                  } }, 
+                { "pos": [ 1, 1, 0], "block": {"id": "minecraft:comparator"   , "facing": "west"} }  
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:jukebox", "has_record": false} }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:redstone_lamp", "lit": false} }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 0} }
+                }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:music_disc_cat", "count": 1} }
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 9, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 1, 0], 
+                    "is": {
+                        "id": "minecraft:jukebox", 
+                        "has_record": true, 
+                        "nbt": {"RecordItem.id": "minecraft:music_disc_cat", "RecordItem.count": 1}
+                    }
+                }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:redstone_lamp", "lit": true} }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "is": { "id": "minecraft:comparator", "nbt": {"OutputSignal": 2} }
+                }, 
+                {"slot": "hotbar1", "is": "empty"}
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

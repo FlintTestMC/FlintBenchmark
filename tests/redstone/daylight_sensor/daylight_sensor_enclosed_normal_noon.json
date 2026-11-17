@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "daylight_sensor_enclosed_normal_noon", 
+    "description": "A normal daylight detector fully enclosed in stone gets no sky light and outputs 0 even at noon.", 
+    "tags": ["redstone", "daylight-sensor", "sky-light"], 
+    "minecraftIds": ["minecraft:daylight_detector", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -1], [2, 3, 1] ]
+        }, 
+        "world": {"time": "6000"}
+    }, 
+    "timeline": [
+        {
+            "at": 105, 
+            "do": "fill", 
+            "region": [ [0, -1, -1], [2, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 106, 
+            "do": "place", 
+            "pos": [1, 0, 0], 
+            "block": {"id": "minecraft:daylight_detector", "inverted": false}
+        }, 
+        {
+            "at": 130, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": false, "power": 0} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

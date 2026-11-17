@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "jack_o_lantern_dispenser_drops_item", 
+    "description": "A powered dispenser holding a jack o'lantern shoots it out as an item instead of placing it (only the carved pumpkin has a dispenser behavior), so a snow golem pattern it points at is not completed and no golem spawns.", 
+    "tags": ["decoration", "jack-o-lantern", "dispenser", "golem", "redstone"], 
+    "minecraftIds": [
+        "minecraft:jack_o_lantern", "minecraft:dispenser"     , "minecraft:snow_block"    , "minecraft:redstone_block", 
+        "minecraft:snow_golem"    , "minecraft:stone"         
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, -1, 0], [2, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, -1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:snow_block"} }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:snow_block"} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "block": {
+                        "id": "minecraft:dispenser", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[{Slot: 0b, count: 1, id: \"minecraft:jack_o_lantern\"}]"}
+                    }
+                }
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 3, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 2, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:snow_block"} }, 
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:snow_block"} }, 
+                {
+                    "pos": [0, 2, 0], 
+                    "is": { "id": "minecraft:dispenser", "nbt": {"Items": []} }
+                }, 
+                {
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "count": 1, 
+                    "pos": [1.5, 2.5, 0.5], 
+                    "position_tolerance": 3, 
+                    "Item.id": "minecraft:jack_o_lantern"
+                }, 
+                { "is": "minecraft:snow_golem", "exists": false, "pos": [1.5, 0.5, 0.5], "position_tolerance": 5 }
+            ]
+        }
+    ]
+}
+

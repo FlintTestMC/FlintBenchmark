@@ -1,0 +1,39 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "daylight_sensor_corrects_stale_power", 
+    "description": "A daylight detector placed with a wrong stored power of 7 at noon corrects itself to 15 on its next 20-tick update.", 
+    "tags": ["redstone", "daylight-sensor", "tick"], 
+    "minecraftIds": ["minecraft:daylight_detector"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -1], [2, 3, 1] ]
+        }, 
+        "world": {"time": "6000"}
+    }, 
+    "timeline": [
+        {
+            "at": 105, 
+            "do": "place", 
+            "pos": [1, 0, 0], 
+            "block": {"id": "minecraft:daylight_detector", "inverted": false, "power": 7}
+        }, 
+        {
+            "at": 106, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:daylight_detector", "power": 7} }
+            ]
+        }, 
+        {
+            "at": 130, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": false, "power": 15} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

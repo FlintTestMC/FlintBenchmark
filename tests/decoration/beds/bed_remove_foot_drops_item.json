@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bed_remove_foot_drops_item", 
+    "description": "Removing the foot of a bed also destroys the head, and the head's loot drops exactly one bed item.", 
+    "tags": ["decoration", "bed", "drops", "neighbor-update"], 
+    "minecraftIds": ["minecraft:red_bed"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 3, 3] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 0], 
+            "block": {"id": "minecraft:red_bed", "facing": "south", "part": "foot"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [0, 0, 1], 
+            "block": {"id": "minecraft:red_bed", "facing": "south", "part": "head"}
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:red_bed", "facing": "south", "part": "foot"} }, 
+                { "pos": [0, 0, 1], "is": {"id": "minecraft:red_bed", "facing": "south", "part": "head"} }  
+            ]
+        }, 
+        { "at": 1, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"} }                                 , 
+                { "pos": [0, 0, 1], "is": {"id": "minecraft:air"} }                                 , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:red_bed"}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

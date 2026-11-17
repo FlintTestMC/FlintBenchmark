@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "axe_strip_wood_and_stems", 
+    "description": "Using an axe strips oak wood, crimson stems, warped hyphae and bamboo blocks into their stripped variants (the STRIPPABLES map in AxeItem).", 
+    "tags": ["item", "axe", "interaction", "player", "strip"], 
+    "minecraftIds": [
+        "minecraft:golden_axe"   , "minecraft:oak_wood"     , "minecraft:crimson_stem" , "minecraft:warped_hyphae", 
+        "minecraft:bamboo_block" 
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [6, 0, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:golden_axe", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:oak_wood"     } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:crimson_stem" } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:warped_hyphae"} }, 
+                { "pos": [6, 0, 0], "block": {"id": "minecraft:bamboo_block" } }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [6.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stripped_oak_wood"     , "axis": "y"} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:stripped_crimson_stem" , "axis": "y"} }, 
+                { "pos": [4, 0, 0], "is": {"id": "minecraft:stripped_warped_hyphae", "axis": "y"} }, 
+                { "pos": [6, 0, 0], "is": {"id": "minecraft:stripped_bamboo_block" , "axis": "y"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,349 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "light_weighted_pressure_plate_power_levels", 
+    "description": "A light weighted pressure plate outputs power equal to the number of entities on it, capped at 15.", 
+    "tags": ["redstone", "pressure-plate", "weighted", "entity-trigger", "power"], 
+    "minecraftIds": ["minecraft:light_weighted_pressure_plate"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [8, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [8, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:light_weighted_pressure_plate"} }, 
+        { "at": 1, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:light_weighted_pressure_plate"} }, 
+        { "at": 1, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:light_weighted_pressure_plate"} }, 
+        { "at": 1, "do": "place", "pos": [6, 1, 0], "block": {"id": "minecraft:light_weighted_pressure_plate"} }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s0_0", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [0.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s1_0", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [2.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s1_1", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [2.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s1_2", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [2.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s1_3", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [2.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s1_4", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [2.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s1_5", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [2.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s1_6", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [2.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_0", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_1", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_2", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_3", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_4", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_5", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_6", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_7", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_8", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_9", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_10", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_11", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_12", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_13", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s2_14", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_0", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_1", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_2", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_3", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_4", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_5", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_6", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_7", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_8", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_9", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_10", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_11", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_12", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_13", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_14", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_15", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_16", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_17", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_18", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "s3_19", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [6.5, 1, 0.5]
+        }, 
+        {
+            "at": 14, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power":  1} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power":  7} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power": 15} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power": 15} }  
+            ]
+        }, 
+        {
+            "at": 40, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power":  1} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power":  7} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power": 15} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:light_weighted_pressure_plate", "power": 15} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "bed_destroyed_by_piston", 
+    "description": "A piston pushing into a bed destroys it instead of moving it, so neither half survives and the bed is not pushed along.", 
+    "tags": ["decoration", "bed", "piston", "push-reaction", "redstone"], 
+    "minecraftIds": ["minecraft:red_bed", "minecraft:piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [3, 2, 4] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [1, 0, 0], "block": {"id": "minecraft:piston", "facing": "south"} }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [1, 0, 1], 
+            "block": {"id": "minecraft:red_bed", "facing": "south", "part": "foot"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [1, 0, 2], 
+            "block": {"id": "minecraft:red_bed", "facing": "south", "part": "head"}
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston" , "extended": false                } }, 
+                { "pos": [1, 0, 1], "is": {"id": "minecraft:red_bed",                    "part": "foot"} }, 
+                { "pos": [1, 0, 2], "is": {"id": "minecraft:red_bed",                    "part": "head"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:piston"     , "extended": true                   } }, 
+                { "pos": [1, 0, 1], "is": {"id": "minecraft:piston_head",                   "facing": "south"} }, 
+                { "pos": [1, 0, 2], "is": {"id": "minecraft:air"                                             } }, 
+                { "pos": [1, 0, 3], "is": {"id": "minecraft:air"                                             } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

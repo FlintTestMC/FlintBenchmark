@@ -1,0 +1,54 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "lantern_destroyed_by_piston", 
+    "description": "Lanterns have PushReaction.DESTROY: an extending piston breaks the lantern in front of it instead of pushing it, drops one lantern item, and extends fully.", 
+    "tags": ["decoration", "lantern", "piston", "push-reaction", "redstone", "drops"], 
+    "minecraftIds": [
+        "minecraft:lantern"       , "minecraft:piston"        , "minecraft:piston_head"   , "minecraft:redstone_block", 
+        "minecraft:item"          
+    ], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -2], [12, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [8, 0, 0], [12, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [9, 1, 0] , "block": {"id": "minecraft:piston", "facing": "east", "extended": false}     }, 
+                { "pos": [10, 1, 0], "block": {"id": "minecraft:lantern", "hanging": false, "waterlogged": false} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [10, 1, 0], "is": {"id": "minecraft:lantern", "hanging": false, "waterlogged": false} }, 
+                {"is": "minecraft:item", "exists": false}                                                         
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [8, 1, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [9, 1, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": true} }           , 
+                { "pos": [10, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east", "type": "normal"} }     , 
+                { "pos": [11, 1, 0], "is": {"id": "minecraft:air"} }                                                 , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:lantern", "Item.count": 1}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

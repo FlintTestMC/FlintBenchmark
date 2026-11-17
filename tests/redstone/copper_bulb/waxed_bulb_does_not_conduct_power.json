@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_bulb_does_not_conduct_power", 
+    "description": "A powered waxed copper bulb is not a power source: a redstone lamp on its far side stays off.", 
+    "tags": ["redstone", "copper-bulb", "waxed-copper-bulb", "power", "redstone-lamp"], 
+    "minecraftIds": ["minecraft:waxed_copper_bulb", "minecraft:redstone_block", "minecraft:redstone_lamp"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -1], [2, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-1, 0, 0], "block": {"id": "minecraft:redstone_lamp"    } }, 
+                { "pos": [ 0, 0, 0], "block": {"id": "minecraft:waxed_copper_bulb"} }, 
+                { "pos": [ 1, 0, 0], "block": {"id": "minecraft:redstone_block"   } }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 0, 0], "is": {"id": "minecraft:waxed_copper_bulb", "lit": true , "powered": true} }, 
+                { "pos": [-1, 0, 0], "is": {"id": "minecraft:redstone_lamp"    , "lit": false                 } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

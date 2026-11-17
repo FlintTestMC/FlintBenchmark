@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "copper_ore_note_block_instrument", 
+    "description": "A note block above dirt plays harp, switches to basedrum when the dirt is replaced by copper ore, and returns to harp when dirt is placed again.", 
+    "tags": ["copper_ore", "note_block", "instrument"], 
+    "minecraftIds": ["minecraft:copper_ore", "minecraft:note_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:note_block"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:note_block", "instrument": "harp"} }
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:copper_ore"} }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:note_block", "instrument": "basedrum"} }
+            ]
+        }, 
+        { "at": 5, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:dirt"} }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:note_block", "instrument": "harp"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

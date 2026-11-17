@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "potted_allium_survives_support_removal", 
+    "description": "A potted allium stays in place after the block under it is removed, because FlowerPotBlock never overrides canSurvive and so the support check in updateShape always passes.", 
+    "tags": ["decoration", "flower-pot", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:potted_allium", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:potted_allium"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"        } }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:potted_allium"} }  
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [0, 0, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"}                            }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:potted_allium"}                  }, 
+                {                   "is": "minecraft:item"                 , "exists": false }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

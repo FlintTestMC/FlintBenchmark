@@ -1,0 +1,49 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "lantern_waterlogged_support_loss_leaves_water", 
+    "description": "A waterlogged hanging lantern that loses its ceiling breaks and leaves a water source behind: updateShape returns air, so updateOrDestroy calls destroyBlock, which places the block's fluid state (water) and drops one lantern item.", 
+    "tags": ["decoration", "lantern", "support", "waterlogging", "water", "drops", "edge-case"], 
+    "minecraftIds": ["minecraft:lantern", "minecraft:water", "minecraft:stone", "minecraft:item"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -1], [13, 2, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [11, 0, -1], [13, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [12, 2, 0], "block": {"id": "minecraft:stone"                                        } }, 
+                { "pos": [12, 1, 0], "block": {"id": "minecraft:lantern", "hanging": true, "waterlogged": true} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [12, 1, 0], "is": {"id": "minecraft:lantern", "hanging": true, "waterlogged": true} }, 
+                {"is": "minecraft:item", "exists": false}                                                       
+            ]
+        }, 
+        { "at": 2, "do": "remove", "pos": [12, 2, 0] }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [12, 1, 0], "is": {"id": "minecraft:water", "level": 0} }                                   , 
+                {"is": "minecraft:item", "exists": true, "count": 1, "Item.id": "minecraft:lantern", "Item.count": 1}  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

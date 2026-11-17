@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "waxed_bulb_power_through_solid_block", 
+    "description": "A waxed copper bulb placed next to a solid block that a powered lever strongly powers turns on, while a bulb next to a block with an unpowered lever stays off.", 
+    "tags": ["redstone", "copper-bulb", "waxed-copper-bulb", "strong-power", "lever"], 
+    "minecraftIds": ["minecraft:waxed_copper_bulb", "minecraft:stone", "minecraft:lever"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, -1, -1], [2, 2, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [1, 1, 0], 
+                    "block": {"id": "minecraft:lever", "face": "floor", "facing": "north", "powered": true}
+                }, 
+                { "pos": [1, 0, 3], "block": {"id": "minecraft:stone"} }, 
+                {
+                    "pos": [1, 1, 3], 
+                    "block": {"id": "minecraft:lever", "face": "floor", "facing": "north", "powered": false}
+                }
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:waxed_copper_bulb"} }, 
+                { "pos": [0, 0, 3], "block": {"id": "minecraft:waxed_copper_bulb"} }  
+            ]
+        }, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:waxed_copper_bulb", "lit": true , "powered": true } }, 
+                { "pos": [0, 0, 3], "is": {"id": "minecraft:waxed_copper_bulb", "lit": false, "powered": false} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

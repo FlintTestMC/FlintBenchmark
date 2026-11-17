@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "grindstone_blocks_piston_push", 
+    "description": "A powered piston facing a grindstone cannot extend and the grindstone does not move, while an identical piston facing stone extends and pushes it.", 
+    "tags": ["grindstone", "piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:grindstone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 4] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:piston", "facing": "east", "extended": false}    }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:grindstone", "face": "floor", "facing": "north"} }, 
+                { "pos": [0, 1, 4], "block": {"id": "minecraft:piston", "facing": "east", "extended": false}    }, 
+                { "pos": [1, 1, 4], "block": {"id": "minecraft:stone"}                                          }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        { "at": 1, "do": "place", "pos": [0, 2, 4], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:piston", "facing": "east", "extended": false}    }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:grindstone", "face": "floor", "facing": "north"} }, 
+                { "pos": [0, 1, 4], "is": {"id": "minecraft:piston", "facing": "east", "extended": true}     }, 
+                { "pos": [1, 1, 4], "is": {"id": "minecraft:piston_head", "facing": "east"}                  }, 
+                { "pos": [2, 1, 4], "is": {"id": "minecraft:stone"}                                          }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

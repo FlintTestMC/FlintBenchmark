@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "composter_comparator_signal", 
+    "description": "A comparator reading a composter outputs the fill level as its signal strength (0, 1, 5 and 8 for levels 0, 1, 5 and 8).", 
+    "tags": ["composter", "comparator", "redstone", "analog-output"], 
+    "minecraftIds": ["minecraft:composter", "minecraft:comparator", "minecraft:redstone_wire", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 1, 6] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 6] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:composter"    , "level": 0                  } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:comparator"   ,             "facing": "west"} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:redstone_wire"                              } }, 
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:composter"    , "level": 1                  } }, 
+                { "pos": [1, 1, 2], "block": {"id": "minecraft:comparator"   ,             "facing": "west"} }, 
+                { "pos": [2, 1, 2], "block": {"id": "minecraft:redstone_wire"                              } }, 
+                { "pos": [0, 1, 4], "block": {"id": "minecraft:composter"    , "level": 5                  } }, 
+                { "pos": [1, 1, 4], "block": {"id": "minecraft:comparator"   ,             "facing": "west"} }, 
+                { "pos": [2, 1, 4], "block": {"id": "minecraft:redstone_wire"                              } }, 
+                { "pos": [0, 1, 6], "block": {"id": "minecraft:composter"    , "level": 8                  } }, 
+                { "pos": [1, 1, 6], "block": {"id": "minecraft:comparator"   ,             "facing": "west"} }, 
+                { "pos": [2, 1, 6], "block": {"id": "minecraft:redstone_wire"                              } }  
+            ]
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:redstone_wire", "power": 0} }, 
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:redstone_wire", "power": 1} }, 
+                { "pos": [2, 1, 4], "is": {"id": "minecraft:redstone_wire", "power": 5} }, 
+                { "pos": [2, 1, 6], "is": {"id": "minecraft:redstone_wire", "power": 8} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "composter_hopper_extract_requires_ready", 
+    "description": "A hopper below a composter that is not ready (level 3) pulls nothing and the level is unchanged.", 
+    "tags": ["composter", "hopper", "block-entity", "extraction"], 
+    "minecraftIds": ["minecraft:composter", "minecraft:hopper"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[]", "TransferCooldown": 0}
+                    }
+                }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:composter", "level": 3} }
+            ]
+        }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 3} }, 
+                {
+                    "pos": [0, 0, 0], 
+                    "is": { "id": "minecraft:hopper", "nbt": {"Items": []} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

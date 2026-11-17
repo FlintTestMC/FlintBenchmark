@@ -1,0 +1,31 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "golden_dandelion_flower_pot_take_back", 
+    "description": "Using an empty hand on a potted golden dandelion gives the player one golden dandelion and turns the pot back into an empty flower pot.", 
+    "tags": ["vegetation", "golden_dandelion", "flower", "flower-pot", "player"], 
+    "minecraftIds": ["minecraft:golden_dandelion", "minecraft:flower_pot", "minecraft:potted_golden_dandelion"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [2, 3, 1] ]
+        }, 
+        "player": {"inventory": {}, "selected_hotbar": 1, "game_mode": "Survival"}
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:potted_golden_dandelion"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:flower_pot"                  }                    }, 
+                {                   "is": {"id": "minecraft:golden_dandelion", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

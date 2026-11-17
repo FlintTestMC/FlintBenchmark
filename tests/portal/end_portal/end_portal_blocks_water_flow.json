@@ -1,0 +1,60 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "end_portal_blocks_water_flow", 
+    "description": "Water next to an end portal in an enclosed corridor does not flow into or replace the portal.", 
+    "tags": ["portal", "end_portal", "fluid"], 
+    "minecraftIds": ["minecraft:end_portal", "minecraft:water"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [4, 2, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [0, 0, 1], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [0, 0, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [1, 0, 1], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [1, 0, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [2, 0, 1], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [2, 0, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [3, 0, 1], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [3, 0, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [4, 0, 1], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [4, 0, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [1, 1, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [2, 1, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [3, 1, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [4, 1, 2], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [3, 1, 1], "block": {"id": "minecraft:obsidian"  } }, 
+                { "pos": [2, 1, 1], "block": {"id": "minecraft:end_portal"} }  
+            ]
+        }, 
+        { "at": 1, "do": "place", "pos": [1, 1, 1], "block": {"id": "minecraft:water", "level": 0} }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 1], "is": {"id": "minecraft:end_portal"} }, 
+                { "pos": [3, 1, 1], "is": {"id": "minecraft:obsidian"  } }  
+            ]
+        }
+    ]
+}
+

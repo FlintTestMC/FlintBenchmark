@@ -1,0 +1,43 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "gravel_column_falls_together", 
+    "description": "A filled column of gravel over air falls and lands as an intact column on the floor.", 
+    "tags": ["gravity", "gravel", "falling"], 
+    "minecraftIds": ["minecraft:gravel", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [2, 9, 2] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [1, 5, 1], [1, 7, 1] ], 
+            "with": {"id": "minecraft:gravel"}
+        }, 
+        {
+            "at": 60, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:gravel"} }, 
+                { "pos": [1, 2, 1], "is": {"id": "minecraft:gravel"} }, 
+                { "pos": [1, 3, 1], "is": {"id": "minecraft:gravel"} }, 
+                { "pos": [1, 4, 1], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [1, 5, 1], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [1, 6, 1], "is": {"id": "minecraft:air"   } }, 
+                { "pos": [1, 7, 1], "is": {"id": "minecraft:air"   } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

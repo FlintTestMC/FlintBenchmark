@@ -1,0 +1,101 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "end_portal_created_by_last_eye", 
+    "description": "Placing the last eye of ender into a complete, inward-facing frame ring turns the 3x3 interior into end portal blocks.", 
+    "tags": ["portal", "end_portal", "end_portal_frame", "ender_eye"], 
+    "minecraftIds": ["minecraft:end_portal", "minecraft:end_portal_frame", "minecraft:ender_eye"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, -2], [4, 3, 4] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:ender_eye", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [0, 0, 1], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [0, 0, 2], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [0, 0, 3], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [0, 0, 4], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [1, 0, 0], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [1, 0, 1], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [1, 0, 2], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [1, 0, 3], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [1, 0, 4], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [2, 0, 0], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [2, 0, 1], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [2, 0, 2], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [2, 0, 3], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [2, 0, 4], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [3, 0, 0], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [3, 0, 1], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [3, 0, 2], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [3, 0, 3], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [3, 0, 4], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [4, 0, 0], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [4, 0, 1], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [4, 0, 2], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [4, 0, 3], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [4, 0, 4], "block": {"id": "minecraft:obsidian"                                         } }, 
+                { "pos": [1, 1, 0], "block": {"id": "minecraft:end_portal_frame", "facing": "south", "eye": true } }, 
+                { "pos": [1, 1, 4], "block": {"id": "minecraft:end_portal_frame", "facing": "north", "eye": true } }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:end_portal_frame", "facing": "south", "eye": false} }, 
+                { "pos": [2, 1, 4], "block": {"id": "minecraft:end_portal_frame", "facing": "north", "eye": true } }, 
+                { "pos": [3, 1, 0], "block": {"id": "minecraft:end_portal_frame", "facing": "south", "eye": true } }, 
+                { "pos": [3, 1, 4], "block": {"id": "minecraft:end_portal_frame", "facing": "north", "eye": true } }, 
+                { "pos": [0, 1, 1], "block": {"id": "minecraft:end_portal_frame", "facing": "east" , "eye": true } }, 
+                { "pos": [4, 1, 1], "block": {"id": "minecraft:end_portal_frame", "facing": "west" , "eye": true } }, 
+                { "pos": [0, 1, 2], "block": {"id": "minecraft:end_portal_frame", "facing": "east" , "eye": true } }, 
+                { "pos": [4, 1, 2], "block": {"id": "minecraft:end_portal_frame", "facing": "west" , "eye": true } }, 
+                { "pos": [0, 1, 3], "block": {"id": "minecraft:end_portal_frame", "facing": "east" , "eye": true } }, 
+                { "pos": [4, 1, 3], "block": {"id": "minecraft:end_portal_frame", "facing": "west" , "eye": true } }  
+            ]
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, -2], [4, 0, -1] ], 
+            "with": {"id": "minecraft:obsidian"}
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [2.5, 1, -1.5], "rot": [0, 22] }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:air"} }
+            ]
+        }, 
+        {"at": 3, "do": "interact", "item": "minecraft:ender_eye"}, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 1, 1], "is": {"id": "minecraft:end_portal"                                      } }, 
+                { "pos": [1, 1, 2], "is": {"id": "minecraft:end_portal"                                      } }, 
+                { "pos": [1, 1, 3], "is": {"id": "minecraft:end_portal"                                      } }, 
+                { "pos": [2, 1, 1], "is": {"id": "minecraft:end_portal"                                      } }, 
+                { "pos": [2, 1, 2], "is": {"id": "minecraft:end_portal"                                      } }, 
+                { "pos": [2, 1, 3], "is": {"id": "minecraft:end_portal"                                      } }, 
+                { "pos": [3, 1, 1], "is": {"id": "minecraft:end_portal"                                      } }, 
+                { "pos": [3, 1, 2], "is": {"id": "minecraft:end_portal"                                      } }, 
+                { "pos": [3, 1, 3], "is": {"id": "minecraft:end_portal"                                      } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:end_portal_frame", "facing": "south", "eye": true} }  
+            ]
+        }, 
+        {
+            "at": 10, 
+            "do": "assert", 
+            "checks": [ {"slot": "hotbar1", "is": "empty"} ]
+        }
+    ]
+}
+

@@ -1,0 +1,67 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_wall_hanging_sign_chaining", 
+    "description": "A wall hanging sign can attach to the side of another wall hanging sign facing along the same axis, but not to one facing across it.", 
+    "tags": ["decoration", "sign", "wall-hanging-sign", "chain", "placement", "player"], 
+    "minecraftIds": ["minecraft:oak_wall_hanging_sign", "minecraft:oak_hanging_sign"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [8, 3, 1] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:oak_hanging_sign", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [8, 3, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [8, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [1, 1, 0], 
+            "block": {"id": "minecraft:oak_wall_hanging_sign", "facing": "north"}
+        }, 
+        {
+            "at": 0, 
+            "do": "place", 
+            "pos": [6, 1, 0], 
+            "block": {"id": "minecraft:oak_wall_hanging_sign", "facing": "east"}
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [2.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_wall_hanging_sign", "facing": "north"} }, 
+                { "slot": "hotbar1", "is": {"id": "minecraft:oak_hanging_sign", "count": 1} }             
+            ]
+        }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [7.5, 3, 0.5], "rot": [0, 90] }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [7, 1, 0], "is": {"id": "minecraft:air"                         }                    }, 
+                {                   "is": {"id": "minecraft:oak_hanging_sign", "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

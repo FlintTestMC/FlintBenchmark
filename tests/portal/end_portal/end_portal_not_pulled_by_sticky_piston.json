@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "end_portal_not_pulled_by_sticky_piston", 
+    "description": "A sticky piston extending and retracting next to an end portal never pulls it: the portal stays in place.", 
+    "tags": ["portal", "end_portal", "sticky-piston", "push-reaction"], 
+    "minecraftIds": ["minecraft:end_portal", "minecraft:sticky_piston", "minecraft:redstone_block"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [3, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:sticky_piston", "facing": "east", "extended": false} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:end_portal"                                        } }  
+            ]
+        }, 
+        { "at": 2, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:redstone_block"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:sticky_piston", "facing": "east", "extended": true} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:piston_head", "facing": "east", "type": "sticky"}   }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:end_portal"}                                        }  
+            ]
+        }, 
+        { "at": 14, "do": "place", "pos": [0, 2, 0], "block": {"id": "minecraft:air"} }, 
+        {
+            "at": 26, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:sticky_piston", "facing": "east", "extended": false} }, 
+                { "pos": [1, 1, 0], "is": {"id": "minecraft:air"                                               } }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:end_portal"                                        } }  
+            ]
+        }
+    ]
+}
+

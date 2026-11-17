@@ -1,0 +1,28 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "dragon_egg_supported_stays", 
+    "description": "A dragon egg placed on a solid block stays a dragon egg and does not fall.", 
+    "tags": ["gravity", "dragon-egg", "placement"], 
+    "minecraftIds": ["minecraft:dragon_egg", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:dragon_egg"} }, 
+        {
+            "at": 12, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dragon_egg"} }, 
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:stone"     } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

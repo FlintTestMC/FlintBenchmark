@@ -1,0 +1,44 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_torch_floor_support_loss_drops_item", 
+    "description": "Removing the block under a standing copper torch turns the torch into air and drops a copper torch item.", 
+    "tags": ["decoration", "copper_torch", "support", "neighbor-update", "drops"], 
+    "minecraftIds": ["minecraft:copper_torch", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [9, 3, 1] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [8, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        { "at": 1, "do": "place", "pos": [8, 2, 0], "block": {"id": "minecraft:copper_torch"} }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:copper_torch"} }
+            ]
+        }, 
+        { "at": 4, "do": "remove", "pos": [8, 1, 0] }, 
+        {
+            "at": 6, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [8, 2, 0], "is": {"id": "minecraft:air"} }, 
+                {
+                    "is": "minecraft:item", 
+                    "exists": true, 
+                    "count": 1, 
+                    "pos": [8.5, 2.2, 0.5], 
+                    "position_tolerance": 1.5, 
+                    "Item.id": "minecraft:copper_torch"
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

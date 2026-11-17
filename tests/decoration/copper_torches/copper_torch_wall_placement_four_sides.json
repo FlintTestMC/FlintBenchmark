@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_torch_wall_placement_four_sides", 
+    "description": "Using a copper torch on each horizontal side of a stone block places a copper wall torch with the matching facing.", 
+    "tags": ["decoration", "copper_torch", "placement", "block-state", "player"], 
+    "minecraftIds": ["minecraft:copper_torch", "minecraft:copper_wall_torch", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-13, 0, -1], [1, 2, 9] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:copper_torch", "count": 5} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ -4, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-12, 1, 8], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-12, 1, 4], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ -4, 1, 4], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [-3.5, 0, -3.5], "rot": [0, 0] }, 
+        {"at": 1, "do": "interact"}, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [-11.5, 0, 11.5], "rot": [180, 0] }, 
+        {"at": 2, "do": "interact"}, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [-8.5, 0, 4.5], "rot": [90, 0] }, 
+        {"at": 3, "do": "interact"}, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [-7.5, 0, 4.5], "rot": [-90, 0] }, 
+        {"at": 4, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ -4, 1, -1], "is": {"id": "minecraft:copper_wall_torch", "facing": "north"} }, 
+                { "pos": [-12, 1,  9], "is": {"id": "minecraft:copper_wall_torch", "facing": "south"} }, 
+                { "pos": [-11, 1,  4], "is": {"id": "minecraft:copper_wall_torch", "facing": "east" } }, 
+                { "pos": [ -5, 1,  4], "is": {"id": "minecraft:copper_wall_torch", "facing": "west" } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

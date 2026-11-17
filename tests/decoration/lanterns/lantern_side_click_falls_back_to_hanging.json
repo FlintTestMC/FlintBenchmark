@@ -1,0 +1,51 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "lantern_side_click_falls_back_to_hanging", 
+    "description": "Clicking the side of a wall while looking down tries a standing lantern first; with no floor below but a stone ceiling above, getStateForPlacement falls back to the UP direction and places it hanging.", 
+    "tags": ["decoration", "lantern", "placement", "block-state", "player", "edge-case"], 
+    "minecraftIds": ["minecraft:lantern"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, 0, 0], [1, 2, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:lantern", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [-3, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [-2, 0, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 1, 1, 0], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [ 0, 2, 0], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 0, 0], "is": {"id": "minecraft:air"} }, 
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }  
+            ]
+        }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [-2.5, 1, 0.5], "rot": [-90, 20] }, 
+        {"at": 1, "do": "interact"}, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:lantern", "hanging": true, "waterlogged": false} }, 
+                {"slot": "hotbar1", "is": "empty"}                                                              
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

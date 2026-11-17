@@ -1,0 +1,47 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "composter_hopper_extracts_bone_meal", 
+    "description": "A hopper below a ready (level 8) composter pulls out one bone meal through the bottom face and the composter resets to level 0.", 
+    "tags": ["composter", "hopper", "block-entity", "extraction", "bone-meal"], 
+    "minecraftIds": ["minecraft:composter", "minecraft:hopper", "minecraft:bone_meal"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "place_each", 
+            "blocks": [
+                {
+                    "pos": [0, 0, 0], 
+                    "block": {
+                        "id": "minecraft:hopper", 
+                        "facing": "east", 
+                        "nbt": {"Items": "[]", "TransferCooldown": 0}
+                    }
+                }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:composter", "level": 8} }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:composter", "level": 0} }, 
+                {
+                    "pos": [0, 0, 0], 
+                    "is": {
+                        "id": "minecraft:hopper", 
+                        "nbt": {"Items[0].id": "minecraft:bone_meal", "Items[0].count": 1}
+                    }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

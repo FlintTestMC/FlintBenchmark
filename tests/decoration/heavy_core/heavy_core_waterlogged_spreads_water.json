@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "heavy_core_waterlogged_spreads_water", 
+    "description": "A waterlogged heavy core acts as a water source: it spreads water into adjacent empty space while staying waterlogged.", 
+    "tags": ["decoration", "heavy_core", "waterlogged", "block-state", "fluid"], 
+    "minecraftIds": ["minecraft:heavy_core", "minecraft:water", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-3, 0, -1], [3, 1, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-3, 0, -1], [3, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-3, 1, -1], [3, 1, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 1, 0], [2, 1, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:heavy_core", "waterlogged": true} }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [ 0, 1, 0], "is": {"id": "minecraft:heavy_core", "waterlogged": true            } }, 
+                { "pos": [-1, 1, 0], "is": {"id": "minecraft:water"     ,                      "level": 1} }, 
+                { "pos": [ 1, 1, 0], "is": {"id": "minecraft:water"     ,                      "level": 1} }, 
+                { "pos": [-2, 1, 0], "is": {"id": "minecraft:water"     ,                      "level": 2} }, 
+                { "pos": [ 2, 1, 0], "is": {"id": "minecraft:water"     ,                      "level": 2} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

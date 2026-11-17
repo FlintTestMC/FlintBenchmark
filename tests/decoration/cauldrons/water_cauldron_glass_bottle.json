@@ -1,0 +1,76 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "water_cauldron_glass_bottle", 
+    "description": "A glass bottle lowers a water cauldron by one level and becomes a potion, and the last level turns the cauldron back into an empty one.", 
+    "tags": ["decoration", "cauldron", "water-cauldron", "bottle", "interaction", "player"], 
+    "minecraftIds": ["minecraft:water_cauldron", "minecraft:cauldron", "minecraft:glass_bottle", "minecraft:potion"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [5, 4, 1] ]
+        }, 
+        "player": {"game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [5, 4, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [-1, 1, 0], [5, 4, 0] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "fill", 
+            "region": [ [-1, 2, -1], [5, 4, -1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:water_cauldron", "level": 3} }, 
+                { "pos": [2, 1, 0], "block": {"id": "minecraft:water_cauldron", "level": 2} }, 
+                { "pos": [4, 1, 0], "block": {"id": "minecraft:water_cauldron", "level": 1} }  
+            ]
+        }, 
+        { "at": 2, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, -0.5], "rot": [0, 65] }, 
+        {"at": 2, "do": "interact", "item": "minecraft:glass_bottle"}, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:water_cauldron", "level": 2}                    }, 
+                {                   "is": {"id": "minecraft:potion"                    }, "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 3, "do": "tp", "entity_alias": "player", "pos": [2.5, 2, -0.5], "rot": [0, 65] }, 
+        {"at": 3, "do": "interact", "item": "minecraft:glass_bottle"}, 
+        {
+            "at": 4, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:water_cauldron", "level": 1}                    }, 
+                {                   "is": {"id": "minecraft:potion"                    }, "slot": "hotbar1" }  
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [4.5, 2, -0.5], "rot": [0, 65] }, 
+        {"at": 4, "do": "interact", "item": "minecraft:glass_bottle"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:cauldron"}                    }, 
+                {                   "is": {"id": "minecraft:potion"  }, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

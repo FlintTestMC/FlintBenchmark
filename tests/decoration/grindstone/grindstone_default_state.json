@@ -1,0 +1,26 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "grindstone_default_state", 
+    "description": "A grindstone placed without properties has the default state face=wall, facing=north.", 
+    "tags": ["grindstone", "placement", "block-state"], 
+    "minecraftIds": ["minecraft:grindstone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 1, 0] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:grindstone"} }, 
+        {
+            "at": 1, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:grindstone", "face": "wall", "facing": "north"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

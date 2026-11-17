@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "copper_wall_torch_survives_unrelated_neighbor_changes", 
+    "description": "A copper wall torch is only removed when the block it hangs on changes: placing and then removing blocks below, beside, above and in front of it leaves it in place.", 
+    "tags": ["decoration", "copper_torch", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:copper_wall_torch", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [9, 3, 3] ]
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [8, 1, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "place", 
+            "pos": [8, 1, 1], 
+            "block": {"id": "minecraft:copper_wall_torch", "facing": "south"}
+        }, 
+        {
+            "at": 3, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [8, 0, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [7, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [9, 1, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [8, 2, 1], "block": {"id": "minecraft:stone"} }, 
+                { "pos": [8, 1, 2], "block": {"id": "minecraft:stone"} }  
+            ]
+        }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 1, 1], "is": {"id": "minecraft:copper_wall_torch", "facing": "south"} }
+            ]
+        }, 
+        { "at": 6, "do": "remove", "pos": [8, 0, 1] }, 
+        { "at": 6, "do": "remove", "pos": [7, 1, 1] }, 
+        { "at": 6, "do": "remove", "pos": [9, 1, 1] }, 
+        { "at": 6, "do": "remove", "pos": [8, 2, 1] }, 
+        { "at": 6, "do": "remove", "pos": [8, 1, 2] }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [8, 1, 0], "is": {"id": "minecraft:stone"                               } }, 
+                { "pos": [8, 1, 1], "is": {"id": "minecraft:copper_wall_torch", "facing": "south"} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

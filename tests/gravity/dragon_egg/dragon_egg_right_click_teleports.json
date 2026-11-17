@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "dragon_egg_right_click_teleports", 
+    "description": "Right-clicking a dragon egg with an empty hand teleports it (DragonEggBlock.useWithoutItem). This test only asserts that the original position becomes air; flint cannot search for the destination, so it does not check where the egg landed or that exactly one egg exists.", 
+    "tags": ["gravity", "dragon-egg", "interaction", "teleport", "player"], 
+    "minecraftIds": ["minecraft:dragon_egg", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-7, 0, -7], [7, 4, 7] ]
+        }, 
+        "player": {"selected_hotbar": 1, "game_mode": "Survival"}
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-7, 0, -7], [7, 0, 7] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 0, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:dragon_egg"} }, 
+        { "at": 1, "do": "tp", "entity_alias": "player", "pos": [0.5, 3, 0.5], "rot": [0, 90] }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:dragon_egg"} }
+            ]
+        }, 
+        {"at": 3, "do": "interact"}, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:air"} }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

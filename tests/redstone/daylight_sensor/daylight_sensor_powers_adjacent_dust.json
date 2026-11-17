@@ -1,0 +1,37 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "daylight_sensor_powers_adjacent_dust", 
+    "description": "A daylight detector's power is output exactly to adjacent redstone dust: an inverted detector capped by a block at noon has sky light 14, power 1, and the dust beside it reads 1.", 
+    "tags": ["redstone", "daylight-sensor", "redstone-wire", "signal"], 
+    "minecraftIds": ["minecraft:daylight_detector", "minecraft:redstone_wire"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, -1, -1], [2, 3, 1] ]
+        }, 
+        "world": {"time": "6000"}
+    }, 
+    "timeline": [
+        {
+            "at": 105, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [2, -1, 0], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [1,  1, 0], "block": {"id": "minecraft:stone"                              } }, 
+                { "pos": [1,  0, 0], "block": {"id": "minecraft:daylight_detector", "inverted": true} }, 
+                { "pos": [2,  0, 0], "block": {"id": "minecraft:redstone_wire"                      } }  
+            ]
+        }, 
+        {
+            "at": 130, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [1, 0, 0], "is": {"id": "minecraft:daylight_detector", "inverted": true, "power": 1} }, 
+                { "pos": [2, 0, 0], "is": {"id": "minecraft:redstone_wire"    ,                   "power": 1} }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

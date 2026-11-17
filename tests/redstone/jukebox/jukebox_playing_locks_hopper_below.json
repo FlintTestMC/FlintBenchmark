@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "jukebox_playing_locks_hopper_below", 
+    "description": "A jukebox that starts playing a disc powers the hopper below it, which locks the hopper (enabled false) so it cannot pull the disc back out.", 
+    "tags": ["jukebox", "hopper", "music-disc", "redstone", "signal", "container", "player"], 
+    "minecraftIds": ["minecraft:jukebox", "minecraft:hopper", "minecraft:music_disc_cat", "minecraft:stone"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [0, 2, 0] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:music_disc_cat", "count": 1} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        { "at": 0, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:stone"} }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 2, 0], "block": {"id": "minecraft:jukebox"} }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "block": { "id": "minecraft:hopper", "facing": "down", "nbt": {"TransferCooldown": 0} }
+                }
+            ]
+        }, 
+        {
+            "at": 3, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:hopper", "enabled": true} }
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 4, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 16, 
+            "do": "assert", 
+            "checks": [
+                {
+                    "pos": [0, 2, 0], 
+                    "is": {
+                        "id": "minecraft:jukebox", 
+                        "has_record": true, 
+                        "nbt": {"RecordItem.id": "minecraft:music_disc_cat"}
+                    }
+                }, 
+                {
+                    "pos": [0, 1, 0], 
+                    "is": { "id": "minecraft:hopper", "enabled": false, "nbt": {"Items": []} }
+                }
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

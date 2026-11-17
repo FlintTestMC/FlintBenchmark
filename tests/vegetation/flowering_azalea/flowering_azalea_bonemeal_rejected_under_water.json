@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "flowering_azalea_bonemeal_rejected_under_water", 
+    "description": "Bone meal on a flowering azalea with a water source directly above it is not a valid azalea growth target, so the azalea stays; the item instead falls through to the water-plant path, turning the water above the sturdy top face into seagrass and consuming one bone meal.", 
+    "tags": ["vegetation", "flowering-azalea", "bone-meal", "waterlogged", "seagrass", "player"], 
+    "minecraftIds": [
+        "minecraft:flowering_azalea", "minecraft:grass_block"     , "minecraft:water"           , 
+        "minecraft:seagrass"        , "minecraft:stone"           , "minecraft:bone_meal"       
+    ], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-2, 0, -2], [2, 5, 2] ]
+        }, 
+        "player": {
+            "inventory": { "hotbar1": {"id": "minecraft:bone_meal", "count": 2} }, 
+            "selected_hotbar": 1, 
+            "game_mode": "Survival"
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [2, 5, 2] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-2, 0, -2], [2, 0, 2] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [ 0, 0,  0], "block": {"id": "minecraft:grass_block"     } }, 
+                { "pos": [ 0, 1,  0], "block": {"id": "minecraft:flowering_azalea"} }, 
+                { "pos": [ 1, 2,  0], "block": {"id": "minecraft:stone"           } }, 
+                { "pos": [-1, 2,  0], "block": {"id": "minecraft:stone"           } }, 
+                { "pos": [ 0, 2,  1], "block": {"id": "minecraft:stone"           } }, 
+                { "pos": [ 0, 2, -1], "block": {"id": "minecraft:stone"           } }, 
+                { "pos": [ 0, 2,  0], "block": {"id": "minecraft:water"           } }  
+            ]
+        }, 
+        { "at": 4, "do": "tp", "entity_alias": "player", "pos": [0.5, 2, 0.5], "rot": [0, 90] }, 
+        {"at": 5, "do": "interact"}, 
+        {
+            "at": 7, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:flowering_azalea"            }                    }, 
+                { "pos": [0, 2, 0], "is": {"id": "minecraft:seagrass"                    }                    }, 
+                {                   "is": {"id": "minecraft:bone_meal"       , "count": 1}, "slot": "hotbar1" }  
+            ]
+        }
+    ], 
+    "dependencies": [], 
+    "breakpoints": []
+}
+

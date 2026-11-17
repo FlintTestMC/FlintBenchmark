@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.0.0", 
+    "name": "flowering_azalea_has_collision", 
+    "description": "An item entity dropped from above comes to rest on top of a flowering azalea at y+1, which shows that the block has a full-width collision shape up to the top of the block.", 
+    "tags": ["vegetation", "flowering-azalea", "collision", "entity"], 
+    "minecraftIds": ["minecraft:flowering_azalea", "minecraft:dirt", "minecraft:item", "minecraft:stick"], 
+    "setup": {
+        "cleanup": {
+            "region": [ [-1, 0, -1], [1, 6, 1] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 6, 1] ], 
+            "with": {"id": "minecraft:air"}
+        }, 
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [-1, 0, -1], [1, 0, 1] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        {
+            "at": 1, 
+            "do": "place_each", 
+            "blocks": [
+                { "pos": [0, 0, 0], "block": {"id": "minecraft:dirt"            } }, 
+                { "pos": [0, 1, 0], "block": {"id": "minecraft:flowering_azalea"} }  
+            ]
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "stick", 
+            "entity_type": "minecraft:item", 
+            "pos": [0.5, 4, 0.5], 
+            "nbt": {"Item": "{count: 1, id: \"minecraft:stick\"}", "PickupDelay": "32767s"}
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "is": "minecraft:item", "exists": true, "pos": [0.5, 2, 0.5], "position_tolerance": 0.05 }
+            ]
+        }
+    ], 
+    "dependencies": [], 
+    "breakpoints": []
+}
+

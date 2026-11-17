@@ -1,0 +1,52 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_pressure_plate_support", 
+    "description": "A wooden pressure plate survives when its support becomes a fence or a top slab, but breaks when the support is removed or replaced by a bottom slab.", 
+    "tags": ["redstone", "pressure-plate", "support", "neighbor-update"], 
+    "minecraftIds": ["minecraft:oak_pressure_plate"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [6, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [6, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:oak_pressure_plate"} }, 
+        { "at": 1, "do": "place", "pos": [2, 1, 0], "block": {"id": "minecraft:oak_pressure_plate"} }, 
+        { "at": 1, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:oak_pressure_plate"} }, 
+        { "at": 1, "do": "place", "pos": [6, 1, 0], "block": {"id": "minecraft:oak_pressure_plate"} }, 
+        {
+            "at": 2, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_pressure_plate"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_pressure_plate"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:oak_pressure_plate"} }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:oak_pressure_plate"} }  
+            ]
+        }, 
+        { "at": 3, "do": "place", "pos": [0, 0, 0], "block": {"id": "minecraft:oak_fence"} }, 
+        { "at": 3, "do": "place", "pos": [2, 0, 0], "block": {"id": "minecraft:stone_slab", "type": "top"} }, 
+        { "at": 3, "do": "place", "pos": [4, 0, 0], "block": {"id": "minecraft:stone_slab", "type": "bottom"} }, 
+        { "at": 3, "do": "remove", "pos": [6, 0, 0] }, 
+        {
+            "at": 5, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_pressure_plate"} }, 
+                { "pos": [2, 1, 0], "is": {"id": "minecraft:oak_pressure_plate"} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:air"               } }, 
+                { "pos": [6, 1, 0], "is": {"id": "minecraft:air"               } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+

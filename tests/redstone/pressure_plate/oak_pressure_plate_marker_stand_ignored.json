@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/FlintTestMC/flint-core/refs/heads/main/flint-content/test_spec_schema.json", 
+    "flintVersion": "1.1", 
+    "name": "oak_pressure_plate_marker_stand_ignored", 
+    "description": "A marker armor stand does not power a wooden pressure plate (it ignores block triggers) while a normal armor stand on a second plate does.", 
+    "tags": ["redstone", "pressure-plate", "entity-trigger"], 
+    "minecraftIds": ["minecraft:oak_pressure_plate"], 
+    "dependencies": [], 
+    "setup": {
+        "cleanup": {
+            "region": [ [0, 0, 0], [5, 2, 0] ]
+        }
+    }, 
+    "timeline": [
+        {
+            "at": 0, 
+            "do": "fill", 
+            "region": [ [0, 0, 0], [5, 0, 0] ], 
+            "with": {"id": "minecraft:stone"}
+        }, 
+        { "at": 1, "do": "place", "pos": [0, 1, 0], "block": {"id": "minecraft:oak_pressure_plate"} }, 
+        { "at": 1, "do": "place", "pos": [4, 1, 0], "block": {"id": "minecraft:oak_pressure_plate"} }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "marker", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [0.5, 1, 0.5], 
+            "Marker": "1b"
+        }, 
+        {
+            "at": 2, 
+            "do": "summon", 
+            "entity_alias": "normal", 
+            "entity_type": "minecraft:armor_stand", 
+            "pos": [4.5, 1, 0.5]
+        }, 
+        {
+            "at": 8, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_pressure_plate", "powered": false} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:oak_pressure_plate", "powered": true } }  
+            ]
+        }, 
+        {
+            "at": 30, 
+            "do": "assert", 
+            "checks": [
+                { "pos": [0, 1, 0], "is": {"id": "minecraft:oak_pressure_plate", "powered": false} }, 
+                { "pos": [4, 1, 0], "is": {"id": "minecraft:oak_pressure_plate", "powered": true } }  
+            ]
+        }
+    ], 
+    "breakpoints": []
+}
+
